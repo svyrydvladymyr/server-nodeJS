@@ -1,4 +1,5 @@
-let {http, fs, path, switchPostRequest, chackPostRoutes} = require('./export-moduls');
+let {http, fs, path} = require('./export-moduls');
+let {addToDB, updateDB} = require('./post-routes.js');
 
 let errorServer = (error, res) => {
     res.writeHead(500, {'Content-Type':'text/plain'});
@@ -15,7 +16,19 @@ let routs = (reqUrl, contType, res) => {
     stream.on('error', error => errorServer(error, res));
     res.writeHead(200, {'Content-Type': contType});
     stream.pipe(res);
-}
+};
+
+let switchPostRequest = (reqPostUrl, data, res) => {
+    switch (reqPostUrl){
+        case '/addToDB': addToDB(reqPostUrl, data, res); break;
+        case '/updateDB': updateDB(reqPostUrl, data, res); break;
+        default: console.log('Unknown request')}
+};
+
+let chackPostRoutes = (reqUrl) => {
+    return ((reqUrl === '/addToDB') || 
+            (reqUrl === '/updateDB')) ? true: false;
+} 
 
 http.createServer((req, res) => {
     console.log(req.method, req.url);  
