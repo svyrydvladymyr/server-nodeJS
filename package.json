@@ -8,5 +8,8 @@
     "start": "node server.js"
   },
   "author": "kalcifer",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mime-types": "^2.1.24"
+  }
 }
