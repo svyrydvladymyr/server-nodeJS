@@ -18,11 +18,19 @@ http.createServer((req, res) => {
         case 'POST':
             if (chackPostRoutes(req.url)){
                 if (res.statusCode === 200) {
-                    let obj = '';
+                    let obj = '', trueJson, errorParse;
                     req.on('data', data => obj += data);
-                    req.on('error', error => errorServer(error, res));            
-                    req.on('end', () => {switchPostRequest(req.url, obj, res)}); 
-                } else {errorData(`ERROR CONNECTION..! _ ${res.statusCode} - ${res.statusMessage}`, res)}
-            } else if (req.url === '/') {errorData('Empty POST routes..!', res)} else {errorData('Unknown POST routes..!', res)}    
+                    req.on('error', error => errorServer(error, res));    
+                    req.on('end', () => {
+                        try {
+                            trueJson = JSON.parse(obj.toString());
+                        } catch (error) {
+                            errorParse = true;
+                        }                         
+                        errorParse ? errorData(`Invalid JSON object..!`, res): switchPostRequest(req.url, trueJson, res)                    
+                    }); 
+                } else {errorData(`ERROR CONNECTION..! --> ${res.statusCode} -- ${res.statusMessage}`, res)};
+            } else if (req.url === '/') {errorData('Empty POST routes..!', res);
+            } else {errorData('Unknown POST routes..!', res)};   
         break;   
     }}).listen(8080, () => {console.log('Server working...')});
