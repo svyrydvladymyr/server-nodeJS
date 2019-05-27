@@ -54,7 +54,9 @@ function getJson(namefile) {
 let loadDoc = function() {
     let xxx = document.getElementById('nameee').value;
     let yyy = document.getElementById('surnameee').value;
-    let obg = {"one":`${xxx}`,"two":`${yyy}`};
+    let obgg = {"name":`${xxx}`,"address":`${yyy}`};
+    let obg = JSON.stringify(obgg);
+
     console.log(obg);
        
     var xhttp = new XMLHttpRequest();
@@ -67,7 +69,7 @@ let loadDoc = function() {
             console.log(this.responseText);  
         }
     };
-    xhttp.open("POST", "fghfgh", true);
+    xhttp.open("POST", "addToDB", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(obg);
   }
@@ -75,7 +77,7 @@ let loadDoc = function() {
   let loadDoc2 = function() {
     let xxx = document.getElementById('nameee2').value;
     let yyy = document.getElementById('surnameee2').value;
-    let obgg = {"one":`${xxx}`,"two":`${yyy}`};
+    let obgg = {"name":`${xxx}`};
     let obg = JSON.stringify(obgg);
     
     console.log(obg);
