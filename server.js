@@ -11,7 +11,7 @@ http.createServer((req, res) => {
     console.log(`${req.method} --> ${req.url} --- ${typeFile}`);   
     switch (req.method) {
         case 'GET':
-            let stream = fs.createReadStream(path.join(__dirname, (req.url == '/') ? 'index.html': req.url));
+            let stream = fs.createReadStream(path.join(__dirname, public, (req.url == '/') ? 'index.html': req.url));
             stream.on('error', error => errorServer(error, res));
             res.writeHead(200, {'Content-Type': (req.url == '/') ? 'text/html': typeFile});
             stream.pipe(res); 
@@ -34,6 +34,4 @@ http.createServer((req, res) => {
             // } else if (req.url === '/') {errorData('Empty POST routes..!', res);
             // } else {errorData('Unknown POST routes..!', res)};   
         break;   
-    }}).listen(process.env.PORT || 4000, function(){
-        console.log('Your node js server is running');
-    });
+    }}).listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
