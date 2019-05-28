@@ -2,7 +2,7 @@ let mysql = require('mysql');
 let con, db_config = {
     host: "localhost",
     user: "root",
-    password: "",
+    password: "kalcifer1988",
     database: "node"
   };
 

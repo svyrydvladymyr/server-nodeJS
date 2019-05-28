@@ -16,7 +16,7 @@ http.createServer((req, res) => {
             res.writeHead(200, {'Content-Type': (req.url == '/') ? 'text/html': typeFile});
             stream.pipe(res); 
         break; 
-        case 'POST':            
+        case 'POST':     
             if (chackPostRoutes(req.url)){
                 if (res.statusCode === 200) {
                     let obj = '';
