@@ -34,4 +34,6 @@ http.createServer((req, res) => {
             // } else if (req.url === '/') {errorData('Empty POST routes..!', res);
             // } else {errorData('Unknown POST routes..!', res)};   
         break;   
-    }}).listen(8080, () => {console.log('Server working...')});
+    }}).listen(process.env.PORT || 4000, function(){
+        console.log('Your node js server is running');
+    });
