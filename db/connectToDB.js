@@ -8,7 +8,7 @@ let con, db_config = {
     collation: 'utf8_unicode_ci',
     prefix: '',
     strict: false,
-    // database: "node"
+    database: "heroku_c286770ec73016d"
   };
 
  // mysql://bb3b6857c7c94b:abe128b6@eu-cdbr-west-02.cleardb.net/heroku_c286770ec73016d?reconnect=true
