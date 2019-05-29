@@ -6,6 +6,7 @@ let con, db_config = {
     // database: "node"
   };
 
+ // mysql://bb3b6857c7c94b:abe128b6@eu-cdbr-west-02.cleardb.net/heroku_c286770ec73016d?reconnect=true
 con = mysql.createConnection(db_config);
 con.connect((err) => {
     if (err) throw errorData(err, res);
