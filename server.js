@@ -9,6 +9,7 @@ let {addToDB, updateDB} = require('./post-routes.js');
 http.createServer((req, res) => {
     let typeFile = mime.lookup(req.url);
     console.log(`${req.method} --> ${req.url} --- ${typeFile}`);   
+    errorData(`${req.method} --> ${req.url} --- ${typeFile}`, res);
     switch (req.method) {
         case 'GET':
             let stream = fs.createReadStream(path.join(__dirname, (req.url == '/') ? 'index.html': req.url));
