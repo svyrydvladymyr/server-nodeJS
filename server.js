@@ -3,8 +3,7 @@ let path = require('path');
 let fs = require('fs');
 let mime = require('mime-types');
 let {chackPostRoutes, trueJson, errorServer, errorData} = require('./service');
-let {addToDB, updateDB} = require('./post-routes.js');
-
+let {addToDB, updateDB} = require('./post-routes');
 
 http.createServer((req, res) => {
     let typeFile = mime.lookup(req.url);
