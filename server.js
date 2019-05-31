@@ -9,8 +9,8 @@ http.createServer((req, res) => {
     let typeFile = mime.lookup(req.url);
     console.log(`${req.method} --> ${req.url} --- ${typeFile}`);   
     switch (req.method) {
-        case 'GET':
-            let stream = fs.createReadStream(path.join(__dirname, public, (req.url == '/') ? 'index.html': req.url));
+        case 'GET':            
+            let stream = fs.createReadStream(path.join(__dirname, 'public', (req.url == '/') ? 'index.html': req.url));
             stream.on('error', error => errorServer(error, res));
             res.writeHead(200, {'Content-Type': (req.url == '/') ? 'text/html': typeFile});
             stream.pipe(res); 
