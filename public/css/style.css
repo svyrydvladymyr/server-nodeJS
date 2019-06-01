@@ -5,7 +5,7 @@
 :root{
     --bg-color:#F1F1F1;
     --bg-color-content:#ffffff;
-    --border-color-content:2px solid #7da2c7;
+    --border-color-content:1px solid #2d5e8e;;
     --border-color-content-hover:1px solid #8bc3e9;
     --box-shadow-content:0px 0px 5px #6eb4ff;
     --border-radius-main:9px;
@@ -66,7 +66,7 @@ body{
     display: flex;
     justify-content: space-between;
     padding: 0px;
-    border: 3px solid #ffffff;
+    border: 2px solid #ffffff;
     background: #2d5e8e;
     border-radius: var(--border-radius-main);
 }
@@ -127,13 +127,13 @@ body{
 .click{
     cursor: pointer;
     display: flex;
-    height: 28px;
+    height: 26px;
     margin: 19px 20px;
     float: right;
     color: #ffffff;
     font-weight: bold;
     background: linear-gradient(to bottom right, #13375a, #a3c1de, #143e67);
-    border: 2px solid #ffffff;
+    border: 1px solid #ffffff;
     border-radius: 7px 15px;
     box-shadow: 0px 0px 5px #4a4a4a;
     text-shadow: 0px 0px 5px #111111;
