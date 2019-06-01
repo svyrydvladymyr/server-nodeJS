@@ -5,7 +5,7 @@
 :root{
     --bg-color:#F1F1F1;
     --bg-color-content:#ffffff;
-    --border-color-content:1px solid #ffffff;
+    --border-color-content:2px solid #7da2c7;
     --border-color-content-hover:1px solid #8bc3e9;
     --box-shadow-content:0px 0px 5px #6eb4ff;
     --border-radius-main:9px;
@@ -52,16 +52,23 @@ body{
     grid-template-areas: 'out1 header header header out2';
 }
 
-.header{
+.wrap_header_second{
     grid-area: header;
-    display: flex;   
+    padding: 14px;
+    margin: 10px;
+    background: #4c7fb3;
+    border: 1px solid #4c7fb3;
+    border-radius: var(--border-radius-main);
+    box-shadow: var(--box-shadow-content);
+}
+
+.header{
+    display: flex;
     justify-content: space-between;
     padding: 0px;
-    margin: 10px;
-    border-radius:var(--border-radius-main);
-    border:var(--border-color-content);
-    box-shadow:var(--box-shadow-content);
-    background: var(--bg-color-content);
+    border: 3px solid #ffffff;
+    background: #2d5e8e;
+    border-radius: var(--border-radius-main);
 }
 
 .header_logo, .header_search, .header_button{
@@ -87,9 +94,9 @@ body{
     width: 70%;
     height: 30px;
     margin: 0px auto;
-    border: 2px solid #bad7f7;
+    border: 2px solid #ffffff;
     border-radius: 7px;
-    background: #f1f1f1;
+    background: #dadada;
     text-align: center;
     font-weight: bold;
     color: #88b0dc;
@@ -99,29 +106,136 @@ body{
     background: #ffffff;
 }
 
+.header_search input:focus::placeholder{
+    color: transparent;
+}
+
 .header_search input::placeholder{
     text-align: center;
     font-weight: normal;
     color: grey;
 }
 
-
-.nav{
-    grid-area: nav;
+/*-----------header-login------------*/
+.header-login{
+    outline: var(--ol-2);
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.article{
-    grid-area: article;
- }
+.click{
+    cursor: pointer;
+    display: flex;
+    height: 28px;
+    margin: 19px 20px;
+    float: right;
+    color: #ffffff;
+    font-weight: bold;
+    background: linear-gradient(to bottom right, #13375a, #a3c1de, #143e67);
+    border: 2px solid #ffffff;
+    border-radius: 7px 15px;
+    box-shadow: 0px 0px 5px #4a4a4a;
+    text-shadow: 0px 0px 5px #111111;
+    transition: 0.2s;
+}
 
-.nav, .article{
-    padding: 10px;
+.click:hover{
+    box-shadow: 0px 0px 8px #4a4a4a;
+    text-shadow: 0px 0px 5px rgb(219, 58, 58);
+    transition: 0.2s;
+}
+
+.click-login-open{
+    width: 200px;
+    margin: 2px 1px 2px 7px;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0px 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    transition: 0.7s;
+}
+
+.click-login-open input{
+    width: 90px;
+    height: 18px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 1px 4px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    border: 1px solid #757575;
+    opacity: 1;
+    transition: 0.7s;
+}
+
+.click-login-close{
+    width: 0px;
+    margin: 2px 1px 2px 7px;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0px 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    transition: 0.7s;
+}
+
+.click-login-close input{
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.click-login-exit{
+    width: 0px;
+    margin: 2px 1px 2px 7px;
+    border-radius: 5px 5px 5px 5px;
+    padding: 0px 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    transition: 0.7s;
+}
+
+.click-login-exit input{
+    opacity: 0;
+    transition: 0.3s;
+}
+
+
+/* nav */
+.nav{
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
     margin: 10px;
     border-radius:var(--border-radius-main);
     border:var(--border-color-content);
     box-shadow:var(--box-shadow-content);
     background: var(--bg-color-content);
 }
+
+.naw-wrap{
+    padding: 7px;
+    width: 100%;
+    background: #f1f1f1;
+    border: 1px solid #2d5e8e;
+    border-radius: var(--border-radius-main);
+}
+
+/* article */
+.article{
+    grid-area: article;
+    padding: 10px;
+    margin: 10px;
+    border-radius:var(--border-radius-main);
+    border:var(--border-color-content);
+    box-shadow:var(--box-shadow-content);
+    background: var(--bg-color-content);
+ }
+
+
 
 /* style for settings */
 .set{
@@ -188,7 +302,9 @@ body{
 .blok{
     margin-top: 10px;
     grid-area: blok;
-    background: #aac2da;
+    background: #6d91b5;
+    border-top: 3px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
     box-shadow: var(--box-shadow-content);
 }
 

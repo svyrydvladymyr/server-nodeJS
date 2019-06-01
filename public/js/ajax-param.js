@@ -99,3 +99,6 @@ let loadDoc = function() {
 
 document.getElementById('send').addEventListener('click', loadDoc);
 document.getElementById('send2').addEventListener('click', loadDoc2);
+
+
+
