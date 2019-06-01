@@ -97,8 +97,31 @@ let loadDoc = function() {
     xhttp.send(obg);
   }
 
+
+
+  let loadDoc3 = function() {
+      let obgg = {"gh":"hj"}; 
+      let obg = JSON.stringify(obgg);      
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {         
+            document.getElementById("button").innerHTML = this.responseText;
+                document.getElementById('click').addEventListener('click', VW.buttonLogin);
+
+         
+// let x = JSON.parse(this.responseText);
+            console.log(this.responseText);  
+        }
+    };
+    xhttp.open("POST", "getButton", true);
+    xhttp.setRequestHeader("Content-type", "text/plain");
+    xhttp.send(obg);
+  }
+
 document.getElementById('send').addEventListener('click', loadDoc);
 document.getElementById('send2').addEventListener('click', loadDoc2);
+document.getElementById('send3').addEventListener('click', loadDoc3);
+
 
 
 

@@ -1,5 +1,9 @@
 let con = require('./db/connectToDB').con;
-let {resOfPostRequest, errorData} = require('./service');
+let {resOfPostRequest, resOfPostRequesttt, errorData} = require('./service');
+let buttonTempl = require('./modules/templ.js');
+
+console.log(buttonTempl);
+
 
 let addToDB = (objReuest, res) => {
     let sql = `INSERT INTO customersOne (name, address) VALUES ('${objReuest.name}', '${objReuest.address}')`;
@@ -14,7 +18,15 @@ let updateDB = (objReuest, res) => {
     });            
 };
 
+let getButton = (obj, res) => {
+    console.log(obj);
+    console.log(buttonTempl);
+
+    resOfPostRequesttt(buttonTempl, res);             
+};
+
 module.exports = {
     addToDB,
-    updateDB
+    updateDB,
+    getButton
 }
