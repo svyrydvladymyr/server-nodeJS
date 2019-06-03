@@ -46,20 +46,34 @@ let VW = (() => {
         if (val == "ua"){
             en.style.width = 13 + "%";
             ua.style.width = 83 + "%";
-            localStorage.kalcifer = val;
-            getJson("./json/configUA.json");
+            localStorage.kalciferLang = val;
+            SE.getLanguage("./json/configUA.json");
         } else if (val == "en"){
             ua.style.width = 13 + "%";
             en.style.width = 83 + "%";
-            localStorage.kalcifer = val;
-            getJson("./json/configEN.json");
+            localStorage.kalciferLang = val;
+            SE.getLanguage("./json/configEN.json");
         } 
     }; 
+   
+//show clear button
+    let showClearButton = () => { 
+        SE.$("search").value !== '' ? SE.$("search_clear").style.display = 'table' : SE.$("search_clear").style.display = 'none';
+    }
+
+//clear search input
+    let clearSearch = () => {
+        SE.$("search").value = '';
+        SE.$("search_clear").style.display = 'none'
+    }
+   
 
 return {
     buttonLogin,
     openSetting,
-    changLang
+    changLang,
+    showClearButton,
+    clearSearch
 };
 
 })();

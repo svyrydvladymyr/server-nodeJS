@@ -8,8 +8,8 @@ let sql = `CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,
                                             country VARCHAR(40),
                                             town VARCHAR(40),
                                             birtday DATE,
-                                            phone NUMBER(10),
-                                            message NAMBER(10),
+                                            phone int(10),
+                                            message int(10),
                                             profesion VARCHAR(50),
                                             level VARCHAR(30)                                 
                                             )`;

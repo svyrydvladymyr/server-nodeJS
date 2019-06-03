@@ -6,7 +6,7 @@ let SE = (() => {
     };
 
     // function for get object from (*.json) file
-    let getJson = function(namefile) {
+    let getLanguage = function(namefile) {
         var file = new XMLHttpRequest();
         file.onreadystatechange = function() {
             if (file.readyState === 4 && file.status == "200") {
@@ -23,19 +23,10 @@ let SE = (() => {
         file.send(null);
     };    
 
-    // function for set parametrs
-    let setSettings = function(enter){
-        SE.$("enter-open").innerHTML = enter;
-        if (sessionStorage.arnikatabs == "two"){
-            SE.getJson("json/packageTwo.json");
-        } else if (sessionStorage.arnikatabs == "three"){
-            SE.getJson("json/packageThree.json");
-        }
-    };
+
 
     return {
         $, 
-        getJson,
-        setSettings        
+        getLanguage
     };
 })();    

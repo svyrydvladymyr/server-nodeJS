@@ -32,7 +32,9 @@
                 </div>
                 <!--search-->
                 <div class="header_search">
-                    <input type="text" placeholder="Пошук...">
+                    <input type="text" placeholder="Пошук..." id="search" oninput="VW.showClearButton()">
+                    <i class='fas' onclick="VW.clearSearch()" style="display: none" id="search_clear">&#xf00d;</i>
+                    <div class="user_list"></div>
                 </div>
                 <!--button-->
                 <div class="header_button">
@@ -46,7 +48,7 @@
                             </div>
                             <!--button-->
                             <div id="click">
-                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;">ENTER</p></div>
+                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;" id="login_button"></p></div>
                             </div>
                         </div>
                     </div>  
@@ -74,7 +76,7 @@
                     </div>
                 </div>     
                 <div class="set_blok">
-                    <p>BACKGROUND</p>
+                    <p id="settings_style"></p>
                 </div> 
                 <div class="set_blok">
                     <p>BORDER RADIUS</p>
@@ -157,21 +159,7 @@
             </div>
         </div>
         <!--CONTENT-->
-        <div class="article">
-            <input type="text" name="name" id="nameee">
-            <input type="text" name="surname" id="surnameee">
-            <div id="send" style="border:1px solid; padding:5px; background:grey; width: 100px; border-radius:8px; cursor:pointer; margin:10px;">send</div>
-            <p id="demo"></p>
-
-            <input type="text" name="name2" id="nameee2">
-            <input type="text" name="surname2" id="surnameee2">
-            <div id="send2" style="border:1px solid; padding:5px; background:grey; width: 100px; border-radius:8px; cursor:pointer; margin:10px;">send</div>
-            <p id="demo2"></p>
-
-
-            <div id="send3" style="border:1px solid; padding:5px; background:grey; width: 100px; border-radius:8px; cursor:pointer; margin:10px;">send</div>
-
-
+        <div class="article">            
         </div>
         <!--BLOK ON TOP FOOTER-->
         <div class="blok">
@@ -182,12 +170,9 @@
         </div>
     </div>
 
-    <script src="./js/lib-function.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
-    <script src="./js/firebase.js"></script>
-    <script src="./js/cookie.js"></script>
-    <script src="./js/setting.js"></script>
     <script src="./js/ajax-param.js"></script>
+
 
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
