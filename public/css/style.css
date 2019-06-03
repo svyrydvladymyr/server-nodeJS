@@ -2,14 +2,61 @@
 @import url("setting.css");
 
 /* my varriables */
+/*blue*/
 :root{
     --bg-color:#F1F1F1;
     --bg-color-content:#ffffff;
     --border-color-content:1px solid #2d5e8e;;
-    --border-color-content-hover:1px solid #8bc3e9;
     --box-shadow-content:0px 0px 5px #6eb4ff;
     --border-radius-main:9px;
+    --main-color:#2d5e8e;
+    --second-color:#5c8ab9;
 }
+
+/*grey*/
+/* :root{
+    --bg-color:#F1F1F1;
+    --bg-color-content:#ffffff;
+    --border-color-content:1px solid #636363;
+    --box-shadow-content:0px 0px 5px #808080;
+    --border-radius-main:9px;
+    --main-color:#636363;
+    --second-color:#c3c3c3;
+} */
+
+/*green*/
+/* :root{
+    --bg-color:#F1F1F1;
+    --bg-color-content:#ffffff;
+    --border-color-content:1px solid #3aa54c;
+    --box-shadow-content:0px 0px 5px #94de81;
+    --border-radius-main:9px;
+    --main-color:#3aa54c;
+    --second-color:#94de81;
+} */
+
+/*red*/
+/* :root{
+    --bg-color:#F1F1F1;
+    --bg-color-content:#ffffff;
+    --border-color-content:1px solid #ca2e23;
+    --box-shadow-content:0px 0px 5px #ef837b;
+    --border-radius-main:9px;
+    --main-color:#ca2e23;
+    --second-color:#ef837b;
+} */
+
+/*yellow*/
+/* :root{
+    --bg-color:#F1F1F1;
+    --bg-color-content:#ffffff;
+    --border-color-content:1px solid #f5c207;
+    --box-shadow-content:0px 0px 5px #ffe999;
+    --border-radius-main:9px;
+    --main-color:#f5c207;
+    --second-color:#ffe999;
+    --color-text:#a78300;
+} */
 
 *{
     box-sizing: border-box;
