@@ -31,8 +31,35 @@ let VW = (() => {
         }
     };
 
+// function for open and close blok settings
+    let openSetting = () => {
+        var openGASet = SE.$("set");
+        var openGASetting = SE.$("setting");
+        openGASet.className === "set" ? openGASet.className = "set_close" : openGASet.className = "set";
+        openGASetting.className === "setting" ? openGASetting.className = "setting_close" : openGASetting.className = "setting";
+    };
+
+// function for change language
+    var changLang = function(val){
+        var ua = SE.$("lang_ua");
+        var en = SE.$("lang_en");
+        if (val == "ua"){
+            en.style.width = 13 + "%";
+            ua.style.width = 83 + "%";
+            localStorage.kalcifer = val;
+            getJson("./json/configUA.json");
+        } else if (val == "en"){
+            ua.style.width = 13 + "%";
+            en.style.width = 83 + "%";
+            localStorage.kalcifer = val;
+            getJson("./json/configEN.json");
+        } 
+    }; 
+
 return {
-    buttonLogin
+    buttonLogin,
+    openSetting,
+    changLang
 };
 
 })();

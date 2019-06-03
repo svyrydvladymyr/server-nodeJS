@@ -12,6 +12,7 @@
                          'footer';
 }
 
+/*--------------------------HEADER-----------------------------*/
 .wrap_header{
     min-height: 70px;
     min-width: 302px;
@@ -22,6 +23,41 @@
     grid-template-areas: 'header';
 }
 
+.header_logo, .header_search, .header_button{
+    outline: 1px solid red; 
+    width: 60%;
+    min-width: 240px;
+    min-height: 50px;
+}
+
+/*logo*/
+.header_logo{
+    order: 1;
+}
+.header_logo img{
+    width: 90%;
+}
+
+/*search*/
+.header_search{
+    order: 3;
+} 
+.header_search input{
+    width: 90%;
+}
+
+/*button*/
+.header_button{
+    order: 2;
+}
+.click-login-open{
+    width: 145px;
+}
+.click-login-open input{
+    width: 45%;
+}
+
+/*------------------------EMPTY BLOKS---------------------------*/
 .out1{
     display: none;
 }
@@ -42,6 +78,7 @@
     margin-top: 10px;
 }
 
+/*--------------------------SETTING-------------------------------*/
 .set{
     position: relative;
     width: 97%;
@@ -68,6 +105,53 @@
     border: var(--border-color-content);
     box-shadow: var(--box-shadow-content);
     background: var(--bg-color-content);
+}
+
+.set_blok_lang{
+    cursor: pointer;
+    width: 200px;
+    min-height: 30px;
+    border-radius: 7px;
+    border: 0px solid #cdcdcd;
+    margin: -1px auto 37px auto;
+}
+
+.set_blok_lang:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #c2c2c200;
+}
+
+.setting{
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    margin: 2.5px;
+    left: 0%;
+    right: 100%;
+    transition: 1s;
+}
+
+.setting_close{
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    margin: 2.5px;
+    left: 101%;
+    right: 0%;
+    transform: translateX(-45px);
+    transition: 1s;
+}
+
+.setting i{
+    font-size:24px;
+    margin: -2px 0px 0px -10px;
+}
+
+.setting_close i{
+    font-size:24px;
+    margin: -2px 0px 0px -10px;
 }
 
 @media screen and (min-width:500px) and (max-width:766px){

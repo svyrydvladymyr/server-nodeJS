@@ -11,6 +11,7 @@
                          'footer footer footer footer footer';
 }
 
+/*--------------------------HEADER-----------------------------*/
 .wrap_header{
     min-height: 70px;
     display: grid;
@@ -20,6 +21,24 @@
     grid-template-areas: 'out1 header header header out2';
 }
 
+.header_logo, .header_search, .header_button{
+    /* outline: 1px solid red;  */
+    width: 50%;
+    min-width: 280px;
+    min-height: 50px;
+}
+
+.header_logo{
+    order: 1;
+}
+.header_search{
+    order: 3;
+} 
+.header_button{
+    order: 2;
+}
+
+/*--------------------------EMPTY BLOKS-----------------------------*/
 .out2{
     grid-area: out2;
 }

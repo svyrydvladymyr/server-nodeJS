@@ -2,8 +2,10 @@ let http = require('http');
 let path = require('path');
 let fs = require('fs');
 let mime = require('mime-types');
-let {chackPostRoutes, trueJson, errorServer, errorData} = require('./service');
-let {addToDB, updateDB, getButton} = require('./post-routes');
+let chackPostRoutes = require('./modules/lib-post-request');
+let {errorServer, errorData} = require('./modules/service-res');
+let {trueJson, translit, token} = require('./modules/service');
+let {addToDB, updateDB, getButton} = require('./modules/post-routes');
 
 http.createServer((req, res) => {
     let typeFile = mime.lookup(req.url);
@@ -28,8 +30,10 @@ http.createServer((req, res) => {
                                 case '/updateDB': updateDB(trueJson(obj), res); break;
                                 case '/getButton': getButton(trueJson(obj), res); break;}
                         } else {errorData(`Invalid JSON object..!`, res)}})(obj, res)}); 
-                } else {errorData(`ERROR CONNECTION..! --> ${res.statusCode} -- ${res.statusMessage}`, res)};
+                } else {errorData(`ERROR CONNECTION..! --> ${res.statusCode} -- ${res.statusMessage}`, res);
+                }
             } else if (req.url === '/') {errorData('Empty POST routes..!', res);
-            } else {errorData('Unknown POST routes..!', res)};   
+            } else {errorData('Unknown POST routes..!', res);
+            }  
         break;   
     }}).listen(process.env.PORT || 4000, function(){console.log('Server is running...')});

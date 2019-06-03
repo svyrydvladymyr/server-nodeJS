@@ -26,18 +26,31 @@
     <div class="wrap_header">
         <div class="wrap_header_second">
             <div class="header">
+                <!--logo-->
                 <div class="header_logo">
                     <img src="./img/logo.png">
                 </div>
+                <!--search-->
                 <div class="header_search">
                     <input type="text" placeholder="Пошук...">
                 </div>
-            <div style="display:contents;" id="button">
-
-            </div>
-
-
-
+                <!--button-->
+                <div class="header_button">
+                    <div class="header-login">
+                        <!--button for enter-->
+                        <div class="click">
+                            <!--inputs-->
+                            <div class="click-login-close" id="send-login-close">
+                                <input type="text" id="login" autofocus>
+                                <input type="password" id="password">
+                            </div>
+                            <!--button-->
+                            <div id="click">
+                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;">ENTER</p></div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
             </div>
         </div>
     </div>
@@ -46,16 +59,16 @@
     <div class="wrap">
         <!--SETTINGS-->
         <div class="set_close" id="set"> 
-            <div class="setting_close" id="setting" onclick="openSetting()">
+            <div class="setting_close" id="setting" onclick="VW.openSetting()">
                 <i class="fa fa-gear fa-spin"></i>
             </div>
             <div class="set_wrap" id="set-wrap">
                 <div class="set_blok_lang" style="border:0px solid" >
-                    <div class="lang_en" id="lang_en" onclick='changLang("en");'>
+                    <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
                         <img src="img/en.png" alt="EN">
                         <p>ENGLISH</p>
                     </div>
-                    <div  class="lang_ua" id="lang_ua" onclick='changLang("ua");'>
+                    <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
                         <img src="img/ua.png" alt="UA">
                         <p>УКРАЇНСЬКА</p>
                     </div>
@@ -94,44 +107,44 @@
                     <img  alt="my-foto" id="foto">
                 </div>
                 <div class="info">
-                    <div class="info-name">
+                    <div class="info-blok-name" >
                         <p id="surname"></p>                        
                         <p id="name"></p>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="far fa-address-card"></i>
-                        <div  class="info-name-text">    
+                        <div  class="info-blok-text">    
                             <p id="country"></p>
                             <p id="town"></p>
                         </div>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="fas fa-calendar-alt"></i>
-                        <div class="info-name-text">
+                        <div class="info-blok-text">
                             <p id="date"></p>
                         </div>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="fas fa-at"></i>
-                        <div class="info-name-text">
+                        <div class="info-blok-text">
                             <p id="email"></p>
                         </div>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="fas fa-phone-volume"></i>
-                        <div class="info-name-text">
+                        <div class="info-blok-text">
                             <p id="phone"></p>
                         </div>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="fas fa-comment"></i>
-                        <div class="info-name-text">
+                        <div class="info-blok-text">
                             <p id="massage"></p>
                         </div>
                     </div>
-                    <div class="info-name">
+                    <div class="info-blok">
                         <i class="fas fa-laptop"></i>
-                        <div class="info-name-text">
+                        <div class="info-blok-text">
                             <p id="job"></p>
                             <p id="joblevel"></p>
                         </div>
