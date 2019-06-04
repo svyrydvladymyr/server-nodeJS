@@ -2,32 +2,41 @@ let http = require('http');
 let path = require('path');
 let fs = require('fs');
 let express = require('express');
+let bodyParser = require('body-parser');
 let app = express();
 let mime = require('mime-types');
-let {errorServer, errorData} = require('./modules/service-res');
-let {trueJson, translit, token} = require('./modules/service');
-let {addToDB, updateDB, getButton} = require('./modules/post-routes');
+// let {errorServer, errorData} = require('./modules/service-res');
+let {trueJson, translit, token, log} = require('./modules/service');
+let {addToDB, addToDBB, updateDB, getButton} = require('./modules/post-routes');
 
-
+app.use(log);
 app.use(express.static(__dirname + '/public'));
-app.use('/registration', (req, res) => {
-    res.send(`<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-    </head>
-    <body>
-    <p onclick="redirect('/')">ghfhfgh</p>
-    <script>
-        let redirect = route => window.location.href = route;
-    </script>
-    </body>
-    </html>`
-    );                 
-});
+app.use(bodyParser.json());  
+
+
+
+// app.use('/registration', (req, res) => {
+//     res.send(`<!DOCTYPE html>
+//     <html lang="en">
+//     <head>
+//         <meta charset="UTF-8">
+//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//         <title>Document</title>
+//     </head>
+//     <body>
+//     <p onclick="redirect('/')">ghfhfgh</p>
+//     <script>
+//         let redirect = route => window.location.href = route;
+//     </script>
+//     </body>
+//     </html>`
+//     );                 
+// });
+
+app.post('/addToDB', addToDBB);
+
+
 
 app.listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
 

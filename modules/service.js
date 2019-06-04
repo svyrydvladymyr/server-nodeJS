@@ -3,6 +3,12 @@ let transliteration = require('transliteration.cyr');
 //transliteration
 let translit = word => {return transliteratedValue = transliteration.transliterate(word)};
 
+//message to concole about method and url
+let log = (req, res, next) => {
+    console.log(`${req.method} --> ${req.url}`);
+    next();
+};
+
 //generate token
 let token = length => {
     let result = '';
@@ -21,5 +27,6 @@ let trueJson = (data) => {
 module.exports = {
     translit,
     trueJson,
-    token
+    token,
+    log
 };

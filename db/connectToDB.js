@@ -1,3 +1,4 @@
+let {errorServer, errorData} = require('../modules/service-res');
 let mysql = require('mysql');
 // let con, db_config = {
 //     driver: "mysql",
@@ -15,7 +16,7 @@ let con, db_config = {
     driver: "mysql",
     host: "localhost",
     user: "root",
-    password: "kalcifer1988",
+    password: "",
     charset: 'utf8',
     collation: 'utf8_unicode_ci',
     prefix: '',
@@ -24,9 +25,7 @@ let con, db_config = {
   };
 
 con = mysql.createConnection(db_config);
-con.connect((err) => {
-    if (err) throw errorData(err, res);
-});    
+con.connect((err) => {if (err) console.log(err);});  
 
 setInterval(function () {
     con.query('SELECT 1');

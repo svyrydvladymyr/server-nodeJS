@@ -15,9 +15,18 @@ let updateDB = (objRequest, res) => {
 };
 
 
+let addToDBB = (req, res) => {
+    
+    console.log(req.body);
+    res.send(req.body);
+    // resOfPostRequest(`Record inserted... status - ${result.protocol41}`, res)
+
+};
+
 
 module.exports = {
     addToDB,
-    updateDB
+    updateDB,
+    addToDBB
     
 }
