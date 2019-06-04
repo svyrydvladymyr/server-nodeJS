@@ -5,6 +5,9 @@ let SE = (() => {
         return getid = document.getElementById(val);
     };
 
+    // function for get id node
+    let redirect = route => window.location.href = route;
+
     // function for get object from (*.json) file
     let getLanguage = function(namefile) {
         var file = new XMLHttpRequest();
@@ -27,6 +30,7 @@ let SE = (() => {
 
     return {
         $, 
-        getLanguage
+        getLanguage,
+        redirect
     };
 })();    

@@ -66,7 +66,6 @@ let VW = (() => {
         SE.$("search").value = '';
         SE.$("search_clear").style.display = 'none'
     }
-   
 
 return {
     buttonLogin,
@@ -74,6 +73,7 @@ return {
     changLang,
     showClearButton,
     clearSearch
+    
 };
 
 })();

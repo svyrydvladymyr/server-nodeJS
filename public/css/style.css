@@ -309,6 +309,21 @@ body{
     transition: 0.3s;
 }
 
+.registration{
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 10px;
+    position: absolute;
+    right: 6%;
+    top: 58px;
+    transition: 1s;
+}
+
+.registration:hover{
+    font-weight: bold;
+    transition: 1s;
+}
+
 /*--------------------------SETTING---------------------------------*/
 .set{
     grid-area: set;

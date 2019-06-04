@@ -10,6 +10,7 @@
   "author": "kalcifer",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "mime-types": "^2.1.24",
     "mysql": "^2.17.1",
     "transliteration.cyr": "^1.0.5"

@@ -59,11 +59,18 @@
 .header_button{
     order: 2;
 }
+.click {
+    margin: 0px 20px 17px 20px;
+}
 .click-login-open{
     width: 145px;
 }
 .click-login-open input{
     width: 45%;
+}
+.registration{
+    right: 7.5%;
+    top: 24px;
 }
 
 /*------------------------EMPTY BLOKS---------------------------*/

@@ -1,6 +1,7 @@
 {
     "login_button":"ВХІД",    
     "settings_style":"ГОЛОВНІ СТИЛІ",
+    "registration":"РЕЄСТРАЦІЯ",
     "placeholder":{
         "search":"пошук..."
     }
