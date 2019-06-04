@@ -1,6 +1,7 @@
 {
         "login_button":"ENTER",       
-        "settings_style":"MAIN STYLES",    
+        "settings_style":"MAIN STYLES",  
+        "registration":"REGISTRATION",  
         "placeholder":{
                 "search":"search..."
         }
