@@ -2,7 +2,7 @@
     width: 70%;
     max-width: 600px;
     margin: 100px auto;
-    border: 15px solid #94adc6;
+    /* border: 15px solid #94adc6; */
     border-radius: 90px 10px;
 }
 .form_wrap{
@@ -11,7 +11,7 @@
     padding: 25px 0px;
     border: 5px solid #ffffff;
     border-radius: 80px 10px;
-    background: #bed3e8;
+    /* background: #bed3e8; */
 }
 
 .form_toback{
@@ -31,8 +31,8 @@
     width: 90%;
     margin: 6px 5%;
     background: #44709c;
-    border: 2px solid #e3e4e5;
-    border-bottom: 4px solid #f2f6fa;
+    border: 2px solid #2c5a88;
+    border-bottom: 4px solid #2c5a88;
     border-radius: 25px 7px;
 }
 
