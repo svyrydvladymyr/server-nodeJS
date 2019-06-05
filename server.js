@@ -4,7 +4,7 @@ let fs = require('fs');
 let express = require('express');
 let bodyParser = require('body-parser');
 let app = express();
-let mime = require('mime-types');
+// let mime = require('mime-types');
 // let {errorServer, errorData} = require('./modules/service-res');
 let {trueJson, translit, token, log} = require('./modules/service');
 let {addToDB, addToDBB, updateDB, getButton} = require('./modules/post-routes');
@@ -13,7 +13,7 @@ app.use(log);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());  
 
-
+app.post('/addToDB', addToDBB);
 
 // app.use('/registration', (req, res) => {
 //     res.send(`<!DOCTYPE html>
@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 //     );                 
 // });
 
-app.post('/addToDB', addToDBB);
+
 
 
 

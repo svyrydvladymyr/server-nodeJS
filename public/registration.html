@@ -3,13 +3,123 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-    </head>
-    <body>
-    <p onclick="redirect('/')">ghfhfgh</p>
-    <script>
-        let redirect = route => window.location.href = route;
-    </script>
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+            <!--Link stylesheet for icon-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+            <!--Link google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Marck+Script" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">   
+        <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
+        <title>6b 61 6c 63 69 66 65 72</title>
+    </head>    
+    <body style="background: hsl(0, 0%, 100%);">
+
+        <div class="form_body_wrap">
+        <!--BUTTON TO BACK-->
+            <p onclick="SE.redirect('/')" id="form_toback" class="form_toback"></p>
+        <!--BUTTON TO BACK-->
+            <div class="form_wrap">
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-name"></p></div>
+                    <div class="form_input"><input type="text" name="reg-name" id="reg-input-name" maxlength="20"></div>
+                    <div class="form_message"><p id="reg-mess-name" class="reg-message"></p></div>                    
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-surname"></p></div>
+                    <div class="form_input"><input type="text" name="reg-surname"  id="reg-input-surname" maxlength="20"></div>
+                    <div class="form_message"><p id="reg-mess-surname" class="reg-message"></p></div>   
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-age"></p></div>
+                    <div class="form_input"><input type="date" name="reg-birthday"  id="reg-input-age"></div>
+                    <div class="form_message"><p id="reg-mess-ege" class="reg-message"></p></div>  
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-email"></p></div>
+                    <div class="form_input"><input type="email" name="reg-email"  id="reg-input-email" maxlength="30"></div>
+                    <div class="form_message"><p id="reg-mess-email" class="reg-message"></p></div>   
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-tel"></p></div>
+                    <div class="form_input"><input type="tel" name="reg-tel"  id="reg-input-tel" maxlength="10"></div>
+                    <div class="form_message"><p id="reg-mess-tel" class="reg-message"></p></div>   
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-message"></p></div>
+                    <div class="form_input"><input type="tel" name="reg-message"  id="reg-input-message" maxlength="10"></div>
+                    <div class="form_message"><p id="reg-mess-message" class="reg-message"></p></div>   
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-country"></p></div>
+                    <div class="form_input"><select name="reg-country" id="reg-input-country">
+                        <option disabled selected value id="select_empty"></option>
+                        <option value="ukraine" id="ukraine"></option>
+                        <option value="russian" id="russian"></option>
+                        <option value="greatbritain" id="greatbritain"></option>
+                        <option value="usa" id="usa"></option>
+                    </select></div>
+                    <div class="form_message"><p id="reg-mess-surname" class="reg-message"></p></div>  
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-town"></p></div>
+                    <div class="form_input"><input type="text" name="reg-town" id="reg-input-town" maxlength="25"></div>
+                    <div class="form_message"><p id="reg-mess-town" class="reg-message-true"></p></div>   
+                </div>
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-profesion"></p></div>
+                    <div class="form_input"><input type="text" name="reg-profesion"  id="reg-input-profesion" maxlength="30"></div>
+                    <div class="form_message"><p id="reg-mess-profesion" class="reg-message-false">апрвапр вапрапвапр а апрапр апрапрапр впрарап</p></div>   
+                </div>                
+
+
+
+
+            </div>
+        </div>
+
+
+        <!--SETTINGS-->
+        <div class="set_close" id="set" style="top:30px;"> 
+            <div class="setting_close" id="setting" onclick="VW.openSetting()">
+                <i class="fa fa-gear fa-spin"></i>
+            </div>
+            <div class="set_wrap" id="set-wrap">
+                <div class="set_blok_lang" style="border:0px solid" >
+                    <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
+                        <img src="img/en.png" alt="EN">
+                        <p>ENGLISH</p>
+                    </div>
+                    <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
+                        <img src="img/ua.png" alt="UA">
+                        <p>УКРАЇНСЬКА</p>
+                    </div>
+                </div>     
+                <div class="set_blok">
+                    <p id="settings_style"></p>
+                </div> 
+                <div class="set_blok">
+                    <p>BORDER RADIUS</p>
+                </div> 
+                <div class="set_blok">
+                    <p>FONT-FAMILY</p>
+                </div> 
+                <div class="set_blok">
+                    <p>BORDER-IMG</p>
+                </div>   
+                <div class="set_blok">
+                    <p>BORDER RADIUS</p>
+                </div>                             
+            </div>                   
+        </div>         
+    
+
+        <script src="./js/service.js"></script>
+        <script src="./js/view.js"></script>
+        <script src="./js/form.js"></script>
+
     </body>
     </html>

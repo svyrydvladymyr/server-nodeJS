@@ -1,7 +1,26 @@
 {
         "login_button":"ENTER",       
         "settings_style":"MAIN STYLES",  
-        "registration":"REGISTRATION",  
+        "registration":"REGISTRATION",
+        "form_toback":"BACK TO MAIN", 
+
+"__comment-country":"select country...",
+        "ukraine":"Ukraine",  
+        "russian":"Russian",  
+        "greatbritain":"Great Britain",  
+        "usa":"USA", 
+
+"__comment-label":"form labels...",
+        "reg-label-name":"NAME",          
+        "reg-label-surname":"SURNAME",          
+        "reg-label-age":"BIRTHDAY",          
+        "reg-label-country":"COUNTRY",          
+        "reg-label-town":"TOWN",          
+        "reg-label-email":"E-MAIL",          
+        "reg-label-tel":"PHONE NUMBER",          
+        "reg-label-message":"MESSENGER NUMBER",          
+        "reg-label-profesion":"PROFESION",
+
         "placeholder":{
                 "search":"search..."
         }

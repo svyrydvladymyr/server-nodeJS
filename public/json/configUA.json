@@ -2,6 +2,25 @@
     "login_button":"ВХІД",    
     "settings_style":"ГОЛОВНІ СТИЛІ",
     "registration":"РЕЄСТРАЦІЯ",
+    "form_toback":"НА ГОЛОВНУ", 
+
+"__comment-country":"select country...",
+    "ukraine":"Україна",  
+    "russian":"Росія",  
+    "greatbritain":"Великобританія",  
+    "usa":"Сполучені Штати",  
+
+"__comment-label":"form labels...",
+    "reg-label-name":"ІМЯ",          
+    "reg-label-surname":"ПРІЗВИЩЕ",          
+    "reg-label-age":"ДАТА НАРОДЖЕННЯ",          
+    "reg-label-country":"КРАЇНА", 
+    "reg-label-town":"МІСТО",
+    "reg-label-email":"E-MAIL",          
+    "reg-label-tel":"НОМЕР ТЕЛЕФОНУ",          
+    "reg-label-message":"НОМЕР МЕСЕНДЖЕРА",          
+    "reg-label-profesion":"ПРОФЕСІЯ",          
+   
     "placeholder":{
         "search":"пошук..."
     }
