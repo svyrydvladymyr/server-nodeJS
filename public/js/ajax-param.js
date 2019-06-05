@@ -146,20 +146,37 @@ function getCookie(cname) {
 
 
 
-    //make AJAX request
-    let send = function(){
-      let obj = {"one":"1111"}
-          dbParam = JSON.stringify(obj);
-          xmlhttp = new XMLHttpRequest();
-          xmlhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 200) {
-                  console.log(this.responseText);                
+     //make AJAX request
+     let send = function(){
+      let obj = {"one":"onfghfghfhfghffghfghe", "two":"two"};
+      let file = document.getElementById('file').files;
+let xxx = "dfgdfgdfg";
+      let formData = new FormData();
+      formData.append("hhh",xxx);
+      formData.append("nnn",xxx);
+      formData.append("mmm",'xxx');
+      formData.append("ggg",JSON.stringify(obj));
+      
+      for(let i = 0; i < file.length; i++){
+        formData.append("file",file[i]);
+      }
 
-                }
-          };
 
-          xmlhttp.open("POST", "/addToDB", true);
-          xmlhttp.setRequestHeader("Content-type", "application/json");
-          xmlhttp.send(dbParam);
+
+
+      let contenttype = {
+        headers:{"Content-type": "multipart/form-data"}
+      }
+
+      axios.post('/profile', formData, contenttype)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+
       
   };
+
+      

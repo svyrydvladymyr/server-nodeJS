@@ -1,5 +1,11 @@
 let con = require('../db/connectToDB').con;
+
+
+
+let {trueJson, translit, token, log} = require('./service');
 let {resOfPostRequest, errorData} = require('./service-res');
+
+
 
 let addToDB = (objRequest, res) => {
     let sql = `INSERT INTO customersOne (name, address) VALUES ('${objRequest.name}', '${objRequest.address}')`;
@@ -22,6 +28,7 @@ let addToDBB = (req, res) => {
     // resOfPostRequest(`Record inserted... status - ${result.protocol41}`, res)
 
 };
+
 
 
 module.exports = {

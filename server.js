@@ -4,10 +4,14 @@ let fs = require('fs');
 let express = require('express');
 let bodyParser = require('body-parser');
 let app = express();
+let multer  = require('multer')
 // let mime = require('mime-types');
 // let {errorServer, errorData} = require('./modules/service-res');
 let {trueJson, translit, token, log} = require('./modules/service');
 let {addToDB, addToDBB, updateDB, getButton} = require('./modules/post-routes');
+
+
+
 
 app.use(log);
 app.use(express.static(__dirname + '/public'));
@@ -15,24 +19,35 @@ app.use(bodyParser.json());
 
 app.post('/addToDB', addToDBB);
 
-// app.use('/registration', (req, res) => {
-//     res.send(`<!DOCTYPE html>
-//     <html lang="en">
-//     <head>
-//         <meta charset="UTF-8">
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//         <title>Document</title>
-//     </head>
-//     <body>
-//     <p onclick="redirect('/')">ghfhfgh</p>
-//     <script>
-//         let redirect = route => window.location.href = route;
-//     </script>
-//     </body>
-//     </html>`
-//     );                 
-// });
+app.post('/profile', (req, res) => {
+
+    let storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, __dirname+"/uploads")
+        },
+        filename: (req, file, cb) => {
+          cb(null, token(5) +'______'+ file.originalname)
+        }
+      })
+       
+    let upload = multer({ storage: storage }).single('file');
+    //let upload = multer({ storage: storage }).array('file',10);
+
+    upload(req, res, (err) => {
+        if (err) {
+            console.log("err", err);
+            res.send({"res":"error"});
+        } else {
+            console.log("files", req.file);
+            console.log("body", req.body);
+            console.log("body", req.body.ggg);
+            console.log("body", JSON.parse(req.body.ggg));
+            res.send({"res":"sours"});
+        }
+    })
+  })
+
+
 
 
 
