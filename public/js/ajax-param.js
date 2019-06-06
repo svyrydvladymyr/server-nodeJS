@@ -142,15 +142,21 @@ function getCookie(cname) {
   }
 
 
+  let send2 = function(){
+    let obj = {"one":"onfghfghfhfghffghfghe", "two":"two"};
+    let file = document.getElementById('file').files;
+    console.log(document.getElementById('file'));
+    console.log(file);
+    console.log(file.length);
+    
+  }
 
 
-
-
-     //make AJAX request
-     let send = function(){
+    //make AJAX request
+    let send = function(){
       let obj = {"one":"onfghfghfhfghffghfghe", "two":"two"};
       let file = document.getElementById('file').files;
-let xxx = "dfgdfgdfg";
+      let xxx = "dfgdfgdfg";
       let formData = new FormData();
       formData.append("hhh",xxx);
       formData.append("nnn",xxx);

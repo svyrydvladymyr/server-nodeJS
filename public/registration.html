@@ -45,12 +45,35 @@
                 </div>
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-tel"></p></div>
-                    <div class="form_input"><input type="tel" name="reg-tel"  id="reg-input-tel" maxlength="10"></div>
-                    <div class="form_message"><p id="reg-mess-tel" class="reg-message"></p></div>   
+                    <div class="form_input">
+                        <div class="tel_blok">
+                            <select type="select" name="reg-tel_cod"  id="reg-input-tel_cod" class="tel_cod">
+                                <option value="ukraine_tel">+38</option>
+                                <option value="russian_tel">+7</option>
+                                <option value="greatbritain_tel">+44</option>
+                                <option value="usa_tel">+1</option>
+                            </select>
+                            <input type="tel" name="reg-tel"  id="reg-input-tel" class="tel_nomer" maxlength="10">
+                        </div>                        
+                    </div>
+                    <div class="form_message"><p id="reg-mess-tel" class="reg-message"></p></div> 
+                    <div class="icon_share">
+                        <i class='fas' onclick="SE.clonePhoneNumber()">&#xf24d;</i>
+                    </div>
                 </div>
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-message"></p></div>
-                    <div class="form_input"><input type="tel" name="reg-message"  id="reg-input-message" maxlength="10"></div>
+                    <div class="form_input">
+                        <div class="tel_blok">
+                            <select type="select" name="reg-message_cod"  id="reg-input-message_cod" class="tel_cod">
+                                <option value="ukraine_tel">+38</option>
+                                <option value="russian_tel">+7</option>
+                                <option value="greatbritain_tel">+44</option>
+                                <option value="usa_tel">+1</option> 
+                            </select>
+                            <input type="tel" name="reg-message"  id="reg-input-message" class="tel_nomer" maxlength="10">
+                        </div>
+                    </div>
                     <div class="form_message"><p id="reg-mess-message" class="reg-message"></p></div>   
                 </div>
                 <div class="form_blok">
@@ -67,13 +90,21 @@
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-town"></p></div>
                     <div class="form_input"><input type="text" name="reg-town" id="reg-input-town" maxlength="25"></div>
-                    <div class="form_message"><p id="reg-mess-town" class="reg-message-true"></p></div>   
+                    <div class="form_message"><p id="reg-mess-town" class="reg-message"></p></div>   
                 </div>
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-profesion"></p></div>
                     <div class="form_input"><input type="text" name="reg-profesion"  id="reg-input-profesion" maxlength="30"></div>
-                    <div class="form_message"><p id="reg-mess-profesion" class="reg-message-false">апрвапр вапрапвапр а апрапр апрапрапр впрарап</p></div>   
-                </div>                
+                    <div class="form_message"><p id="reg-mess-profesion" class="reg-message"></p></div>   
+                </div>    
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-file"></p></div>
+                    <div class="form_input"><input type="file" name="reg-file" id="reg-input-file"  class="form_input_file"></div>
+                    <div class="form_message"><p id="reg-mess-file" class="reg-message"></p></div>   
+                </div>               
+                <div class="form_blok_send">
+                    <div class="form_label"><p id="reg-form-send" class="reg-form-send send_active"></p></div>
+                 </div>               
 
 
 

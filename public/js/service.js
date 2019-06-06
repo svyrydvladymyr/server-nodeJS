@@ -24,13 +24,23 @@ let SE = (() => {
         };
         file.open("GET", namefile, true);
         file.send(null);
-    };    
+    }; 
+    
+    //clone phone number
+    let clonePhoneNumber = () => {
+        let phoneNum = SE.$('reg-input-tel').value;
+        if ((phoneNum !== '') && (phoneNum.length == 10) && (/^[0-9]+$/g.test(phoneNum))){
+            SE.$('reg-input-message_cod').value = SE.$('reg-input-tel_cod').value;
+            SE.$('reg-input-message').value = SE.$('reg-input-tel').value;
+        }        
+    }; 
 
 
 
     return {
         $, 
         getLanguage,
-        redirect
+        redirect,
+        clonePhoneNumber
     };
 })();    

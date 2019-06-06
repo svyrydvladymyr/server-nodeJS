@@ -20,6 +20,8 @@
     "reg-label-tel":"НОМЕР ТЕЛЕФОНУ",          
     "reg-label-message":"НОМЕР МЕСЕНДЖЕРА",          
     "reg-label-profesion":"ПРОФЕСІЯ",          
+    "reg-label-file":"ФОТО",          
+    "reg-form-send":"ЗАРЕЄСТРУВАТИСЯ",          
    
     "placeholder":{
         "search":"пошук..."

@@ -20,6 +20,8 @@
         "reg-label-tel":"PHONE NUMBER",          
         "reg-label-message":"MESSENGER NUMBER",          
         "reg-label-profesion":"PROFESION",
+        "reg-label-file":"PHOTO",
+        "reg-form-send":"REGISTER",          
 
         "placeholder":{
                 "search":"search..."
