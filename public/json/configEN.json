@@ -11,6 +11,9 @@
         "usa":"USA", 
 
 "__comment-label":"form labels...",
+        "reg-label-login":"LOGIN",          
+        "reg-label-password":"PASSWORD",    
+        "reg-label-password-two":"REPEAT PASSWORD",       
         "reg-label-name":"NAME",          
         "reg-label-surname":"SURNAME",          
         "reg-label-age":"BIRTHDAY",          

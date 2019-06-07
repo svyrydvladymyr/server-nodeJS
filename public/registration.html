@@ -23,90 +23,127 @@
             <p onclick="SE.redirect('/')" id="form_toback" class="form_toback"></p>
         <!--BUTTON TO BACK-->
             <div class="form_wrap">
+                <!--login-->
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-login"></p></div>
+                    <div class="form_input">
+                        <input type="text" name="reg-login" id="reg-login" maxlength="20">
+                    </div>
+                    <div class="form_message"><span id="reg-login-mess" class="reg-message"></span></div>                    
+                </div>
+                <!--password-->
+                <div class="form_blok">
+                    <div class="form_label password">
+                        <p id="reg-label-password"></p>
+                        <p id="reg-label-password-two"></p>
+                    </div>
+                    <div class="form_input password">
+                        <input type="password" name="reg-password" id="reg-password" maxlength="40">
+                        <input type="password" name="reg-password-two" id="reg-password-two" maxlength="40">
+                    </div>
+                    <div class="form_message password"><span id="reg-password-mess" class="reg-message"></span></div>                    
+                </div>
+                <!--name-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-name"></p></div>
-                    <div class="form_input"><input type="text" name="reg-name" id="reg-input-name" maxlength="20"></div>
-                    <div class="form_message"><p id="reg-mess-name" class="reg-message"></p></div>                    
+                    <div class="form_input">
+                        <input type="text" name="reg-name" id="reg-name" maxlength="20">
+                    </div>
+                    <div class="form_message"><span id="reg-name-mess" class="reg-message"></span></div>                    
                 </div>
+                <!--surname-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-surname"></p></div>
-                    <div class="form_input"><input type="text" name="reg-surname"  id="reg-input-surname" maxlength="20"></div>
-                    <div class="form_message"><p id="reg-mess-surname" class="reg-message"></p></div>   
+                    <div class="form_input">
+                        <input type="text" name="reg-surname"  id="reg-surname" maxlength="20">
+                    </div>
+                    <div class="form_message"><p id="reg-surname-mess" class="reg-message"></p></div>   
                 </div>
+                <!--birthday-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-age"></p></div>
-                    <div class="form_input"><input type="date" name="reg-birthday"  id="reg-input-age"></div>
-                    <div class="form_message"><p id="reg-mess-ege" class="reg-message"></p></div>  
+                    <div class="form_input">
+                        <input type="date" name="reg-age"  id="reg-age">
+                    </div>
+                    <div class="form_message"><p id="reg-age-mess" class="reg-message"></p></div>  
                 </div>
+                <!--email-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-email"></p></div>
-                    <div class="form_input"><input type="email" name="reg-email"  id="reg-input-email" maxlength="30"></div>
-                    <div class="form_message"><p id="reg-mess-email" class="reg-message"></p></div>   
+                    <div class="form_input"><input type="email" name="reg-email"  id="reg-email" maxlength="30"></div>
+                    <div class="form_message"><p id="reg-email-mess" class="reg-message"></p></div>   
                 </div>
+                <!--phone-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-tel"></p></div>
                     <div class="form_input">
                         <div class="tel_blok">
-                            <select type="select" name="reg-tel_cod"  id="reg-input-tel_cod" class="tel_cod">
+                            <select type="select" name="reg-tel_cod"  id="reg-tel_cod" class="tel_cod">
                                 <option value="ukraine_tel">+38</option>
                                 <option value="russian_tel">+7</option>
                                 <option value="greatbritain_tel">+44</option>
                                 <option value="usa_tel">+1</option>
                             </select>
-                            <input type="tel" name="reg-tel"  id="reg-input-tel" class="tel_nomer" maxlength="10">
+                            <input type="tel" name="reg-tel"  id="reg-tel" class="tel_nomer" maxlength="10">
                         </div>                        
                     </div>
-                    <div class="form_message"><p id="reg-mess-tel" class="reg-message"></p></div> 
+                    <div class="form_message"><p id="reg-tel-mess" class="reg-message"></p></div> 
                     <div class="icon_share">
                         <i class='fas' onclick="SE.clonePhoneNumber()">&#xf24d;</i>
                     </div>
                 </div>
+                <!--message-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-message"></p></div>
                     <div class="form_input">
                         <div class="tel_blok">
-                            <select type="select" name="reg-message_cod"  id="reg-input-message_cod" class="tel_cod">
+                            <select type="select" name="reg-message_cod"  id="reg-message_cod" class="tel_cod">
                                 <option value="ukraine_tel">+38</option>
                                 <option value="russian_tel">+7</option>
                                 <option value="greatbritain_tel">+44</option>
                                 <option value="usa_tel">+1</option> 
                             </select>
-                            <input type="tel" name="reg-message"  id="reg-input-message" class="tel_nomer" maxlength="10">
+                            <input type="tel" name="reg-message"  id="reg-message" class="tel_nomer" maxlength="10">
                         </div>
                     </div>
-                    <div class="form_message"><p id="reg-mess-message" class="reg-message"></p></div>   
+                    <div class="form_message"><p id="reg-message-mess" class="reg-message"></p></div>   
                 </div>
+                <!--country-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-country"></p></div>
-                    <div class="form_input"><select name="reg-country" id="reg-input-country">
+                    <div class="form_input"><select name="reg-country" id="reg-country">
                         <option disabled selected value id="select_empty"></option>
                         <option value="ukraine" id="ukraine"></option>
                         <option value="russian" id="russian"></option>
                         <option value="greatbritain" id="greatbritain"></option>
                         <option value="usa" id="usa"></option>
                     </select></div>
-                    <div class="form_message"><p id="reg-mess-surname" class="reg-message"></p></div>  
+                    <div class="form_message"><p id="reg-country-mess" class="reg-message"></p></div>  
                 </div>
+                <!--town-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-town"></p></div>
-                    <div class="form_input"><input type="text" name="reg-town" id="reg-input-town" maxlength="25"></div>
-                    <div class="form_message"><p id="reg-mess-town" class="reg-message"></p></div>   
+                    <div class="form_input"><input type="text" name="reg-town" id="reg-town" maxlength="25"></div>
+                    <div class="form_message"><p id="reg-town-mess" class="reg-message"></p></div>   
                 </div>
+                <!--profession-->
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-profesion"></p></div>
-                    <div class="form_input"><input type="text" name="reg-profesion"  id="reg-input-profesion" maxlength="30"></div>
-                    <div class="form_message"><p id="reg-mess-profesion" class="reg-message"></p></div>   
-                </div>    
+                    <div class="form_input"><input type="text" name="reg-profesion"  id="reg-profesion" maxlength="30"></div>
+                    <div class="form_message"><p id="reg-profesion-mess" class="reg-message"></p></div>   
+                </div> 
+                <!--file-->   
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-file"></p></div>
-                    <div class="form_input"><input type="file" name="reg-file" id="reg-input-file"  class="form_input_file"></div>
-                    <div class="form_message"><p id="reg-mess-file" class="reg-message"></p></div>   
-                </div>               
+                    <div class="form_input"><input type="file" name="reg-file" id="reg-file"  class="form_input_file"></div>
+                    <div class="form_message"><p id="reg-file-mess" class="reg-message"></p></div>   
+                </div>  
+                <!--send-->             
                 <div class="form_blok_send">
-                    <div class="form_label"><p id="reg-form-send" class="reg-form-send send_active"></p></div>
+                    <div class="form_label"><p id="reg-form-send" class="reg-form-send"></p></div>
                  </div>               
 
-
+                <p class="main-form-message" id="main-form-message"></p>
 
 
             </div>
@@ -145,12 +182,13 @@
                     <p>BORDER RADIUS</p>
                 </div>                             
             </div>                   
-        </div>         
-    
+        </div>     
 
+
+        <script src="./js/clear.js"></script>
+        <script src="./js/proto.js"></script>
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
         <script src="./js/form.js"></script>
-
     </body>
     </html>

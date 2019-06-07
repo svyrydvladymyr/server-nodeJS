@@ -11,6 +11,9 @@
     "usa":"Сполучені Штати",  
 
 "__comment-label":"form labels...",
+    "reg-label-login":"ЛОГІН",          
+    "reg-label-password":"ПАРОЛЬ", 
+    "reg-label-password-two":"ПОВТОРІТЬ ПАРОЛЬ", 
     "reg-label-name":"ІМЯ",          
     "reg-label-surname":"ПРІЗВИЩЕ",          
     "reg-label-age":"ДАТА НАРОДЖЕННЯ",          
