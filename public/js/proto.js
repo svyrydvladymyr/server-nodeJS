@@ -1,7 +1,6 @@
 
 //registration prototipe
 class regProto{
-    constructor(){
-    }
+    constructor(){}
 }
 let regPrototype = new regProto();

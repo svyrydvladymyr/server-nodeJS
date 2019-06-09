@@ -30,7 +30,7 @@
     justify-content: center;
     width: 90%;
     margin: 6px 5%;
-    background: #44709c;
+    background: #6b92b9;
     border: 2px solid #2c5a88;
     border-bottom: 4px solid #2c5a88;
     border-radius: 25px 7px;
@@ -43,13 +43,18 @@
     align-items: center;
     outline: 0px solid red;
     width: 31.3%;
-    height: 40px;
+    min-height: 40px;
     min-width: 150px;
     margin: 2px 1%;
+    position: relative;
 }
 
 .password{
     height: 60px;
+}
+
+.password input{
+    margin-bottom: 3px;
 }
 
 .form_label p{
@@ -101,6 +106,15 @@
 
 .form_input input:focus{
     box-shadow: var(--box-shadow-main);
+}
+
+.required input{
+    border: 1px solid #021f3c;
+    border-bottom: 3px solid #022546;
+}
+
+.required-block{
+    background: #44709c;
 }
 
 /*input select*/
@@ -197,7 +211,7 @@
 /*message*/
 .reg-message{
     width: 50%;
-    height: 6px;
+    height: 8px;
     margin: 0px;
     background: #cbcbcb;
     border-radius:5px; 
@@ -218,11 +232,47 @@
 
 .reg-message-true{
     width: 50%;
-    height: 7px;
+    height: 9px;
     margin: 0px;
     background: #00cb17;
     border: 1px solid #c7c7c7;
     border-radius:5px; 
+}
+
+.main-form-message{
+    color: red;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0px 0px 0px;
+}
+
+.reg-ava{
+    max-width: 100%; 
+    max-height: 110px;
+    margin: 3px auto;
+    border: 3px solid #e0e0e0;
+}
+
+.file-ava{
+    margin: 1px 0px;
+}
+
+.password_eye{
+    cursor: pointer;
+    position: absolute;
+    font-size: 14px;
+    top: 7px;
+    right: 7px;
+}
+
+.password_eye2{
+    cursor: pointer;
+    position: absolute;
+    font-size: 14px;
+    top: 41px;
+    right: 7px;
 }
 
 @media screen and (max-width:850px){
@@ -235,7 +285,7 @@
     .form_input_file::before {width: 95%;}
     .form_label, .form_input, .form_message {
         width: 50%;
-        height: 20px;
+        min-height: 15px;
     }
     .form_input > input {margin-top: -4px;}
     .form_input select {margin-top: -4px;}
@@ -248,6 +298,8 @@
     .password > p:last-child {margin-top: 35px;}
     .password{height: 50px;}
     .password:last-child{height: 20px;}
+    .password_eye{top: -30px;}    
+    .password_eye2{top: 18px;}
 }
 @media screen and (max-width:600px){
     .icon_share i {right: -135px;}
@@ -262,7 +314,7 @@
 @media screen and (max-width:450px){
     .form_label, .form_input, .form_message {
         width: 90%;
-        height: 20px;
+        min-height: 15px;
     }
     .form_input > input {margin-top: -4px;}
     .icon_share i {right: -27px;}
