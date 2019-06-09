@@ -19,39 +19,25 @@ app.use(bodyParser.json());
 
 app.post('/addToDB', addToDBB);
 
-app.post('/profile', (req, res) => {
-
+app.post('/registrationUser', (req, res) => {
     let storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, __dirname+"/uploads")
-        },
-        filename: (req, file, cb) => {
-          cb(null, token(5) +'______'+ file.originalname)
-        }
-      })
-       
+        destination: (req, file, cb) => {cb(null, __dirname+"/uploads")},
+        filename: (req, file, cb) => {cb(null, token(5) +'_'+ file.originalname)}
+      })       
     let upload = multer({ storage: storage }).single('file');
-    //let upload = multer({ storage: storage }).array('file',10);
-
     upload(req, res, (err) => {
         if (err) {
             console.log("err", err);
             res.send({"res":"error"});
         } else {
-            console.log("files", req.file);
-            console.log("body", req.body);
-            console.log("body", req.body.ggg);
-            console.log("body", JSON.parse(req.body.ggg));
+            console.log("files", req.file.originalname);
+            console.log("body", JSON.parse(req.body.objreg));
+            let xx = JSON.parse(req.body.objreg);
+            console.log("body--login", xx.login);
             res.send({"res":"sours"});
         }
     })
   })
-
-
-
-
-
-
 
 app.listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
 

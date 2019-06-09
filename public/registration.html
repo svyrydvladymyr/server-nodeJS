@@ -19,6 +19,7 @@
     <body style="background: hsl(0, 0%, 100%);">
 
         <div class="form_body_wrap">
+            <img src="./img/logo.png" class="logo-form">
         <!--BUTTON TO BACK-->
             <p onclick="SE.redirect('/')" id="form_toback" class="form_toback"></p>
         <!--BUTTON TO BACK-->
@@ -149,7 +150,10 @@
                     <div class="form_input">
                         <input type="file" name="reg-file" id="reg-file" value="reg-file" class="form_input_file" accept=".jpg,.jpeg,.png"> 
                     </div>
-                    <div class="form_message"><p id="reg-file-mess" class="reg-message file-ava"></p><img id="reg-ava" src="#" alt="" class="reg-ava"/></div>   
+                    <div class="form_message">
+                        <p id="reg-file-mess" class="reg-message file-ava"></p>
+                        <img id="reg-ava" src="#" alt="" class="reg-ava"/>
+                    </div>                      
                 </div>  
                 <!--send-->             
                 <div class="form_blok_send">
@@ -161,6 +165,7 @@
 
             </div>
         </div>
+
 
 
         <!--SETTINGS-->
@@ -195,9 +200,11 @@
                     <p>BORDER RADIUS</p>
                 </div>                             
             </div>                   
-        </div>     
+        </div> 
+        
+        
 
-        <script src="../modules/service.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>        
         <script src="./js/towns.js"></script>
         <script src="./js/clear.js"></script>
         <script src="./js/proto.js"></script>

@@ -176,7 +176,9 @@ function getCookie(cname) {
 
       axios.post('/profile', formData, contenttype)
       .then(function (response) {
-        console.log(response);
+        if (response.readyState === 4 && response.status === "200") {
+          console.log(response);
+        }
       })
       .catch(function (error) {
         console.log(error);

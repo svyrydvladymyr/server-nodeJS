@@ -275,6 +275,12 @@
     right: 7px;
 }
 
+.logo-form{
+    position: absolute;
+    width: 300px;
+    top: 30px;
+}
+
 @media screen and (max-width:850px){
     .form_body_wrap {width: 95%;}
     .form_input_file::before {width: 95%;}
@@ -322,4 +328,5 @@
     .password > p:last-child {margin-top: 35px;}
     .password{height: 50px;}
     .password:last-child{height: 20px;}
+    .logo-form{width: 220px;}
 }

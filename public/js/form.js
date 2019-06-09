@@ -17,7 +17,6 @@ window.onload = function(){
 
     SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
 
-
 //check and cut incorrect symbol form
     //logim-----------------------------------------------------------------------------------
         SE.$("reg-login").addEventListener("change", () => {SE.checkCut("reg-login", "[^a-zA-Z0-9-_]")});

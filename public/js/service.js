@@ -182,12 +182,12 @@ let SE = (() => {
     let checkPhoneAndMessInput = (idF) => {
         if (SE.$(idF).value.length != 10) {
             SE.iconON(idF, "false", SE.errorFormMessage().notCorectNum);
-            SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
             SE.readyToSend(idF, "");
         } else {
             let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
             SE.readyToSend(idF, phoneReady);
-            SE.$("reg-form-send").addEventListener("click", SE.sendToDB); 
+            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
         }
     }
 
@@ -198,7 +198,7 @@ let SE = (() => {
         if (gгest != ""){
             SE.iconON(idF, "true", '');    
             SE.readyToSend(idF, b.options[b.selectedIndex].text);
-            SE.$("reg-form-send").addEventListener("click", SE.sendToDB);
+            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB);
             if (idF === 'reg-country'){
                 let getTownId = SE.$('reg-town');
                 let getSelectedCountry = SE.$(idF).value;
@@ -217,7 +217,7 @@ let SE = (() => {
             } 
         } else {
             SE.iconON(idF, "false", '');
-            SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
             SE.readyToSend(idF, "");
         }
     }
@@ -228,16 +228,16 @@ let SE = (() => {
             if (SE.$('reg-password').value === SE.$('reg-password-two').value){
                 SE.iconON('reg-password', "true", '');
                 SE.readyToSend('reg-password', SE.$('reg-password').value);
-                SE.$("reg-form-send").addEventListener("click", SE.sendToDB); 
+                SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
             } else {
                 SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
                 SE.readyToSend('reg-password', '');
-                SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
             }                            
         } else {
             SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
             SE.readyToSend('reg-password', '');
-            SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
         }
     }
     
@@ -245,12 +245,12 @@ let SE = (() => {
     let checkAgeEmailInput = (idF) => {
         if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
             SE.iconON(idF, "false", SE.errorFormMessage().notCorectVar);
-            SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
             SE.readyToSend(idF, "");
         } else {
             SE.iconON(idF, "true", '');
             SE.readyToSend(idF, SE.$(idF).value);  
-            SE.$("reg-form-send").addEventListener("click", SE.sendToDB);                            
+            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB);                            
         }
     }
 
@@ -272,13 +272,13 @@ let SE = (() => {
                 (SE.$(idF).id === 'reg-surname') ||
                 (SE.$(idF).id === 'reg-email')){
                     SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                    SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                     SE.$("reg-form-send").style.cursor = "no-drop";
                     SE.readyToSend(idF, "");
             } else {
                 SE.iconON(idF, "true", '');
-                SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = "no-drop";
                 SE.readyToSend(idF, "");
@@ -292,7 +292,7 @@ let SE = (() => {
                         (SE.$(idF).id === 'reg-surname') ||
                         (SE.$(idF).id === 'reg-email')){
                             SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                            SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                             SE.$("reg-form-send").classList.remove('reg_send_active');
                             SE.$("reg-form-send").style.cursor = "no-drop";
                             SE.readyToSend(idF, "");
@@ -328,9 +328,9 @@ let SE = (() => {
                     }else{
                         SE.iconON(idF, "true", '');         
                         SE.readyToSend(idF, SE.$(idF).value);
-                        SE.$("reg-form-send").addEventListener("click", SE.sendToDB); 
+                        SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
                     }
-                    SE.$("reg-form-send").addEventListener("click", SE.sendToDB); 
+                    SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
                 }
             }); 
         }
@@ -347,16 +347,16 @@ let SE = (() => {
         } else {
             if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
                 SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
-                SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
             } else {
                 if (SE.$(idF).value === ''){
                     SE.iconON(idF, "true", '');
-                    SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 } else {
                     SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
-                    SE.$("reg-form-send").removeEventListener("click", SE.sendToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 }
             }
@@ -379,7 +379,7 @@ let SE = (() => {
         ){
             SE.$("reg-form-send").classList.add('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'pointer';
-            SE.$("reg-form-send").addEventListener("click", SE.sendToDB); 
+            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
         } else {
             SE.$("reg-form-send").classList.remove('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'no-drop';            
@@ -389,69 +389,67 @@ let SE = (() => {
 //message if empty name surname or E-mail input
     let messageSendError = () => {
         if ((SE.$('reg-login').value === "") || (SE.$('reg-password').value === "") ||(SE.$('reg-name').value === "") || (SE.$('reg-surname').value === "") || (SE.$('reg-email').value === "")){
-            if ((regPrototype.reglogin !== "") && (SE.$('reg-login').value === '')){
-                SE.iconON('reg-login', "false", SE.errorFormMessage().notCunEmpty);
-            }
-            if ((regPrototype.regpassword !== "") && (SE.$('reg-password').value === '')){
-                SE.iconON('reg-password', "false", SE.errorFormMessage().notCunEmpty);
-            }
-            if ((regPrototype.regname !== "") && (SE.$('reg-name').value === '')) {
-                SE.iconON('reg-name', "false", SE.errorFormMessage().notCunEmpty);
-            }
-            if ((regPrototype.regsurname !== "") && (SE.$('reg-surname').value === '')){
-                SE.iconON('reg-surname', "false", SE.errorFormMessage().notCunEmpty);
-            }
-            if ((regPrototype.regemail !== "") && (SE.$('reg-email').value === '')){
-                SE.iconON('reg-email', "false", SE.errorFormMessage().notCunEmpty);
-            }            
+            let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
+            for(let i = 0; i < 5; i++){
+                if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){
+                    SE.iconON(masIdRequired[i], "false", SE.errorFormMessage().notCunEmpty);
+                }
+            }       
             SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
         } else {
             SE.$("main-form-message").innerHTML = "";
+            SE.registerUserToDB();
         }
     };    
     
-    // function for add to DB
-    let addToDB = function(){
-        SE.$("send").removeEventListener("click", SE.sendToDB);
-        let obj, priseResult, urlToDB, dbParam, xmlhttp;
-        //set price for guest or worker
-        (sendReadyObg.addstatusgгest == "worker") ? priseResult = sendReadyObg.price / 2 : priseResult = sendReadyObg.price;
-        //set url for send
-        (sessionStorage.arnikatabs == "two") ? urlToDB = "php/addToDbTwo.php?x=" : 
-        (sessionStorage.arnikatabs == "three") ? urlToDB = "php/addToDbThree.php?x=" : SE.errorAutorization();        
-        //make iteration 
-        let day = 0;
-        for(let i = 0; i < sendReadyObg.addkilk; i++){
-            let startdata = new Date(sendReadyObg.addstartdata);
-            //add day
-            let nextday = new Date(startdata.getFullYear(),startdata.getMonth(),startdata.getDate()+day);
-            day = day + 1;
-            //format date
-            let resDateDZ = nextday.getFullYear() + "-" + SE.readyMonth(nextday) + "-" + SE.readyDay(nextday);
-            obj = { "name":sendReadyObg.addname, 
-                    "surname":sendReadyObg.addsurname, 
-                    "tel":sendReadyObg.addtel, 
-                    "number":sendReadyObg.addnomer, 
-                    "dz":resDateDZ, 
-                    "kilk":sendReadyObg.addkilk, 
-                    "price":priseResult, 
-                    "buking":sendReadyObg.addstatuszamovl, 
-                    "tip":sendReadyObg.addstatusgгest, 
-                    "admin":sendReadyObg.admin, 
-                    "datazapovn":sendReadyObg.registr, 
-                    "login":sessionStorage.arnikalogin, 
-                    "password":sessionStorage.arnikapassword};
-            dbParam = JSON.stringify(obj);
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {                    
-                    SE.setMessage("autoriz-message-wrap", "none", "", ""); 
-                    (this.responseText.trim() == "") ? VW.addToDB() : SE.setMessage("message-send", "table", "red", `${this.responseText}`);
-                }
-            };
-            xmlhttp.open("GET", urlToDB + dbParam, true);
-            xmlhttp.send();
-        };            
+// function for add user to DB
+    let registerUserToDB = function(){
+        SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+        let obj;
+
+        obj = { "login":regPrototype.reglogin, 
+                "password":regPrototype.regpassword, 
+                "name":regPrototype.regname, 
+                "surname":regPrototype.regsurname, 
+                "email":regPrototype.regemail, 
+                "birthday":regPrototype.regage, 
+                "phone":regPrototype.regtel, 
+                "message":regPrototype.regmessage, 
+                "country":regPrototype.regcountry, 
+                "town":regPrototype.regtown, 
+                "pofession":regPrototype.regprofession, 
+                "registrdata":regPrototype.registr};
+        dbParam = JSON.stringify(obj);
+        console.log(dbParam);
+        
+
+
+
+        let fileAva = document.getElementById('reg-file').files;
+
+        console.log(fileAva);
+        
+        let formData = new FormData();
+        formData.append("objreg",JSON.stringify(obj));
+       
+        for(let i = 0; i < fileAva.length; i++){
+          formData.append("file",fileAva[i]);
+        }  
+  
+        let contenttype = {headers:{"Content-type": "multipart/form-data"}}
+  
+        axios.post('/registrationUser', formData, contenttype)
+        .then(function (response) {
+            if (response.request.readyState == 4 && response.request.status == "200") {
+                console.log(response);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+  
+
+          
     };    
 
 
@@ -464,7 +462,7 @@ let SE = (() => {
         incorrectCheck,
         iconON,
         readyToSend,
-        addToDB,
+        registerUserToDB,
         readyDay,
         readyMonth,
         checkCut,
@@ -477,5 +475,6 @@ let SE = (() => {
         errorFormMessage,
         rus_to_latin,
         readURL
+
     };
 })();    
