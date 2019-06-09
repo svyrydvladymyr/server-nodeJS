@@ -398,13 +398,15 @@ let SE = (() => {
             SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
         } else {
             SE.$("main-form-message").innerHTML = "";
+            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+
             SE.registerUserToDB();
+
         }
     };    
     
 // function for add user to DB
     let registerUserToDB = function(){
-        SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
         let obj;
 
         obj = { "login":regPrototype.reglogin, 
@@ -442,6 +444,10 @@ let SE = (() => {
         .then(function (response) {
             if (response.request.readyState == 4 && response.request.status == "200") {
                 console.log(response);
+
+                // CLEAR.obgRegistration();
+                // CLEAR.protoRegistration();
+
             }
         })
         .catch(function (error) {
