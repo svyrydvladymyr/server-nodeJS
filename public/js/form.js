@@ -4,17 +4,14 @@ window.onload = function(){
     localStorage.kalciferLang === "ua" ? VW.changLang('ua') : localStorage.kalciferLang === "en" ? VW.changLang('en') : VW.changLang('ua');
         
 //get date registration and push to prototype
-    let dateRegFull = new Date();
-    let dateReg = dateRegFull.getFullYear() + "-" + SE.readyMonth(dateRegFull) + "-" + SE.readyDay(dateRegFull);
-    regProto.prototype.registr = dateReg;
+    regProto.prototype.registr = SE.readyFullDate('');
 
 //set limitation to choice date zvit
-    let tooday = new Date();
-    let readyTooday = tooday.getFullYear() + '-' + SE.readyMonth(tooday) + '-' + SE.readyDay(tooday);
     let input = document.getElementById("reg-age");
     input.setAttribute("min", "1930-01-02");
-    input.setAttribute("max", readyTooday);
+    input.setAttribute("max", SE.readyFullDate(''));
 
+//border for ava img on load form 
     SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
 
 //check and cut incorrect symbol form

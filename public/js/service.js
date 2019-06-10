@@ -94,8 +94,28 @@ let SE = (() => {
         } else if (createDate.getMonth() == 11){            
             return finMonth = 12;
         }            
-    };  
+    }; 
     
+//ready full date
+    let readyFullDate = (fullDate, reverse) => {
+        let dateRegFull = new Date(fullDate);
+        let dateRegFullEmpty = new Date();
+        if (reverse === 'r'){
+            if ((fullDate === '') || (fullDate === undefined)){
+                return dateReg = SE.readyDay(dateRegFullEmpty) + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + dateRegFullEmpty.getFullYear();
+            } else {
+                return dateReg = SE.readyDay(dateRegFull) + "-" + SE.readyMonth(dateRegFull) + "-" + dateRegFull.getFullYear();
+            }
+        } else {
+            if ((fullDate === '') || (fullDate === undefined)){
+                return dateReg = dateRegFullEmpty.getFullYear() + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + SE.readyDay(dateRegFullEmpty);
+            } else {
+                return dateReg = dateRegFull.getFullYear() + "-" + SE.readyMonth(dateRegFull) + "-" + SE.readyDay(dateRegFull);
+            }
+        }
+    };     
+
+//transliteration    
     let rus_to_latin = ( str ) => {    
         var ru = {
             'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 
@@ -142,7 +162,7 @@ let SE = (() => {
             let repeatPass = 'Повторіть пароль!';
             let onlyNum = "Тільки цифри!";
             let onlyLetters = "Тільки букви!";
-            let toLBigFile = "Занадто великий файл! Максимальний розмір 1 мб.";
+            let toLBigFile = "Занадто великий файл! Макс. розмір 1мб";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -163,7 +183,7 @@ let SE = (() => {
             let repeatPass = 'Repeat password!';
             let onlyNum = "Only numbers!";
             let onlyLetters = "Only letters!";
-            let toLBigFile = "Too large file! Maximum size 1 MB...";
+            let toLBigFile = "Too large file! Max. size 1MB";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -262,6 +282,14 @@ let SE = (() => {
             reader.readAsDataURL(SE.$('reg-file').files[0]);
         }
     }
+//show previe foto     
+    let readURLPreview = () => {
+        if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}`)}          
+            reader.readAsDataURL(SE.$('reg-file').files[0]);
+        }
+    }
 
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg) => {
@@ -323,6 +351,7 @@ let SE = (() => {
                                 SE.$('reg-ava').style.border = '3px solid #e0e0e0';
                                 SE.$('reg-file-mess').style.display = 'none';
                                 SE.readURL();                             
+                                SE.readURLPreview();                             
                             }
                         }
                     }else{
@@ -480,7 +509,9 @@ let SE = (() => {
         checkAgeEmailInput,
         errorFormMessage,
         rus_to_latin,
-        readURL
+        readURL,
+        readyFullDate,
+        readURLPreview
 
     };
 })();    
