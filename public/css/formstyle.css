@@ -319,7 +319,6 @@
     border-radius: 9px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-origin: content-box;
     background-position: 50% 50%;
 }
 
