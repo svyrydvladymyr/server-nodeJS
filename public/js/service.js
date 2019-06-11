@@ -274,6 +274,9 @@ let SE = (() => {
         }
     }
 
+//-----------------------------------------------------------------------------------------------------
+//-------------------------function for work with ava-----------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 //show preview foto     
     let readURL = () => {
         console.log(SE.$('reg-file').files[0]);
@@ -285,6 +288,9 @@ let SE = (() => {
             }          
             reader.readAsDataURL(SE.$('reg-file').files[0]);
             setTimeout(() => {
+                SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
+                SE.$("reg-form-send").classList.add('reg_send_active');
+                SE.$("reg-form-send").style.cursor = 'pointer'; 
                 SE.$('reg-ava').style.display = 'table';
                 SE.$('reg-ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
                 regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
@@ -318,16 +324,23 @@ let SE = (() => {
         if (SE.$('reg-ava').style.backgroundImage === ''){
             SE.$('reg-file-mess').style.display = 'table';
         }
-            SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
-            SE.$('ava-preview-wrap').style.display = 'none';  
-            SE.clearFileInput();
+        SE.$('horizontally').value = '50%';
+        SE.$('vertical').value = '50%';
+        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+        SE.$('reg-ava').setAttribute("style", `background-image: url("")`)
+        SE.$('ava-preview-wrap').style.display = 'none';  
+        SE.clearFileInput();
     }
 
 //clear file input
     let clearFileInput = () => {
         SE.$('reg-file').type = "text";
         setTimeout(() => {
+            SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+            SE.$('reg-ava').setAttribute("style", `background-image: url("")`)
             SE.$('reg-ava').style.display = 'none';
+            SE.$('horizontally').value = '50%';
+            SE.$('vertical').value = '50%';
             SE.$('reg-file-mess').style.display = 'table';
             SE.$('reg-file').type = "file";
             regProto.prototype.avasettings = '';
