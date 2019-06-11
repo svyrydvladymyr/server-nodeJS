@@ -25,17 +25,6 @@ let SE = (() => {
         file.open("GET", namefile, true);
         file.send(null);
     }; 
-    
-//clone phone number
-    let clonePhoneNumber = () => {
-        let phoneNum = SE.$('reg-tel').value;
-        if ((phoneNum !== '') && (phoneNum.length === 10) && (/^[0-9]+$/g.test(phoneNum))){
-            SE.$('reg-message_cod').value = SE.$('reg-tel_cod').value;
-            SE.$('reg-message').value = SE.$('reg-tel').value;
-            SE.iconON('reg-message', "true", '');
-            SE.readyToSend('reg-message', SE.$('reg-message').value); 
-        }        
-    }; 
 
 //make AJAX request
     let send = function(objUrlSend){
@@ -196,7 +185,18 @@ let SE = (() => {
                 toLBigFile
             };
         }
-    }    
+    };    
+    
+//clone phone number
+let clonePhoneNumber = () => {
+    let phoneNum = SE.$('reg-tel').value;
+    if ((phoneNum !== '') && (phoneNum.length === 10) && (/^[0-9]+$/g.test(phoneNum))){
+        SE.$('reg-message_cod').value = SE.$('reg-tel_cod').value;
+        SE.$('reg-message').value = SE.$('reg-tel').value;
+        SE.iconON('reg-message', "true", '');
+        SE.readyToSend('reg-message', SE.$(`reg-message_cod`).options[SE.$(`reg-message_cod`).selectedIndex].text + SE.$('reg-message').value); 
+    }        
+}; 
 
 //phone and message exclusion
     let checkPhoneAndMessInput = (idF) => {
@@ -205,8 +205,8 @@ let SE = (() => {
             SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             SE.readyToSend(idF, "");
         } else {
-            let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
-            SE.readyToSend(idF, phoneReady);
+            // let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
+            SE.readyToSend(idF, SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value);
             SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
         }
     }
@@ -220,6 +220,7 @@ let SE = (() => {
             SE.readyToSend(idF, b.options[b.selectedIndex].text);
             SE.$("reg-form-send").addEventListener("click", SE.messgeSendError);
             if (idF === 'reg-country'){
+                SE.readyToSend('reg-town', '');
                 let getTownId = SE.$('reg-town');
                 let getSelectedCountry = SE.$(idF).value;
                 getTownId.innerHTML = `<option disabled selected></option>`;
@@ -280,7 +281,7 @@ let SE = (() => {
 //show preview foto     
     let readURL = () => {
         console.log(SE.$('reg-file').files[0]);
-        
+
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
             reader.onload = function(e) {
@@ -494,7 +495,6 @@ let SE = (() => {
 // function for add user to DB
     let registerUserToDB = function(){
         let obj;
-
         obj = { "login":regPrototype.reglogin, 
                 "password":regPrototype.regpassword, 
                 "name":regPrototype.regname, 
@@ -505,42 +505,29 @@ let SE = (() => {
                 "message":regPrototype.regmessage, 
                 "country":regPrototype.regcountry, 
                 "town":regPrototype.regtown, 
-                "pofession":regPrototype.regprofession, 
+                "profession":regPrototype.regprofession, 
                 "registrdata":regPrototype.registr,
                 "avasettings":regPrototype.avasettings};
         dbParam = JSON.stringify(obj);
-        console.log(dbParam);
-        
-
-
-
-        let fileAva = document.getElementById('reg-file').files;
-        
+        console.log(dbParam); 
+        let fileAva = document.getElementById('reg-file').files;        
         let formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
-
         for(let i = 0; i < fileAva.length; i++){
             formData.append("file",fileAva[i]);
-        }  
-
-        let contenttype = {headers:{"Content-type": "multipart/form-data"}}
-  
+        } 
+        let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
         axios.post('/registrationUser', formData, contenttype)
         .then(function (response) {
             if (response.request.readyState == 4 && response.request.status == "200") {
                 console.log(response);
-
                 // CLEAR.obgRegistration();
                 // CLEAR.protoRegistration();
-
             }
         })
         .catch(function (error) {
             console.log(error);
         })
-  
-
-          
     };    
 
 

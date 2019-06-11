@@ -153,6 +153,28 @@
     z-index: 2;
 }
 
+.logo-form{
+    position: absolute;
+    width: 300px;
+    top: 30px;
+}
+
+.password_eye{
+    cursor: pointer;
+    position: absolute;
+    font-size: 14px;
+    top: 7px;
+    right: 7px;
+}
+
+.password_eye2{
+    cursor: pointer;
+    position: absolute;
+    font-size: 14px;
+    top: 41px;
+    right: 7px;
+}
+
 .form_input_file:hover::before {
     text-shadow: 0px 0px 1px #111111;
 }
@@ -253,6 +275,7 @@
     margin: 20px 0px 0px 0px;
 }
 
+/*-------ava----------*/
 .reg-ava{
     display: none;
     width: 150px;
@@ -267,28 +290,6 @@
 
 .file-ava{
     margin: 1px 0px;
-}
-
-.password_eye{
-    cursor: pointer;
-    position: absolute;
-    font-size: 14px;
-    top: 7px;
-    right: 7px;
-}
-
-.password_eye2{
-    cursor: pointer;
-    position: absolute;
-    font-size: 14px;
-    top: 41px;
-    right: 7px;
-}
-
-.logo-form{
-    position: absolute;
-    width: 300px;
-    top: 30px;
 }
 
 .ava-preview-wrap{
