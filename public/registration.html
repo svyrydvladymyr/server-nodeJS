@@ -147,38 +147,41 @@
                 <!--file-->   
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-file"></p></div>
-                    <div class="form_input">
-                        <input type="file" name="reg-file" id="reg-file" value="reg-file" class="form_input_file" accept=".jpg,.jpeg,.png"> 
+                    <div class="form_input" id="form_input">
+                        <input type="file" name="reg-file" id="reg-file" value="reg-file" class="form_input_file inp-file"  accept=".jpg,.jpeg,.png"> 
                     </div>
                     <div class="form_message">
                         <p id="reg-file-mess" class="reg-message file-ava"></p>
-                        <img id="reg-ava" src="#" alt="" class="reg-ava"/>
+                        <div id="reg-ava" class="reg-ava">
+                            <i class='fas clear-input-foto' onclick="SE.clearFileInput()" >&#xf00d;</i>
+                        </div>
                     </div>                      
                 </div>  
                 <!--send-->             
                 <div class="form_blok_send">
                     <div class="form_label"><p id="reg-form-send" class="reg-form-send"></p></div>
                  </div>               
-
+                <!--main message form-->
                 <p class="main-form-message" id="main-form-message"></p>
-
+                <!--preview ava-->
                 <div class="ava-preview-wrap"  id="ava-preview-wrap">
-                        <div class="ava-preview-body">
-                            <div class="ava-preview-foto-wrap">
-                                <div class="ava-preview-foto" id="ava-preview-foto">
-                                    <input type="range" name="horizontally" id="horizontally" min="0" max="100" step="5" class="rande-hor" onchange="VW.rangeAvaFoto('h')">
-                                    <input type="range" name="vertical" id="vertical" min="0" max="100" step="5" class="rande-vert" onchange="VW.rangeAvaFoto('v')">
-                                </div>
+                    <div class="ava-preview-body">
+                        <div class="ava-preview-foto-wrap">
+                            <div class="ava-preview-foto" id="ava-preview-foto">
+                                <input type="range" name="horizontally" id="horizontally" min="0" max="100" step="5" class="rande-hor" onchange="VW.rangeAvaFoto('h')">
+                                <input type="range" name="vertical" id="vertical" min="0" max="100" step="5" class="rande-vert" onchange="VW.rangeAvaFoto('v')">
                             </div>
                         </div>
-                        <div class="ava-preview-cover"></div>
-                        <div class="ava-preview-button-wrap">
-                            <div class="ava-preview-button">
-                                <p>sdfsgsgsdg</p>
+                    </div>
+                    <div class="ava-preview-button-wrap">
+                        <div class="ava-preview-button">
+                            <div id="button-preview-form" class="button-preview-form" onclick="SE.confirmPreview()"></div>
+                            <div id="button-preview-form-close" class="button-preview-form-close" onclick="SE.confirmPreviewClose()">
+                                <i class='fas'>&#xf00d;</i>
                             </div>
                         </div>
+                    </div>                        
                 </div>
-
             </div>
         </div>
 

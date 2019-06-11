@@ -202,12 +202,12 @@ let SE = (() => {
     let checkPhoneAndMessInput = (idF) => {
         if (SE.$(idF).value.length != 10) {
             SE.iconON(idF, "false", SE.errorFormMessage().notCorectNum);
-            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             SE.readyToSend(idF, "");
         } else {
             let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
             SE.readyToSend(idF, phoneReady);
-            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
+            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
         }
     }
 
@@ -218,7 +218,7 @@ let SE = (() => {
         if (gгest != ""){
             SE.iconON(idF, "true", '');    
             SE.readyToSend(idF, b.options[b.selectedIndex].text);
-            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB);
+            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError);
             if (idF === 'reg-country'){
                 let getTownId = SE.$('reg-town');
                 let getSelectedCountry = SE.$(idF).value;
@@ -237,7 +237,7 @@ let SE = (() => {
             } 
         } else {
             SE.iconON(idF, "false", '');
-            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             SE.readyToSend(idF, "");
         }
     }
@@ -248,16 +248,16 @@ let SE = (() => {
             if (SE.$('reg-password').value === SE.$('reg-password-two').value){
                 SE.iconON('reg-password', "true", '');
                 SE.readyToSend('reg-password', SE.$('reg-password').value);
-                SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
+                SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
             } else {
                 SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
                 SE.readyToSend('reg-password', '');
-                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             }                            
         } else {
             SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
             SE.readyToSend('reg-password', '');
-            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
         }
     }
     
@@ -265,31 +265,74 @@ let SE = (() => {
     let checkAgeEmailInput = (idF) => {
         if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
             SE.iconON(idF, "false", SE.errorFormMessage().notCorectVar);
-            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             SE.readyToSend(idF, "");
         } else {
             SE.iconON(idF, "true", '');
             SE.readyToSend(idF, SE.$(idF).value);  
-            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB);                            
+            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError);                            
         }
     }
 
-//show previe foto     
+//show preview foto     
     let readURL = () => {
+        console.log(SE.$('reg-file').files[0]);
+        
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
-            reader.onload = function(e) {SE.$('reg-ava').setAttribute('src', e.target.result)}          
+            reader.onload = function(e) {
+                SE.$('reg-ava').setAttribute("style", `background-image: url("${e.target.result}")`)
+            }          
             reader.readAsDataURL(SE.$('reg-file').files[0]);
+            setTimeout(() => {
+                SE.$('reg-ava').style.display = 'table';
+                SE.$('reg-ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
+                regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
+                SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+            },500);
         }
+
     }
-//show previe foto     
+//show preview foto     
     let readURLPreview = () => {
+        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
-            reader.onload = function(e) {SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}`)}          
+            reader.onload = function(e) {
+                SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}")`)
+            }          
             reader.readAsDataURL(SE.$('reg-file').files[0]);
         }
     }
+
+//confirm preview ava
+    let confirmPreview = () => {
+        SE.$('ava-preview-wrap').style.display = 'none';  
+        SE.$('horizontally').value = '50%';
+        SE.$('vertical').value = '50%';
+        SE.readURL(); 
+    }
+
+//confirm preview ava close
+    let confirmPreviewClose = () => {
+        if (SE.$('reg-ava').style.backgroundImage === ''){
+            SE.$('reg-file-mess').style.display = 'table';
+        }
+            SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+            SE.$('ava-preview-wrap').style.display = 'none';  
+            SE.clearFileInput();
+    }
+
+//clear file input
+    let clearFileInput = () => {
+        SE.$('reg-file').type = "text";
+        setTimeout(() => {
+            SE.$('reg-ava').style.display = 'none';
+            SE.$('reg-file-mess').style.display = 'table';
+            SE.$('reg-file').type = "file";
+            regProto.prototype.avasettings = '';
+        },100);
+    }    
 
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg) => {
@@ -300,13 +343,13 @@ let SE = (() => {
                 (SE.$(idF).id === 'reg-surname') ||
                 (SE.$(idF).id === 'reg-email')){
                     SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                     SE.$("reg-form-send").style.cursor = "no-drop";
                     SE.readyToSend(idF, "");
             } else {
                 SE.iconON(idF, "true", '');
-                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = "no-drop";
                 SE.readyToSend(idF, "");
@@ -320,7 +363,7 @@ let SE = (() => {
                         (SE.$(idF).id === 'reg-surname') ||
                         (SE.$(idF).id === 'reg-email')){
                             SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                             SE.$("reg-form-send").classList.remove('reg_send_active');
                             SE.$("reg-form-send").style.cursor = "no-drop";
                             SE.readyToSend(idF, "");
@@ -346,20 +389,20 @@ let SE = (() => {
                                 SE.$('reg-file-mess').style.marginTop = '3px';
                                 SE.$('reg-ava').style.display = 'none';
                                 SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
+                                SE.$('form_input').style.height = '40px';
                             } else {
-                                SE.$('reg-ava').style.display = 'table';
-                                SE.$('reg-ava').style.border = '3px solid #e0e0e0';
                                 SE.$('reg-file-mess').style.display = 'none';
-                                SE.readURL();                             
+                                //show preview
+                                SE.$('ava-preview-wrap').style.display = 'flex';
                                 SE.readURLPreview();                             
                             }
                         }
                     }else{
                         SE.iconON(idF, "true", '');         
                         SE.readyToSend(idF, SE.$(idF).value);
-                        SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
+                        SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
                     }
-                    SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
+                    SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
                 }
             }); 
         }
@@ -376,16 +419,16 @@ let SE = (() => {
         } else {
             if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
                 SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
-                SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
             } else {
                 if (SE.$(idF).value === ''){
                     SE.iconON(idF, "true", '');
-                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 } else {
                     SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
-                    SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
+                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 }
             }
@@ -394,8 +437,7 @@ let SE = (() => {
     
 //function for make prototype for send obgect
     let readyToSend = function(idF, value){
-        console.log(regProto.prototype);
-        
+        console.log(regProto.prototype);        
         //replace (-) and push to prototype
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
@@ -408,7 +450,7 @@ let SE = (() => {
         ){
             SE.$("reg-form-send").classList.add('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'pointer';
-            SE.$("reg-form-send").addEventListener("click", SE.registerUserToDB); 
+            SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
         } else {
             SE.$("reg-form-send").classList.remove('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'no-drop';            
@@ -425,10 +467,12 @@ let SE = (() => {
                 }
             }       
             SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
-        } else {
+        } 
+        if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
             SE.$("main-form-message").innerHTML = "";
-            SE.$("reg-form-send").removeEventListener("click", SE.registerUserToDB);
-
+            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+            SE.$("reg-form-send").classList.remove('reg_send_active');
+            SE.$("reg-form-send").style.cursor = 'no-drop'; 
             SE.registerUserToDB();
 
         }
@@ -449,7 +493,8 @@ let SE = (() => {
                 "country":regPrototype.regcountry, 
                 "town":regPrototype.regtown, 
                 "pofession":regPrototype.regprofession, 
-                "registrdata":regPrototype.registr};
+                "registrdata":regPrototype.registr,
+                "avasettings":regPrototype.avasettings};
         dbParam = JSON.stringify(obj);
         console.log(dbParam);
         
@@ -457,16 +502,14 @@ let SE = (() => {
 
 
         let fileAva = document.getElementById('reg-file').files;
-
-        console.log(fileAva);
         
         let formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
-       
+
         for(let i = 0; i < fileAva.length; i++){
-          formData.append("file",fileAva[i]);
+            formData.append("file",fileAva[i]);
         }  
-  
+
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}
   
         axios.post('/registrationUser', formData, contenttype)
@@ -511,7 +554,10 @@ let SE = (() => {
         rus_to_latin,
         readURL,
         readyFullDate,
-        readURLPreview
+        readURLPreview,
+        confirmPreview,
+        confirmPreviewClose,
+        clearFileInput
 
     };
 })();    

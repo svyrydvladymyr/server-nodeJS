@@ -22,15 +22,19 @@ app.post('/addToDB', addToDBB);
 app.post('/registrationUser', (req, res) => {
     let storage = multer.diskStorage({
         destination: (req, file, cb) => {cb(null, __dirname+"/uploads")},
-        filename: (req, file, cb) => {cb(null, token(5) +'_'+ file.originalname)}
-      })       
+        filename: (req, file, cb) => {
+          if (req.file === undefined){
+            cb(null, token(10) +'_'+  file.originalname);
+          }
+        }})       
     let upload = multer({ storage: storage }).single('file');
     upload(req, res, (err) => {
         if (err) {
             console.log("err", err);
             res.send({"res":"error"});
         } else {
-            console.log("files", req.file.originalname);
+            console.log("files", req.file);
+            // console.log("files", req.file.originalname);
             console.log("body", JSON.parse(req.body.objreg));
             let xx = JSON.parse(req.body.objreg);
             console.log("body--login", xx.login);

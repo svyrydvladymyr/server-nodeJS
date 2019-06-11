@@ -148,6 +148,11 @@
     font-size: 10pt;
 }
 
+.inp-file{
+    position: relative;
+    z-index: 2;
+}
+
 .form_input_file:hover::before {
     text-shadow: 0px 0px 1px #111111;
 }
@@ -249,10 +254,15 @@
 }
 
 .reg-ava{
-    max-width: 100%; 
-    max-height: 110px;
+    display: none;
+    width: 150px;
+    height: 150px;
     margin: 3px auto;
     border: 3px solid #e0e0e0;
+    border-radius:7px; 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 
 .file-ava{
@@ -282,7 +292,7 @@
 }
 
 .ava-preview-wrap{
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     justify-content: center;
     position: absolute;
@@ -294,6 +304,7 @@
     border: 3px solid #2c5a88;
     border-radius: 9px;
     background: #ffffff;
+    z-index: 3;
 }
 
 .ava-preview-body{
@@ -347,14 +358,59 @@
     cursor: pointer;
     position: relative;
     margin: 0px auto;
-    padding:4px;
-    width: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 4px;
+    width: 100%;
     height: 30px;
     text-align: center;
 }
 
-.ava-preview-button p{
-    margin: 0px;
+.button-preview-form{
+    margin: -5px;
+    cursor: pointer;
+    border: 2px solid #111111;
+    background: #6b92b9;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0px 0px 3px #111111;
+    padding: 4px;
+    width: 100px;
+}
+
+.button-preview-form-close{
+    margin: -5px;
+    cursor: pointer;
+    border: 2px solid #bd0000;
+    background: #ff3737;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0px 0px 3px #111111;
+    padding: 4px;
+    width: 32px;
+    margin-left: 10px;
+}
+
+.button-preview-form-close:hover {
+    box-shadow: 0px 0px 2px #111111;
+}
+
+.button-preview-form:hover {
+    box-shadow: 0px 0px 2px #111111;
+}
+
+.clear-input-foto{
+    position: absolute;
+    color: white;
+    cursor: pointer;
+    right: 15px;
+    top: 10px;
+    text-shadow: 0px 0px 5px #000000;
 }
 
 /*range input*/

@@ -81,15 +81,10 @@ let VW = (() => {
 //range ava foto
     let rangeAvaFoto = (el) => {
         if (el === 'h') {
-            let cc = SE.$('horizontally').value;
-            console.log(cc);
             SE.$('ava-preview-foto').style.backgroundPosition = `${SE.$('horizontally').value}% 50%`;
-            
         } else if (el === 'v') {
             SE.$('ava-preview-foto').style.backgroundPosition = `50% ${SE.$('vertical').value}%`;
-
-        }   
-    
+        }      
     };   
 
 return {
