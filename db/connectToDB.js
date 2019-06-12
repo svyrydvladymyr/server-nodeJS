@@ -25,7 +25,13 @@ let con, db_config = {
   };
 
 con = mysql.createConnection(db_config);
-con.connect((err) => {if (err) console.log(err);});  
+con.connect((err) => {
+    if (err) {
+      console.log("err", err);
+      res.send(err);
+    }
+  }
+);  
 
 setInterval(function () {
     con.query('SELECT 1');

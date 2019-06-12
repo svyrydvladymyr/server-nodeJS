@@ -6,11 +6,15 @@ window.onload = function(){
 //get date registration and push to prototype
     regProto.prototype.registr = SE.readyFullDate('');
 
+//set default settings for ava
+    regProto.prototype.avasettings = '50% 50%';
+
 //set limitation to choice date zvit
     let input = document.getElementById("reg-age");
     input.setAttribute("min", "1930-01-02");
     input.setAttribute("max", SE.readyFullDate(''));
 
+    //border preview foto on start
     SE.$('reg-ava').style.border = '0px solid #e0e0e0';
 
 

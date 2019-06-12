@@ -44,9 +44,21 @@
     outline: 0px solid red;
     width: 31.3%;
     min-height: 40px;
-    min-width: 150px;
     margin: 2px 1%;
     position: relative;
+}
+
+.form_label{
+    width: 33%;
+    min-width: 120px;
+}
+.form_input{
+    width: 40%;
+    min-width: 150px;
+} 
+.form_message{
+    width: 10%;
+    min-width: 100px;
 }
 
 .password{
@@ -135,7 +147,7 @@
 
 .form_input_file::before {
     content: "select file";
-    width: 90%;
+    width: 93%;
     display: inline-block;
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
     padding: 5px 8px;
@@ -278,8 +290,8 @@
 /*-------ava----------*/
 .reg-ava{
     display: none;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     margin: 3px auto;
     border: 3px solid #e0e0e0;
     border-radius:7px; 
@@ -503,68 +515,112 @@ input[type=range] {
   }
 
 @media screen and (max-width:850px){
-    .form_body_wrap {width: 95%;}
-    .form_input_file::before {width: 95%;}
+    .form_body_wrap {
+        width: 95%;}
+    .form_input_file::before {
+        width: 95%;}
 }
 
 @media screen and (max-width:660px){
-    .form_body_wrap {width: 98%;}
-    .form_input_file::before {width: 95%;}
+    .form_body_wrap {
+        width: 98%;}
+    .form_input_file::before {
+        width: 95%;}
     .form_label, .form_input, .form_message {
         width: 50%;
-        min-height: 15px;
-    }
-    .form_input > input {margin-top: -4px;}
-    .form_input select {margin-top: -4px;}
-    .tel_blok > .tel_nomer {margin-top: -4px;}
+        min-height: 15px;}
+    .form_input > input {
+        margin-top: -4px;}
+    .form_input select {
+        margin-top: -4px;}
+    .tel_blok > .tel_nomer {
+        margin-top: -4px;}
     .icon_share i {
         top: 18px;
-        right: -145px;
-    }
-    .password > input:first-child {margin-top: -50px;}
-    .password > p:last-child {margin-top: 35px;}
-    .password{height: 50px;}
-    .password:last-child{height: 20px;}
-    .password_eye{top: -30px;}    
-    .password_eye2{top: 18px;}
-    .clear-input-foto {right: 23%;}
+        right: -145px;}
+    .password > input:first-child {
+        margin-top: -50px;}
+    .password > p:last-child {
+        margin-top: 35px;}
+    .password{
+        height: 50px;}
+    .password:last-child{
+        height: 20px;}
+    .password_eye{
+        top: -30px;}    
+    .password_eye2{
+        top: 18px;}
+    .clear-input-foto {
+        right: 23%;}
     .ava-preview-wrap {
         width: 90%;
-        margin: 0px 5%;
-    }
+        margin: 0px 5%;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
 }
 @media screen and (max-width:600px){
-    .icon_share i {right: -135px;}
+    .icon_share i {
+        right: -135px;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
+    .form_label, .form_input, .form_message {
+        width: 65%;}
 }
 @media screen and (max-width:550px){
-    .icon_share i {right: -125px;}
+    .icon_share i {
+        right: -125px;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
+    .form_label, .form_input, .form_message {
+        width: 70%;}
 }
 @media screen and (max-width:500px){
-    .icon_share i {right: -115px;}
+    .icon_share i {
+        right: -115px;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
+    .form_label, .form_input, .form_message {
+        width: 80%;}
 }
 
 @media screen and (max-width:450px){
     .form_label, .form_input, .form_message {
         width: 90%;
-        min-height: 15px;
-    }
-    .form_input > input {margin-top: -4px;}
-    .icon_share i {right: -27px;}
-    .password > input:first-child {margin-top: -50px;}
-    .password > p:last-child {margin-top: 35px;}
-    .password{height: 50px;}
-    .password:last-child{height: 20px;}
-    .logo-form{width: 220px;}
-    .clear-input-foto {right: 27%;}
+        min-height: 15px;}
+    .form_input > input {
+        margin-top: -4px;}
+    .icon_share i {
+        right: -27px;}
+    .password > input:first-child {
+        margin-top: -50px;}
+    .password > p:last-child {
+        margin-top: 35px;}
+    .password{
+        height: 50px;}
+    .password:last-child{
+        height: 20px;}
+    .logo-form{
+        width: 220px;}
+    .clear-input-foto {
+        right: 27%;}
     .ava-preview-wrap {
         width: 96%;
-        margin: 0px 2%;
-    }
+        margin: 0px 2%;}
     .ava-preview-foto-wrap {
         width: 96%;
-        max-width: 268px;
-    }
+        max-width: 268px;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
 }
 @media screen and (max-width:350px){
-    .rande-vert {right: -70px;}
+    .rande-vert {
+        right: -70px;}
+    .reg-ava{
+        width: 150px;
+        height: 150px;}
 }
