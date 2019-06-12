@@ -298,8 +298,8 @@ let clonePhoneNumber = () => {
                 SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
             },500);
         }
-
     }
+
 //show preview foto     
     let readURLPreview = () => {
         SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
