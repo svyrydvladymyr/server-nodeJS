@@ -86,7 +86,7 @@ let registrationUsers = (req, res) => {
         
             // res.send({"res":"sours"});
 
-            var sql = `INSERT INTO users (userid, token, login, password, name, surname, email) VALUES ('fgh', 'fghg', 'fghgg', 'fghggg', 'fghg', 'fghgg', 'fghggg')`;
+            var sql = `INSERT INTO users (userid, login, password, name, surname, email, ava, avasettings, birtday, phone, message, country, town, profession) VALUES ('fff', 'fff', 'ffff', 'ffff', 'fff', 'ffff', 'ffff', 'ffff', '2019-09-12', '+380660961462', '+380660961462', 'ffff', 'fffff', 'ffff')`;
             con.query(sql, function (err, result) {
               if (err) {
                 console.log("err", err);
