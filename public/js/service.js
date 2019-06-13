@@ -494,7 +494,7 @@ let clonePhoneNumber = () => {
     
 // function for add user to DB
     let registerUserToDB = function(){
-        let obj;
+        let obj, xmlhttp;
         obj = { "login":regPrototype.reglogin, 
                 "password":regPrototype.regpassword, 
                 "name":regPrototype.regname, 
@@ -510,14 +510,36 @@ let clonePhoneNumber = () => {
                 "avasettings":regPrototype.avasettings};
         dbParam = JSON.stringify(obj);
         console.log(dbParam); 
-        let fileAva = document.getElementById('reg-file').files;        
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let responses = this.responseText;
+                console.log(responses);
+                SE.addAvaToDB();
+            }
+        };
+        xmlhttp.open("POST", "/registrationUser", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(dbParam);
+    };
+
+// function for add user to DB
+    let addAvaToDB = function(){
+        let obj;
+        obj = { "avasettings":regPrototype.avasettings};
+        let fileAva = document.getElementById('reg-file').files;      
+        console.log(fileAva);
+          
         let formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
         for(let i = 0; i < fileAva.length; i++){
             formData.append("file",fileAva[i]);
         } 
+
+        console.log(formData);
+
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
-        axios.post('/registrationUser', formData, contenttype)
+        axios.post('/addavatodb', formData, contenttype)
         .then(function (response) {
             if (response.request.readyState == 4 && response.request.status == "200") {
                 console.log(response);
@@ -557,7 +579,7 @@ let clonePhoneNumber = () => {
         readURLPreview,
         confirmPreview,
         confirmPreviewClose,
-        clearFileInput
-
+        clearFileInput,
+        addAvaToDB
     };
 })();    
