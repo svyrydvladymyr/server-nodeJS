@@ -24,6 +24,11 @@ window.onload = function(){
         SE.$("reg-login").addEventListener("input", () => {SE.checkTest("reg-login", "^[a-zA-Z0-9-_]+$")}); 
     //password-----------------------------------------------------------------------------------
         SE.$("reg-password").addEventListener("change", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
+        SE.$("reg-password").addEventListener("change", () => {
+            if (SE.$("reg-password").value.length < 6){
+                SE.iconON("reg-password", "false", SE.errorFormMessage().toshort);
+            }
+        });
         SE.$("reg-password").addEventListener("input", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password").addEventListener("input", () => {SE.checkTest("reg-password", "^[a-zA-Z0-9-_]+$")}); 
     //password-two-----------------------------------------------------------------------------------

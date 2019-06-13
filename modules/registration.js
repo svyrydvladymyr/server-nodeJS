@@ -22,7 +22,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
 let registrationUsers = (req, res) => {     
     let parseObjUsers = req.body;
 
-    console.log("objClient---", parseObjUsers);
+    // console.log("objClient---", parseObjUsers);
 
     prUs.userid = translit(`${parseObjUsers.name}${parseObjUsers.surname}`).toLowerCase() + '-' + token(10);
 
@@ -39,18 +39,30 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-]+$", "profession", "Bad profession!", parseObjUsers, res);            
  
-    console.log("obj----", prUs);        
+    // console.log("obj----", prUs);        
 
-    var sql = `INSERT INTO users (userid, login, password, name, surname, email, birtday, phone, message, country, town, profession) VALUES ('fff', 'fff', 'fff', 'ffff', 'ffff', 'ffff', '2019-09-12', '+380660961462', '+380660961462', 'ffff', 'fffff', 'ffff')`;
+    var sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
+               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send(err);
-        }
+            if (err.code === 'ER_DUP_ENTRY'){
+                let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
+                if (parseSQLmess === 'login'){
+                    console.log("err", err.sqlMessage);
+                    res.send({"error":'duplicate_entry_login'});
+                } else if (parseSQLmess === 'email'){
+                    console.log("err", err.sqlMessage);
+                    res.send({"error":'duplicate_entry_email'});
+                } else {
+                    console.log("err", err);
+                    res.send({"error":err});
+                }             
+            }
+        } else {
             console.log(result);
+            res.send(result);
         }
-    );            
-            
+    });          
 };
 
 let addAvatoDB = (req, res) => {
@@ -72,12 +84,20 @@ let addAvatoDB = (req, res) => {
             if (req.file !== undefined){
                 prUs.ava = req.file.filename;
                 prUs.avasettings = parseAvasettings.avasettings;
+                var sql = `UPDATE users SET ava = '${prUs.ava}', avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
+                con.query(sql, function (err, result) {
+                    if (err) {
+                        console.log("err", err);
+                        res.send(err);
+                    }
+                    console.log(result.affectedRows + " record(s) updated");
+                    res.send(result);
+                }); 
             } else {
                 prUs.ava = '';
                 prUs.avasettings = '';
+                res.send({"result":"ava_no"});
             }
-
-            console.log("obj----", prUs);  
         }
     });
 

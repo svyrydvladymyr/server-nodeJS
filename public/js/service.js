@@ -152,6 +152,9 @@ let SE = (() => {
             let onlyNum = "Тільки цифри!";
             let onlyLetters = "Тільки букви!";
             let toLBigFile = "Занадто великий файл! Макс. розмір 1мб";
+            let dupllogin = "Користувач з таким логіном вже існує!";
+            let duplemail = "Користувач з такою поштою вже існує!";
+            let toshort = "Мінімум 7 символів!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -161,7 +164,10 @@ let SE = (() => {
                 onlyNum,
                 onlyLetters,
                 allInputs,
-                toLBigFile
+                toLBigFile,
+                dupllogin,
+                duplemail,
+                toshort
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -173,6 +179,9 @@ let SE = (() => {
             let onlyNum = "Only numbers!";
             let onlyLetters = "Only letters!";
             let toLBigFile = "Too large file! Max. size 1MB";
+            let dupllogin = "A user with this login already exists!";
+            let duplemail = "A user with such mail already exists!";
+            let toshort = "Minimum of 7 characters!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -182,7 +191,10 @@ let SE = (() => {
                 onlyNum,
                 onlyLetters,
                 allInputs,
-                toLBigFile
+                toLBigFile,
+                dupllogin,
+                duplemail,
+                toshort
             };
         }
     };    
@@ -343,6 +355,8 @@ let clonePhoneNumber = () => {
             SE.$('horizontally').value = '50%';
             SE.$('vertical').value = '50%';
             SE.$('reg-file-mess').style.display = 'table';
+            SE.$('reg-file-mess').innerHTML = '';
+            SE.iconON('reg-file', "true", '');         
             SE.$('reg-file').type = "file";
             regProto.prototype.avasettings = '';
         },100);
@@ -491,6 +505,13 @@ let clonePhoneNumber = () => {
 
         }
     };    
+
+//show main message    
+    let showErrorMainMess = () => {
+        SE.$("main-form-message").innerHTML = '';
+        SE.$('reg-login').removeEventListener('change', showErrorMainMess);
+        SE.$('reg-email').removeEventListener('change', showErrorMainMess);
+    };
     
 // function for add user to DB
     let registerUserToDB = function(){
@@ -509,13 +530,21 @@ let clonePhoneNumber = () => {
                 "registrdata":regPrototype.registr,
                 "avasettings":regPrototype.avasettings};
         dbParam = JSON.stringify(obj);
-        console.log(dbParam); 
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                let responses = this.responseText;
-                console.log(responses);
-                SE.addAvaToDB();
+                let parseObj = JSON.parse(this.responseText);
+                if (parseObj.error === 'duplicate_entry_login'){
+                    SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
+                    SE.$('reg-login').addEventListener('change', showErrorMainMess);
+                } else if (parseObj.error === 'duplicate_entry_email'){
+                    SE.$("main-form-message").innerHTML = SE.errorFormMessage().duplemail;  
+                    SE.$('reg-email').addEventListener('change', showErrorMainMess);
+                } else if ((parseObj.affectedRows === 1) && (parseObj.protocol41 === true)){
+                    SE.addAvaToDB();
+                } else {
+                    console.log(this.responseText);
+                }
             }
         };
         xmlhttp.open("POST", "/registrationUser", true);
@@ -525,26 +554,20 @@ let clonePhoneNumber = () => {
 
 // function for add user to DB
     let addAvaToDB = function(){
-        let obj;
+        let obj, fileAva, formData;
         obj = { "avasettings":regPrototype.avasettings};
-        let fileAva = document.getElementById('reg-file').files;      
-        console.log(fileAva);
-          
-        let formData = new FormData();
+        fileAva = document.getElementById('reg-file').files;      
+        formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
         for(let i = 0; i < fileAva.length; i++){
             formData.append("file",fileAva[i]);
         } 
-
-        console.log(formData);
-
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
         axios.post('/addavatodb', formData, contenttype)
-        .then(function (response) {
-            if (response.request.readyState == 4 && response.request.status == "200") {
-                console.log(response);
-                // CLEAR.obgRegistration();
-                // CLEAR.protoRegistration();
+        .then(function (response) {    
+            if (response.request.readyState == 4 && response.request.status == "200") {                
+                CLEAR.clearRegProto();
+                SE.redirect('/');
             }
         })
         .catch(function (error) {
@@ -580,6 +603,7 @@ let clonePhoneNumber = () => {
         confirmPreview,
         confirmPreviewClose,
         clearFileInput,
-        addAvaToDB
+        addAvaToDB,
+        showErrorMainMess
     };
 })();    
