@@ -21,26 +21,19 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
 
 let registrationUsers = (req, res) => {     
     let parseObjUsers = req.body;
-
-    // console.log("objClient---", parseObjUsers);
-
     prUs.userid = translit(`${parseObjUsers.name}${parseObjUsers.surname}`).toLowerCase() + '-' + token(10);
-
     checkObjValues("^[0-9-]+$", "registrdata", "Bad registration date!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad password!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯїЇ]+$", "name", "Bad name!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯїЇ]+$", "surname", "Bad surname!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "name", "Bad name!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "surname", "Bad surname!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9@-_.]+$", "email", "Bad email!", parseObjUsers, res);
     checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-]+$", "profession", "Bad profession!", parseObjUsers, res);            
- 
-    // console.log("obj----", prUs);        
-
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);            
     var sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     con.query(sql, function (err, result) {
@@ -99,11 +92,7 @@ let addAvatoDB = (req, res) => {
                 res.send({"result":"ava_no"});
             }
         }
-    });
-
-    
-
-
+    });  
 };
 
 

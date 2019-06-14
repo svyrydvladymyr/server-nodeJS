@@ -155,6 +155,7 @@ let SE = (() => {
             let dupllogin = "Користувач з таким логіном вже існує!";
             let duplemail = "Користувач з такою поштою вже існує!";
             let toshort = "Мінімум 7 символів!";
+            let registrationGood = "Реєстрація успішна!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -167,7 +168,8 @@ let SE = (() => {
                 toLBigFile,
                 dupllogin,
                 duplemail,
-                toshort
+                toshort,
+                registrationGood
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -182,6 +184,7 @@ let SE = (() => {
             let dupllogin = "A user with this login already exists!";
             let duplemail = "A user with such mail already exists!";
             let toshort = "Minimum of 7 characters!";
+            let registrationGood = "Registration is successful!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -194,7 +197,8 @@ let SE = (() => {
                 toLBigFile,
                 dupllogin,
                 duplemail,
-                toshort
+                toshort,
+                registrationGood
             };
         }
     };    
@@ -292,8 +296,6 @@ let clonePhoneNumber = () => {
 //-----------------------------------------------------------------------------------------------------
 //show preview foto     
     let readURL = () => {
-        console.log(SE.$('reg-file').files[0]);
-
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
             reader.onload = function(e) {
@@ -465,8 +467,7 @@ let clonePhoneNumber = () => {
     
 //function for make prototype for send obgect
     let readyToSend = function(idF, value){
-        console.log(regProto.prototype);        
-        //replace (-) and push to prototype
+        // console.log(regProto.prototype);        
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
         //for change button
@@ -555,7 +556,11 @@ let clonePhoneNumber = () => {
 // function for add user to DB
     let addAvaToDB = function(){
         let obj, fileAva, formData;
-        obj = { "avasettings":regPrototype.avasettings};
+        if (regPrototype.avasettings === ''){
+            obj = { "avasettings":"50% 50%"};
+        } else {
+            obj = { "avasettings":regPrototype.avasettings};
+        }
         fileAva = document.getElementById('reg-file').files;      
         formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
@@ -565,9 +570,13 @@ let clonePhoneNumber = () => {
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
         axios.post('/addavatodb', formData, contenttype)
         .then(function (response) {    
-            if (response.request.readyState == 4 && response.request.status == "200") {                
-                CLEAR.clearRegProto();
-                SE.redirect('/');
+            if (response.request.readyState == 4 && response.request.status == "200") {  
+                SE.$("main-form-message").innerHTML = SE.errorFormMessage().registrationGood;
+                setTimeout(() => {
+                    SE.$("main-form-message").innerHTML = '';
+                    CLEAR.clearRegProto();
+                    SE.redirect('/');
+                }, 2000);
             }
         })
         .catch(function (error) {
