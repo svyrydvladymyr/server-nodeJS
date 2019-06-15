@@ -103,8 +103,8 @@
     top: 0px;
     right: 0px;
     border-radius: var(--border-radius-main);
-    border: var(--border-color-content);
-    box-shadow: var(--box-shadow-content);
+    border: var(--border);
+    box-shadow: var(--box-shadow-main);
     background: var(--bg-color-content);
 }
 
@@ -118,8 +118,8 @@
     right: 0px;
     overflow: hidden;
     border-radius: var(--border-radius-main);
-    border: var(--border-color-content);
-    box-shadow: var(--box-shadow-content);
+    border: var(--border);
+    box-shadow: var(--box-shadow-main);
     background: var(--bg-color-content);
 }
 

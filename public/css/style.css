@@ -4,16 +4,16 @@
 :root{
     --bg-color:#F1F1F1;
     --bg-color-content:#ffffff;
-    --border:1px solid #2d5e8e;
-    --border-5px:5px solid #2d5e8e;
+    /* --border:1px solid #2d5e8e;
+    --border-5px:5px solid #2d5e8e; */
     --border-2px:2px solid #616161;
     --border-15px:15px solid #e4e4e4;
-    --box-shadow-main:0px 0px 5px #6eb4ff;
-    --text-shadow-main:0px 0px 2px #6eb4ff;
+    /* --box-shadow-main:0px 0px 5px #5c8ab9; */
+    /* --text-shadow-main:0px 0px 2px #5c8ab9; */
     --border-radius-main:9px;
-    --button-background:linear-gradient(to bottom right, #13375a, #a3c1de, #143e67);
-    --main-color:#2d5e8e;
-    --second-color:#5c8ab9;
+    /* --button-background:linear-gradient(to bottom right, #13375a, #a3c1de, #143e67); */
+    /* --main-color:#2d5e8e;
+    --second-color:#5c8ab9; */
 }
 
 
@@ -177,7 +177,7 @@ body{
     background: #dadada;
     text-align: center;
     font-weight: bold;
-    color: #88b0dc;
+    color: var(--main-color);
 }
 
 .header_search input:focus{
@@ -534,8 +534,60 @@ body{
     text-align: center;
 }
 
+/*main style button*/
+.main-style-btn{
+    cursor: pointer;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    margin: 10px;
+    box-shadow: 0px 0px 4px #111111;
+}
+
+.main-style-btn:hover{
+    box-shadow: 0px 0px 6px #111111;
+}
+
+.height-blok-set{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 37px;
+    overflow: hidden;
+}
+
+.bg-blue{
+    background: #2d5e8e;
+}
+.bg-green{
+    background: #01ab01;
+}
+.bg-red{
+    background: #dc0000;
+}
+.bg-yellow{
+    background: #d6d600;
+}
+.bg-grey{
+    background: grey;
+}
+.bg-custom{
+    cursor: pointer;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    border-top: 7px solid #12db00;
+    border-bottom: 7px solid #e40000;
+    border-left: 7px solid #0022e6;
+    border-right: 7px solid #eeea00;
+    margin: 10px;
+    box-shadow: 0px 0px 4px #111111;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
-/*-------------------------------------------------------NAV----------0-----------------------------------------------*/
+/*-------------------------------------------------------NAV----------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 .nav{
     grid-area: nav;

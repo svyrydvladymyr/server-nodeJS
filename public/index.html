@@ -76,6 +76,14 @@
             </div>     
             <div class="set_blok">
                 <p id="settings_style"></p>
+                <div class="height-blok-set">
+                    <div class="main-style-btn bg-blue" onclick="VW.changeSettings('#2d5e8e', '#5c8ab9')"></div>
+                    <div class="main-style-btn bg-green" onclick="VW.changeSettings('#3aa54c', '#94de81')"></div>
+                    <div class="main-style-btn bg-red" onclick="VW.changeSettings('#ca2e23', '#ef837b')"></div>
+                    <div class="main-style-btn bg-yellow" onclick="VW.changeSettings('#ffe999', '#a78300')"></div>
+                    <div class="main-style-btn bg-grey" onclick="VW.changeSettings('#636363', '#c3c3c3')"></div>
+                    <div class="main-style-btn bg-custom" onclick="VW.changeSettings('main', 'custom')"></div>
+                </div>
             </div> 
             <div class="set_blok">
                 <p>BORDER RADIUS</p>
@@ -187,9 +195,7 @@
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script src="./js/ajax-param.js"></script>
-
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>

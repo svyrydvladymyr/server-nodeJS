@@ -87,6 +87,27 @@ let VW = (() => {
         }      
     };   
 
+//change main style
+    let changeSettings = (mainarg, secondarg) => {
+        let main, second;
+        if ((mainarg === '') || (secondarg === '') || (mainarg === undefined) || (secondarg === undefined)){
+            main = '#2d5e8e';
+            second ='#5c8ab9';
+        } else {
+            main = mainarg;
+            second = secondarg;
+        }
+        localStorage.kalciferMaimColor=main;
+        localStorage.kalcifersecondColor=second;
+        document.documentElement.style.setProperty('--border', `1px solid ${main}`);
+        document.documentElement.style.setProperty('--border-5px', `5px solid ${main}`);
+        document.documentElement.style.setProperty('--box-shadow-main', `0px 0px 5px ${second}`);
+        document.documentElement.style.setProperty('--text-shadow-main', `0px 0px 2px ${second}`);
+        document.documentElement.style.setProperty('--button-background', `linear-gradient(to bottom right, ${main}, ${second}, ${main})`);
+        document.documentElement.style.setProperty('--main-color', `${main}`);
+        document.documentElement.style.setProperty('--second-color', `${second}`);        
+    }    
+
 return {
     buttonLogin,
     openSetting,
@@ -94,7 +115,8 @@ return {
     showClearButton,
     clearSearch,
     showPassword,
-    rangeAvaFoto    
+    rangeAvaFoto,
+    changeSettings    
 };
 
 })();
