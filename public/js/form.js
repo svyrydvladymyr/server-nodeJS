@@ -14,7 +14,7 @@ window.onload = function(){
     input.setAttribute("min", "1930-01-02");
     input.setAttribute("max", SE.readyFullDate(''));
 
-    //border preview foto on start
+//border preview foto on start
     SE.$('reg-ava').style.border = '0px solid #e0e0e0';
 
 

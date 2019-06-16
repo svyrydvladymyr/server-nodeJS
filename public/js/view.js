@@ -88,17 +88,22 @@ let VW = (() => {
     };   
 
 //change main style
-    let changeSettings = (mainarg, secondarg) => {
+    let changeSettings = (mainarg, secondarg, bgarg) => {
         let main, second;
-        if ((mainarg === '') || (secondarg === '') || (mainarg === undefined) || (secondarg === undefined)){
+        if ((mainarg === '') || (secondarg === '') || (bgarg === '') || 
+            (mainarg === undefined) || (secondarg === undefined) || (secondarg === undefined)){
             main = '#2d5e8e';
             second ='#5c8ab9';
+            bg = '#f1f1f1';
         } else {
             main = mainarg;
             second = secondarg;
-        }
-        localStorage.kalciferMaimColor=main;
-        localStorage.kalcifersecondColor=second;
+            bg = bgarg;
+        }        
+        localStorage.kalcifermaincolor=main;
+        localStorage.kalcifersecondcolor=second;
+        localStorage.kalciferbgcolor=bgarg;
+        document.documentElement.style.setProperty('--bg-color', `${bg}`);
         document.documentElement.style.setProperty('--border', `1px solid ${main}`);
         document.documentElement.style.setProperty('--border-5px', `5px solid ${main}`);
         document.documentElement.style.setProperty('--box-shadow-main', `0px 0px 5px ${second}`);
@@ -106,7 +111,19 @@ let VW = (() => {
         document.documentElement.style.setProperty('--button-background', `linear-gradient(to bottom right, ${main}, ${second}, ${main})`);
         document.documentElement.style.setProperty('--main-color', `${main}`);
         document.documentElement.style.setProperty('--second-color', `${second}`);        
-    }    
+    } 
+
+//open and close custom main style    
+    let customMainStyle = () => {
+        let el = SE.$('customcolor');
+        el.style.display === "none" ? el.style.display = "flex" : el.style.display = "none";        
+    }; 
+    
+//set custom settings    
+    let setCustomSettings = (el, val) => {     
+        localStorage.setItem(`kalcifer${el}`, `${val.value}`);
+        VW.changeSettings(localStorage.kalcifermaincolor, localStorage.kalcifersecondcolor, localStorage.kalciferbgcolor);
+    };
 
 return {
     buttonLogin,
@@ -116,7 +133,9 @@ return {
     clearSearch,
     showPassword,
     rangeAvaFoto,
-    changeSettings    
+    changeSettings,
+    customMainStyle,
+    setCustomSettings    
 };
 
 })();

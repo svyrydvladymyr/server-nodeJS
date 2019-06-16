@@ -77,12 +77,17 @@
             <div class="set_blok">
                 <p id="settings_style"></p>
                 <div class="height-blok-set">
-                    <div class="main-style-btn bg-blue" onclick="VW.changeSettings('#2d5e8e', '#5c8ab9')"></div>
-                    <div class="main-style-btn bg-green" onclick="VW.changeSettings('#3aa54c', '#94de81')"></div>
-                    <div class="main-style-btn bg-red" onclick="VW.changeSettings('#ca2e23', '#ef837b')"></div>
-                    <div class="main-style-btn bg-yellow" onclick="VW.changeSettings('#ffe999', '#a78300')"></div>
-                    <div class="main-style-btn bg-grey" onclick="VW.changeSettings('#636363', '#c3c3c3')"></div>
-                    <div class="main-style-btn bg-custom" onclick="VW.changeSettings('main', 'custom')"></div>
+                    <div class="main-style-btn bg-blue" onclick="VW.changeSettings('#2d5e8e', '#5c8ab9', '#F1F1F1')"></div>
+                    <div class="main-style-btn bg-green" onclick="VW.changeSettings('#3aa54c', '#94de81', '#F1F1F1')"></div>
+                    <div class="main-style-btn bg-red" onclick="VW.changeSettings('#ca2e23', '#ef837b', '#F1F1F1')"></div>
+                    <div class="main-style-btn bg-yellow" onclick="VW.changeSettings('#ffe999', '#a78300', '#F1F1F1')"></div>
+                    <div class="main-style-btn bg-grey" onclick="VW.changeSettings('#636363', '#c3c3c3', '#F1F1F1')"></div>
+                    <div class="main-style-btn bg-custom" onclick="VW.customMainStyle()"></div>
+                </div>
+                <div class="height-blok-set2"  id="customcolor" style="display:none;">                             
+                    <label for="bgcolor">bg</label><input type="color" name="bgcolor" id="bgcolor" value="#f1f1f1" onchange="VW.setCustomSettings('bgcolor', this)">
+                    <label for="bgcolor">m</label><input type="color" name="maincolor" id="maincolor" value="#2d5e8e" onchange="VW.setCustomSettings('maincolor', this)">
+                    <label for="bgcolor">s</label><input type="color" name="secondcolor" id="secondcolor" value="#5c8ab9" onchange="VW.setCustomSettings('secondcolor', this)">
                 </div>
             </div> 
             <div class="set_blok">
