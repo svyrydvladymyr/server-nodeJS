@@ -1,6 +1,8 @@
 {
         "login_button":"ENTER",       
         "settings_style":"MAIN STYLES",  
+        "settings_border":"BORDER RADIUS",  
+        "settings_font":"FONT FAMILY",  
         "registration":"REGISTRATION",
         "form_toback":"BACK TO MAIN", 
         "button-preview-form":"CONFIRM",

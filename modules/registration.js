@@ -34,7 +34,7 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);            
-    var sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
+    let sql = `INSERT INTO users (userid, login, password, name, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     con.query(sql, function (err, result) {
         if (err) {
@@ -61,7 +61,7 @@ let registrationUsers = (req, res) => {
 let addAvatoDB = (req, res) => {
     let storage, upload;
     storage = multer.diskStorage({
-        destination: (req, file, cb) => {cb(null, +__dirname+"/../uploads")},
+        destination: (req, file, cb) => {cb(null, +__dirname+"/../public/uploads")},
         filename: (req, file, cb) => {
           if (req.file === undefined){
             cb(null, token(10) +'_'+  file.originalname);

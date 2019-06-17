@@ -1,6 +1,8 @@
 {
     "login_button":"ВХІД",    
     "settings_style":"ГОЛОВНІ СТИЛІ",
+    "settings_border":"РАДІУС КУТІВ",  
+    "settings_font":"ШРИФТ", 
     "registration":"РЕЄСТРАЦІЯ",
     "form_toback":"НА ГОЛОВНУ", 
     "button-preview-form":"ПІДТВЕРДИТИ",

@@ -8,72 +8,14 @@
     --border-5px:5px solid #2d5e8e; */
     --border-2px:2px solid #616161;
     --border-15px:15px solid #e4e4e4;
+    /* --main-font:'PT Sans', sans-serif; */
     /* --box-shadow-main:0px 0px 5px #5c8ab9; */
     /* --text-shadow-main:0px 0px 2px #5c8ab9; */
-    --border-radius-main:9px;
+    /* --border-radius-main:9px 9px 9px 9px; */
     /* --button-background:linear-gradient(to bottom right, #13375a, #a3c1de, #143e67); */
     /* --main-color:#2d5e8e;
     --second-color:#5c8ab9; */
 }
-
-
-
-/*grey*/
-/* :root{
-    --bg-color:#F1F1F1;
-    --bg-color-content:#ffffff;
-    --border:1px solid #636363;
-    --border-5px:5px solid #636363;
-    --box-shadow-main:0px 0px 5px #808080;
-    --text-shadow-main:0px 0px 2px #808080;
-    --border-radius-main:9px;
-    --button-background:linear-gradient(to bottom right, #636363, #c3c3c3, #636363);
-    --main-color:#636363;
-    --second-color:#c3c3c3;
-} */
-
-/*green*/
-/* :root{
-    --bg-color:#F1F1F1;
-    --bg-color-content:#ffffff;
-    --border:1px solid #3aa54c;
-    --border-5px:5px solid #3aa54c;
-    --box-shadow-main:0px 0px 5px #94de81;
-    --text-shadow-main:0px 0px 2px #94de81;
-    --border-radius-main:9px;
-    --button-background:linear-gradient(to bottom right, #3aa54c, #94de81, #3aa54c);
-    --main-color:#3aa54c;
-    --second-color:#94de81;
-} */
-
-/*red*/
-/* :root{
-    --bg-color:#F1F1F1;
-    --bg-color-content:#ffffff;
-    --border:1px solid #ca2e23;
-    --border-5px:5px solid #ca2e23;
-    --box-shadow-main:0px 0px 5px #ef837b;
-    --text-shadow-main:0px 0px 2px #ef837b;
-    --border-radius-main:9px;
-    --button-background:linear-gradient(to bottom right, #ca2e23, #ef837b, #ca2e23);
-    --main-color:#ca2e23;
-    --second-color:#ef837b;
-} */
-
-/*yellow*/
-/* :root{
-    --bg-color:#F1F1F1;
-    --bg-color-content:#ffffff;
-    --border:1px solid #f5c207;
-    --border-5px:5px solid #f5c207;
-    --box-shadow-main:0px 0px 5px #ffe999;
-    --text-shadow-main:0px 0px 2px #ffe999;
-    --border-radius-main:9px;
-    --button-background:linear-gradient(to bottom right, #ffe999, #a78300, #ffe999);
-    --main-color:#f5c207;
-    --second-color:#ffe999;
-    --color-text:#a78300;
-} */
 
 *{
     box-sizing: border-box;
@@ -84,12 +26,7 @@ body{
     margin: 0px;
     min-width: 300px;
     background: var(--bg-color);
-    /* font-family: 'Caveat', cursive; */
-    /* font-family: 'Marck Script', cursive; */
-    font-family: 'PT Sans', sans-serif;
-    /* font-family: 'Lobster', cursive; */
-    /* font-family: 'Neucha', cursive; */
-    /* font-family: 'Bad Script', cursive; */
+    font-family: var(--main-font);
 }
 
 /* grid */
@@ -211,11 +148,12 @@ body{
 
 .header_search .user_list{
     width: 70%;
-    min-height: 200px;
+    min-height: 50px;
     position: absolute;
+    padding: 10px 0px;
     top: 70px;
     left: 15%;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     border: 2px solid #d2d2d2;
@@ -234,6 +172,51 @@ body{
     top: -22px;
     left: 46%;
     transform: rotate(180deg);
+}
+
+.listusers-boks{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    min-height: 20px;
+    border-radius: 70px 9px 9px 70px;
+    box-shadow: -1px 1px 1px #2d5e8e;
+    margin: 5px 5%;
+    padding: 0px 0px 0px 0px;
+    transition: 0.4s;
+}
+
+.listusers-boks:hover{
+    background: #5c8ab9;
+    color: #ffffff;
+    font-weight: normal;
+    text-shadow: 0px 0px 2px #000000;
+    box-shadow: -1px 0px 4px #2d5e8e;
+    transition: 0.4s;
+}
+
+.listusers-img{
+    width: 40px;
+    height: 40px;
+    border: 3px solid #ffffff;
+    border-radius: 50% 50% 2px 50%;
+    box-shadow: 0px 0px 4px #2d5e8e;
+    background-size: cover;
+    transition: 0.4s;
+}
+
+.listusers-boks p{
+    margin: 0px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.listusers-boks:hover .listusers-img{
+    display: block;
+    border-radius: 50% 2px 50% 50%;
+    transition: 0.4s;
 }
 
 /*---------------------------------------------------------------------------------------------------------------------*/
@@ -554,7 +537,6 @@ body{
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
-    height: 37px;
     padding: 0px 13px 0px 3px;
     overflow: hidden;
 }
@@ -676,7 +658,7 @@ body{
 }
 
 .side_sub{
-    padding: 10px;
+    padding: 20px 10px;
     margin: 10px;
     width: 100%;
     display: table;

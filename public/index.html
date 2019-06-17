@@ -32,9 +32,9 @@
                 </div>
                 <!--search-->
                 <div class="header_search">
-                    <input type="text" placeholder="Пошук..." id="search" oninput="VW.showClearButton()">
+                    <input type="text" placeholder="Пошук..." id="search" oninput="VW.showClearButton(), VW.showUsersList(this)">
                     <i class='fas' onclick="VW.clearSearch()" style="display: none" id="search_clear">&#xf00d;</i>
-                    <div class="user_list"></div>
+                    <div class="user_list" id="userlist"></div>
                 </div>
                 <!--button-->
                 <div class="header_button">
@@ -76,7 +76,7 @@
             </div>     
             <div class="set_blok">
                 <p id="settings_style"></p>
-                <div class="height-blok-set">
+                <div class="height-blok-set" style="height: 37px;">
                     <div class="main-style-btn bg-blue" onclick="VW.changeSettings('#2d5e8e', '#5c8ab9', '#F1F1F1')"></div>
                     <div class="main-style-btn bg-green" onclick="VW.changeSettings('#3aa54c', '#94de81', '#F1F1F1')"></div>
                     <div class="main-style-btn bg-red" onclick="VW.changeSettings('#ca2e23', '#ef837b', '#F1F1F1')"></div>
@@ -85,23 +85,32 @@
                     <div class="main-style-btn bg-custom" onclick="VW.customMainStyle()"></div>
                 </div>
                 <div class="height-blok-set2"  id="customcolor" style="display:none;">                             
-                    <label for="bgcolor">bg</label><input type="color" name="bgcolor" id="bgcolor" value="#f1f1f1" onchange="VW.setCustomSettings('bgcolor', this)">
-                    <label for="bgcolor">m</label><input type="color" name="maincolor" id="maincolor" value="#2d5e8e" onchange="VW.setCustomSettings('maincolor', this)">
-                    <label for="bgcolor">s</label><input type="color" name="secondcolor" id="secondcolor" value="#5c8ab9" onchange="VW.setCustomSettings('secondcolor', this)">
+                    <label for="bgcolor">bg</label><input type="color" name="bgcolor" id="bgcolor" value="#f1f1f1" onchange="VW.setCustomSettings('bgcolor', this, 's')">
+                    <label for="bgcolor">m</label><input type="color" name="maincolor" id="maincolor" value="#2d5e8e" onchange="VW.setCustomSettings('maincolor', this, 's')">
+                    <label for="bgcolor">s</label><input type="color" name="secondcolor" id="secondcolor" value="#5c8ab9" onchange="VW.setCustomSettings('secondcolor', this, 's')">
                 </div>
             </div> 
             <div class="set_blok">
-                <p>BORDER RADIUS</p>
+                <p id="settings_border"></p>
+                <div class="height-blok-set add-height">
+                    <input type="range" name="topleft" id="topleft" min="0" max="40" step="1" onchange="VW.setCustomSettings('topleft', this, 'r')">
+                    <input type="range" name="topright" id="topright" min="0" max="40" step="1" onchange="VW.setCustomSettings('topright', this, 'r')">
+                    <input type="range" name="bottomleft" id="bottomleft" min="0" max="40" step="1" onchange="VW.setCustomSettings('bottomleft', this, 'r')">
+                    <input type="range" name="bottomright" id="bottomright" min="0" max="40" step="1" onchange="VW.setCustomSettings('bottomright', this, 'r')">
+                </div>
             </div> 
             <div class="set_blok">
-                <p>FONT-FAMILY</p>
+                <p id="settings_font"></p>
+                <div class="height-blok-set" style="padding: 8px;">
+                    <select name="fontselect" id="fontselect"  onchange="VW.setCustomSettings('font', this, 'f')">
+                        <option value="ptsans">PT Sans</option>
+                        <option value="caveat">Caveat</option>
+                        <option value="marckscript">Marck Script</option>
+                        <option value="lobster">Lobster</option>
+                        <option value="neucha">Neucha</option>
+                    </select>
+                </div>
             </div> 
-            <div class="set_blok">
-                <p>BORDER-IMG</p>
-            </div>   
-            <div class="set_blok">
-                <p>BORDER RADIUS</p>
-            </div>                             
         </div>                   
     </div>   
 
@@ -175,17 +184,6 @@
         </div>
         <!--CONTENT-->
         <div class="article">    
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-           
-                <input type="file" name="avatar" id="file" multiple>
-                <input type="submit" value="Upload Image" name="submit" onclick="send2()">
-            
         </div>
         <!--BLOK ON TOP FOOTER-->
         <div class="blok">

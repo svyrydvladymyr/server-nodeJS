@@ -6,6 +6,7 @@ let bodyParser = require('body-parser');
 let app = express();
 let {translit, token, log} = require('./modules/service');
 let {registrationUsers, addAvatoDB} = require('./modules/registration');
+let {searchUser} = require('./modules/searchuser');
 
 
 
@@ -15,6 +16,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
+app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
 
 

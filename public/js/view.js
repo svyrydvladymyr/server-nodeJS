@@ -65,6 +65,7 @@ let VW = (() => {
     let clearSearch = () => {
         SE.$("search").value = '';
         SE.$("search_clear").style.display = 'none'
+        SE.$('userlist').style.display = 'none';
     }
 
 //show password
@@ -89,7 +90,7 @@ let VW = (() => {
 
 //change main style
     let changeSettings = (mainarg, secondarg, bgarg) => {
-        let main, second;
+        let main, second, bg;
         if ((mainarg === '') || (secondarg === '') || (bgarg === '') || 
             (mainarg === undefined) || (secondarg === undefined) || (secondarg === undefined)){
             main = '#2d5e8e';
@@ -100,9 +101,9 @@ let VW = (() => {
             second = secondarg;
             bg = bgarg;
         }        
-        localStorage.kalcifermaincolor=main;
-        localStorage.kalcifersecondcolor=second;
-        localStorage.kalciferbgcolor=bgarg;
+        localStorage.kalcifermaincolor = main;
+        localStorage.kalcifersecondcolor = second;
+        localStorage.kalciferbgcolor = bgarg;
         document.documentElement.style.setProperty('--bg-color', `${bg}`);
         document.documentElement.style.setProperty('--border', `1px solid ${main}`);
         document.documentElement.style.setProperty('--border-5px', `5px solid ${main}`);
@@ -113,6 +114,48 @@ let VW = (() => {
         document.documentElement.style.setProperty('--second-color', `${second}`);        
     } 
 
+//change main style
+    let changeRadius = (tla, tra, bla, bra) => {
+        let tl, tr, bl, br;
+        if ((tla === '') ||  (tra === '') ||  (bla === '') ||  (bra === '') || 
+            (tla === undefined) ||  (tra === undefined) ||  (bla === undefined) ||  (bra === undefined)){
+            tl = 9;
+            tr = 9;
+            bl = 9;
+            br = 9;
+        } else {
+            tl = tla;
+            tr = tra;
+            bl = bla;
+            br = bra;
+        }  
+        localStorage.kalcifertopleft = tl;
+        localStorage.kalcifertopright = tr;
+        localStorage.kalciferbottomleft = bl;
+        localStorage.kalciferbottomright = br;
+        document.documentElement.style.setProperty('--border-radius-main', `${tl}px ${tr}px ${br}px ${bl}px `);
+    } 
+
+//change font
+    let changeFont = (fonta) => {
+        let font;
+        if ((fonta === '') || (fonta === undefined)){
+            font = `'PT Sans', sans-serif`;
+        } else if (fonta === 'ptsans') {
+            font = `'PT Sans', sans-serif`;
+        } else if (fonta === 'caveat') {
+            font = `'Caveat', cursive`;
+        } else if (fonta === 'marckscript') {
+            font = `'Marck Script', cursive`;
+        } else if (fonta === 'lobster') {
+            font = `'Lobster', cursive`;
+        } else if (fonta === 'neucha') {
+            font = `'Neucha', cursive`;
+        } 
+        localStorage.kalciferfont = fonta;
+        document.documentElement.style.setProperty('--main-font', `${font}`);
+    } 
+
 //open and close custom main style    
     let customMainStyle = () => {
         let el = SE.$('customcolor');
@@ -120,10 +163,62 @@ let VW = (() => {
     }; 
     
 //set custom settings    
-    let setCustomSettings = (el, val) => {     
-        localStorage.setItem(`kalcifer${el}`, `${val.value}`);
-        VW.changeSettings(localStorage.kalcifermaincolor, localStorage.kalcifersecondcolor, localStorage.kalciferbgcolor);
+    let setCustomSettings = (el, val, t) => {  
+        if (t === 's'){
+            localStorage.setItem(`kalcifer${el}`, `${val.value}`);
+            VW.changeSettings(localStorage.kalcifermaincolor, localStorage.kalcifersecondcolor, localStorage.kalciferbgcolor);
+        } else if (t === 'r'){
+            localStorage.setItem(`kalcifer${el}`, `${val.value}`);
+            VW.changeRadius(localStorage.kalcifertopleft, localStorage.kalcifertopright, localStorage.kalciferbottomleft, localStorage.kalciferbottomright);
+        } else if (t === 'f'){
+            localStorage.setItem(`kalcifer${el}`, `${val.value}`);
+            VW.changeFont(localStorage.kalciferfont);
+        }
     };
+
+//show users list
+    let showUsersList = (el) => {
+        if (el.value.length > 1){
+            console.log("sdfsdf");
+            SE.$('userlist').style.display = 'flex';
+            let searchuser = el.value;
+            let obj = { "searchuser":searchuser}
+            dbParam = JSON.stringify(obj);
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let parseObj = JSON.parse(this.responseText);
+                    console.log(parseObj);
+                    if (parseObj.length === 0){
+                        if (localStorage.kalciferLang === "ua") {
+                            SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">НЕ ЗНАЙДЕНО...</p>';
+                        } else if (localStorage.kalciferLang === "en") {
+                            SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">NOT FOUND...</p>';
+                        }
+                    } else {
+                        SE.$('userlist').innerHTML = '';
+                        for(let i = 0; i < parseObj.length; i++){
+                            SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
+                                                            <div class="listusers-img" 
+                                                                style="background-image: url('./uploads/${parseObj[i].ava}'); 
+                                                                background-position: ${parseObj[i].avasettings};">
+                                                            </div>    
+                                                            <p>${parseObj[i].name} ${parseObj[i].surname}</p>
+                                                            </div>`;
+                        }
+                    }
+
+                    
+                }
+            };
+            xmlhttp.open("POST", "/searchuser", true);
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(dbParam);
+            
+        } else {
+            SE.$('userlist').style.display = 'none';
+        }
+    }
 
 return {
     buttonLogin,
@@ -135,7 +230,10 @@ return {
     rangeAvaFoto,
     changeSettings,
     customMainStyle,
-    setCustomSettings    
+    setCustomSettings,
+    changeRadius,
+    changeFont,
+    showUsersList
 };
 
 })();
