@@ -198,17 +198,21 @@ let VW = (() => {
                     } else {
                         SE.$('userlist').innerHTML = '';
                         for(let i = 0; i < parseObj.length; i++){
+                            let avafoto;
+                            if ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)){
+                                avafoto = `./img/ava_empty.jpg`;
+                            } else {
+                                avafoto = `./uploads/${parseObj[i].ava}`;
+                            }
                             SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
                                                             <div class="listusers-img" 
-                                                                style="background-image: url('./uploads/${parseObj[i].ava}'); 
+                                                                style="background-image: url('${avafoto}'); 
                                                                 background-position: ${parseObj[i].avasettings};">
                                                             </div>    
                                                             <p>${parseObj[i].name} ${parseObj[i].surname}</p>
                                                             </div>`;
                         }
-                    }
-
-                    
+                    }                    
                 }
             };
             xmlhttp.open("POST", "/searchuser", true);
@@ -218,6 +222,12 @@ let VW = (() => {
         } else {
             SE.$('userlist').style.display = 'none';
         }
+    }
+
+//get and render page    
+    let renderPage = (el) => {
+        console.log(el.id);
+        SE.redirect(el.id);        
     }
 
 return {
@@ -233,7 +243,8 @@ return {
     setCustomSettings,
     changeRadius,
     changeFont,
-    showUsersList
+    showUsersList,
+    renderPage
 };
 
 })();

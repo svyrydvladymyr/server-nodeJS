@@ -6,7 +6,10 @@
     "registration":"РЕЄСТРАЦІЯ",
     "form_toback":"НА ГОЛОВНУ", 
     "button-preview-form":"ПІДТВЕРДИТИ",
-
+    "footer-copyright-person":"Сайт розробив: <b>СВИРИД ВОЛОДИМИР СТЕПАНОВИЧ</b>",
+    "footer-copyright-link-about":"Про нас",
+    "footer-copyright-link-registr":"Реєстрація",
+    "footer-copyright-link-news":"Новини",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  

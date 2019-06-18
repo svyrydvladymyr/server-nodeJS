@@ -22,9 +22,10 @@
 }
 
 .header_logo, .header_search, .header_button{
-    width: 50%;
+    width: 33.3%;
     min-width: 280px;
-    min-height: 50px;
+    min-height: 90px;
+
 }
 
 /*logo*/
@@ -34,22 +35,22 @@
 
 /*search*/
 .header_search{
-    order: 3;
+    order: 2;
 } 
 .header_search i{
     right: 15.5%;
-    top: 12px;
+    top: 32px;
 }
 .header_search .user_list{
-    top: 50px;
+    top: 75px;
 }
 
 /*button*/
 .header_button{
-    order: 2;
+    order: 3;
 }
 .registration{
-    top: 43px;
+    top: 55px;
 }
 
 /*--------------------------EMPTY BLOKS-----------------------------*/
@@ -61,3 +62,46 @@
     grid-area: out1;
 }
 
+
+@media screen and (max-width:970px){
+    .header_logo, .header_search, .header_button{
+        display: flex;
+        justify-content: space-around;
+        width: 90%;
+        min-width: 280px;
+        min-height: 35px;
+        max-width: 430px;
+    }
+    .header_button{
+        padding-right: 6%;
+        margin-top: -20px;
+        margin-bottom: 10px;
+    }
+
+    .header_search{
+        margin-bottom: 10px;
+    }
+    /*logo*/
+    .header_logo{
+        order: 1;
+    }
+    /*search*/
+    .header_search{
+        order: 3;
+    } 
+    /*button*/
+    .header_button{
+        order: 2;
+    }
+    .header_search i{
+        right: 15.5%;
+        top: 5px;
+    }
+    .header_search .user_list{
+        top: 48px;
+    }
+    .registration {
+        top: 45px;
+        right: 15%;
+    }
+}

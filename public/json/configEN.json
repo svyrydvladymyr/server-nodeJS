@@ -6,6 +6,10 @@
         "registration":"REGISTRATION",
         "form_toback":"BACK TO MAIN", 
         "button-preview-form":"CONFIRM",
+        "footer-copyright-person":"The site has been developed by <b>SVIRID VLADIMIR STEPANOVICH</b>",
+        "footer-copyright-link-about":"About us",
+        "footer-copyright-link-registr":"Registration",
+        "footer-copyright-link-news":"News",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  
