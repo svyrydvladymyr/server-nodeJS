@@ -3,11 +3,11 @@ let path = require('path');
 let fs = require('fs');
 let express = require('express');
 let app = express();
+let Cookies = require('cookies');
 let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
-
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
@@ -26,9 +26,16 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/registration', (req, res, next) => {
-    res.render(`registration`, {});
+    res.render(`registration`);
     next();
 });
+
+app.use('/login', (req, res, next) => {
+    let cookies = new Cookies(req, res);
+    cookies.set('sessionid', 'sssss', {maxAge: '', path: '/'}); 
+    next()
+});
+
 app.use('/:userid', (req, res, next) => {renderuser(req, res, next)});
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 

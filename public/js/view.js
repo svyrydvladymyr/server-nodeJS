@@ -92,7 +92,7 @@ let VW = (() => {
     let changeSettings = (mainarg, secondarg, bgarg) => {
         let main, second, bg;
         if ((mainarg === '') || (secondarg === '') || (bgarg === '') || 
-            (mainarg === undefined) || (secondarg === undefined) || (secondarg === undefined)){
+            (mainarg === undefined) || (secondarg === undefined) || (bgarg === undefined)){
             main = '#2d5e8e';
             second ='#5c8ab9';
             bg = '#f1f1f1';
@@ -103,7 +103,7 @@ let VW = (() => {
         }        
         localStorage.kalcifermaincolor = main;
         localStorage.kalcifersecondcolor = second;
-        localStorage.kalciferbgcolor = bgarg;
+        localStorage.kalciferbgcolor = bg;
         document.documentElement.style.setProperty('--bg-color', `${bg}`);
         document.documentElement.style.setProperty('--border', `1px solid ${main}`);
         document.documentElement.style.setProperty('--border-5px', `5px solid ${main}`);
@@ -141,19 +141,23 @@ let VW = (() => {
         let font;
         if ((fonta === '') || (fonta === undefined)){
             font = `'PT Sans', sans-serif`;
-        } else if (fonta === 'ptsans') {
-            font = `'PT Sans', sans-serif`;
-        } else if (fonta === 'caveat') {
-            font = `'Caveat', cursive`;
-        } else if (fonta === 'marckscript') {
-            font = `'Marck Script', cursive`;
-        } else if (fonta === 'lobster') {
-            font = `'Lobster', cursive`;
-        } else if (fonta === 'neucha') {
-            font = `'Neucha', cursive`;
+            localStorage.kalciferfont = "ptsans";
+            document.documentElement.style.setProperty('--main-font', `${font}`);
+        } else {
+            if (fonta === 'ptsans') {
+                font = `'PT Sans', sans-serif`;
+            } else if (fonta === 'caveat') {
+                font = `'Caveat', cursive`;
+            } else if (fonta === 'marckscript') {
+                font = `'Marck Script', cursive`;
+            } else if (fonta === 'lobster') {
+                font = `'Lobster', cursive`;
+            } else if (fonta === 'neucha') {
+                font = `'Neucha', cursive`;
+            } 
+            localStorage.kalciferfont = fonta;
+            document.documentElement.style.setProperty('--main-font', `${font}`);
         } 
-        localStorage.kalciferfont = fonta;
-        document.documentElement.style.setProperty('--main-font', `${font}`);
     } 
 
 //open and close custom main style    

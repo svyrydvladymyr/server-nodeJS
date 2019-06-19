@@ -129,10 +129,14 @@
         <!--SIDE-INFO-->
         <div class="side">
             <%- include("info.ejs") %>
-            <div class="side_sub">  
-            </div>
-            <div class="side_sub">
-            </div>
+                <% if(permiss === 'true') {%>
+                <div class="side_sub">  
+                    <p id="town"><%=name %></p>
+                </div>
+                <div class="side_sub">
+                </div>
+                <% } %>
+
         </div>
         <!--CONTENT-->
         <div class="article">    

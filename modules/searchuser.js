@@ -6,7 +6,7 @@ let searchUser = (req, res) => {
     console.log(searchuser);
     let transl = translit(searchuser);
     console.log(transl);
-    let sql = `SELECT name, surname, userid, ava, avasettings FROM users WHERE name LIKE '${searchuser}%' OR surname LIKE '${searchuser}%' OR name LIKE '${transl}%' OR surname LIKE '${transl}%' OR userid LIKE '${transl}%'`;
+    let sql = `SELECT U.name, U.surname, U.userid, U.ava, S.avasettings FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.name LIKE '${searchuser}%' OR U.surname LIKE '${searchuser}%' OR U.name LIKE '${transl}%' OR U.surname LIKE '${transl}%' OR U.userid LIKE '${transl}%'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
