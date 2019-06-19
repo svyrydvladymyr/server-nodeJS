@@ -4,7 +4,9 @@ let {translit, token} = require('./service');
 let searchUser = (req, res) => {
     let searchuser = req.body.searchuser;
     console.log(searchuser);
-    let sql = `SELECT name, surname, userid, ava, avasettings FROM users WHERE name LIKE '${searchuser}%' OR surname LIKE '${searchuser}%'`;
+    let transl = translit(searchuser);
+    console.log(transl);
+    let sql = `SELECT name, surname, userid, ava, avasettings FROM users WHERE name LIKE '${searchuser}%' OR surname LIKE '${searchuser}%' OR name LIKE '${transl}%' OR surname LIKE '${transl}%' OR userid LIKE '${transl}%'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -17,6 +19,4 @@ let searchUser = (req, res) => {
 }
 
 
-module.exports = {
-    searchUser    
-};
+module.exports = searchUser;

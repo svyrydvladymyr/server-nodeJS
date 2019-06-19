@@ -569,13 +569,13 @@ let clonePhoneNumber = () => {
         } 
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
         axios.post('/addavatodb', formData, contenttype)
-        .then(function (response) {    
+        .then(function (response) {              
             if (response.request.readyState == 4 && response.request.status == "200") {  
                 SE.$("main-form-message").innerHTML = SE.errorFormMessage().registrationGood;
                 setTimeout(() => {
                     SE.$("main-form-message").innerHTML = '';
                     CLEAR.clearRegProto();
-                    SE.redirect('/');
+                    SE.redirect(`/${response.data.userid}`);
                 }, 2000);
             }
         })

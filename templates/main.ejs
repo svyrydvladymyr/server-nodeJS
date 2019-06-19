@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">   
     <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
-    <title>6b 61 6c 63 69 66 65 72</title>
+    <title><%=title %></title>
 </head>
 <body>
     <!--HEADER-->
@@ -31,7 +31,7 @@
                     <img src="./img/logo.png">
                 </div>
                 <!--search-->
-                <div class="header_search">                    
+                <div class="header_search">
                     <input type="text" placeholder="Пошук..." id="search" oninput="VW.showClearButton(), VW.showUsersList(this)">
                     <i class='fas' onclick="VW.clearSearch()" style="display: none" id="search_clear">&#xf00d;</i>
                     <div class="user_list" id="userlist"></div>
@@ -114,20 +114,42 @@
         </div>                   
     </div>   
 
-    <div class="footer-main-info">
-        <div class="footer-copyright-links">
-            <a href="#"><p id="footer-copyright-link-about"></p></a>
-            <a href="/registration"><p id="footer-copyright-link-registr"></p></a>
-            <a href="#"><p id="footer-copyright-link-news"></p></a>
+    <!--WRAP BODY--> 
+    <div class="wrap">                     
+        <!--NAV-->
+        <div class="nav">     
+            <div class="naw-wrap">
+
+            </div>   
         </div>
-        <p id="footer-copyright-person"></p>
-        <p>Copyright © 2019 <b>6b 61 6c 63 69 66 65 72</b></p>
+
+        <!--EMPTY SIDE BLOKS-->
+        <div class="out1"></div>
+        <div class="out2"></div>
+        <!--SIDE-INFO-->
+        <div class="side">
+            <%- include("info.ejs") %>
+            <div class="side_sub">  
+            </div>
+            <div class="side_sub">
+            </div>
+        </div>
+        <!--CONTENT-->
+        <div class="article">    
+
+        </div>
+        <!--BLOK ON TOP FOOTER-->
+        <div class="blok">
+        </div>
+        <!--FOOTER-->
+        <div class="footer">
+            <img src="">
+        </div>
     </div>
 
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./js/ajax-param.js"></script>
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
@@ -135,4 +157,3 @@
  
 
 </body>
-

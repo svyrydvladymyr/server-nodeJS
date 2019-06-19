@@ -2,22 +2,35 @@ let http = require('http');
 let path = require('path');
 let fs = require('fs');
 let express = require('express');
-let bodyParser = require('body-parser');
 let app = express();
-let {translit, token, log} = require('./modules/service');
+let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB} = require('./modules/registration');
-let {searchUser} = require('./modules/searchuser');
+let searchUser = require('./modules/searchuser');
+let renderuser = require('./modules/renderuser');
 
 
-
-
-app.use(log);
+app.set('views', __dirname + '/templates'); 
+app.set('view engine', 'ejs');
+app.use((req, res, next) => {
+    console.log(`${req.method} --> ${req.url}`);
+    next();
+});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
-app.listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
+app.use((req, res, next) => {
+    let logs = `IP: ${req.ip}  TIME: ${new Date().toLocaleString()}  URL: ${req.url}\n`;
+    fs.appendFile('access-log.txt', logs, (err) => {console.log(err)});
+    next();
+});
+app.use('/registration', (req, res, next) => {
+    res.render(`registration`, {});
+    next();
+});
+app.use('/:userid', (req, res, next) => {renderuser(req, res, next)});
+app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 
 
 

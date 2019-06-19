@@ -1,0 +1,64 @@
+<div class="side_sub" id="sideinfo">
+        <div class="ava" style="background-image: url('<%=ava %>'); background-position: <%=avasettings %>;">
+            <!-- <img  alt="my-foto" id="foto"> -->
+        </div>
+        <div class="info">
+            <div class="info-blok-name" >
+                <p id="surname" style="margin-right: 6px;"><%=surname %></p>                        
+                <p id="name"><%=name %></p>
+            </div>
+            <% if((country !== '') || (town !== '')) {%>
+            <div class="info-blok">
+                <i class="far fa-address-card"></i>
+                <div  class="info-blok-text"> 
+                    <% if(country !== '') {%>   
+                    <p id="country"><%=country %></p>
+                    <% } %>
+                    <% if(town !== '') {%>
+                    <p id="town"><%=town %></p>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+            <% if(birthday !== '') {%>
+            <div class="info-blok">
+                <i class="fas fa-calendar-alt"></i>
+                <div class="info-blok-text">
+                    <p id="date"><%=birthday %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if(email !== '') {%>
+            <div class="info-blok">
+                <i class="fas fa-at"></i>
+                <div class="info-blok-text">
+                    <p id="email"><%=email %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if(phone !== '') {%>
+            <div class="info-blok">
+                <i class="fas fa-phone-volume"></i>
+                <div class="info-blok-text">
+                    <p id="phone"><%=phone %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if(message !== '') {%>
+            <div class="info-blok">
+                <i class="fas fa-comment"></i>
+                <div class="info-blok-text">
+                    <p id="massage"><%=message %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if(profession !== '') {%>
+            <div class="info-blok">
+                <i class="fas fa-laptop"></i>
+                <div class="info-blok-text">
+                    <p id="profession"><%=profession %></p>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>

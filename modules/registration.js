@@ -34,7 +34,7 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);            
-    let sql = `INSERT INTO users (userid, login, password, name, email, birthday, phone, message, country, town, profession, registrdata) 
+    let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     con.query(sql, function (err, result) {
         if (err) {
@@ -83,8 +83,8 @@ let addAvatoDB = (req, res) => {
                         console.log("err", err);
                         res.send(err);
                     }
-                    console.log(result.affectedRows + " record(s) updated");
-                    res.send(result);
+                    console.log(result.affectedRows + " foto updated");
+                    res.send({"result":result, "userid":prUs.userid});
                 }); 
             } else {
                 prUs.ava = '';
