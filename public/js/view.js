@@ -92,7 +92,7 @@ let VW = (() => {
     let changeSettings = (mainarg, secondarg, bgarg) => {
         let main, second, bg;
         if ((mainarg === '') || (secondarg === '') || (bgarg === '') || 
-            (mainarg === undefined) || (secondarg === undefined) || (secondarg === undefined)){
+            (mainarg === undefined) || (secondarg === undefined) || (bgarg === undefined)){
             main = '#2d5e8e';
             second ='#5c8ab9';
             bg = '#f1f1f1';
@@ -103,7 +103,7 @@ let VW = (() => {
         }        
         localStorage.kalcifermaincolor = main;
         localStorage.kalcifersecondcolor = second;
-        localStorage.kalciferbgcolor = bgarg;
+        localStorage.kalciferbgcolor = bg;
         document.documentElement.style.setProperty('--bg-color', `${bg}`);
         document.documentElement.style.setProperty('--border', `1px solid ${main}`);
         document.documentElement.style.setProperty('--border-5px', `5px solid ${main}`);

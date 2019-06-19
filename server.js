@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/registration', (req, res, next) => {
-    res.render(`registration`, {});
+    res.render(`registration`);
     next();
 });
 app.use('/:userid', (req, res, next) => {renderuser(req, res, next)});

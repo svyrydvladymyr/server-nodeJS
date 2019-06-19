@@ -36,6 +36,7 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);            
     let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
+    let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
     con.query(sql, function (err, result) {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY'){
@@ -52,6 +53,15 @@ let registrationUsers = (req, res) => {
                 }             
             }
         } else {
+            con.query(sqlsett, function (err, result) {
+                if (err) {
+                    console.log("err", err);
+                    res.send({"error":err});   
+                } else {
+                    console.log(result);
+                    // res.send(result);
+                }
+            });
             console.log(result);
             res.send(result);
         }
@@ -77,12 +87,21 @@ let addAvatoDB = (req, res) => {
             if (req.file !== undefined){
                 prUs.ava = req.file.filename;
                 prUs.avasettings = parseAvasettings.avasettings;
-                var sql = `UPDATE users SET ava = '${prUs.ava}', avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
+                var sql = `UPDATE users SET ava = '${prUs.ava}' WHERE userid = '${prUs.userid}'`;
+                var sqlsett = `UPDATE userssettings SET avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
                         console.log("err", err);
                         res.send(err);
                     }
+                    con.query(sqlsett, function (err, result) {
+                        if (err) {
+                            console.log("err", err);
+                            res.send(err);
+                        }
+                        console.log(result.affectedRows + " foto updated");
+                        // res.send({"result":result, "userid":prUs.userid});
+                    }); 
                     console.log(result.affectedRows + " foto updated");
                     res.send({"result":result, "userid":prUs.userid});
                 }); 

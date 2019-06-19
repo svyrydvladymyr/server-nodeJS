@@ -1,10 +1,11 @@
 let con = require('../db/connectToDB').con;
+let Cookies = require('cookies');
 
 let renderuser = (req, res, next) => {
     let getuserid = req.params['userid'];
     console.log(getuserid);
 
-    let sql = `SELECT * FROM users WHERE userid = '${getuserid}'`;
+    let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${getuserid}'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -15,12 +16,25 @@ let renderuser = (req, res, next) => {
                 next();
             } else {
                 console.log("good", result);
-                let avaurl, avaset;
+                let avaurl;
                 if (result[0].ava === null){
                     avaurl = `./img/ava_empty.jpg`;
                 }else{
                     avaurl = `./uploads/${result[0].ava}`;
                 }
+
+
+           
+
+
+                let cookies = new Cookies(req, res);
+                cookies.set('admin', 'adminval', {maxAge: '', path: '/'});
+
+
+     
+                
+                
+
                 res.render(`main`, {
                     title: `${result[0].surname} ${result[0].name}`,
                     name: `${result[0].name}`,
@@ -35,12 +49,13 @@ let renderuser = (req, res, next) => {
                     ava: `${avaurl}`,
                     avasettings: `${result[0].avasettings}`
                 });
-            }
+                // sendobj(req, res, result);
+            }            
         }
     });
 
     
-}
+};
 
 
 
