@@ -39,20 +39,41 @@
                 <!--button-->
                 <div class="header_button">
                     <div class="header-login">
+                        <% if(permiss === 'false') {%>
                         <!--button for enter-->
                         <div class="click">
                             <!--inputs-->
                             <div class="click-login-close" id="send-login-close">
                                 <input type="text" id="login" autofocus>
                                 <input type="password" id="password">
-                            </div>
+                            </div>                            
                             <!--button-->
                             <div id="click" onclick="VW.buttonLogin()">
                                 <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;" id="login_button"></p></div>
+                            </div>             
+                        </div>
+                        <% } %>
+                        <% if(permiss === 'true') {%>
+                        <!--button for enter-->
+                        <div class="click">
+                            <!--inputs-->
+                            <div class="click-login-close" id="send-login-close">
+                                <input type="text" id="login" autofocus>
+                                <input type="password" id="password">
+                            </div>                            
+                            <!--button-->
+                            <div id="click" onclick="VW.buttonLoginExit()">
+                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;" id="login_button_exit"></p></div>
                             </div>
                         </div>
-                    </div>  
+                        <% } %>
+                    </div>
+                    <% if(permiss === 'false') {%>  
                     <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
+                    <% } %>
+                    <% if(permiss === 'true') {%>
+                    <p class="login-message-autoris"><%=surname %> <%=name %></p>
+                    <% } %>
                     <p class="login-message"  id="login-message" style="display: none;"></p>
                 </div>
             </div>
@@ -130,13 +151,13 @@
         <!--SIDE-INFO-->
         <div class="side">
             <%- include("info.ejs") %>
-                <% if(permiss === 'true') {%>
-                <div class="side_sub">  
-                    <p id="town"><%=name %></p>
-                </div>
-                <div class="side_sub">
-                </div>
-                <% } %>
+            <% if(permiss === 'true') {%>
+            <div class="side_sub">  
+                <p id="town"><%=name %></p>
+            </div>
+            <div class="side_sub">
+            </div>
+            <% } %>
 
         </div>
         <!--CONTENT-->

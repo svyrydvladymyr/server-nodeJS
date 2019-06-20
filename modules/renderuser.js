@@ -22,12 +22,10 @@ let renderuser = (req, res, next) => {
                     avaurl = `./img/ava_empty.jpg`;
                 }else{
                     avaurl = `./uploads/${result[0].ava}`;
-                }     
-
-                let cookies = new Cookies(req, res);
-
-                let clientToken = cookies.get('sessionid');   
-                let permission;   
+                }
+                let permission, clientToken, cookies;
+                cookies = new Cookies(req, res);
+                clientToken = cookies.get('sessionisdd');   
                 if ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])){
                     permission = true;
                     console.log("----------good--------");                    
@@ -35,19 +33,10 @@ let renderuser = (req, res, next) => {
                     permission = false;
                     console.log("----------bad--------");
                 }
-
-
-                console.log(permission);
-                console.log(clientToken);
-                
-                console.log(req.params['userid']);
-                
-                
-
-                
-                
-
-                 res.render(`main`, {
+                console.log("permis--",permission);
+                console.log("clienttoken--",clientToken);                
+                console.log("reqparam--",req.params['userid']);          
+                res.render(`main`, {
                     title: `${result[0].surname} ${result[0].name}`,
                     name: `${result[0].name}`,
                     surname: `${result[0].surname}`,
@@ -62,7 +51,6 @@ let renderuser = (req, res, next) => {
                     avasettings: `${result[0].avasettings}`,
                     permiss: `${permission}`
                 });
-                // sendobj(req, res, result);
             }            
         }
     });

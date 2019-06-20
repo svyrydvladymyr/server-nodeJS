@@ -64,6 +64,9 @@
 .login-message {
     right: 29%;
 }
+.login-message-autoris{
+    right: 5%;
+}
 
 /*--------------------------EMPTY BLOKS-----------------------------*/
 .out2{
@@ -123,5 +126,8 @@
     .login-message {
         right: 32%;
         bottom: -3%;
+    }
+    .login-message-autoris{
+        right: 14%;
     }
 }

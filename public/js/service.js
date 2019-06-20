@@ -158,6 +158,7 @@ let SE = (() => {
             let registrationGood = "Реєстрація успішна!";
             let autorisNotEmpty = "Заповніть всі поля!";
             let autorisOnlyletters = "Тільки лат. букви та цифри!";
+            let autorisNotAvtoris = "Логін або пароль не вірні!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -173,7 +174,8 @@ let SE = (() => {
                 toshort,
                 registrationGood,
                 autorisNotEmpty,
-                autorisOnlyletters
+                autorisOnlyletters,
+                autorisNotAvtoris
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -191,6 +193,7 @@ let SE = (() => {
             let registrationGood = "Registration is successful!";
             let autorisNotEmpty = "Fill in all fields!";
             let autorisOnlyletters = "Only letters and numbers!";
+            let autorisNotAvtoris = "Login or pass. is incorrect!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -206,7 +209,8 @@ let SE = (() => {
                 toshort,
                 registrationGood,
                 autorisNotEmpty,
-                autorisOnlyletters
+                autorisOnlyletters,
+                autorisNotAvtoris
             };
         }
     };    

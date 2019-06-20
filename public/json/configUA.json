@@ -1,5 +1,6 @@
 {
-    "login_button":"ВХІД",    
+    "login_button":"ВХІД",   
+    "login_button_exit":"ВИХІД",    
     "settings_style":"ГОЛОВНІ СТИЛІ",
     "settings_border":"РАДІУС КУТІВ",  
     "settings_font":"ШРИФТ", 

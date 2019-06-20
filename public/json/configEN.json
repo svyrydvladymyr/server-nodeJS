@@ -1,5 +1,6 @@
 {
         "login_button":"ENTER",       
+        "login_button_exit":"EXIT",       
         "settings_style":"MAIN STYLES",  
         "settings_border":"BORDER RADIUS",  
         "settings_font":"FONT FAMILY",  

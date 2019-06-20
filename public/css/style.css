@@ -330,6 +330,19 @@ body{
     box-shadow: 0px 0px 2px white;
     background: var(--second-color);
 }
+
+.login-message-autoris{
+    position: absolute;
+    bottom: 9%;
+    right: 4%;
+    font-size: 12px;
+    margin: 0px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-shadow: 0px 0px 2px #ffffff;
+    border-radius: 5px;
+    padding: 1px 5px;
+}
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

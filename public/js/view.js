@@ -23,6 +23,12 @@ let VW = (() => {
                     if (this.readyState == 4 && this.status == 200) {
                         let parseObj = JSON.parse(this.responseText);
                         console.log(parseObj);                        
+                        console.log(parseObj.err);    
+                        if (parseObj.err === 'false'){
+                            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotAvtoris;
+                        } else {
+                            SE.redirect(parseObj.res);
+                        }                   
                     }
                 };
                 xmlhttp.open("POST", "/autorisation", true);
