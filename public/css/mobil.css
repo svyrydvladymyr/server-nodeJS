@@ -59,6 +59,9 @@
 .header_button{
     order: 2;
 }
+.header-login {
+    padding: 10px 0px;
+}
 .click {
     margin: 0px 20px 17px 20px;
 }
@@ -69,8 +72,12 @@
     width: 45%;
 }
 .registration{
-    right: 7.5%;
-    top: 24px;
+    right: 8%;
+    bottom: 0%;
+}
+.login-message {
+    bottom: 1%;
+    right: 35%;
 }
 
 /*------------------------EMPTY BLOKS---------------------------*/

@@ -156,6 +156,8 @@ let SE = (() => {
             let duplemail = "Користувач з такою поштою вже існує!";
             let toshort = "Мінімум 7 символів!";
             let registrationGood = "Реєстрація успішна!";
+            let autorisNotEmpty = "Заповніть всі поля!";
+            let autorisOnlyletters = "Тільки лат. букви та цифри!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -169,7 +171,9 @@ let SE = (() => {
                 dupllogin,
                 duplemail,
                 toshort,
-                registrationGood
+                registrationGood,
+                autorisNotEmpty,
+                autorisOnlyletters
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -185,6 +189,8 @@ let SE = (() => {
             let duplemail = "A user with such mail already exists!";
             let toshort = "Minimum of 7 characters!";
             let registrationGood = "Registration is successful!";
+            let autorisNotEmpty = "Fill in all fields!";
+            let autorisOnlyletters = "Only letters and numbers!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -198,7 +204,9 @@ let SE = (() => {
                 dupllogin,
                 duplemail,
                 toshort,
-                registrationGood
+                registrationGood,
+                autorisNotEmpty,
+                autorisOnlyletters
             };
         }
     };    
@@ -292,7 +300,29 @@ let clonePhoneNumber = () => {
     }
 
 //-----------------------------------------------------------------------------------------------------
-//-------------------------function for work with ava-----------------------------------------------------------
+//--------------------------function for autorisation--------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//login and passsword autorisation exclusion  
+    let checkAutorisation = (idf, reg, reg2) => {
+        let newReg = new RegExp(reg, "gi");
+        let input = SE.$(idf).value;
+        let res = input.replace(newReg, '');
+        SE.$(idf).value = res;        
+        if (new RegExp(reg2, "gi").test(SE.$(idf).value) == true) {
+            SE.$('login-message').innerHTML = '';
+            SE.$('login-message').style.display = 'none'; 
+        } else {
+            SE.$('login-message').style.display = 'table';
+            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisOnlyletters;
+        }
+    }
+
+    let autorisation = () => {
+
+    }
+
+//-----------------------------------------------------------------------------------------------------
+//-------------------------function for work with ava--------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 //show preview foto     
     let readURL = () => {
@@ -364,6 +394,9 @@ let clonePhoneNumber = () => {
         },100);
     }    
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------check on true or error in input on change-------------------------------------
+//-----------------------------------------------------------------------------------------------------    
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg) => {
         if (SE.$(idF).value === ""){
@@ -403,7 +436,7 @@ let clonePhoneNumber = () => {
                         SE.$(`${idF}-mess`).classList.remove('reg-message-false');
                    }
                 } else {    
-                    if ((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
+                    if((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
                         SE.checkPhoneAndMessInput(idF);
                     } else if ((SE.$(idF).id === "reg-password") || (SE.$(idF).id === "reg-password-two")){
                         SE.checkPasswordInput(idF);
@@ -440,26 +473,36 @@ let clonePhoneNumber = () => {
 
 //check on true or error in input on input and show message
     let checkTest = (idF, reg) => {
-        if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
-            if (idF === 'reg-password-two'){
-                SE.iconON('reg-password', "true", '');
+        if ((idF === 'login') || (idF === 'password')){
+            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
+                SE.$('login-message').innerHTML = '';
+                SE.$('login-message').style.display = 'none';
             } else {
-                SE.iconON(idF, "true", '');
+                SE.$('login-message').style.display = 'table';
+                SE.$('login-message').innerHTML = SE.errorFormMessage().autorisOnlyletters;         
             }
         } else {
-            if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
-                SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
-                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                SE.$("reg-form-send").classList.remove('reg_send_active');
-            } else {
-                if (SE.$(idF).value === ''){
+            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
+                if (idF === 'reg-password-two'){
+                    SE.iconON('reg-password', "true", '');
+                } else {
                     SE.iconON(idF, "true", '');
+                }
+            } else {
+                if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
+                    SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
                     SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 } else {
-                    SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
-                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                    SE.$("reg-form-send").classList.remove('reg_send_active');
+                    if (SE.$(idF).value === ''){
+                        SE.iconON(idF, "true", '');
+                        SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                        SE.$("reg-form-send").classList.remove('reg_send_active');
+                    } else {
+                        SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
+                        SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                        SE.$("reg-form-send").classList.remove('reg_send_active');
+                    }
                 }
             }
         }
@@ -613,6 +656,8 @@ let clonePhoneNumber = () => {
         confirmPreviewClose,
         clearFileInput,
         addAvaToDB,
-        showErrorMainMess
+        showErrorMainMess,
+        checkAutorisation,
+        autorisation
     };
 })();    

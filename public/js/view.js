@@ -4,30 +4,31 @@ let VW = (() => {
     let buttonLogin = function(){
         let logIn = document.getElementById("send-login-close");
         if (logIn.classList == "click-login-close"){
-            logIn.classList = "click-login-open";
-     
+            logIn.classList = "click-login-open";     
         } else if(logIn.classList == "click-login-open"){
             let inputLogin = SE.$("login").value;
             let inputPassword = SE.$("password").value;
-
-
-            logIn.classList = "click-login-close";
-
-
-
-
-            //chack on empty login and password and show message
-            if ((inputLogin == "") && (inputPassword == "")){
-            } else if ((inputLogin == "")) {
-            } else if ((inputPassword == "")) {
+            if ((inputLogin === "") && (inputPassword === "")){
+                SE.$('login-message').style.display = 'table';
+                SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotEmpty;
             } else{
-
+                SE.$('login-message').innerHTML = '';
+                SE.$('login-message').style.display = 'none'; 
+                let obj, xmlhttp;
+                obj = { "login":inputLogin, 
+                        "password":inputPassword};
+                dbParam = JSON.stringify(obj);
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let parseObj = JSON.parse(this.responseText);
+                        console.log(parseObj);                        
+                    }
+                };
+                xmlhttp.open("POST", "/autorisation", true);
+                xmlhttp.setRequestHeader("Content-type", "application/json");
+                xmlhttp.send(dbParam);
             }
-        } else if (logIn.classList == "click-login-exit"){
-            logIn.classList = "click-login-close";
-
-            //clear session
-            sessionStorage.autorisetionUser = "";
         }
     };
 
@@ -140,9 +141,8 @@ let VW = (() => {
     let changeFont = (fonta) => {
         let font;
         if ((fonta === '') || (fonta === undefined)){
-            font = `'PT Sans', sans-serif`;
             localStorage.kalciferfont = "ptsans";
-            document.documentElement.style.setProperty('--main-font', `${font}`);
+            document.documentElement.style.setProperty('--main-font', `'PT Sans', sans-serif`);
         } else {
             if (fonta === 'ptsans') {
                 font = `'PT Sans', sans-serif`;
@@ -154,7 +154,10 @@ let VW = (() => {
                 font = `'Lobster', cursive`;
             } else if (fonta === 'neucha') {
                 font = `'Neucha', cursive`;
-            } 
+            } else {
+                font = `'PT Sans', sans-serif`;
+                fonta = 'ptsans';
+            }
             localStorage.kalciferfont = fonta;
             document.documentElement.style.setProperty('--main-font', `${font}`);
         } 

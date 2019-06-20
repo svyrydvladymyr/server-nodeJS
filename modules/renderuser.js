@@ -23,7 +23,9 @@ let renderuser = (req, res, next) => {
                 }else{
                     avaurl = `./uploads/${result[0].ava}`;
                 }     
+
                 let cookies = new Cookies(req, res);
+
                 let clientToken = cookies.get('sessionid');   
                 let permission;   
                 if ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])){
@@ -36,6 +38,7 @@ let renderuser = (req, res, next) => {
 
 
                 console.log(permission);
+                console.log(clientToken);
                 
                 console.log(req.params['userid']);
                 

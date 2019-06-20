@@ -33,7 +33,7 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ- ]+$", "profession", "Bad profession!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
     let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;

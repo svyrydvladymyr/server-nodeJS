@@ -3,11 +3,11 @@ let path = require('path');
 let fs = require('fs');
 let express = require('express');
 let app = express();
-let Cookies = require('cookies');
 let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
+let autorisation = require('./modules/autorisation');
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
@@ -20,23 +20,15 @@ app.use(bodyParser.json());
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
+app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.use((req, res, next) => {
     let logs = `IP: ${req.ip}  TIME: ${new Date().toLocaleString()}  URL: ${req.url}\n`;
     fs.appendFile('access-log.txt', logs, (err) => {console.log(err)});
     next();
 });
-app.use('/registration', (req, res, next) => {
-    res.render(`registration`);
-    next();
-});
-
-app.use('/login', (req, res, next) => {
-    let cookies = new Cookies(req, res);
-    cookies.set('sessionid', 'sssss', {maxAge: '', path: '/'}); 
-    next()
-});
-
+app.use('/registration', (req, res) => {res.render(`registration`)});
 app.use('/:userid', (req, res, next) => {renderuser(req, res, next)});
+
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 
 

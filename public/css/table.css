@@ -21,11 +21,19 @@
     grid-template-areas: 'out1 header header header out2';
 }
 
+.click {
+    margin: 19px 20px;
+}
+
 .header_logo, .header_search, .header_button{
     width: 33.3%;
     min-width: 280px;
     min-height: 90px;
 
+}
+
+.header-login {
+    padding: 10px 0px;
 }
 
 /*logo*/
@@ -45,12 +53,16 @@
     top: 75px;
 }
 
+
 /*button*/
 .header_button{
     order: 3;
 }
 .registration{
-    top: 55px;
+    bottom: 10%;
+}
+.login-message {
+    right: 29%;
 }
 
 /*--------------------------EMPTY BLOKS-----------------------------*/
@@ -78,6 +90,10 @@
         margin-bottom: 10px;
     }
 
+    .header-login {
+        padding: 10px 0px;
+    }
+    
     .header_search{
         margin-bottom: 10px;
     }
@@ -101,7 +117,11 @@
         top: 48px;
     }
     .registration {
-        top: 45px;
-        right: 15%;
+        bottom: -2%;
+        right: 16%;
+    }
+    .login-message {
+        right: 32%;
+        bottom: -3%;
     }
 }
