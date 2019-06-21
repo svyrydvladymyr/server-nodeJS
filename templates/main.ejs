@@ -1,140 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--Link favicon-->
-    <link rel="shortcut icon" type="text/plain" href="favicon.ico"/>
-        <!--Link my stylesheet-->
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link rel="stylesheet" type="text/css" media="(min-width:768px) and (max-width:1250px)" href="./css/table.css">
-    <link rel="stylesheet" type="text/css" media="(max-width:767px)" href="./css/mobil.css">
-        <!--Link stylesheet for icon-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-        <!--Link google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Marck+Script" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">   
-    <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
-    <title><%=title %></title>
+    <%- include("head.ejs") %>
 </head>
 <body>
-    <!--HEADER-->
-    <div class="wrap_header">
-        <div class="wrap_header_second">
-            <div class="header">
-                <!--logo-->
-                <div class="header_logo">
-                    <img src="./img/logo.png">
-                </div>
-                <!--search-->
-                <div class="header_search">
-                    <input type="text" placeholder="Пошук..." id="search" oninput="VW.showClearButton(), VW.showUsersList(this)">
-                    <i class='fas' onclick="VW.clearSearch()" style="display: none" id="search_clear">&#xf00d;</i>
-                    <div class="user_list" id="userlist"></div>
-                </div>
-                <!--button-->
-                <div class="header_button">
-                    <div class="header-login">
-                        <% if(permiss === 'false') {%>
-                        <!--button for enter-->
-                        <div class="click">
-                            <!--inputs-->
-                            <div class="click-login-close" id="send-login-close">
-                                <input type="text" id="login" autofocus>
-                                <input type="password" id="password">
-                            </div>                            
-                            <!--button-->
-                            <div id="click" onclick="VW.buttonLogin()">
-                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;" id="login_button"></p></div>
-                            </div>             
-                        </div>
-                        <% } %>
-                        <% if(permiss === 'true') {%>
-                        <!--button for enter-->
-                        <div class="click">
-                            <!--inputs-->
-                            <div class="click-login-close" id="send-login-close">
-                                <input type="text" id="login" autofocus>
-                                <input type="password" id="password">
-                            </div>                            
-                            <!--button-->
-                            <div id="click" onclick="VW.buttonLoginExit()">
-                                <div class="click-text" id="enter-open"><p style="margin: 1px 12px 0px 6px;" id="login_button_exit"></p></div>
-                            </div>
-                        </div>
-                        <% } %>
-                    </div>
-                    <% if(permiss === 'false') {%>  
-                    <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
-                    <% } %>
-                    <% if(permiss === 'true') {%>
-                    <p class="login-message-autoris"><%=surname %> <%=name %></p>
-                    <% } %>
-                    <p class="login-message"  id="login-message" style="display: none;"></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!--SETTINGS-->
-    <div class="set_close" id="set"> 
-        <div class="setting_close" id="setting" onclick="VW.openSetting()">
-            <i class="fa fa-gear fa-spin"></i>
-        </div>
-        <div class="set_wrap" id="set-wrap">
-            <div class="set_blok_lang" style="border:0px solid" >
-                <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
-                    <img src="img/en.png" alt="EN">
-                    <p>ENGLISH</p>
-                </div>
-                <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
-                    <img src="img/ua.png" alt="UA">
-                    <p>УКРАЇНСЬКА</p>
-                </div>
-            </div>     
-            <div class="set_blok">
-                <p id="settings_style"></p>
-                <div class="height-blok-set" style="height: 37px;">
-                    <div class="main-style-btn bg-blue" onclick="VW.changeSettings('#2d5e8e', '#5c8ab9', '#F1F1F1')"></div>
-                    <div class="main-style-btn bg-green" onclick="VW.changeSettings('#3aa54c', '#94de81', '#F1F1F1')"></div>
-                    <div class="main-style-btn bg-red" onclick="VW.changeSettings('#ca2e23', '#ef837b', '#F1F1F1')"></div>
-                    <div class="main-style-btn bg-yellow" onclick="VW.changeSettings('#ffe999', '#a78300', '#F1F1F1')"></div>
-                    <div class="main-style-btn bg-grey" onclick="VW.changeSettings('#636363', '#c3c3c3', '#F1F1F1')"></div>
-                    <div class="main-style-btn bg-custom" onclick="VW.customMainStyle()"></div>
-                </div>
-                <div class="height-blok-set2"  id="customcolor" style="display:none;">                             
-                    <label for="bgcolor">bg</label><input type="color" name="bgcolor" id="bgcolor" value="#f1f1f1" onchange="VW.setCustomSettings('bgcolor', this, 's')">
-                    <label for="bgcolor">m</label><input type="color" name="maincolor" id="maincolor" value="#2d5e8e" onchange="VW.setCustomSettings('maincolor', this, 's')">
-                    <label for="bgcolor">s</label><input type="color" name="secondcolor" id="secondcolor" value="#5c8ab9" onchange="VW.setCustomSettings('secondcolor', this, 's')">
-                </div>
-            </div> 
-            <div class="set_blok">
-                <p id="settings_border"></p>
-                <div class="height-blok-set add-height">
-                    <input type="range" name="topleft" id="topleft" min="0" max="40" step="1" onchange="VW.setCustomSettings('topleft', this, 'r')">
-                    <input type="range" name="topright" id="topright" min="0" max="40" step="1" onchange="VW.setCustomSettings('topright', this, 'r')">
-                    <input type="range" name="bottomleft" id="bottomleft" min="0" max="40" step="1" onchange="VW.setCustomSettings('bottomleft', this, 'r')">
-                    <input type="range" name="bottomright" id="bottomright" min="0" max="40" step="1" onchange="VW.setCustomSettings('bottomright', this, 'r')">
-                </div>
-            </div> 
-            <div class="set_blok">
-                <p id="settings_font"></p>
-                <div class="height-blok-set" style="padding: 8px;">
-                    <select name="fontselect" id="fontselect"  onchange="VW.setCustomSettings('font', this, 'f')">
-                        <option value="ptsans">PT Sans</option>
-                        <option value="caveat">Caveat</option>
-                        <option value="marckscript">Marck Script</option>
-                        <option value="lobster">Lobster</option>
-                        <option value="neucha">Neucha</option>
-                    </select>
-                </div>
-            </div> 
-        </div>                   
-    </div>   
+    <%- include("header.ejs") %>
+
+    <%- include("settings.ejs") %> 
 
     <!--WRAP BODY--> 
     <div class="wrap">                     
@@ -151,7 +24,7 @@
         <!--SIDE-INFO-->
         <div class="side">
             <%- include("info.ejs") %>
-            <% if(permiss === 'true') {%>
+            <% if(permissEdit === 'true') {%>
             <div class="side_sub">  
                 <p id="town"><%=name %></p>
             </div>
@@ -173,6 +46,7 @@
         </div>
     </div>
 
+    <%- include("footer.ejs") %>
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

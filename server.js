@@ -7,8 +7,7 @@ let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
-let autorisation = require('./modules/autorisation');
-
+let {autorisation, exit} = require('./modules/autorisation');
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
@@ -16,8 +15,10 @@ app.use((req, res, next) => {
     console.log(`${req.method} --> ${req.url}`);
     next();
 });
+
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
@@ -28,7 +29,19 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/registration', (req, res) => {res.render(`registration`)});
-app.use('/:userid', (req, res, next) => {renderuser(req, res, next)});
+app.use('/:userid', (req, res) => {renderuser(req, res)});
+
+app.use('/exit', (req, res, next) => {exit(req, res, next)});
+
+
+
+
+app.use('/', (req, res, next) => {
+    res.redirect('index');
+    next();
+});
+
+
 
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 

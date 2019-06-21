@@ -3,16 +3,8 @@ let {token} = require('./service');
 let Cookies = require('cookies');
 
 let autorisation = (req, res) => {
-
-    console.log(req.body);
-    console.log(req.body.login);
-    console.log(req.body.password);
-
     let tokenId = token(20);
     console.log(tokenId);
-
-
-
     let sql = `UPDATE users SET token = '${tokenId}' WHERE login = '${req.body.login}' AND password = '${req.body.password}'`;
     con.query(sql, function (err, result) {
         if (err) {
@@ -32,7 +24,6 @@ let autorisation = (req, res) => {
                         res.send({"error":err});
                     } else {
                         console.log(result);
-                        // console.log("ffff---", result.OkPacket);
                         let cookies = new Cookies(req, res);
                         cookies.set('sessionisdd', `${tokenId}`, {maxAge: '', path: '/'}); 
                         res.send({"res":result[0].userid});
@@ -41,7 +32,16 @@ let autorisation = (req, res) => {
             }           
         }
     });
-
 };
 
-module.exports = autorisation;
+let exit = (req, res, next) => {
+    let cookies = new Cookies(req, res);
+    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'}); 
+    res.render(`nouser`);
+    next();
+}
+
+module.exports = {
+    autorisation,
+    exit
+};

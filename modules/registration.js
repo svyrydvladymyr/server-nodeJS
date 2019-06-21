@@ -1,6 +1,7 @@
 let con = require('../db/connectToDB').con;
 let multer  = require('multer')
 let {translit, token} = require('./service');
+let Cookies = require('cookies');
 
 
 
@@ -106,6 +107,8 @@ let addAvatoDB = (req, res) => {
                         // res.send({"result":result, "userid":prUs.userid});
                     }); 
                     console.log(result.affectedRows + " foto updated");
+                    let cookies = new Cookies(req, res);
+                    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'}); 
                     res.send({"result":result, "userid":prUs.userid});
                 }); 
             } else {
