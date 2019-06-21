@@ -15,31 +15,21 @@ app.use((req, res, next) => {
     console.log(`${req.method} --> ${req.url}`);
     next();
 });
-
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-
+app.use('/registration', (req, res) => {res.render(`registration`)});
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});
+app.post('/exit', (req, res) => {exit(req, res)});
 app.use((req, res, next) => {
     let logs = `IP: ${req.ip}  TIME: ${new Date().toLocaleString()}  URL: ${req.url}\n`;
     fs.appendFile('access-log.txt', logs, (err) => {console.log(err)});
     next();
 });
-app.use('/registration', (req, res) => {res.render(`registration`)});
 app.use('/:userid', (req, res) => {renderuser(req, res)});
-
-app.use('/exit', (req, res, next) => {exit(req, res, next)});
-
-
-
-
-app.use('/', (req, res, next) => {
-    res.redirect('index');
-    next();
-});
+app.use('/', (req, res, next) => {res.redirect('index'); next()});
 
 
 

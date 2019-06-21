@@ -34,12 +34,11 @@ let autorisation = (req, res) => {
     });
 };
 
-let exit = (req, res, next) => {
+let exit = (req, res) => {
     let cookies = new Cookies(req, res);
-    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'}); 
-    res.render(`nouser`);
-    next();
-}
+    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'});
+    res.send({"exit":"exit"});
+};
 
 module.exports = {
     autorisation,

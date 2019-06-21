@@ -1,27 +1,42 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <%- include("head.ejs") %>
+    <%- include("./parts/head.ejs") %>
 </head>
 <body>
-    <% if(permissUserid !== '') {%>
-        <script>       
-            window.location.href = '<%=permissUserid %>';                   
-        </script>
+    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news')) {%>
+        <% if(permissUserid !== '') {%>
+            <script>       
+                window.location.href = '<%=permissUserid %>';                   
+            </script>
+        <% } %>
     <% } %>
-
-    <%- include("header.ejs") %>
-
-    <%- include("settings.ejs") %>
-
-    <% if(onindex !== 'index') {%>
+<!--------HEADER--------->
+    <%- include("./parts/header.ejs") %>
+<!-------SETTINGS-------->    
+    <%- include("./parts/settings.ejs") %>
+<!-------NOT FIND-------->
+    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
+    <div class="emodge">
+        <img src="./img/smile.png">
+    </div>
     <% } %>
+<!--------ABOUTUS---------> 
+    <% if(onindex === 'aboutus') {%>
+        <%- include("./parts/aboutus.ejs") %>
+    <% } %>
+<!----------NEW----------->
+    <% if(onindex === 'news') {%>
+        <%- include("./parts/news.ejs") %>
+    <% } %>
+<!--------FOOTER--------->
+    <div class="footer-main-info" style="background: transparent; border-top: 2px solid transparent; box-shadow: 0px -2px 3px transparent;">
+        <%- include("./parts/footer.ejs") %>
+    </div>
 
-    <%- include("footer.ejs") %>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./js/ajax-param.js"></script>
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>

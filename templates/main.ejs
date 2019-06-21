@@ -1,52 +1,63 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <%- include("head.ejs") %>
+    <%- include("./parts/head.ejs") %>
 </head>
 <body>
+<!--HEADER-->
+    <%- include("./parts/header.ejs") %>
 
-    <%- include("header.ejs") %>
+<!--SETTINGS-->
+    <%- include("./parts/settings.ejs") %> 
 
-    <%- include("settings.ejs") %> 
+<!--WRAP BODY--> 
+    <div class="wrap">
 
-    <!--WRAP BODY--> 
-    <div class="wrap">                     
-        <!--NAV-->
+    <!--NAV-->
         <div class="nav">     
-            <div class="naw-wrap">
-
-            </div>   
+            <%- include("./parts/nav.ejs") %>  
         </div>
 
-        <!--EMPTY SIDE BLOKS-->
+
+    <!--EMPTY SIDE BLOKS-->
         <div class="out1"></div>
         <div class="out2"></div>
-        <!--SIDE-INFO-->
+
+    <!--SIDE-INFO-->
         <div class="side">
-            <%- include("info.ejs") %>
+            <!--MAIN INFO-->
+            <%- include("./parts/info.ejs") %>
+
+        <!--MAIN TWO-->
             <% if(permissEdit === 'true') {%>
             <div class="side_sub">  
                 <p id="town"><%=name %></p>
             </div>
+            <% } %>
+
+        <!--MAIN THREE-->
+            <% if(permissEdit === 'true') {%>
             <div class="side_sub">
             </div>
             <% } %>
-
         </div>
-        <!--CONTENT-->
+
+    <!--CONTENT-->
         <div class="article">    
+            <%- include("./parts/article.ejs") %> 
+        </div>
 
-        </div>
-        <!--BLOK ON TOP FOOTER-->
+    <!--BLOK ON TOP FOOTER-->
         <div class="blok">
+            <%- include("./parts/ontopfooter.ejs") %>
         </div>
-        <!--FOOTER-->
-        <div class="footer">
-            <img src="">
-        </div>
+       
     </div>
 
-    <%- include("footer.ejs") %>
+<!--FOOTER-->
+    <div class="footer-main-info">
+        <%- include("./parts/footer.ejs") %>
+    </div>
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

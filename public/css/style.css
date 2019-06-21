@@ -34,13 +34,12 @@ body{
     min-height: 100vh;
     display: grid;
     grid-template-columns: auto 300px 450px 450px auto;
-    grid-template-rows: 0px 120px auto auto 50px;   
+    grid-template-rows: auto auto auto auto;   
     grid-gap: 1px; 
     grid-template-areas: 'out1 side set set out2'
                          'out1 side nav nav out2'
                          'out1 side article article out2'
-                         'blok blok blok blok blok'
-                         'footer footer footer footer footer';
+                         'blok blok blok blok blok';
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -162,6 +161,7 @@ body{
     border-radius: 7px;
     background: #ffffff;
     box-shadow: 0px 0px 3px #dadada;
+    z-index: 1;
 }
 
 .listusers-boks{
@@ -211,6 +211,19 @@ body{
     display: block;
     border-radius: 50% 2px 50% 50%;
     transition: 0.4s;
+}
+
+.emodge{
+    width: 100%;
+    max-width: 200px;
+    margin: 50px auto;
+    margin-bottom:60px; 
+    position: relative;
+    opacity: 0.8;
+}
+
+.emodge img{
+    width: 100%;
 }
 
 /*---------------------------------------------------------------------------------------------------------------------*/
@@ -650,8 +663,12 @@ body{
 /*--------------------------------------------------------------------------------------------------------------------*/
 .footer-main-info{
     width: 100%;
-    height: 100px;
-    margin-top: 60px;
+    min-width: 300px;
+    height: 120px;
+    background: #c5c5c5;
+    padding-top: 30px;
+    border-top: 2px solid #f3f3f3;
+    box-shadow: 0px -2px 3px #c6c6c6;
 }
 
 .footer-copyright-links{
@@ -681,19 +698,26 @@ body{
     grid-area: nav;
     display: flex;
     justify-content: space-between;
-    padding: 14px;
-    margin: 10px;
-    border-radius: var(--border-radius-main);
-    border: var(--border);
-    box-shadow: var(--box-shadow-main);
-    background: var(--bg-color-content);
+    margin: 0px;
 }
 
 .naw-wrap{
-    padding: 7px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 15px;
+    width: 100%;
+    min-height: 100px;
+    background: #ffffff;
+    border: var(--border);
+    border-radius: var(--border-radius-main);
+    box-shadow: var(--box-shadow-main);
+}
+
+.naw-body{
     width: 100%;
     background: #f1f1f1;
-    border: var(--border);
+    border: 1px solid #cccccc;
     border-radius: var(--border-radius-main);
 }
 
@@ -702,13 +726,23 @@ body{
 /*--------------------------------------------------------------------------------------------------------------------*/
 .article{
     grid-area: article;
-    padding: 10px;
+    margin: 0px;
+    display: flex;
+    justify-content: space-between;
+ }
+
+ .article-wrap{
+    display: flex;
+    justify-content: space-between;
     margin: 10px;
+    padding: 15px;
+    width: 100%;
+    min-height: 80vh;
     border-radius: var(--border-radius-main);
     border: var(--border);
     box-shadow: var(--box-shadow-main);
     background: var(--bg-color-content);
- }
+}
 
 /*--------------------------------------------------------------------------------------------------------------------*/ 
 /*----------------------------------------------------EMPTY SPACE-----------------------------------------------------*/
@@ -840,28 +874,24 @@ body{
 /*--------------------------------------------------BLOK ON TOP FOOTER------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 .blok{
-    margin-top: 10px;
     grid-area: blok;
-    min-height: 150px;
-    max-height: 200px;
-    position: relative;
-    bottom: -62px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+}
+
+.topfooter-wrap{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    width: 100%;
+    min-height: 200px;
     background: var(--second-color);
-    border-top: 3px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: var(--border);
+    border-top: var(--border);
+    border-radius: 0px;
+    margin-top: 20px;
     box-shadow: var(--box-shadow-main);
 }
-
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------------------FOOTER------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
-.footer{
-    grid-area: footer;
-    background: #929292;
-    margin-top: -1px;
-}
-
-
-
 
 

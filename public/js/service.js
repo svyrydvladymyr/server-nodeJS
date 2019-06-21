@@ -631,6 +631,15 @@ let clonePhoneNumber = () => {
         })
     };    
 
+//for exit from session    
+    let exit = () => {
+        let obj, xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {location.reload()}};
+        xmlhttp.open("POST", "/exit", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify({}));
+    }    
 
     return {
         $, 
@@ -662,6 +671,7 @@ let clonePhoneNumber = () => {
         addAvaToDB,
         showErrorMainMess,
         checkAutorisation,
-        autorisation
+        autorisation,
+        exit
     };
 })();    
