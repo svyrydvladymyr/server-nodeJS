@@ -25,8 +25,10 @@ let renderuser = (req, res) => {
                         //if the user is not found and is not authorized 
                         if (result == ''){
                             permissionAccess = false;
+                            permissionEdit = false;
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
+                                permissEdit: `${permissionEdit}`,
                                 permissName: ``,
                                 permissSurname: ``,
                                 permissUserid: ``,
@@ -36,8 +38,10 @@ let renderuser = (req, res) => {
                         } else {
                         //if the user is not found but is authorized    
                             (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
+                            (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
+                                permissEdit: `${permissionEdit}`,
                                 permissName: `${result[0].name}`,
                                 permissSurname: `${result[0].surname}`,
                                 permissUserid: `${result[0].userid}`,
@@ -120,12 +124,7 @@ let renderuser = (req, res) => {
                 })
             }            
         }
-    });
-
-    
+    });    
 };
-
-
-
 
 module.exports = renderuser;

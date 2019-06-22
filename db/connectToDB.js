@@ -1,4 +1,3 @@
-let {errorServer, errorData} = require('../modules/service-res');
 let mysql = require('mysql');
 // let con, db_config = {
 //     driver: "mysql",
@@ -16,7 +15,7 @@ let con, db_config = {
     driver: "mysql",
     host: "localhost",
     user: "root",
-    password: "kalcifer1988",
+    password: "",
     charset: 'utf8',
     collation: 'utf8_unicode_ci',
     prefix: '',

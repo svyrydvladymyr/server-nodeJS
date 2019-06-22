@@ -12,7 +12,7 @@
                 <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
                     <img src="img/ua.png" alt="UA">
                     <p>УКРАЇНСЬКА</p>
-                </div>
+                </div>                
             </div>     
             <div class="set_blok">
                 <p id="settings_style"></p>
@@ -51,5 +51,8 @@
                     </select>
                 </div>
             </div> 
+            <% if(permissEdit === 'true') {%>
+            <div class="save-settings"><i style='font-size:20px;' class='fas' onclick="VW.saveSett()">&#xf0c7;</i></div>
+            <% } %>
         </div>                   
     </div> 

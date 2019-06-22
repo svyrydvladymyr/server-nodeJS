@@ -3,8 +3,6 @@ let multer  = require('multer')
 let {translit, token} = require('./service');
 let Cookies = require('cookies');
 
-
-
 class protoUsers{constructor(){ }}
 let prUs = new protoUsers();
 
@@ -13,6 +11,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
         if (new RegExp(reg, "gi").test(parseObjUsers[val]) == true){
             prUs[val] = parseObjUsers[val];
         } else {
+            console.log("--bad-input--", mess);            
             res.status(404).send(mess);
         }
     } else {
@@ -22,6 +21,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
 
 let registrationUsers = (req, res) => {     
     let parseObjUsers = req.body;
+    console.log("--client-registr-obj--", parseObjUsers);    
     prUs.userid = translit(`${parseObjUsers.surname}${parseObjUsers.name}`).toLowerCase() + '-' + token(10);
     checkObjValues("^[0-9-]+$", "registrdata", "Bad registration date!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
@@ -43,35 +43,36 @@ let registrationUsers = (req, res) => {
             if (err.code === 'ER_DUP_ENTRY'){
                 let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
                 if (parseSQLmess === 'login'){
-                    console.log("err", err.sqlMessage);
+                    console.log("--err--", err.sqlMessage);
                     res.send({"error":'duplicate_entry_login'});
                 } else if (parseSQLmess === 'email'){
-                    console.log("err", err.sqlMessage);
+                    console.log("--err--", err.sqlMessage);
                     res.send({"error":'duplicate_entry_email'});
                 } else {
-                    console.log("err", err);
+                    console.log("--err--", err);
                     res.send({"error":err});
                 }             
             } else {
-                console.log("err", err);
+                console.log("--err--", err);
                 res.send({"error":err});
             }
         } else {
             con.query(sqlsett, function (err, result) {
                 if (err) {
-                    console.log("err", err);
+                    console.log("--err--", err);
                     res.send({"error":err});   
                 } else {
-                    console.log(result);
+                    console.log("--result-registr--", result);
                     // res.send(result);
                 }
             });
-            console.log(result);
+            console.log("--result-registr--", result);
             res.send(result);
         }
     });          
 };
 
+//if registration true add ava to DB
 let addAvatoDB = (req, res) => {
     let storage, upload;
     storage = multer.diskStorage({
@@ -120,9 +121,35 @@ let addAvatoDB = (req, res) => {
     });  
 };
 
+//save settings to DB
+let savesett = (req, res) => {
+    let clientObg = req.body;
+    console.log("--client-obj--", clientObg);
+    cookies = new Cookies(req, res);
+    clientToken = cookies.get('sessionisdd');
+    console.log("--client-token--", clientToken);
+    var sqlsel = `SELECT userid FROM users WHERE token = '${clientToken}'`;
+    con.query(sqlsel, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send(err);
+        }
+        console.log("--upd-sett-userid--", result[0].userid);  
+        var sqlupt = `UPDATE userssettings 
+        SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
+        con.query(sqlupt, function (err, result) {
+            if (err) {
+                console.log("err", err);
+                res.send(err);
+            }
+            console.log(result.changedRows ," settings updated");
+            // res.send({"result":result, "userid":prUs.userid});
+        }); 
+    }); 
+};
 
 module.exports = {
     registrationUsers,
-    addAvatoDB
-    
+    addAvatoDB,
+    savesett    
 };

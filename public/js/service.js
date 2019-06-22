@@ -635,7 +635,18 @@ let clonePhoneNumber = () => {
     let exit = () => {
         let obj, xmlhttp;
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {location.reload()}};
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                localStorage.kalcifermaincolor = '#2d5e8e';
+                localStorage.kalcifersecondcolor = '#5c8ab9';
+                localStorage.kalciferbgcolor = '#f1f1f1';
+                localStorage.kalcifertopleft = 9;
+                localStorage.kalcifertopright = 9;
+                localStorage.kalciferbottomleft = 9;
+                localStorage.kalciferbottomright = 9;
+                localStorage.kalciferfont = 'ptsans';
+                localStorage.kalciferLang = 'ua';
+                location.reload()}};
         xmlhttp.open("POST", "/exit", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(JSON.stringify({}));

@@ -4,22 +4,20 @@ let fs = require('fs');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let {registrationUsers, addAvatoDB} = require('./modules/registration');
+let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {autorisation, exit} = require('./modules/autorisation');
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
-app.use((req, res, next) => {
-    console.log(`${req.method} --> ${req.url}`);
-    next();
-});
+app.use((req, res, next) => {console.log(`${req.method} --> ${req.url}`); next();});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/registration', (req, res) => {res.render(`registration`)});
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
+app.post('/savesett', (req, res) => {savesett(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.post('/exit', (req, res) => {exit(req, res)});

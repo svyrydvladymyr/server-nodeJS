@@ -22,12 +22,19 @@ let VW = (() => {
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         let parseObj = JSON.parse(this.responseText);
-                        console.log(parseObj);                        
-                        console.log(parseObj.err);    
                         if (parseObj.err === 'false'){
                             SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotAvtoris;
                         } else {
-                            SE.redirect(parseObj.res);
+                            localStorage.kalcifermaincolor = parseObj.res.maincolor;
+                            localStorage.kalcifersecondcolor = parseObj.res.secondcolor;
+                            localStorage.kalciferbgcolor = parseObj.res.bgcolor;
+                            localStorage.kalcifertopleft = parseObj.res.bordertl;
+                            localStorage.kalcifertopright = parseObj.res.bordertr;
+                            localStorage.kalciferbottomleft = parseObj.res.borderbl;
+                            localStorage.kalciferbottomright = parseObj.res.borderbr;
+                            localStorage.kalciferfont = parseObj.res.fonts;
+                            localStorage.kalciferLang = parseObj.res.language;
+                            SE.redirect(parseObj.res.userid);
                         }                   
                     }
                 };
@@ -192,7 +199,6 @@ let VW = (() => {
 //show users list
     let showUsersList = (el) => {
         if (el.value.length > 1){
-            console.log("sdfsdf");
             SE.$('userlist').style.display = 'flex';
             let searchuser = el.value;
             let obj = { "searchuser":searchuser}
@@ -201,7 +207,6 @@ let VW = (() => {
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let parseObj = JSON.parse(this.responseText);
-                    console.log(parseObj);
                     if (parseObj.length === 0){
                         if (localStorage.kalciferLang === "ua") {
                             SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">НЕ ЗНАЙДЕНО...</p>';
@@ -243,6 +248,27 @@ let VW = (() => {
         SE.redirect(el.id);        
     }
 
+//save settings to DB   
+    let saveSett = () => {
+        let obj = { 
+            "main":localStorage.kalcifermaincolor,
+            "second":localStorage.kalcifersecondcolor,
+            "bg":localStorage.kalciferbgcolor,
+            "tl":localStorage.kalcifertopleft,
+            "tr":localStorage.kalcifertopright,
+            "bl":localStorage.kalciferbottomleft,
+            "br": localStorage.kalciferbottomright,
+            "font": localStorage.kalciferfont,
+            "lang": localStorage.kalciferLang}      
+        dbParam = JSON.stringify(obj);
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {} };
+        xmlhttp.open("POST", "/savesett", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(dbParam);
+    };
+
+
 return {
     buttonLogin,
     openSetting,
@@ -257,7 +283,8 @@ return {
     changeRadius,
     changeFont,
     showUsersList,
-    renderPage
+    renderPage,
+    saveSett
 };
 
 })();
