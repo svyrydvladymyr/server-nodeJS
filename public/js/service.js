@@ -515,7 +515,7 @@ let clonePhoneNumber = () => {
         regProto.prototype[idReplace] = value;
 
         console.log(regPrototype);    
-            
+
         //for change button
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
             if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
@@ -532,9 +532,15 @@ let clonePhoneNumber = () => {
                 SE.$("reg-form-send").style.cursor = 'no-drop';            
             }
         } else if (SE.$('reg-form-send').getAttribute('param') === 'up'){
+
+
+
             SE.$("reg-form-send").classList.add('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'pointer';
             SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
+
+
+            
         }
 
     }; 
