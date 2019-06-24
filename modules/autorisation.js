@@ -13,8 +13,12 @@ let autorisation = (req, res) => {
         } else {
             console.log("--result-autoriz--",result.changedRows);
             if (result.changedRows === 0){
-                let cookies = new Cookies(req, res);
-                cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'}); 
+                let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                let param = {
+                    maxAge: '-1', 
+                    path: '/', 
+                    signed:true}
+                cookies.set('sessionisdd', ``, param); 
                 res.send({"err":false});
             } else {
                 let sqlsel = `SELECT U.userid, S.maincolor, S.secondcolor, S.bgcolor, S.bordertl, S.bordertr, S.borderbl, S.borderbr, S.fonts, S.language FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.login = '${req.body.login}' AND U.password = '${req.body.password}'`;
@@ -24,8 +28,12 @@ let autorisation = (req, res) => {
                         res.send({"error":err});
                     } else {
                         console.log("--result-userSett--", result);
-                        let cookies = new Cookies(req, res);
-                        cookies.set('sessionisdd', `${tokenId}`, {maxAge: '', path: '/'}); 
+                        let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                        let param = {
+                            maxAge: '', 
+                            path: '/', 
+                            signed:true}
+                        cookies.set('sessionisdd', `${tokenId}`, param); 
                         res.send({"res":result[0]});
                     }
                 }); 
@@ -35,8 +43,12 @@ let autorisation = (req, res) => {
 };
 
 let exit = (req, res) => {
-    let cookies = new Cookies(req, res);
-    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'});
+    let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    let param = {
+        maxAge: '-1', 
+        path: '/', 
+        signed:true}
+    cookies.set('sessionisdd', ``, param); 
     res.send({"exit":"exit"});
 };
 

@@ -48,7 +48,7 @@
                     <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
                     <% } %>
                     <% if(permissAccess === 'true') {%>
-                    <p class="login-message-autoris" onclick="SE.redirect('<%=permissUserid %>')"><%=permissSurname %> <%=permissName %></p>
+                        <a href="/<%=permissUserid %>"><p class="login-message-autoris"><%=permissSurname %> <%=permissName %></p></a>
                     <% } %>
                     <p class="login-message"  id="login-message" style="display: none;"></p>
                 </div>

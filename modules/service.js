@@ -11,15 +11,7 @@ let token = length => {
     return result;
 };
 
-//check on true JSON
-let trueJson = (data) => {
-    let trueJson, errorParse;
-    try {trueJson = JSON.parse(data.toString())} catch (error){errorParse = true}                         
-    return errorParse ? false: trueJson;
-};
-
 module.exports = {
     translit,
-    trueJson,
     token
 };

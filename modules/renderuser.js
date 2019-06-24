@@ -5,8 +5,8 @@ let renderuser = (req, res) => {
     let permissionAccess, permissionEdit, clientToken, cookies, getuserid;
     //get variables
     getuserid = req.params['userid'];
-    cookies = new Cookies(req, res);
-    clientToken = cookies.get('sessionisdd'); 
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true}); 
     // get user information using usrid
     let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${getuserid}'`;
     con.query(sql, function (err, result) {
@@ -26,6 +26,7 @@ let renderuser = (req, res) => {
                         if (result == ''){
                             permissionAccess = false;
                             permissionEdit = false;
+                            console.log('--render-user--', result[0]);                            
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
                                 permissEdit: `${permissionEdit}`,
@@ -39,6 +40,7 @@ let renderuser = (req, res) => {
                         //if the user is not found but is authorized    
                             (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
                             (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
+                            console.log('--render-user--', result[0]);                     
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
                                 permissEdit: `${permissionEdit}`,
@@ -69,7 +71,8 @@ let renderuser = (req, res) => {
                         if (result == ''){
                             permissionEdit = false;         
                             permissionAccess = false;
-                            //render user page and send variables        
+                            //render user page and send variables   
+                            console.log('--render-user--', result[0]);                     
                             res.render(`main`, {
                                 title: `${userObj[0].surname} ${userObj[0].name}`,
                                 name: `${userObj[0].name}`,
@@ -99,7 +102,8 @@ let renderuser = (req, res) => {
                             (result[0].token === clientToken) ? 
                             permissionAccess = true : 
                             permissionAccess = false;
-                            //render user page and send variables          
+                            //render user page and send variables  
+                            console.log('--render-user--', result[0]);        
                             res.render(`main`, {
                                 title: `${userObj[0].surname} ${userObj[0].name}`,
                                 name: `${userObj[0].name}`,

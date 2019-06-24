@@ -321,10 +321,6 @@ let clonePhoneNumber = () => {
         }
     }
 
-    let autorisation = () => {
-
-    }
-
 //-----------------------------------------------------------------------------------------------------
 //-------------------------function for work with ava--------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
@@ -402,7 +398,7 @@ let clonePhoneNumber = () => {
 //-----------------------check on true or error in input on change-------------------------------------
 //-----------------------------------------------------------------------------------------------------    
 //check on true or error in input on change, cut all incorrect, show message
-    let checkCut = (idF, reg) => {
+    let checkCut = (idF, reg, t) => {
         if (SE.$(idF).value === ""){
             if ((SE.$(idF).id === 'reg-login') || 
                 (SE.$(idF).id === 'reg-password') || 
@@ -476,7 +472,7 @@ let clonePhoneNumber = () => {
     };    
 
 //check on true or error in input on input and show message
-    let checkTest = (idF, reg) => {
+    let checkTest = (idF, reg, t) => {
         if ((idF === 'login') || (idF === 'password')){
             if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
                 SE.$('login-message').innerHTML = '';
@@ -517,41 +513,53 @@ let clonePhoneNumber = () => {
         // console.log(regProto.prototype);        
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
+
+        console.log(regPrototype);    
+            
         //for change button
-        if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
-        ((regPrototype.regpassword !== "") && (regPrototype.regpassword !== undefined)) &&
-        ((regPrototype.regname !== "") && (regPrototype.regname !== undefined)) && 
-        ((regPrototype.regsurname !== "") && (regPrototype.regsurname !== undefined)) && 
-        ((regPrototype.regemail !== "") && (regPrototype.regemail !== undefined))        
-        ){
+        if (SE.$('reg-form-send').getAttribute('param') === 'add'){
+            if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
+            ((regPrototype.regpassword !== "") && (regPrototype.regpassword !== undefined)) &&
+            ((regPrototype.regname !== "") && (regPrototype.regname !== undefined)) && 
+            ((regPrototype.regsurname !== "") && (regPrototype.regsurname !== undefined)) && 
+            ((regPrototype.regemail !== "") && (regPrototype.regemail !== undefined))        
+            ){
+                SE.$("reg-form-send").classList.add('reg_send_active');
+                SE.$("reg-form-send").style.cursor = 'pointer';
+                SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
+            } else {
+                SE.$("reg-form-send").classList.remove('reg_send_active');
+                SE.$("reg-form-send").style.cursor = 'no-drop';            
+            }
+        } else if (SE.$('reg-form-send').getAttribute('param') === 'up'){
             SE.$("reg-form-send").classList.add('reg_send_active');
             SE.$("reg-form-send").style.cursor = 'pointer';
             SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
-        } else {
-            SE.$("reg-form-send").classList.remove('reg_send_active');
-            SE.$("reg-form-send").style.cursor = 'no-drop';            
         }
+
     }; 
  
 //message if empty name surname or E-mail input
     let messageSendError = () => {
-        if ((SE.$('reg-login').value === "") || (SE.$('reg-password').value === "") ||(SE.$('reg-name').value === "") || (SE.$('reg-surname').value === "") || (SE.$('reg-email').value === "")){
-            let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
-            for(let i = 0; i < 5; i++){
-                if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){
-                    SE.iconON(masIdRequired[i], "false", SE.errorFormMessage().notCunEmpty);
-                }
-            }       
-            SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
-        } 
-        if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
-            SE.$("main-form-message").innerHTML = "";
-            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-            SE.$("reg-form-send").classList.remove('reg_send_active');
-            SE.$("reg-form-send").style.cursor = 'no-drop'; 
-            SE.registerUserToDB();
+        if (SE.$('reg-form-send').getAttribute('param') === 'add'){
+            if ((SE.$('reg-login').value === "") || (SE.$('reg-password').value === "") ||(SE.$('reg-name').value === "") || (SE.$('reg-surname').value === "") || (SE.$('reg-email').value === "")){
+                let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
+                for(let i = 0; i < 5; i++){
+                    if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){
+                        SE.iconON(masIdRequired[i], "false", SE.errorFormMessage().notCunEmpty);
+                    }
+                }       
+                SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
+            } 
+            if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
+                SE.$("main-form-message").innerHTML = "";
+                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                SE.$("reg-form-send").classList.remove('reg_send_active');
+                SE.$("reg-form-send").style.cursor = 'no-drop'; 
+                SE.registerUserToDB();
 
-        }
+            }
+        } 
     };    
 
 //show main message    
@@ -652,6 +660,7 @@ let clonePhoneNumber = () => {
         xmlhttp.send(JSON.stringify({}));
     }    
 
+
     return {
         $, 
         getLanguage,
@@ -682,7 +691,6 @@ let clonePhoneNumber = () => {
         addAvaToDB,
         showErrorMainMess,
         checkAutorisation,
-        autorisation,
         exit
     };
 })();    

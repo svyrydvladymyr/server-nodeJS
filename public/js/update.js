@@ -1,24 +1,15 @@
 window.onload = function(){
 
+//clear update object 
     CLEAR.clearRegProto();
-    
+
 //set language settings
     localStorage.kalciferLang === "ua" ? VW.changLang('ua') : localStorage.kalciferLang === "en" ? VW.changLang('en') : VW.changLang('ua');
         
-//get date registration and push to prototype
-    regProto.prototype.registr = SE.readyFullDate('');
-
-//set default settings for ava
-    regProto.prototype.avasettings = '50% 50%';
-
 //set limitation to choice date zvit
     let input = document.getElementById("reg-age");
     input.setAttribute("min", "1930-01-02");
     input.setAttribute("max", SE.readyFullDate(''));
-
-//border preview foto on start
-    SE.$('reg-ava').style.border = '0px solid #e0e0e0';
-
 
 //check and cut incorrect symbol form
     //logim-----------------------------------------------------------------------------------
@@ -61,8 +52,6 @@ window.onload = function(){
     //profession-----------------------------------------------------------------------------------
         SE.$("reg-profession").addEventListener("change", () => {SE.checkCut("reg-profession", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
         SE.$("reg-profession").addEventListener("input", () => {SE.checkTest("reg-profession", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
-    //file------------------------------------------------------------------------------------
-        SE.$("reg-file").addEventListener("change", () => {SE.checkCut("reg-file", "")});
     //send-----------------------------------------------------------------------------------
         SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
 

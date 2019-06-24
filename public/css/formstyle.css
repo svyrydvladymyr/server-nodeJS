@@ -2,7 +2,7 @@
     width: 70%;
     max-width: 600px;
     margin: 100px auto;
-    border: 15px solid #94adc6;
+    border: 15px solid #ffffff;
     border-radius: 90px 10px;
 }
 .form_wrap{
@@ -11,7 +11,7 @@
     padding: 25px 0px;
     border: 5px solid #ffffff;
     border-radius: 80px 10px;
-    background: #bed3e8;
+    background: #ffffff;
 }
 
 .form_toback{
@@ -29,10 +29,10 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 90%;
-    margin: 6px 5%;
-    background: #6b92b9;
-    border: 2px solid #2c5a88;
-    border-bottom: 4px solid #2c5a88;
+    margin: -9px 10% 0px 0%;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
     border-radius: 25px 7px;
 }
 
@@ -71,12 +71,12 @@
 
 .form_label p{
     width: 100%;
-    color:#ffffff;
+    color:#444444;
     font-size: 12px;
     font-weight: bold;
     text-align: right;
     margin: 0px;
-    text-shadow: 0px 0px 1px #111111;
+    /* text-shadow: 0px 0px 1px #111111; */
 }
 
 /*input*/
@@ -126,7 +126,7 @@
 }
 
 .required-block{
-    background: #44709c;
+    background: #ffffff;
 }
 
 /*input select*/
@@ -212,11 +212,11 @@
     align-items: center;
     cursor: no-drop;
     width: 90%;
-    height: 35px;
+    height: 30px;
     margin: 6px 5%;
-    background: #8297ac;
-    border: 2px solid #738ba2;
-    border-bottom: 4px solid #5d84ab;
+    background: #bdbdbd;
+    border: 2px solid #969696;
+    border-bottom: 4px solid #676767;
     border-radius: 25px 7px;
 }
 
@@ -242,8 +242,8 @@
     transform: rotateY(190deg);
     font-size: 22px;
     top: 37px;
-    right: -25px;
-    color: #2c5a88;
+    right: 15px;
+    color: #4a4a4a;
     text-shadow: 0px 0px 3px #ffffff;
 }
 
@@ -252,8 +252,13 @@
     width: 50%;
     height: 8px;
     margin: 0px;
+    border: 1px solid #9a9a9a;
     background: #cbcbcb;
     border-radius:5px; 
+}
+
+.reg-message-r{
+    background: #717171;
 }
 
 .reg-message-false{
@@ -624,8 +629,8 @@ input[type=range] {
     .tel_blok > .tel_nomer {
         margin-top: -4px;}
     .icon_share i {
-        top: 18px;
-        right: -145px;}
+        top: 0px;
+        right: -25px;}
     .password > input:first-child {
         margin-top: -50px;}
     .password > p:last-child {
@@ -646,10 +651,13 @@ input[type=range] {
     .reg-ava{
         width: 150px;
         height: 150px;}
+    .form_blok {
+        margin: -9px 5% 0px 5%;
+    }
 }
 @media screen and (max-width:600px){
     .icon_share i {
-        right: -135px;}
+        right: -25px;}
     .reg-ava{
         width: 150px;
         height: 150px;}
@@ -658,7 +666,7 @@ input[type=range] {
 }
 @media screen and (max-width:550px){
     .icon_share i {
-        right: -125px;}
+        right: -25px;}
     .reg-ava{
         width: 150px;
         height: 150px;}
@@ -667,7 +675,7 @@ input[type=range] {
 }
 @media screen and (max-width:500px){
     .icon_share i {
-        right: -115px;}
+        right: -25px;}
     .reg-ava{
         width: 150px;
         height: 150px;}

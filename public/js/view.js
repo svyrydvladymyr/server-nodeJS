@@ -262,7 +262,14 @@ let VW = (() => {
             "lang": localStorage.kalciferLang}      
         dbParam = JSON.stringify(obj);
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {} };
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                SE.$('save-settings-mess').innerHTML = 'save...';
+                setTimeout(() => {
+                    SE.$('save-settings-mess').innerHTML = '';
+                },1000);
+            } 
+        };
         xmlhttp.open("POST", "/savesett", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(dbParam);

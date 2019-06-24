@@ -1,12 +1,23 @@
 <div class="side_sub" id="sideinfo">
         <div class="ava" style="background-image: url('<%=ava %>'); background-position: <%=avasettings %>;">
             <!-- <img  alt="my-foto" id="foto"> -->
+            
+            <% if(permissEdit === 'true') {%>
+                <i class='fas fa-camera' style='font-size:16px; text-shadow: 0px 0px 3px #ffffff; float:right; cursor: pointer; margin: 5px 7px 0px 0px;' onclick="window.location.href = '/updateuser';"></i>
+            <% } %>
         </div>
         <div class="info">
             <div class="info-blok-name" >
                 <p id="surname" style="margin-right: 6px;"><%=surname %></p>                        
                 <p id="name"><%=name %></p>
             </div>
+
+
+            <% if(permissEdit === 'true') {%>
+                <i style='font-size:16px; float:right; cursor: pointer; margin: -5px 0px 7px 0px;' class='far' onclick="window.location.href = '/updateuser';">&#xf044;</i>
+            <% } %>
+
+
             <% if((country !== '') || (town !== '')) {%>
             <div class="info-blok">
                 <i class="fas fa-map-marker-alt"></i>

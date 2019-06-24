@@ -34,7 +34,9 @@
     "reg-label-message":"НОМЕР МЕСЕНДЖЕРА",          
     "reg-label-profession":"ПРОФЕСІЯ",          
     "reg-label-file":"ФОТО",          
-    "reg-form-send":"ЗАРЕЄСТРУВАТИСЯ",          
+    "reg-form-send":"ЗАРЕЄСТРУВАТИСЯ",    
+    "reg-form-save":"ЗБЕРЕГТИ",          
+      
    
     "placeholder":{
         "search":"пошук..."
