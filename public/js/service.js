@@ -150,6 +150,7 @@ let SE = (() => {
             let checkPass = 'Перевірте пароль!';
             let repeatPass = 'Повторіть пароль!';
             let onlyNum = "Тільки цифри!";
+            let onlyLetterslat = "Тільки лат. букви!";
             let onlyLetters = "Тільки букви!";
             let toLBigFile = "Занадто великий файл! Макс. розмір 1мб";
             let dupllogin = "Користувач з таким логіном вже існує!";
@@ -159,6 +160,8 @@ let SE = (() => {
             let autorisNotEmpty = "Заповніть всі поля!";
             let autorisOnlyletters = "Тільки лат. букви та цифри!";
             let autorisNotAvtoris = "Логін або пароль не вірні!";
+            let enterPassword = "Введіть пароль!";
+            let notSame = "Старий і новий паролі не можуть співпадати!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -175,7 +178,10 @@ let SE = (() => {
                 registrationGood,
                 autorisNotEmpty,
                 autorisOnlyletters,
-                autorisNotAvtoris
+                autorisNotAvtoris,
+                onlyLetterslat,
+                enterPassword,
+                notSame
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -185,6 +191,7 @@ let SE = (() => {
             let checkPass = 'Check your password!';
             let repeatPass = 'Repeat password!';
             let onlyNum = "Only numbers!";
+            let onlyLetterslat = "Only letters!";
             let onlyLetters = "Only letters!";
             let toLBigFile = "Too large file! Max. size 1MB";
             let dupllogin = "A user with this login already exists!";
@@ -194,6 +201,8 @@ let SE = (() => {
             let autorisNotEmpty = "Fill in all fields!";
             let autorisOnlyletters = "Only letters and numbers!";
             let autorisNotAvtoris = "Login or pass. is incorrect!";
+            let enterPassword = "Enter the password!";
+            let notSame = "Old and new passwords can not match!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -210,7 +219,10 @@ let SE = (() => {
                 registrationGood,
                 autorisNotEmpty,
                 autorisOnlyletters,
-                autorisNotAvtoris
+                autorisNotAvtoris,
+                onlyLetterslat,
+                enterPassword,
+                notSame
             };
         }
     };    
@@ -273,20 +285,26 @@ let clonePhoneNumber = () => {
 
 //password exclusion
     let checkPasswordInput = (idF) => {
-        if ((SE.$("reg-password").value !== '') && (SE.$("reg-password-two").value !== '')){
-            if (SE.$('reg-password').value === SE.$('reg-password-two').value){
-                SE.iconON('reg-password', "true", '');
-                SE.readyToSend('reg-password', SE.$('reg-password').value);
-                SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
+        if (idF === "reg-oldpassword"){
+            SE.iconON('reg-oldpassword', "true", '');
+            SE.readyToSend('reg-oldpassword', SE.$('reg-oldpassword').value);
+            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
+        } else {
+            if ((SE.$("reg-password").value !== '') && (SE.$("reg-password-two").value !== '')){
+                if (SE.$('reg-password').value === SE.$('reg-password-two').value){
+                    SE.iconON('reg-password', "true", '');
+                    SE.readyToSend('reg-password', SE.$('reg-password').value);
+                    SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
+                } else {
+                    SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
+                    SE.readyToSend('reg-password', '');
+                    SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
+                }                            
             } else {
-                SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
+                SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
                 SE.readyToSend('reg-password', '');
                 SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-            }                            
-        } else {
-            SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
-            SE.readyToSend('reg-password', '');
-            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
+            }
         }
     }
     
@@ -399,6 +417,8 @@ let clonePhoneNumber = () => {
 //-----------------------------------------------------------------------------------------------------    
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg, t) => {
+        console.log(idF);
+        
         if (SE.$(idF).value === ""){
             if ((SE.$(idF).id === 'reg-login') || 
                 (SE.$(idF).id === 'reg-password') || 
@@ -408,13 +428,17 @@ let clonePhoneNumber = () => {
                     SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
                     SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
-                    SE.$("reg-form-send").style.cursor = "no-drop";
                     SE.readyToSend(idF, "");
             } else {
-                SE.iconON(idF, "true", '');
+                let idFF;
+                if (idF === 'reg-password-two'){
+                    idFF = 'reg-password';
+                } else {
+                    idFF = idF;
+                }
+                SE.iconON(idFF, "true", '');
                 SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
-                SE.$("reg-form-send").style.cursor = "no-drop";
                 SE.readyToSend(idF, "");
             }
         } else {
@@ -428,7 +452,6 @@ let clonePhoneNumber = () => {
                             SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
                             SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                             SE.$("reg-form-send").classList.remove('reg_send_active');
-                            SE.$("reg-form-send").style.cursor = "no-drop";
                             SE.readyToSend(idF, "");
                    } else {
                         SE.readyToSend(idF, "");
@@ -438,7 +461,7 @@ let clonePhoneNumber = () => {
                 } else {    
                     if((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
                         SE.checkPhoneAndMessInput(idF);
-                    } else if ((SE.$(idF).id === "reg-password") || (SE.$(idF).id === "reg-password-two")){
+                    } else if ((SE.$(idF).id === "reg-password") || (SE.$(idF).id === "reg-password-two") || (SE.$(idF).id === "reg-oldpassword")){
                         SE.checkPasswordInput(idF);
                     } else if((SE.$(idF).id === "reg-age") || (SE.$(idF).id === "reg-email")) {
                         SE.checkAgeEmailInput(idF);
@@ -495,13 +518,25 @@ let clonePhoneNumber = () => {
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                 } else {
                     if (SE.$(idF).value === ''){
-                        SE.iconON(idF, "true", '');
+                        let idFF;
+                        if (idF === 'reg-password-two'){
+                            idFF = 'reg-password';
+                        } else {
+                            idFF = idF;
+                        }
+                        SE.iconON(idFF, "true", '');
                         SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                         SE.$("reg-form-send").classList.remove('reg_send_active');
                     } else {
-                        SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
-                        SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                        SE.$("reg-form-send").classList.remove('reg_send_active');
+                        if ((idF === 'reg-login-up') || (idF === 'reg-login') || (idF === 'reg-oldpassword')){
+                            SE.iconON(idF, "false", SE.errorFormMessage().autorisOnlyletters);
+                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                            SE.$("reg-form-send").classList.remove('reg_send_active');
+                        } else {
+                            SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
+                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                            SE.$("reg-form-send").classList.remove('reg_send_active');
+                        }
                     }
                 }
             }
@@ -514,7 +549,11 @@ let clonePhoneNumber = () => {
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
 
+
+
         console.log(regPrototype);    
+
+
 
         //for change button
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
@@ -531,20 +570,18 @@ let clonePhoneNumber = () => {
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = 'no-drop';            
             }
-        } else if (SE.$('reg-form-send').getAttribute('param') === 'up'){
-
-
-
-            SE.$("reg-form-send").classList.add('reg_send_active');
-            SE.$("reg-form-send").style.cursor = 'pointer';
-            SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
-
-
-            
         }
 
     }; 
  
+//clear message if not empty name surname or E-mail input
+    let messageSendErrorClear = () => {
+        if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
+            SE.$("main-form-message").innerHTML = "";
+        }
+    }
+
+
 //message if empty name surname or E-mail input
     let messageSendError = () => {
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
@@ -664,7 +701,60 @@ let clonePhoneNumber = () => {
         xmlhttp.open("POST", "/exit", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(JSON.stringify({}));
-    }    
+    } 
+
+//for send update data    
+    let sendUp = (obj, url) => {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+    
+                // location.reload()}};
+            }};
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify(obj));
+    };
+
+
+
+//update security and enter
+    let updateUser = (val) => {
+        if (val === 's'){
+            let obj = { "login":regPrototype.regloginup, 
+            "oldpassword":regPrototype.regoldpassword, 
+            "password":regPrototype.regpassword};            
+            if ((regPrototype.regpassword !== '') && (regPrototype.regoldpassword === '')){
+                SE.iconON('reg-oldpassword', "false", SE.errorFormMessage().enterPassword);
+            }else if ((regPrototype.regloginup !== '') && (regPrototype.regoldpassword === '')){
+                SE.iconON('reg-oldpassword', "false", SE.errorFormMessage().enterPassword);
+            } else if ((regPrototype.regpassword === regPrototype.regoldpassword) && (regPrototype.regoldpassword !== '')){
+                SE.$('main-form-message1').innerHTML = SE.errorFormMessage().notSame;
+            } else if (((regPrototype.regloginup !== '') && (regPrototype.regoldpassword !== '')) || 
+            ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '')) || 
+            ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '') && (regPrototype.regloginup !== ''))){
+            SE.sendUp(obj, '/updatesecurity');   
+            }
+        } else if (val === 'm'){
+            let obj = {"name":regPrototype.regname, 
+            "surname":regPrototype.regsurname, 
+            "email":regPrototype.regemail, 
+            "birthday":regPrototype.regbirthday, 
+            "phone":regPrototype.regtel, 
+            "message":regPrototype.regmessage};
+            if ((regPrototype.regname !== '') || (regPrototype.regsurname !== '') || (regPrototype.regemail !== '') || (regPrototype.regbirthday !== '') || (regPrototype.regtel !== '') || (regPrototype.regmessage !== '')){
+                SE.sendUp(obj, '/updatesecurity');                
+            }
+        } else if (val === 'o'){
+            let obj = {"country":regPrototype.regcountry, 
+            "town":regPrototype.regtown, 
+            "profession":regPrototype.regprofession};
+            if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '')){
+                SE.sendUp(obj, '/updatesecurity');                
+            }
+        }
+
+    };    
 
 
     return {
@@ -682,6 +772,7 @@ let clonePhoneNumber = () => {
         checkCut,
         checkTest,
         messageSendError,
+        messageSendErrorClear,
         checkPhoneAndMessInput,
         checkCountryInput,
         checkPasswordInput,
@@ -697,6 +788,8 @@ let clonePhoneNumber = () => {
         addAvaToDB,
         showErrorMainMess,
         checkAutorisation,
-        exit
+        exit,
+        updateUser,
+        sendUp
     };
 })();    

@@ -736,17 +736,20 @@ body{
 .article{
     grid-area: article;
     margin: 0px;
-    display: flex;
+    /* display: flex; */
+    /* flex-flow: wrap; */
+    /* flex-wrap: wrap; */
+    min-height: 100vh;
     justify-content: space-between;
  }
 
  .article-wrap{
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     margin: 10px;
     padding: 15px;
-    width: 100%;
-    min-height: 80vh;
+    /* width: 100%; */
+    min-height: 60px;
     border-radius: var(--border-radius-main);
     border: var(--border);
     box-shadow: var(--box-shadow-main);

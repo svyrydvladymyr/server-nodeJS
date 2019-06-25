@@ -13,8 +13,11 @@ window.onload = function(){
 
 //check and cut incorrect symbol form
     //logim-----------------------------------------------------------------------------------
-        SE.$("reg-login").addEventListener("change", () => {SE.checkCut("reg-login", "[^a-zA-Z0-9-_]")});
-        SE.$("reg-login").addEventListener("input", () => {SE.checkTest("reg-login", "^[a-zA-Z0-9-_]+$")}); 
+        SE.$("reg-login-up").addEventListener("change", () => {SE.checkCut("reg-login-up", "[^a-zA-Z0-9-_]")});
+        SE.$("reg-login-up").addEventListener("input", () => {SE.checkTest("reg-login-up", "^[a-zA-Z0-9-_]+$")}); 
+    //old-password-----------------------------------------------------------------------------------
+        SE.$("reg-oldpassword").addEventListener("change", () => {SE.checkCut("reg-oldpassword", "[^a-zA-Z0-9-_]")});
+        SE.$("reg-oldpassword").addEventListener("input", () => {SE.checkTest("reg-oldpassword", "^[a-zA-Z0-9-_]+$")}); 
     //password-----------------------------------------------------------------------------------
         SE.$("reg-password").addEventListener("change", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password").addEventListener("change", () => {

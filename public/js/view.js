@@ -87,9 +87,11 @@ let VW = (() => {
         if (( SE.$("reg-password").type === 'password') || ( SE.$("reg-password").type === "password")){
             SE.$("reg-password").type = 'text';
             SE.$("reg-password-two").type = 'text'
+            SE.$("reg-oldpassword").type = 'text'
         } else {
             SE.$("reg-password").type = 'password';
             SE.$("reg-password-two").type = 'password'
+            SE.$("reg-oldpassword").type = 'password'
         }
     };
 
@@ -275,6 +277,18 @@ let VW = (() => {
         xmlhttp.send(dbParam);
     };
 
+//for tabs
+    let clickTabs = (el) => {
+        let classs = document.getElementsByClassName('tabs-form-head-tab');
+        for (let i = 1; i <= classs.length; i++){
+            if (SE.$(`tab-${i}`).classList.contains("tab-active")){
+                SE.$(`tab-${i}`).classList.remove("tab-active");
+            }
+            SE.$(`tabs-body-${i}`).style.display = 'none';
+        }
+        el.classList.add('tab-active'); 
+        SE.$(`tabs-body-${el.id.slice(-1)}`).style.display = 'table';
+    };
 
 return {
     buttonLogin,
@@ -291,7 +305,9 @@ return {
     changeFont,
     showUsersList,
     renderPage,
-    saveSett
+    saveSett,
+    clickTabs
+
 };
 
 })();

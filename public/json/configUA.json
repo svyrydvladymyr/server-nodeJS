@@ -12,9 +12,9 @@
     "footer-copyright-link-registr":"Реєстрація",
     "footer-copyright-link-news":"Новини",
     "nouser":"На жаль, ця сторінка не доступна ...",
-    "tab-form-head-one":"Security and Entrance",
-    "tab-form-head-two":"General",
-    "tab-form-head-three":"Other",
+    "tab-1":"Безпека та вхід",
+    "tab-2":"Загальне",
+    "tab-3":"Інше",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  
@@ -38,7 +38,9 @@
     "reg-label-profession":"ПРОФЕСІЯ",          
     "reg-label-file":"ФОТО",          
     "reg-form-send":"ЗАРЕЄСТРУВАТИСЯ",    
-    "reg-form-save":"ЗБЕРЕГТИ",          
+    "reg-up-send1":"ЗБЕРЕГТИ",       
+    "reg-up-send2":"ЗБЕРЕГТИ",       
+    "reg-up-send3":"ЗБЕРЕГТИ",       
       
    
     "placeholder":{

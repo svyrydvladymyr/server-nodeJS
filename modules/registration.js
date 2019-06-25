@@ -207,8 +207,9 @@ let updaterender = (req, res) => {
 
 };
 
-let updateuser = (req, res) => {
-
+let updatesecurity = (req, res) => {
+    console.log(req.body);
+    
 };
 
 module.exports = {
@@ -216,5 +217,5 @@ module.exports = {
     addAvatoDB,
     savesett,
     updaterender,
-    updateuser    
+    updatesecurity    
 };

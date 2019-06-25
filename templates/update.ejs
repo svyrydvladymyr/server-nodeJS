@@ -24,31 +24,34 @@
         <!--BUTTON TO BACK-->
             <a href="/<%=userid %>" style="color: #111111;"><p id="form_toback" class="form_toback"></p></a>
         <!--UPDATE FORM-->
+            <p id="reg-form-send" param="up" class="reg-form-send" style="display: none;"></p>
+
             <div class="form_wrap">
                 <div class="tabs-form-head-wrap">
-                    <p class="tabs-form-head-tab" id="tab-form-head-one"></p>
-                    <p class="tabs-form-head-tab" id="tab-form-head-two"></p>
-                    <p class="tabs-form-head-tab" id="tab-form-head-three"></p>
+                    <p class="tabs-form-head-tab tab-active" id="tab-1" onclick="VW.clickTabs(this)"></p>
+                    <p class="tabs-form-head-tab" id="tab-2" onclick="VW.clickTabs(this)"></p>
+                    <p class="tabs-form-head-tab" id="tab-3" onclick="VW.clickTabs(this)"></p>
                 </div>
                 <div class="tabs-form-body-wrap">
 
                 <!----SECURITY AND ENTER----------------------------------------------->
-                    <div class="tabs-form-body-one" id="tabs-form-body-one">
+                    <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
 
 
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
                             <div class="form_input required">
-                                <input type="text" name="reg-login" id="reg-login" maxlength="20">
+                                <input type="text" name="reg-login" id="reg-login-up" maxlength="20">
                             </div>
-                            <div class="form_message"><span id="reg-login-mess" class="reg-message "></span></div>                    
+                            <div class="form_message"><span id="reg-login-up-mess" class="reg-message "></span></div>                    
                         </div>
                         <!--old password-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-oldpassword"></p></div>
                             <div class="form_input required">
-                                <input type="text" name="reg-oldpassword" id="reg-oldpassword" maxlength="20">
+                                <input type="password" name="reg-oldpassword" id="reg-oldpassword" maxlength="20">
+                                <i class='far password_oldpassword' onclick="VW.showPassword()">&#xf06e;</i>
                             </div>
                             <div class="form_message"><span id="reg-oldpassword-mess" class="reg-message "></span></div>                    
                         </div>
@@ -71,16 +74,16 @@
 
                         <!--send-->             
                         <div class="form_blok_send">
-                            <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                            <div class="form_label" onclick="SE.updateUser('s')"><p id="reg-up-send1" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
                         </div>               
                         <!--main message form-->
-                        <p class="main-form-message" id="main-form-message"></p>
+                        <p class="main-form-message" id="main-form-message1"></p>
 
 
                     </div>
 
                 <!----MAIN_INFO--------------------------------------------------->
-                    <div class="tabs-form-body-two" id="tabs-form-body-two">
+                    <div class="tabs-form-body-one" id="tabs-body-2">
 
 
                         <!--name-->
@@ -152,16 +155,16 @@
 
                         <!--send-->             
                         <div class="form_blok_send">
-                            <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                            <div class="form_label" onclick="SE.updateUser('m')"><p id="reg-up-send2" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
                         </div>               
                         <!--main message form-->
-                        <p class="main-form-message" id="main-form-message"></p>
+                        <p class="main-form-message" id="main-form-message2"></p>
 
 
                     </div>
 
-                <!----OTHER------------------------------------------------------>>
-                    <div class="tabs-form-body-three" id="tabs-form-body-three">
+                <!----OTHER------------------------------------------------------>
+                    <div class="tabs-form-body-one" id="tabs-body-3">
 
 
                         <!--country-->
@@ -199,10 +202,10 @@
 
                             <!--send-->             
                             <div class="form_blok_send">
-                                <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                                <div class="form_label" onclick="SE.updateUser('o')"><p id="reg-up-send3" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
                             </div>               
                             <!--main message form-->
-                            <p class="main-form-message" id="main-form-message"></p>
+                            <p class="main-form-message" id="main-form-message3"></p>
 
                             
                     </div>

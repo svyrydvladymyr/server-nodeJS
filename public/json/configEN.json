@@ -12,9 +12,9 @@
         "footer-copyright-link-registr":"Registration",
         "footer-copyright-link-news":"News",
         "nouser":"Sorry, this page isn't available...",
-        "tab-form-head-one":"Безпека та вхід",
-        "tab-form-head-two":"Загальне",
-        "tab-form-head-three":"Інше",
+        "tab-1":"Security and Entrance",
+        "tab-2":"General",
+        "tab-3":"Other",
 
 
 
@@ -40,7 +40,9 @@
         "reg-label-profession":"PROFESION",
         "reg-label-file":"PHOTO",
         "reg-form-send":"REGISTER",          
-        "reg-form-save":"SAVE",          
+        "reg-up-send1":"SAVE",          
+        "reg-up-send2":"SAVE",          
+        "reg-up-send3":"SAVE",          
 
         "placeholder":{
                 "search":"search..."

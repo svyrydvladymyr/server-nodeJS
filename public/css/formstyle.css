@@ -187,6 +187,14 @@
     right: 7px;
 }
 
+.password_oldpassword{
+    cursor: pointer;
+    position: absolute;
+    font-size: 14px;
+    top: 12px;
+    right: 7px;
+}
+
 .form_input_file:hover::before {
     text-shadow: 0px 0px 1px #111111;
 }
@@ -630,15 +638,22 @@ input[type=range] {
     margin: 0px;
 }
 
+.tab-active{
+    background: #efefef;
+    border-bottom: 3px solid #ffa74c;
+    border-radius: 12px 12px 0px 0px;
+}
+
 .tabs-form-body-wrap{
     width: 100%;
 }
 
-.tabs-form-body-one{
-    
+.tabs-form-body-one{    
     width: 100%;
-    display: table;
+    display: none;
+    padding-top: 30px;
 }
+
 
 @media screen and (max-width:850px){
     .form_body_wrap {
@@ -687,6 +702,9 @@ input[type=range] {
     .form_blok {
         margin: -9px 5% 0px 5%;
     }
+    .password_oldpassword {
+        top: 4px;
+    }
 }
 @media screen and (max-width:600px){
     .icon_share i {
@@ -696,6 +714,9 @@ input[type=range] {
         height: 150px;}
     .form_label, .form_input, .form_message {
         width: 65%;}
+    .password_oldpassword {
+        top: 4px;
+    }
 }
 @media screen and (max-width:550px){
     .icon_share i {
@@ -705,6 +726,9 @@ input[type=range] {
         height: 150px;}
     .form_label, .form_input, .form_message {
         width: 70%;}
+    .password_oldpassword {
+        top: 4px;
+    }    
 }
 @media screen and (max-width:500px){
     .icon_share i {
@@ -714,6 +738,9 @@ input[type=range] {
         height: 150px;}
     .form_label, .form_input, .form_message {
         width: 80%;}
+    .password_oldpassword {
+        top: 4px;
+    }        
 }
 
 @media screen and (max-width:450px){
@@ -745,6 +772,9 @@ input[type=range] {
     .reg-ava{
         width: 150px;
         height: 150px;}
+    .password_oldpassword {
+        top: 4px;
+    }
 }
 @media screen and (max-width:350px){
     .rande-vert {
@@ -752,4 +782,7 @@ input[type=range] {
     .reg-ava{
         width: 150px;
         height: 150px;}
+    .password_oldpassword {
+        top: 4px;
+    }
 }
