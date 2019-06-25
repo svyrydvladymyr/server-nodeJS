@@ -150,46 +150,61 @@ let savesett = (req, res) => {
 
 let updaterender = (req, res) => {
     let cookies, clientToken;
-    cookies = new Cookies(req, res);
-    clientToken = cookies.get('sessionisdd'); 
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
     console.log("--client-token--", clientToken);
-    var sql = `SELECT userid, name, surname, email, birthday, phone, message, country, town, profession FROM users WHERE token = '${clientToken}'`;
-    con.query(sql, function (err, result) {
-        if (err) {
-            console.log("err", err);
-            res.send(err);
-        }
-        console.log("--user-for-update--", result[0]);  
-        let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
-        phone = result[0].phone.slice(3 ,13);
-        phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
-        message = result[0].message.slice(3 ,13);
-        messagecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
-        if ((RC === 'Ukraine') || (RC === 'Україна')){
-            country = 'ukraine';
-        } else if ((RC === 'Russian') || (RC === 'Росія')){
-            country = 'russian';
-        } else if ((RC === 'Great Britain') || (RC === 'Великобританія')){
-            country = 'greatbritain';
-        } else if ((RC === 'USA') || (RC === 'Сполучені Штати')){
-            country = 'usa';
-        } 
-        town = translit(result[0].town);        
-        res.render(`update`, {
-            userid: result[0].userid,
-            name: result[0].name,
-            surname: result[0].surname,
-            email: result[0].email,
-            birthday: result[0].birthday,
-            phone: phone,
-            phonecod: phonecod,
-            message: message,
-            messagecod: messagecod,
-            country: country,
-            town: town,
-            profession: result[0].profession
+    if (clientToken === undefined){
+        permissionAccess = false;
+        permissionEdit = false;
+        res.render(`nouser`, {
+            permissAccess: `${permissionAccess}`,
+            permissEdit: `${permissionEdit}`,
+            permissName: ``,
+            permissSurname: ``,
+            permissUserid: ``,
+            onindex:`6b 61 6c 63 69 66 65 72`,
+            title:``
         });
-    }); 
+    } else {
+        var sql = `SELECT userid, name, surname, email, birthday, phone, message, country, town, profession FROM users WHERE token = '${clientToken}'`;
+        con.query(sql, function (err, result) {
+            if (err) {
+                console.log("err", err);
+                res.send(err);
+            }
+            console.log("--user-for-update--", result[0]);  
+            let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
+            phone = result[0].phone.slice(3 ,13);
+            phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
+            message = result[0].message.slice(3 ,13);
+            messagecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
+            if ((RC === 'Ukraine') || (RC === 'Україна')){
+                country = 'ukraine';
+            } else if ((RC === 'Russian') || (RC === 'Росія')){
+                country = 'russian';
+            } else if ((RC === 'Great Britain') || (RC === 'Великобританія')){
+                country = 'greatbritain';
+            } else if ((RC === 'USA') || (RC === 'Сполучені Штати')){
+                country = 'usa';
+            } 
+            town = translit(result[0].town);        
+            res.render(`update`, {
+                userid: result[0].userid,
+                name: result[0].name,
+                surname: result[0].surname,
+                email: result[0].email,
+                birthday: result[0].birthday,
+                phone: phone,
+                phonecod: phonecod,
+                message: message,
+                messagecod: messagecod,
+                country: country,
+                town: town,
+                profession: result[0].profession
+            });
+        }); 
+    }
+
 };
 
 let updateuser = (req, res) => {

@@ -32,8 +32,10 @@
                 </div>
                 <div class="tabs-form-body-wrap">
 
+                <!----SECURITY AND ENTER----------------------------------------------->
+                    <div class="tabs-form-body-one" id="tabs-form-body-one">
 
-                    <div class="tabs-form-body-one">
+
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
@@ -41,6 +43,14 @@
                                 <input type="text" name="reg-login" id="reg-login" maxlength="20">
                             </div>
                             <div class="form_message"><span id="reg-login-mess" class="reg-message "></span></div>                    
+                        </div>
+                        <!--old password-->
+                        <div class="form_blok required-block">
+                            <div class="form_label"><p id="reg-label-oldpassword"></p></div>
+                            <div class="form_input required">
+                                <input type="text" name="reg-oldpassword" id="reg-oldpassword" maxlength="20">
+                            </div>
+                            <div class="form_message"><span id="reg-oldpassword-mess" class="reg-message "></span></div>                    
                         </div>
                         <!--password-->
                         <div class="form_blok required-block">
@@ -56,12 +66,25 @@
                             </div>
                             <div class="form_message password"><span id="reg-password-mess" class="reg-message "></span></div>                    
                         </div>
+
+
+
+                        <!--send-->             
+                        <div class="form_blok_send">
+                            <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                        </div>               
+                        <!--main message form-->
+                        <p class="main-form-message" id="main-form-message"></p>
+
+
                     </div>
 
+                <!----MAIN_INFO--------------------------------------------------->
+                    <div class="tabs-form-body-two" id="tabs-form-body-two">
 
-                    <div class="tabs-form-body-two">
-                    <!--name-->
-                    <div class="form_blok required-block">
+
+                        <!--name-->
+                        <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-name"></p></div>
                             <div class="form_input required">
                                 <input type="text" name="reg-name" id="reg-name" maxlength="20" value="<%=name %>">
@@ -123,10 +146,24 @@
                             </div>
                             <div class="form_message"><p id="reg-message-mess" class="reg-message"></p></div>   
                         </div>
+
+
+
+
+                        <!--send-->             
+                        <div class="form_blok_send">
+                            <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                        </div>               
+                        <!--main message form-->
+                        <p class="main-form-message" id="main-form-message"></p>
+
+
                     </div>
 
+                <!----OTHER------------------------------------------------------>>
+                    <div class="tabs-form-body-three" id="tabs-form-body-three">
 
-                    <div class="tabs-form-body-three">
+
                         <!--country-->
                         <div class="form_blok">
                                 <div class="form_label"><p id="reg-label-country"></p></div>
@@ -158,18 +195,23 @@
                                 </div>
                                 <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
                             </div> 
+
+
+                            <!--send-->             
+                            <div class="form_blok_send">
+                                <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
+                            </div>               
+                            <!--main message form-->
+                            <p class="main-form-message" id="main-form-message"></p>
+
+                            
                     </div>
                 </div>
 
 
 
                
-                <!--send-->             
-                <div class="form_blok_send">
-                    <div class="form_label"><p id="reg-form-send" param="up" class="reg-form-send" style="color:#ffffff;"></p></div>
-                 </div>               
-                <!--main message form-->
-                <p class="main-form-message" id="main-form-message"></p>
+
             </div>
         </div>
 
