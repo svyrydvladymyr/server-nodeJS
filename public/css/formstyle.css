@@ -607,6 +607,39 @@ input[type=range] {
     background: #50555C;
   }
 
+.tabs-form-head-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.tabs-form-head-tab{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    width: 33.3%;
+    height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 3px;
+    border-bottom: 3px solid #676767;
+    margin: 0px;
+}
+
+.tabs-form-body-wrap{
+    width: 100%;
+}
+
+.tabs-form-body-one{
+    
+    width: 100%;
+    display: table;
+}
+
 @media screen and (max-width:850px){
     .form_body_wrap {
         width: 95%;}
