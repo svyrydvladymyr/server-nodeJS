@@ -12,6 +12,8 @@
 }
 
 /*--------------------------HEADER-----------------------------*/
+
+
 .wrap_header{
     min-height: 70px;
     min-width: 302px;
@@ -179,11 +181,24 @@
 @media screen and (min-width:500px) and (max-width:766px){
     .set{width: 98%}
     .set_close{width: 98%}
+    .login-message-autoris {
+        bottom: -10%;
+    }
 }
 
 @media screen and (min-width:400px) and (max-width:499px){
     .set{width: 97.5%}
     .set_close{width: 97.5%}    
+    .login-message-autoris {
+        bottom: -10%;
+        margin: 0px 0px 0px 10px;
+    }
+}
+@media screen and (max-width:400px){
+    .login-message-autoris {
+        bottom: -10%;
+        margin: 0px 0px 0px 10px;
+    }
 }
 
 

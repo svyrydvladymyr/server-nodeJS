@@ -29,7 +29,7 @@ window.onload = function(){
     //password-----------------------------------------------------------------------------------
         SE.$("reg-password").addEventListener("change", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password").addEventListener("change", () => {
-            if (SE.$("reg-password").value.length < 6){
+            if (SE.$("reg-password").value.length < 7){
                 SE.iconON("reg-password", "false", SE.errorFormMessage().toshort);
             }
         });

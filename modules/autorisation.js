@@ -19,7 +19,7 @@ let autorisation = (req, res) => {
                     path: '/', 
                     signed:true}
                 cookies.set('sessionisdd', ``, param); 
-                res.send({"err":false});
+                res.send({"err":"false"});
             } else {
                 let sqlsel = `SELECT U.userid, S.maincolor, S.secondcolor, S.bgcolor, S.bordertl, S.bordertr, S.borderbl, S.borderbr, S.fonts, S.language FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.login = '${req.body.login}' AND U.password = '${req.body.password}'`;
                 con.query(sqlsel, function (err, result) {

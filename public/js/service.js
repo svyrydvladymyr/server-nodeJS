@@ -1,11 +1,11 @@
 let SE = (() => {
 
-    // function for get id node
+// function for get id node
     let $ = function(val) {
         return getid = document.getElementById(val);
     };
 
-    // function for get id node
+// function for get id node
     let redirect = route => window.location.href = route;
 
 // function for get object from (*.json) file
@@ -26,23 +26,19 @@ let SE = (() => {
         file.send(null);
     }; 
 
-//make AJAX request
-    let send = function(objUrlSend){
-        let {obj, urlSend} = objUrlSend;
-        return new Promise(function(resolve, reject){
-            dbParam = JSON.stringify(obj);
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let responses = this.responseText;
-                    (responses != "[]") ? resolve(responses) : reject("Помилка авторизації!!!");
-                }
-            };
-            xmlhttp.open("GET", urlSend + dbParam, true);
-            xmlhttp.send();
-        });
-    };
-
+//for send AJAX  
+    let send = (obj, url, fun) => {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                fun(this.responseText);
+                // location.reload()}};
+            }};
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify(obj));
+    };   
+    
 //cut incorrect symbol 
     let incorrectCheck = function(val, reg, fun){
         let newReg = new RegExp(reg, "gi");
@@ -162,6 +158,8 @@ let SE = (() => {
             let autorisNotAvtoris = "Логін або пароль не вірні!";
             let enterPassword = "Введіть пароль!";
             let notSame = "Старий і новий паролі не можуть співпадати!";
+            let save = "зберігається...";
+            let saved = "Збережено!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -181,7 +179,9 @@ let SE = (() => {
                 autorisNotAvtoris,
                 onlyLetterslat,
                 enterPassword,
-                notSame
+                notSame,
+                save,
+                saved
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -203,6 +203,8 @@ let SE = (() => {
             let autorisNotAvtoris = "Login or pass. is incorrect!";
             let enterPassword = "Enter the password!";
             let notSame = "Old and new passwords can not match!";
+            let save = "save...";
+            let saved = "Saved!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -222,7 +224,9 @@ let SE = (() => {
                 autorisNotAvtoris,
                 onlyLetterslat,
                 enterPassword,
-                notSame
+                notSame,
+                save,
+                saved
             };
         }
     };    
@@ -291,15 +295,21 @@ let clonePhoneNumber = () => {
             SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
         } else {
             if ((SE.$("reg-password").value !== '') && (SE.$("reg-password-two").value !== '')){
-                if (SE.$('reg-password').value === SE.$('reg-password-two').value){
-                    SE.iconON('reg-password', "true", '');
-                    SE.readyToSend('reg-password', SE.$('reg-password').value);
-                    SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
-                } else {
-                    SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
+                if (SE.$('reg-password').value.length > 6){
+                    if (SE.$('reg-password').value === SE.$('reg-password-two').value){
+                        SE.iconON('reg-password', "true", '');
+                        SE.readyToSend('reg-password', SE.$('reg-password').value);
+                        SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
+                    } else {
+                        SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
+                        SE.readyToSend('reg-password', '');
+                        SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
+                    } 
+                }else {
+                    SE.iconON("reg-password", "false", SE.errorFormMessage().toshort);
                     SE.readyToSend('reg-password', '');
                     SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-                }                            
+                }         
             } else {
                 SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
                 SE.readyToSend('reg-password', '');
@@ -417,8 +427,6 @@ let clonePhoneNumber = () => {
 //-----------------------------------------------------------------------------------------------------    
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg, t) => {
-        console.log(idF);
-        
         if (SE.$(idF).value === ""){
             if ((SE.$(idF).id === 'reg-login') || 
                 (SE.$(idF).id === 'reg-password') || 
@@ -548,13 +556,7 @@ let clonePhoneNumber = () => {
         // console.log(regProto.prototype);        
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
-
-
-
-        console.log(regPrototype);    
-
-
-
+console.log(regPrototype);
         //for change button
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
             if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
@@ -613,45 +615,6 @@ let clonePhoneNumber = () => {
     };
     
 // function for add user to DB
-    let registerUserToDB = function(){
-        let obj, xmlhttp;
-        obj = { "login":regPrototype.reglogin, 
-                "password":regPrototype.regpassword, 
-                "name":regPrototype.regname, 
-                "surname":regPrototype.regsurname, 
-                "email":regPrototype.regemail, 
-                "birthday":regPrototype.regage, 
-                "phone":regPrototype.regtel, 
-                "message":regPrototype.regmessage, 
-                "country":regPrototype.regcountry, 
-                "town":regPrototype.regtown, 
-                "profession":regPrototype.regprofession, 
-                "registrdata":regPrototype.registr,
-                "avasettings":regPrototype.avasettings};
-        dbParam = JSON.stringify(obj);
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                let parseObj = JSON.parse(this.responseText);
-                if (parseObj.error === 'duplicate_entry_login'){
-                    SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
-                    SE.$('reg-login').addEventListener('change', showErrorMainMess);
-                } else if (parseObj.error === 'duplicate_entry_email'){
-                    SE.$("main-form-message").innerHTML = SE.errorFormMessage().duplemail;  
-                    SE.$('reg-email').addEventListener('change', showErrorMainMess);
-                } else if ((parseObj.affectedRows === 1) && (parseObj.protocol41 === true)){
-                    SE.addAvaToDB();
-                } else {
-                    console.log(this.responseText);
-                }
-            }
-        };
-        xmlhttp.open("POST", "/registrationUser", true);
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send(dbParam);
-    };
-
-// function for add user to DB
     let addAvaToDB = function(){
         let obj, fileAva, formData;
         if (regPrototype.avasettings === ''){
@@ -680,43 +643,62 @@ let clonePhoneNumber = () => {
         .catch(function (error) {
             console.log(error);
         })
+    };   
+
+//-----------------------------------------------------------------------------------------------------
+//---------------------function for make date and object before send-----------------------------------
+//-----------------------------------------------------------------------------------------------------   
+// function for add user to DB
+let registerUserToDB = function(){
+    let obj;
+    obj = { "login":regPrototype.reglogin, 
+            "password":regPrototype.regpassword, 
+            "name":regPrototype.regname, 
+            "surname":regPrototype.regsurname, 
+            "email":regPrototype.regemail, 
+            "birthday":regPrototype.regage, 
+            "phone":regPrototype.regtel, 
+            "message":regPrototype.regmessage, 
+            "country":regPrototype.regcountry, 
+            "town":regPrototype.regtown, 
+            "profession":regPrototype.regprofession, 
+            "registrdata":regPrototype.registr,
+            "avasettings":regPrototype.avasettings};
+        SE.send(obj, "/registrationUser", VW.registerUserToDB);
+    };
+
+//show users list
+    let showUsersList = (el) => {
+        if (el.value.length > 1){
+            SE.$('userlist').style.display = 'flex';
+            let searchuser = el.value;
+            let obj = { "searchuser":searchuser};
+            SE.send(obj, "/searchuser", VW.showUsersList);
+        } else {
+            SE.$('userlist').style.display = 'none';
+        }
+    };       
+    
+//save settings to DB   
+    let saveSett = () => {
+        let obj = { 
+            "main":localStorage.kalcifermaincolor,
+            "second":localStorage.kalcifersecondcolor,
+            "bg":localStorage.kalciferbgcolor,
+            "tl":localStorage.kalcifertopleft,
+            "tr":localStorage.kalcifertopright,
+            "bl":localStorage.kalciferbottomleft,
+            "br": localStorage.kalciferbottomright,
+            "font": localStorage.kalciferfont,
+            "lang": localStorage.kalciferLang}; 
+        SE.send(obj, "/savesett", VW.saveSett); 
     };    
 
 //for exit from session    
     let exit = () => {
-        let obj, xmlhttp;
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                localStorage.kalcifermaincolor = '#2d5e8e';
-                localStorage.kalcifersecondcolor = '#5c8ab9';
-                localStorage.kalciferbgcolor = '#f1f1f1';
-                localStorage.kalcifertopleft = 9;
-                localStorage.kalcifertopright = 9;
-                localStorage.kalciferbottomleft = 9;
-                localStorage.kalciferbottomright = 9;
-                localStorage.kalciferfont = 'ptsans';
-                localStorage.kalciferLang = 'ua';
-                location.reload()}};
-        xmlhttp.open("POST", "/exit", true);
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send(JSON.stringify({}));
-    } 
-
-//for send update data    
-    let sendUp = (obj, url) => {
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-    
-                // location.reload()}};
-            }};
-        xmlhttp.open("POST", url, true);
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send(JSON.stringify(obj));
-    };
-
-
+        let obj = {};
+        SE.send(obj, "/exit", VW.exit);
+   };
 
 //update security and enter
     let updateUser = (val) => {
@@ -733,24 +715,24 @@ let clonePhoneNumber = () => {
             } else if (((regPrototype.regloginup !== '') && (regPrototype.regoldpassword !== '')) || 
             ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '')) || 
             ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '') && (regPrototype.regloginup !== ''))){
-            SE.sendUp(obj, '/updatesecurity');   
+            SE.send(obj, '/updatesecurity', VW.updateSecurity);   
             }
         } else if (val === 'm'){
             let obj = {"name":regPrototype.regname, 
             "surname":regPrototype.regsurname, 
             "email":regPrototype.regemail, 
-            "birthday":regPrototype.regbirthday, 
+            "birthday":regPrototype.regage, 
             "phone":regPrototype.regtel, 
             "message":regPrototype.regmessage};
-            if ((regPrototype.regname !== '') || (regPrototype.regsurname !== '') || (regPrototype.regemail !== '') || (regPrototype.regbirthday !== '') || (regPrototype.regtel !== '') || (regPrototype.regmessage !== '')){
-                SE.sendUp(obj, '/updatesecurity');                
+            if ((regPrototype.regname !== '') || (regPrototype.regsurname !== '') || (regPrototype.regemail !== '') || (regPrototype.regage !== '') || (regPrototype.regtel !== '') || (regPrototype.regmessage !== '')){
+                SE.send(obj, '/updatemain', VW.updateMain);                
             }
         } else if (val === 'o'){
             let obj = {"country":regPrototype.regcountry, 
             "town":regPrototype.regtown, 
             "profession":regPrototype.regprofession};
             if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '')){
-                SE.sendUp(obj, '/updatesecurity');                
+                SE.send(obj, '/updatesecurity', VW.updateSecurity);                
             }
         }
 
@@ -790,6 +772,8 @@ let clonePhoneNumber = () => {
         checkAutorisation,
         exit,
         updateUser,
-        sendUp
+        send,
+        showUsersList,
+        saveSett
     };
 })();    

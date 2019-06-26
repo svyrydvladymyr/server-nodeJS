@@ -92,8 +92,8 @@ let addAvatoDB = (req, res) => {
             if (req.file !== undefined){
                 prUs.ava = req.file.filename;
                 prUs.avasettings = parseAvasettings.avasettings;
-                var sql = `UPDATE users SET ava = '${prUs.ava}' WHERE userid = '${prUs.userid}'`;
-                var sqlsett = `UPDATE userssettings SET avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
+                let sql = `UPDATE users SET ava = '${prUs.ava}' WHERE userid = '${prUs.userid}'`;
+                let sqlsett = `UPDATE userssettings SET avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
                         console.log("err", err);
@@ -128,14 +128,14 @@ let savesett = (req, res) => {
     cookies = new Cookies(req, res);
     clientToken = cookies.get('sessionisdd');
     console.log("--client-token--", clientToken);
-    var sqlsel = `SELECT userid FROM users WHERE token = '${clientToken}'`;
+    let sqlsel = `SELECT userid FROM users WHERE token = '${clientToken}'`;
     con.query(sqlsel, function (err, result) {
         if (err) {
             console.log("err", err);
             res.send(err);
         }
         console.log("--upd-sett-userid--", result[0].userid);  
-        var sqlupt = `UPDATE userssettings 
+        let sqlupt = `UPDATE userssettings 
         SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
         con.query(sqlupt, function (err, result) {
             if (err) {
@@ -166,7 +166,7 @@ let updaterender = (req, res) => {
             title:``
         });
     } else {
-        var sql = `SELECT userid, name, surname, email, birthday, phone, message, country, town, profession FROM users WHERE token = '${clientToken}'`;
+        let sql = `SELECT userid, name, surname, email, birthday, phone, message, country, town, profession FROM users WHERE token = '${clientToken}'`;
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
@@ -177,7 +177,7 @@ let updaterender = (req, res) => {
             phone = result[0].phone.slice(3 ,13);
             phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
             message = result[0].message.slice(3 ,13);
-            messagecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
+            messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
             if ((RC === 'Ukraine') || (RC === 'Україна')){
                 country = 'ukraine';
             } else if ((RC === 'Russian') || (RC === 'Росія')){
@@ -208,8 +208,90 @@ let updaterender = (req, res) => {
 };
 
 let updatesecurity = (req, res) => {
-    console.log(req.body);
-    
+    let cookies, clientToken, parseObjUsers, sql, sqlchack;
+    parseObjUsers = req.body;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    console.log("--client-registr-obj--", parseObjUsers); 
+    checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad new password!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Z0-9-_]+$", "oldpassword", "Bad old password!", parseObjUsers, res);
+    console.log("--ready-obj--", prUs);
+    if (prUs.login === ''){
+        sql = `UPDATE users SET password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
+    } else if (prUs.password === '') {
+        sql = `UPDATE users SET login = '${prUs.login}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
+    } else if ((prUs.login !== '') && (prUs.password !== '')){
+        sql = `UPDATE users SET login = '${prUs.login}', password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
+    }  
+    sqlchack = `SELECT password FROM users WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
+    con.query(sqlchack, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            if (result == ''){
+                console.log("--res--", "BAD_PASS");
+                res.send({"res": "BAD_PASS"});
+            } else {
+                con.query(sql, function (err, result) {
+                    if (err) {
+                        console.log("err", err);
+                        console.log("err", err.code);
+                        if (err.code == 'ER_DUP_ENTRY'){
+                            res.send({"res":'ER_DUP_ENTRY'});
+                        } else {
+                            res.send({"err":err});
+                        }
+                    } else {
+                        console.log(result.changedRows ," settings updated");
+                        res.send({"res": result.changedRows});
+                    }
+                }); 
+            }
+        }        
+    });
+}; 
+
+let updatemain = (req, res) => {
+    let cookies, clientToken, parseObjUsers, sql, datetime, updatedatetime;
+    parseObjUsers = req.body;
+    datetime = new Date();
+    updatedatetime = datetime.toISOString().slice(0,10);
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    console.log("--client-registr-obj--", parseObjUsers); 
+    prUs.updateuser = updatedatetime;
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "name", "Bad name!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "surname", "Bad surname!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Z0-9@-_.]+$", "email", "Bad email!", parseObjUsers, res);
+    checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
+    checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
+    checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
+    console.log("--ready-obj--", prUs);
+    prUs.name !== '' ? nameR = ` name = '${prUs.name}',` :  nameR = ``;
+    prUs.surname !== '' ? surnameR = ` surname = '${prUs.surname}',` : surnameR = ``;
+    prUs.email !== '' ? emailR = ` email = '${prUs.email}',` : emailR = ``;
+    prUs.birthday !== '' ? birthdayR = ` birthday = '${prUs.birthday}',` : birthdayR = ``;
+    prUs.phone !== '' ? phoneR = ` phone = '${prUs.phone}',` : phoneR = ``;
+    prUs.message !== '' ? messageR = ` message = '${prUs.message}',` : messageR = ``;
+    sql = `UPDATE users SET ${nameR}${surnameR}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            console.log("err", err.code);
+            if (err.code == 'ER_DUP_ENTRY'){
+                res.send({"res":'ER_DUP_ENTRY'});
+            } else {
+                res.send({"err":err});
+            }
+        } else {
+            console.log(result.changedRows ," settings updated");
+            res.send({"res": result.changedRows});
+        }
+    });
 };
 
 module.exports = {
@@ -217,5 +299,6 @@ module.exports = {
     addAvatoDB,
     savesett,
     updaterender,
-    updatesecurity    
+    updatesecurity,    
+    updatemain
 };

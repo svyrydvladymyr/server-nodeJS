@@ -1,6 +1,6 @@
 let VW = (() => {
     
-    //function for change login button
+//function for change login button
     let buttonLogin = function(){
         let logIn = document.getElementById("send-login-close");
         if (logIn.classList == "click-login-close"){
@@ -17,33 +17,44 @@ let VW = (() => {
                 let obj, xmlhttp;
                 obj = { "login":inputLogin, 
                         "password":inputPassword};
-                dbParam = JSON.stringify(obj);
-                xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        let parseObj = JSON.parse(this.responseText);
-                        if (parseObj.err === 'false'){
-                            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotAvtoris;
-                        } else {
-                            localStorage.kalcifermaincolor = parseObj.res.maincolor;
-                            localStorage.kalcifersecondcolor = parseObj.res.secondcolor;
-                            localStorage.kalciferbgcolor = parseObj.res.bgcolor;
-                            localStorage.kalcifertopleft = parseObj.res.bordertl;
-                            localStorage.kalcifertopright = parseObj.res.bordertr;
-                            localStorage.kalciferbottomleft = parseObj.res.borderbl;
-                            localStorage.kalciferbottomright = parseObj.res.borderbr;
-                            localStorage.kalciferfont = parseObj.res.fonts;
-                            localStorage.kalciferLang = parseObj.res.language;
-                            SE.redirect(parseObj.res.userid);
-                        }                   
-                    }
-                };
-                xmlhttp.open("POST", "/autorisation", true);
-                xmlhttp.setRequestHeader("Content-type", "application/json");
-                xmlhttp.send(dbParam);
+                SE.send(obj, "/autorisation", VW.autorizationSett);                
             }
         }
     };
+
+//view after autorization
+    let autorizationSett = (res) => {
+        let parseObj = JSON.parse(res);
+        if (parseObj.err === 'false'){
+            SE.$('login-message').style.display = 'table';
+            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotAvtoris;
+        } else if (parseObj.res !== undefined){
+            localStorage.kalcifermaincolor = parseObj.res.maincolor;
+            localStorage.kalcifersecondcolor = parseObj.res.secondcolor;
+            localStorage.kalciferbgcolor = parseObj.res.bgcolor;
+            localStorage.kalcifertopleft = parseObj.res.bordertl;
+            localStorage.kalcifertopright = parseObj.res.bordertr;
+            localStorage.kalciferbottomleft = parseObj.res.borderbl;
+            localStorage.kalciferbottomright = parseObj.res.borderbr;
+            localStorage.kalciferfont = parseObj.res.fonts;
+            localStorage.kalciferLang = parseObj.res.language;
+            SE.redirect(parseObj.res.userid);
+        }   
+    };    
+
+//for exit from session    
+    let exit = (res) => {
+        localStorage.kalcifermaincolor = '#2d5e8e';
+        localStorage.kalcifersecondcolor = '#5c8ab9';
+        localStorage.kalciferbgcolor = '#f1f1f1';
+        localStorage.kalcifertopleft = 9;
+        localStorage.kalcifertopright = 9;
+        localStorage.kalciferbottomleft = 9;
+        localStorage.kalciferbottomright = 9;
+        localStorage.kalciferfont = 'ptsans';
+        localStorage.kalciferLang = 'ua';   
+        location.reload()
+    };    
 
 // function for open and close blok settings
     let openSetting = () => {
@@ -73,14 +84,14 @@ let VW = (() => {
 //show clear button
     let showClearButton = () => { 
         SE.$("search").value !== '' ? SE.$("search_clear").style.display = 'table' : SE.$("search_clear").style.display = 'none';
-    }
+    };
 
 //clear search input
     let clearSearch = () => {
         SE.$("search").value = '';
         SE.$("search_clear").style.display = 'none'
         SE.$('userlist').style.display = 'none';
-    }
+    };
 
 //show password
     let showPassword = () => {
@@ -128,7 +139,7 @@ let VW = (() => {
         document.documentElement.style.setProperty('--button-background', `linear-gradient(to bottom right, ${main}, ${second}, ${main})`);
         document.documentElement.style.setProperty('--main-color', `${main}`);
         document.documentElement.style.setProperty('--second-color', `${second}`);        
-    } 
+    }; 
 
 //change main style
     let changeRadius = (tla, tra, bla, bra) => {
@@ -150,7 +161,7 @@ let VW = (() => {
         localStorage.kalciferbottomleft = bl;
         localStorage.kalciferbottomright = br;
         document.documentElement.style.setProperty('--border-radius-main', `${tl}px ${tr}px ${br}px ${bl}px `);
-    } 
+    }; 
 
 //change font
     let changeFont = (fonta) => {
@@ -176,7 +187,7 @@ let VW = (() => {
             localStorage.kalciferfont = fonta;
             document.documentElement.style.setProperty('--main-font', `${font}`);
         } 
-    } 
+    }; 
 
 //open and close custom main style    
     let customMainStyle = () => {
@@ -199,50 +210,33 @@ let VW = (() => {
     };
 
 //show users list
-    let showUsersList = (el) => {
-        if (el.value.length > 1){
-            SE.$('userlist').style.display = 'flex';
-            let searchuser = el.value;
-            let obj = { "searchuser":searchuser}
-            dbParam = JSON.stringify(obj);
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let parseObj = JSON.parse(this.responseText);
-                    if (parseObj.length === 0){
-                        if (localStorage.kalciferLang === "ua") {
-                            SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">НЕ ЗНАЙДЕНО...</p>';
-                        } else if (localStorage.kalciferLang === "en") {
-                            SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">NOT FOUND...</p>';
-                        }
-                    } else {
-                        SE.$('userlist').innerHTML = '';
-                        for(let i = 0; i < parseObj.length; i++){
-                            let avafoto;
-                            if ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)){
-                                avafoto = `./img/ava_empty.jpg`;
-                            } else {
-                                avafoto = `./uploads/${parseObj[i].ava}`;
-                            }
-                            SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
-                                                            <div class="listusers-img" 
-                                                                style="background-image: url('${avafoto}'); 
-                                                                background-position: ${parseObj[i].avasettings};">
-                                                            </div>    
-                                                            <p>${parseObj[i].name} ${parseObj[i].surname}</p>
-                                                            </div>`;
-                        }
-                    }                    
-                }
-            };
-            xmlhttp.open("POST", "/searchuser", true);
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(dbParam);
-            
+    let showUsersList = (res) => {
+        let parseObj = JSON.parse(res);
+        if (parseObj.length === 0){
+            if (localStorage.kalciferLang === "ua") {
+                SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">НЕ ЗНАЙДЕНО...</p>';
+            } else if (localStorage.kalciferLang === "en") {
+                SE.$('userlist').innerHTML = '<p style="width:100%; font-size:14px; font-weight:bold; text-align:center;">NOT FOUND...</p>';
+            }
         } else {
-            SE.$('userlist').style.display = 'none';
-        }
-    }
+            SE.$('userlist').innerHTML = '';
+            for(let i = 0; i < parseObj.length; i++){
+                let avafoto;
+                if ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)){
+                    avafoto = `./img/ava_empty.jpg`;
+                } else {
+                    avafoto = `./uploads/${parseObj[i].ava}`;
+                }
+                SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
+                                                <div class="listusers-img" 
+                                                    style="background-image: url('${avafoto}'); 
+                                                    background-position: ${parseObj[i].avasettings};">
+                                                </div>    
+                                                <p>${parseObj[i].name} ${parseObj[i].surname}</p>
+                                                </div>`;
+            }
+        } 
+    };
 
 //get and render page    
     let renderPage = (el) => {
@@ -251,30 +245,11 @@ let VW = (() => {
     }
 
 //save settings to DB   
-    let saveSett = () => {
-        let obj = { 
-            "main":localStorage.kalcifermaincolor,
-            "second":localStorage.kalcifersecondcolor,
-            "bg":localStorage.kalciferbgcolor,
-            "tl":localStorage.kalcifertopleft,
-            "tr":localStorage.kalcifertopright,
-            "bl":localStorage.kalciferbottomleft,
-            "br": localStorage.kalciferbottomright,
-            "font": localStorage.kalciferfont,
-            "lang": localStorage.kalciferLang}      
-        dbParam = JSON.stringify(obj);
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                SE.$('save-settings-mess').innerHTML = 'save...';
-                setTimeout(() => {
-                    SE.$('save-settings-mess').innerHTML = '';
-                },1000);
-            } 
-        };
-        xmlhttp.open("POST", "/savesett", true);
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send(dbParam);
+    let saveSett = (res) => {
+        SE.$('save-settings-mess').innerHTML = 'save...';
+        setTimeout(() => {
+            SE.$('save-settings-mess').innerHTML = '';
+        },1000);    
     };
 
 //for tabs
@@ -289,6 +264,101 @@ let VW = (() => {
         el.classList.add('tab-active'); 
         SE.$(`tabs-body-${el.id.slice(-1)}`).style.display = 'table';
     };
+
+// function for add user to DB
+    let registerUserToDB = function(res){
+        let parseObj = JSON.parse(res);
+        if (parseObj.error === 'duplicate_entry_login'){
+            SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
+            SE.$('reg-login').addEventListener('change', showErrorMainMess);
+        } else if (parseObj.error === 'duplicate_entry_email'){
+            SE.$("main-form-message").innerHTML = SE.errorFormMessage().duplemail;  
+            SE.$('reg-email').addEventListener('change', showErrorMainMess);
+        } else if ((parseObj.affectedRows === 1) && (parseObj.protocol41 === true)){
+            SE.addAvaToDB();
+        } else {
+            console.log(res);
+        }      
+    };
+
+//update security date in user date
+    let updateSecurity = (res) => {
+        let parseObj = JSON.parse(res);
+        console.log(parseObj);  
+        console.log(parseObj.res); 
+        if (parseObj.res === 'BAD_PASS') {
+            SE.iconON("reg-oldpassword", "false", SE.errorFormMessage().checkPass);
+        } else if (parseObj.res === 'ER_DUP_ENTRY') {
+            SE.$('main-form-messageone').innerHTML = SE.errorFormMessage().dupllogin;            
+        } else if (parseObj.res === 0){
+            SE.$('main-form-messageone').innerHTML = SE.errorFormMessage().notCorectVar; 
+        } else if (parseObj.res === 1){
+            SE.$('main-form-messageone').innerHTML = `${SE.errorFormMessage().save}`;            
+            setTimeout(() => {
+                SE.$('main-form-messageone').innerHTML = '';
+                SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;
+            },1000);
+            setTimeout(() => {
+                SE.$('main-form-messageone').innerHTML = '';
+            },3000);
+            SE.$('reg-login-up').value = '';
+            SE.$('reg-oldpassword').value = '';
+            SE.$('reg-password').value = '';
+            SE.$('reg-password-two').value = '';
+            if (SE.$('reg-login-up-mess').classList.contains('reg-message-true')){
+                SE.$('reg-login-up-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-oldpassword-mess').classList.contains('reg-message-true')){
+                SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-password-mess').classList.contains('reg-message-true')){
+                SE.$('reg-password-mess').classList.remove('reg-message-true');
+            }
+        }
+    };    
+
+//update main date in user date
+    let updateMain = (res) => {
+        let parseObj = JSON.parse(res);
+        console.log(parseObj);  
+        console.log(parseObj.res); 
+
+
+        if (parseObj.res === 'ER_DUP_ENTRY') {
+            SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().duplemail;            
+        } else if (parseObj.res === 0){
+            SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().notCorectVar; 
+        } else if (parseObj.res === 1){
+            SE.$('main-form-messagetwo').innerHTML = `${SE.errorFormMessage().save}`;            
+            setTimeout(() => {
+                SE.$('main-form-messagetwo').innerHTML = '';
+                SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;
+            },1000);
+            setTimeout(() => {
+                SE.$('main-form-messagetwo').innerHTML = '';
+            },3000);
+
+
+            if (SE.$('reg-name-mess').classList.contains('reg-message-true')){
+                SE.$('reg-name-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){
+                SE.$('reg-surname-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-email-mess').classList.contains('reg-message-true')){
+                SE.$('reg-email-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-age-mess').classList.contains('reg-message-true')){
+                SE.$('reg-age-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){
+                SE.$('reg-tel-mess').classList.remove('reg-message-true');
+            }
+            if (SE.$('reg-message-mess').classList.contains('reg-message-true')){
+                SE.$('reg-message-mess').classList.remove('reg-message-true');
+            }
+        }
+    };    
 
 return {
     buttonLogin,
@@ -306,8 +376,12 @@ return {
     showUsersList,
     renderPage,
     saveSett,
-    clickTabs
-
+    clickTabs,
+    exit,
+    autorizationSett,
+    registerUserToDB,
+    updateSecurity,
+    updateMain
 };
 
 })();
