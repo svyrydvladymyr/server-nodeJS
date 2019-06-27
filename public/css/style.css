@@ -446,7 +446,7 @@ body{
     position: absolute;
     top: -21px;
     left: -1px;
-    min-width: 100px;
+    width: 120px;
     color: #ffffff;
     font-size: 11px;
     font-weight: bold;
@@ -668,6 +668,60 @@ body{
     margin-bottom: 5px;
     justify-content: space-around;
   }
+
+/*widgets*/  
+.widget-head{
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.widget-body{
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: column; 
+}
+.widget-blok{
+    width: 200px;
+    height: 16px;
+    margin: 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.widget-head-wrap{
+    width: 100%;
+    height: 16px;
+    max-width: 200px;
+    margin: 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.widget-chack{
+    width: 30px;
+    height: 16px;
+    text-align: center;
+}
+.widget-chack-last{
+    padding: 2px 4px; 
+    width: 130px;
+    text-align: left;
+}
+.widget-head-text{
+    width: 30px;
+    text-align: center;
+}
+.widget-head-text-one{
+    border-right: 1px solid #111111;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------FOOTER MAIN PAGE---------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

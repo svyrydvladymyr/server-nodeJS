@@ -17,14 +17,19 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
+
+
+
+// app.post('/widgetsett', (req, res) => {widgetsett(req,res)});
+
+
+
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});
 app.post('/updatemain', (req, res) => {updatemain(req, res)});
 app.post('/updateother', (req, res) => {updateother(req, res)});
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
-
 app.post('/updateavatodb', (req, res) => {updateAvatoDB(req, res)});
-
 app.post('/savesett', (req, res) => {savesett(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});

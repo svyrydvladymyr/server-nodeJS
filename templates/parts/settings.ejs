@@ -50,6 +50,79 @@
                     </select>
                 </div>
             </div> 
+            <% if(permissAccess === 'true') {%>            
+            <div class="set_blok">
+                <p id="settings_v_side"></p>
+                <div class="height-blok-set" style="padding: 8px;">
+                    <div class="widget-head">
+                        <div class="widget-head-wrap">
+                            <span class="widget-head-text widget-head-text-one" id="widget-all"></span>
+                            <span class="widget-head-text" id="widget-me"></span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-blok">
+                            <span class="widget-chack widget-head-text-one">
+                                <input type="checkbox" name="vskillsall" id="vskillsall" onchange="VW.saveWidgets('vskillsall')">
+                            </span>
+                            <span class="widget-chack">
+                                <input type="checkbox" name="vskillsme" id="vskillsme" onchange="VW.saveWidgets('vskillsme')">
+                            </span>
+                            <span class="widget-chack widget-chack-last" id="widget-skills"></span>
+                        </div>
+                        <div class="widget-blok">
+                            <span class="widget-chack widget-head-text-one">
+                                <input type="checkbox" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall')">
+                            </span>
+                            <span class="widget-chack">
+                                <input type="checkbox" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme')">
+                            </span>
+                            <span class="widget-chack widget-chack-last" id="widget-project"></span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="set_blok">
+                <p id="settings_t_side"></p>
+                <div class="height-blok-set" style="padding: 8px;">
+                    <div class="widget-head">
+                        <div class="widget-head-wrap">
+                            <span class="widget-head-text widget-head-text-one" id="widget-all-t"></span>
+                            <span class="widget-head-text" id="widget-me-t"></span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-blok">
+                            <span class="widget-chack widget-head-text-one">
+                                <input type="checkbox" name="vskillsalltop" id="vskillsalltop" onchange="VW.saveWidgets('vskillsalltop')">
+                            </span>
+                            <span class="widget-chack">
+                                <input type="checkbox" name="vskillsmetop" id="vskillsmetop" onchange="VW.saveWidgets('vskillsmetop')">
+                            </span>
+                            <span class="widget-chack widget-chack-last" id="widget-skills-t"></span>
+                        </div>
+                        <div class="widget-blok">
+                            <span class="widget-chack widget-head-text-one">
+                                <input type="checkbox" name="vprojectsalltop" id="vprojectsalltop" onchange="VW.saveWidgets('vprojectsalltop')">
+                            </span>
+                            <span class="widget-chack">
+                                <input type="checkbox" name="vprojectsmetop" id="vprojectsmetop" onchange="VW.saveWidgets('vprojectsmetop')">
+                            </span>
+                            <span class="widget-chack widget-chack-last" id="widget-project-t"></span>
+                        </div>
+                        <div class="widget-blok">
+                            <span class="widget-chack widget-head-text-one">
+                                <input type="checkbox" name="vblogall" id="vblogall" onchange="VW.saveWidgets('vblogall')">
+                            </span>
+                            <span class="widget-chack">
+                                <input type="checkbox" name="vblogme" id="vblogme" onchange="VW.saveWidgets('vblogme')">
+                            </span>
+                            <span class="widget-chack widget-chack-last" id="widget-blog-t"></span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <% } %>
             <% if(permissEdit === 'true') {%>
             <div class="save-settings"><i style='font-size:20px;' class='fas' onclick="SE.saveSett()">&#xf0c7;</i></div>
             <p id="save-settings-mess" style="text-align: center; margin: 0px auto 9px auto; font-size: 12px;"></p>

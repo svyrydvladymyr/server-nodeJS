@@ -364,7 +364,34 @@ let VW = (() => {
                 SE.readURLPreview();                             
             }
         }
-    };    
+    };  
+    
+//save settings widgets
+    let saveWidgets = (val) => {
+        SE.$(val);
+        console.log(SE.$(val));
+        if (SE.$(val).checked){
+            console.log('ceacked');            
+        } else {
+            console.log('no');            
+
+        }
+        let obj = {
+            "k":SE.$(val).id
+        }
+        console.log(obj);
+        
+
+        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);
+
+        
+    };   
+    
+    let saveWidgetsMess = (val) => {
+        console.log(val);
+        
+    }
+
 
 return {
     buttonLogin,
@@ -389,7 +416,9 @@ return {
     updateSecurity,
     updateMain,
     updateOther,
-    updateAva
+    updateAva,
+    saveWidgets,
+    saveWidgetsMess
 };
 
 })();

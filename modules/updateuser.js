@@ -264,13 +264,10 @@ let updateAvatoDB = (req, res) => {
             });           
         }        
     });
-
-
-
-
-
-
 };
+
+
+
 
 module.exports = {
     updaterender,

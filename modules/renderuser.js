@@ -93,6 +93,7 @@ let renderuser = (req, res) => {
                                 permissUserid: ``,
                                 vskillsall: `${userObj[0].vskillsall}`,
                                 vskillsme: `${userObj[0].vskillsme}`,
+                                tryy:`ssssssssssss`,
                             });
                         } else {
                             //if the user is found and is autorized
@@ -126,6 +127,7 @@ let renderuser = (req, res) => {
                                 permissUserid: `${result[0].userid}`,
                                 vskillsall: `${userObj[0].vskillsall}`,
                                 vskillsme: `${userObj[0].vskillsme}`,
+                                tryy:`ssssssssssss`,
                             });
                         }                
                     }
