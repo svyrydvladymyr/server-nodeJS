@@ -11,8 +11,11 @@ let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         borderbr VARCHAR(3) DEFAULT '9',
                                         fonts VARCHAR(35) DEFAULT 'ptsans',
                                         language VARCHAR(10) DEFAULT 'ua',
-                                        vskills VARCHAR(5) DEFAULT 'off',                                                                  
-                                        vprojects VARCHAR(5) DEFAULT 'off',                                                                  
-                                        vblog VARCHAR(5) DEFAULT 'off'                                                               
+                                        vskillsall VARCHAR(5) DEFAULT 'off',                                                                  
+                                        vskillsme VARCHAR(5) DEFAULT 'on',                                                                  
+                                        vprojectsall VARCHAR(5) DEFAULT 'off',                                                                  
+                                        vprojectsme VARCHAR(5) DEFAULT 'on',                                                                  
+                                        vblogall VARCHAR(5) DEFAULT 'off'                                                               
+                                        vblogme VARCHAR(5) DEFAULT 'on'                                                               
                                         )`;            
     con.query(sql, function (err, result) {if (err) throw err; console.log("Table userssettings created")});

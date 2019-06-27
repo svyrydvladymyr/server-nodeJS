@@ -90,10 +90,12 @@ let renderuser = (req, res) => {
                                 permissEdit: `${permissionEdit}`,
                                 permissName: ``,
                                 permissSurname: ``,
-                                permissUserid: ``
+                                permissUserid: ``,
+                                vskillsall: `${userObj[0].vskillsall}`,
+                                vskillsme: `${userObj[0].vskillsme}`,
                             });
                         } else {
-                            //if the user is found and is authorized
+                            //if the user is found and is autorized
                             //permission for edit
                             ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? 
                             permissionEdit = true : 
@@ -121,7 +123,9 @@ let renderuser = (req, res) => {
                                 permissEdit: `${permissionEdit}`,
                                 permissName: `${result[0].name}`,
                                 permissSurname: `${result[0].surname}`,
-                                permissUserid: `${result[0].userid}`
+                                permissUserid: `${result[0].userid}`,
+                                vskillsall: `${userObj[0].vskillsall}`,
+                                vskillsme: `${userObj[0].vskillsme}`,
                             });
                         }                
                     }

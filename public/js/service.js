@@ -358,9 +358,10 @@ let clonePhoneNumber = () => {
             let reader = new FileReader();
             reader.onload = function(e) {
                 if (type === 'm'){
-                    SE.$('ava').setAttribute("style", `background-image: url("${e.target.result}")`)
-                    SE.$('ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
-                    SE.updateAvaToDB();
+                    let url = e.target.result;
+                    let sett = SE.$('ava-preview-foto').style.backgroundPosition;
+                    SE.$('ava').style.backgroundPosition = sett;
+                    SE.updateAvaToDB(url, sett);
                 } else if (type === 'r'){
                     SE.$('reg-ava').setAttribute("style", `background-image: url("${e.target.result}")`)
                 }
@@ -376,7 +377,6 @@ let clonePhoneNumber = () => {
                     regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
                     SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)                  
                 }
-
             },500);
         }
     }
@@ -667,7 +667,7 @@ console.log(regPrototype);
     };
 
 // function for add user ava to DB
-    let updateAvaToDB = function(){
+    let updateAvaToDB = function(url, sett){
         let obj, fileAva, formData, avaset;
         avaset = SE.$('ava').style.backgroundPosition;
         obj = { "avasettings":avaset};
@@ -679,9 +679,10 @@ console.log(regPrototype);
         } 
         let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
         axios.post('/updateavatodb', formData, contenttype)
-        .then(function (response) {              
+        .then(function (response) {                    
             if (response.request.readyState == 4 && response.request.status == "200") {  
-
+                SE.$('ava').setAttribute("style", `background-image: url("${url}")`);
+                SE.$('ava').style.backgroundPosition = sett;
             }
         })
         .catch(function (error) {
