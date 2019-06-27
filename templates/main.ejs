@@ -51,4 +51,11 @@
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+    <% if(permissEdit === 'true') {%>
+        <script>
+            //file------------------------------------------------------------------------------------
+            SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
+        </script>
+    <% } %>
+
 </body>

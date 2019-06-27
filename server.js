@@ -4,7 +4,8 @@ let fs = require('fs');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let {registrationUsers, addAvatoDB, savesett, updatesecurity, updaterender, updatemain, updateother} = require('./modules/registration');
+let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
+let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {autorisation, exit} = require('./modules/autorisation');
@@ -30,6 +31,7 @@ app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.post('/exit', (req, res) => {exit(req, res)});
 app.use((req, res, next) => {
     let logs = `IP: ${req.ip}  TIME: ${new Date().toLocaleString()}  URL: ${req.url}\n`;
+    //make for all date logs
     fs.appendFile('access-log.txt', logs, (err) => {console.log(err)});
     next();
 });
