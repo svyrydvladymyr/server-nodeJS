@@ -786,6 +786,7 @@ body{
     margin: 10px;
     width: 100%;
     display: table;
+    position: relative;
     border-radius:var(--border-radius-main);
     border:var(--border);
     box-shadow:var(--box-shadow-main) ;
@@ -794,10 +795,10 @@ body{
 
 /*style info*/
 .ava {
-    cursor: pointer;
     width: 258px;
     height: 258px;
     margin: 0px auto;
+    position: relative;
     border-radius: var(--border-radius-main);
     border: 8px solid #ffffff;
     background-size: cover;

@@ -15,5 +15,6 @@ let sql = `CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,
                                 town VARCHAR(40), 
                                 profession VARCHAR(100),                            
                                 registrdata DATE                            
+                                updateuser DATE                            
                                 )`;            
     con.query(sql, function (err, result) {if (err) throw err; console.log("Table users created")});

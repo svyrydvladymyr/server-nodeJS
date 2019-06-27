@@ -23,5 +23,10 @@ window.onload = function(){
 //autorisation--password-------------------------------------------------------------------------------
     SE.$("password").addEventListener("change", () => {SE.checkAutorisation("password", "[^a-zA-Z0-9]", "^[a-zA-Z0-9]+$")});
     SE.$("password").addEventListener("input", () => {SE.checkTest("password", "^[a-zA-Z0-9]+$")}); 
+//file------------------------------------------------------------------------------------
+    SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
+
+
+
 
 };

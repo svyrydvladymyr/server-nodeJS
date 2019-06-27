@@ -353,21 +353,30 @@ let clonePhoneNumber = () => {
 //-------------------------function for work with ava--------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 //show preview foto     
-    let readURL = () => {
+    let readURL = (type) => {
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
             reader.onload = function(e) {
-                SE.$('reg-ava').setAttribute("style", `background-image: url("${e.target.result}")`)
+                if (type === 'm'){
+                    SE.$('ava').setAttribute("style", `background-image: url("${e.target.result}")`)
+                    SE.$('ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
+                    SE.updateAvaToDB();
+                } else if (type === 'r'){
+                    SE.$('reg-ava').setAttribute("style", `background-image: url("${e.target.result}")`)
+                }
             }          
             reader.readAsDataURL(SE.$('reg-file').files[0]);
             setTimeout(() => {
-                SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
-                SE.$("reg-form-send").classList.add('reg_send_active');
-                SE.$("reg-form-send").style.cursor = 'pointer'; 
-                SE.$('reg-ava').style.display = 'table';
-                SE.$('reg-ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
-                regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
-                SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+                if (type === 'r'){
+                    SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
+                    SE.$("reg-form-send").classList.add('reg_send_active');
+                    SE.$("reg-form-send").style.cursor = 'pointer'; 
+                    SE.$('reg-ava').style.display = 'table';
+                    SE.$('reg-ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
+                    regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
+                    SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)                  
+                }
+
             },500);
         }
     }
@@ -385,25 +394,37 @@ let clonePhoneNumber = () => {
     }
 
 //confirm preview ava
-    let confirmPreview = () => {
-        SE.$('ava-preview-wrap').style.display = 'none';  
-        SE.$('horizontally').value = '50%';
-        SE.$('vertical').value = '50%';
-        SE.readURL(); 
-    }
-
-//confirm preview ava close
-    let confirmPreviewClose = () => {
-        if (SE.$('reg-ava').style.backgroundImage === ''){
-            SE.$('reg-file-mess').style.display = 'table';
+    let confirmPreview = (type) => {
+        if (type === 'm'){
+            SE.$('ava-preview-wrap-main').style.display = 'none';
+        } else if (type === 'r'){
+            SE.$('ava-preview-wrap').style.display = 'none';
         }
         SE.$('horizontally').value = '50%';
         SE.$('vertical').value = '50%';
-        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
-        SE.$('reg-ava').setAttribute("style", `background-image: url("")`)
-        SE.$('ava-preview-wrap').style.display = 'none';  
-        SE.clearFileInput();
+        SE.readURL(type); 
     }
+
+//confirm preview ava close
+    let confirmPreviewClose = (type) => {
+        SE.$('horizontally').value = '50%';
+        SE.$('vertical').value = '50%';
+        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
+        if (type === 'm'){
+            SE.$('ava-preview-wrap-main').style.display = 'none'; 
+            SE.$('reg-file').type = "text";
+            setTimeout(() => {
+                SE.$('reg-file').type = "file";
+            },100);
+        } else if (type === 'r'){
+            if (SE.$('reg-ava').style.backgroundImage === ''){
+                SE.$('reg-file-mess').style.display = 'table';
+            }
+            SE.$('ava-preview-wrap').style.display = 'none'; 
+            SE.$('reg-ava').setAttribute("style", `background-image: url("")`);
+            SE.clearFileInput();
+        }
+    };
 
 //clear file input
     let clearFileInput = () => {
@@ -614,7 +635,7 @@ console.log(regPrototype);
         SE.$('reg-email').removeEventListener('change', showErrorMainMess);
     };
     
-// function for add user to DB
+// function for add user ava to DB
     let addAvaToDB = function(){
         let obj, fileAva, formData;
         if (regPrototype.avasettings === ''){
@@ -638,6 +659,29 @@ console.log(regPrototype);
                     CLEAR.clearRegProto();
                     SE.redirect(`/${response.data.userid}`);
                 }, 2000);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    };
+
+// function for add user ava to DB
+    let updateAvaToDB = function(){
+        let obj, fileAva, formData, avaset;
+        avaset = SE.$('ava').style.backgroundPosition;
+        obj = { "avasettings":avaset};
+        fileAva = document.getElementById('reg-file').files;      
+        formData = new FormData();
+        formData.append("objreg",JSON.stringify(obj));
+        for(let i = 0; i < fileAva.length; i++){
+            formData.append("file",fileAva[i]);
+        } 
+        let contenttype = {headers:{"Content-type": "multipart/form-data"}}  
+        axios.post('/updateavatodb', formData, contenttype)
+        .then(function (response) {              
+            if (response.request.readyState == 4 && response.request.status == "200") {  
+
             }
         })
         .catch(function (error) {
@@ -704,8 +748,8 @@ let registerUserToDB = function(){
     let updateUser = (val) => {
         if (val === 's'){
             let obj = { "login":regPrototype.regloginup, 
-            "oldpassword":regPrototype.regoldpassword, 
-            "password":regPrototype.regpassword};            
+                        "oldpassword":regPrototype.regoldpassword, 
+                        "password":regPrototype.regpassword};            
             if ((regPrototype.regpassword !== '') && (regPrototype.regoldpassword === '')){
                 SE.iconON('reg-oldpassword', "false", SE.errorFormMessage().enterPassword);
             }else if ((regPrototype.regloginup !== '') && (regPrototype.regoldpassword === '')){
@@ -719,20 +763,20 @@ let registerUserToDB = function(){
             }
         } else if (val === 'm'){
             let obj = {"name":regPrototype.regname, 
-            "surname":regPrototype.regsurname, 
-            "email":regPrototype.regemail, 
-            "birthday":regPrototype.regage, 
-            "phone":regPrototype.regtel, 
-            "message":regPrototype.regmessage};
+                        "surname":regPrototype.regsurname, 
+                        "email":regPrototype.regemail, 
+                        "birthday":regPrototype.regage, 
+                        "phone":regPrototype.regtel, 
+                        "message":regPrototype.regmessage};
             if ((regPrototype.regname !== '') || (regPrototype.regsurname !== '') || (regPrototype.regemail !== '') || (regPrototype.regage !== '') || (regPrototype.regtel !== '') || (regPrototype.regmessage !== '')){
                 SE.send(obj, '/updatemain', VW.updateMain);                
             }
         } else if (val === 'o'){
             let obj = {"country":regPrototype.regcountry, 
-            "town":regPrototype.regtown, 
-            "profession":regPrototype.regprofession};
+                        "town":regPrototype.regtown, 
+                        "profession":regPrototype.regprofession};
             if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '')){
-                SE.send(obj, '/updatesecurity', VW.updateSecurity);                
+                SE.send(obj, '/updateother', VW.updateOther);                
             }
         }
 
@@ -774,6 +818,7 @@ let registerUserToDB = function(){
         updateUser,
         send,
         showUsersList,
-        saveSett
+        saveSett,
+        updateAvaToDB
     };
 })();    

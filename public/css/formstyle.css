@@ -144,6 +144,9 @@
 .form_input_file::-webkit-file-upload-button {
     visibility: hidden;
 }
+.form_input_file_ava::-webkit-file-upload-button {
+    visibility: hidden;
+}
 
 .form_input_file::before {
     content: "select file";
@@ -158,6 +161,17 @@
     text-align: center;
     font-weight: 700;
     font-size: 10pt;
+}
+.form_input_file_ava::before {
+    content: "select file";
+    width: 9px;
+    display: inline-block;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 0px 0px 9px #ffffff;
+    font-weight: bold;
+    font-size: 11pt;
+    color: #000000;
 }
 
 .inp-file{
@@ -333,10 +347,43 @@
     background: #ffffff;
     z-index: 3;
 }
+.ava-preview-wrap-main{
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: absolute;
+    /* margin: 0px 3%; */
+    width: 93%;
+    /* bottom: 15px; */
+    height: 300px;
+    box-shadow: 0px 0px 3px #ffffff;
+    border: 3px solid #2c5a88;
+    border-radius: 9px;
+    background: #ffffff;
+    z-index: 3;
+}
+
+.input-ava{
+    width: 25px;
+    height: 22px;
+    position: absolute;
+    padding: 2px 3px;
+    border-radius: 5px;
+    background: #ffffff;
+    right: 5px;
+    top: 8px;
+    border: 2px solid #000000;
+    box-shadow: 0px 0px 4px #ffffff;
+}
 
 .ava-preview-body{
     width: 100%;
     height: 280px;
+    position: relative;
+}
+.ava-preview-body-main {
+    width: 100%;
+    height: 250px;
     position: relative;
 }
 
@@ -347,6 +394,14 @@
     margin: 10px auto;
     border: 2px solid #2c5a88;
     border-radius: 9px
+}
+.ava-preview-foto-wrap-main{
+    width: 238px;
+    height: 238px;
+    position: relative;
+    margin: 10px auto;
+    border: 2px solid #2c5a88;
+    border-radius: 9px;
 }
 
 .ava-preview-foto{
@@ -366,12 +421,25 @@
     top: 10px;
     width: 80%;
 }
+.rande-hor-main {
+    position: absolute;
+    right: 28px;
+    top: 1px;
+    width: 80%;
+}
 
 .rande-vert{
     position: absolute;
     transform: rotateZ(90deg);
     right: -80px;
     top: 118px;
+    width: 80%;
+}
+.rande-vert-main {
+    position: absolute;
+    transform: rotateZ(90deg);
+    right: -76px;
+    top: 102px;
     width: 80%;
 }
 

@@ -294,11 +294,42 @@ let updatemain = (req, res) => {
     });
 };
 
+
+let updateother = (req, res) => {
+    let cookies, clientToken, parseObjUsers, sql, datetime, updatedatetime;
+    parseObjUsers = req.body;
+    datetime = new Date();
+    updatedatetime = datetime.toISOString().slice(0,10);
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    console.log("--client-registr-obj--", parseObjUsers); 
+    prUs.updateuser = updatedatetime;
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    console.log("--ready-obj--", prUs);
+    prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
+    prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;
+    prUs.profession !== '' ? professionR = ` profession = '${prUs.profession}',` : professionR = ``;
+    sql = `UPDATE users SET ${countryR}${townR}${professionR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err":err});
+        } else {
+            console.log(result.changedRows ," settings updated");
+            res.send({"res": result.changedRows});
+        }
+    });
+};
+
 module.exports = {
     registrationUsers,
     addAvatoDB,
     savesett,
     updaterender,
     updatesecurity,    
-    updatemain
+    updatemain,
+    updateother
 };

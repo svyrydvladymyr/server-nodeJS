@@ -284,8 +284,6 @@ let VW = (() => {
 //update security date in user date
     let updateSecurity = (res) => {
         let parseObj = JSON.parse(res);
-        console.log(parseObj);  
-        console.log(parseObj.res); 
         if (parseObj.res === 'BAD_PASS') {
             SE.iconON("reg-oldpassword", "false", SE.errorFormMessage().checkPass);
         } else if (parseObj.res === 'ER_DUP_ENTRY') {
@@ -294,68 +292,76 @@ let VW = (() => {
             SE.$('main-form-messageone').innerHTML = SE.errorFormMessage().notCorectVar; 
         } else if (parseObj.res === 1){
             SE.$('main-form-messageone').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {
-                SE.$('main-form-messageone').innerHTML = '';
-                SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;
-            },1000);
-            setTimeout(() => {
-                SE.$('main-form-messageone').innerHTML = '';
-            },3000);
+            setTimeout(() => {SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            setTimeout(() => {SE.$('main-form-messageone').innerHTML = '';},3000);
             SE.$('reg-login-up').value = '';
             SE.$('reg-oldpassword').value = '';
             SE.$('reg-password').value = '';
             SE.$('reg-password-two').value = '';
             if (SE.$('reg-login-up-mess').classList.contains('reg-message-true')){
-                SE.$('reg-login-up-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-login-up-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-oldpassword-mess').classList.contains('reg-message-true')){
-                SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-password-mess').classList.contains('reg-message-true')){
-                SE.$('reg-password-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-password-mess').classList.remove('reg-message-true');}
         }
     };    
 
 //update main date in user date
     let updateMain = (res) => {
         let parseObj = JSON.parse(res);
-        console.log(parseObj);  
-        console.log(parseObj.res); 
-
-
         if (parseObj.res === 'ER_DUP_ENTRY') {
             SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().duplemail;            
         } else if (parseObj.res === 0){
             SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().notCorectVar; 
         } else if (parseObj.res === 1){
             SE.$('main-form-messagetwo').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {
-                SE.$('main-form-messagetwo').innerHTML = '';
-                SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;
-            },1000);
-            setTimeout(() => {
-                SE.$('main-form-messagetwo').innerHTML = '';
-            },3000);
-
-
+            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},3000);
             if (SE.$('reg-name-mess').classList.contains('reg-message-true')){
-                SE.$('reg-name-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-name-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){
-                SE.$('reg-surname-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-surname-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-email-mess').classList.contains('reg-message-true')){
-                SE.$('reg-email-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-email-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-age-mess').classList.contains('reg-message-true')){
-                SE.$('reg-age-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-age-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){
-                SE.$('reg-tel-mess').classList.remove('reg-message-true');
-            }
+                SE.$('reg-tel-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-message-mess').classList.contains('reg-message-true')){
-                SE.$('reg-message-mess').classList.remove('reg-message-true');
+                SE.$('reg-message-mess').classList.remove('reg-message-true');}
+        }
+    };  
+
+//update other date in user date
+    let updateOther = (res) => {
+        let parseObj = JSON.parse(res);
+        if (parseObj.res === 0){
+            SE.$('main-form-messagethree').innerHTML = SE.errorFormMessage().notCorectVar; 
+        } else if (parseObj.res === 1){
+            SE.$('main-form-messagethree').innerHTML = `${SE.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},3000);
+            if (SE.$('reg-country-mess').classList.contains('reg-message-true')){
+                SE.$('reg-country-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-town-mess').classList.contains('reg-message-true')){
+                SE.$('reg-town-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-profession-mess').classList.contains('reg-message-true')){
+                SE.$('reg-profession-mess').classList.remove('reg-message-true');}
+        }
+    };  
+    
+    
+//update ava date in user date
+    let updateAva = () => {
+        if (SE.$('reg-file').files.length === 1){
+            if (SE.$('reg-file').files[0].size > 1024000) {
+                SE.$('ava-mess-main').innerHTML = SE.errorFormMessage().toLBigFile;  
+                setTimeout(() => {SE.$('ava-mess-main').innerHTML = ''}, 3000);
+            } else {
+                //show preview
+                SE.$('ava-preview-wrap-main').style.display = 'flex';
+                SE.readURLPreview();                             
             }
         }
     };    
@@ -381,7 +387,9 @@ return {
     autorizationSett,
     registerUserToDB,
     updateSecurity,
-    updateMain
+    updateMain,
+    updateOther,
+    updateAva
 };
 
 })();

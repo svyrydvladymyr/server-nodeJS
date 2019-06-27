@@ -6,64 +6,49 @@
 <body>
 <!--HEADER-->
     <%- include("./parts/header.ejs") %>
-
 <!--SETTINGS-->
     <%- include("./parts/settings.ejs") %> 
-
 <!--WRAP BODY--> 
-    <div class="wrap">
-
+    <div class="wrap">  
     <!--NAV-->
         <div class="nav">     
             <%- include("./parts/nav.ejs") %>  
         </div>
-
-
     <!--EMPTY SIDE BLOKS-->
         <div class="out1"></div>
         <div class="out2"></div>
-
     <!--SIDE-INFO-->
         <div class="side">
             <!--MAIN INFO-->
             <%- include("./parts/info.ejs") %>
-
         <!--MAIN TWO-->
             <% if(permissEdit === 'true') {%>
             <div class="side_sub">  
                 <p id="town"><%=name %></p>
             </div>
             <% } %>
-
         <!--MAIN THREE-->
             <% if(permissEdit === 'true') {%>
             <div class="side_sub">
             </div>
             <% } %>
         </div>
-
     <!--CONTENT-->
         <div class="article">    
             <%- include("./parts/article.ejs") %> 
         </div>
-
     <!--BLOK ON TOP FOOTER-->
         <div class="blok">
             <%- include("./parts/ontopfooter.ejs") %>
-        </div>
-       
+        </div>       
     </div>
-
 <!--FOOTER-->
     <div class="footer-main-info">
         <%- include("./parts/footer.ejs") %>
     </div>
-
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
-
- 
-
 </body>

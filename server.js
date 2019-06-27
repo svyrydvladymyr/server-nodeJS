@@ -4,7 +4,7 @@ let fs = require('fs');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let {registrationUsers, addAvatoDB, savesett, updatesecurity, updaterender, updatemain} = require('./modules/registration');
+let {registrationUsers, addAvatoDB, savesett, updatesecurity, updaterender, updatemain, updateother} = require('./modules/registration');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {autorisation, exit} = require('./modules/autorisation');
@@ -15,12 +15,15 @@ app.use((req, res, next) => {console.log(`${req.method} --> ${req.url}`); next()
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
+app.use('/registration', (req, res) => {res.render(`registration`)});
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});
 app.post('/updatemain', (req, res) => {updatemain(req, res)});
-// app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});
-app.use('/registration', (req, res) => {res.render(`registration`)});
+app.post('/updateother', (req, res) => {updateother(req, res)});
 app.post('/registrationUser', (req, res) => {registrationUsers(req, res)});
 app.post('/addavatodb', (req, res) => {addAvatoDB(req, res)});
+
+app.post('/updateavatodb', (req, res) => {updateAvatoDB(req, res)});
+
 app.post('/savesett', (req, res) => {savesett(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});

@@ -1,7 +1,29 @@
 <div class="side_sub" id="sideinfo">
-        <div class="ava" style="background-image: url('<%=ava %>'); background-position: <%=avasettings %>;">
+        <% if(permissEdit === 'true') {%>
+            <!--preview ava-->
+            <div class="ava-preview-wrap-main"  id="ava-preview-wrap-main">
+                <div class="ava-preview-body-main">
+                    <div class="ava-preview-foto-wrap-main">
+                        <div class="ava-preview-foto" id="ava-preview-foto">
+                            <input type="range" name="horizontally" id="horizontally" min="0" max="100" step="5" class="rande-hor-main" onchange="VW.rangeAvaFoto('h')">
+                            <input type="range" name="vertical" id="vertical" min="0" max="100" step="5" class="rande-vert-main" onchange="VW.rangeAvaFoto('v')">
+                        </div>
+                    </div>
+                </div>
+                <div class="ava-preview-button-wrap">
+                    <div class="ava-preview-button">
+                        <div id="button-preview-form" class="button-preview-form" onclick="SE.confirmPreview('m')"></div>
+                        <div id="button-preview-form-close" class="button-preview-form-close" onclick="SE.confirmPreviewClose('m')">
+                            <i class='fas'>&#xf00d;</i>
+                        </div>
+                    </div>
+                </div>                        
+            </div>
+        <% } %>
+        <p id="ava-mess-main" style="margin:0px; font-size:14px; font-weight: bold; text-align:center; color:red;"></p>
+        <div class="ava" id="ava" style="background-image: url('<%=ava %>'); background-position: <%=avasettings %>;">
             <% if(permissEdit === 'true') {%>
-                <i class='fas fa-camera' style='font-size:16px; text-shadow: 0px 0px 3px #ffffff; float:right; cursor: pointer; margin: 5px 7px 0px 0px;' onclick="window.location.href = '/updateuser';"></i>
+               <input type="file" name="reg-file" id="reg-file" value="reg-file" class="form_input_file_ava inp-file fas fa-camera input-ava" accept=".jpg,.jpeg,.png"> 
             <% } %>
         </div>
         <div class="info">
@@ -11,7 +33,7 @@
             </div>
 
 
-            <% if(permissEdit === 'true') {%>
+            <% if(permissEdit === 'true') {%>                
                 <i style='font-size:16px; float:right; cursor: pointer; margin: -5px 0px 7px 0px;' class='far' onclick="window.location.href = '/updateuser';">&#xf044;</i>
             <% } %>
 
