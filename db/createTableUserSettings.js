@@ -19,7 +19,7 @@ let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         vprojectsalltop VARCHAR(5) DEFAULT 'off',                                                                  
                                         vprojectsme VARCHAR(5) DEFAULT 'on',                                                                  
                                         vprojectsmetop VARCHAR(5) DEFAULT 'off',                                                                  
-                                        vblogall VARCHAR(5) DEFAULT 'off'                                                               
+                                        vblogall VARCHAR(5) DEFAULT 'off',                                                               
                                         vblogme VARCHAR(5) DEFAULT 'on'                                                               
                                         )`;            
     con.query(sql, function (err, result) {if (err) throw err; console.log("Table userssettings created")});

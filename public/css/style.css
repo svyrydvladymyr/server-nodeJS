@@ -423,8 +423,20 @@ body{
     border-left: 1px solid #2b2b2b;
 }
 
+.set_blok_update {
+    width: 250px;
+    border-radius: 0px 0px 7px 7px;
+    border: 1px solid #ffffff;
+    background: #ffffff;
+    border-top: 2px solid #676767;
+}
+
 .set_blok:hover{
     box-shadow: 0px 0px 2px #c2c2c2;
+}
+
+.set_blok_update:hover {
+    box-shadow: 0px 0px 0px transparent;
 }
 
 /*bloks in setting for language*/
@@ -456,6 +468,15 @@ body{
     background: #b33535;
     border: 1px solid #2b2b2b;
     text-shadow: 0px 0px 1px #111111;
+}
+
+.set_blok_update p {
+    width: 101%;
+    color: #000000;
+    border-radius: 9px 17px 0px 0px;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    text-shadow: 0px 0px 0px transparent;
 }
 
 /*label on click setting*/

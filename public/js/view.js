@@ -368,28 +368,16 @@ let VW = (() => {
     
 //save settings widgets
     let saveWidgets = (val) => {
-        SE.$(val);
-        console.log(SE.$(val));
-        if (SE.$(val).checked){
-            console.log('ceacked');            
-        } else {
-            console.log('no');            
-
-        }
-        let obj = {
-            "k":SE.$(val).id
-        }
+        let obj;
+        SE.$(val).checked ? obj = {"el":SE.$(val).id, "value":"on"} : obj = {"el":SE.$(val).id, "value":"off"};
         console.log(obj);
-        
-
-        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);
-
-        
-    };   
+        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
+    };  
     
     let saveWidgetsMess = (val) => {
-        console.log(val);
-        
+        SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().save}`;            
+        setTimeout(() => {SE.$('main-form-messagefour').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},500);
+        setTimeout(() => {SE.$('main-form-messagefour').innerHTML = '';},1000);
     }
 
 

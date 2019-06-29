@@ -594,7 +594,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").style.cursor = 'no-drop';            
             }
         }
-
     }; 
  
 //clear message if not empty name surname or E-mail input
@@ -623,7 +622,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = 'no-drop'; 
                 SE.registerUserToDB();
-
             }
         } 
     };    

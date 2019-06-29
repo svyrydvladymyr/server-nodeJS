@@ -22,6 +22,7 @@
         <!--MAIN INFO-->
             <%- include("./parts/info.ejs") %>
         <!--SKILLS-->
+            <!--see for me-->
             <% if((permissEdit === 'true') && (vskillsme === 'on')) {%>
                 <div class="side_sub">         
                     <% if(permissEdit === 'true') {%>
@@ -34,12 +35,9 @@
                     <p>fghfgh</p>              
                 </div>
             <% } %>
-
-            <% if(vskillsall === 'on') {%>
+            <!--see for all-->
+            <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
                 <div class="side_sub">  
-                    <% if(permissEdit === 'true') {%>
-                        <p id="town"><%=name %> <%=surname %></p>
-                    <% } %>  
                     <p>fghfgh</p>
                     <p>fghfghf</p>
                     <p>fghfghfggfhf</p>
@@ -48,12 +46,25 @@
                 </div>
             <% } %>
 
-
-        <!--MAIN THREE-->
-            <% if(permissEdit === 'true') {%>
-            <div class="side_sub">
-            </div>
+        <!--PROJECTS-->
+            <!--see for me-->
+            <% if((permissEdit === 'true') && (vprojectsme === 'on')) {%>
+                <div class="side_sub">         
+                    <% if(permissEdit === 'true') {%>
+                        <p id="town"><%=name %> <%=surname %></p>
+                    <% } %>  
+                    <p>fghfgh</p>
+                    <p>fghfghf</p>
+                </div>
             <% } %>
+            <!--see for all-->
+            <% if((permissEdit === 'false') && (vprojectsall === 'on')) {%>
+                <div class="side_sub">  
+                    <p>fghfgh</p>
+                    <p>fghfghf</p>
+                </div>
+            <% } %>
+
         </div>
     <!--CONTENT-->
         <div class="article">    
