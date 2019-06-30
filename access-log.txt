@@ -1,4 +1,0 @@
-IP: ::1  TIME: 2019-6-28 02:23:29  URL: /volodymyrsvyryd-kQnOheDxIc
-IP: ::1  TIME: 2019-6-28 02:23:37  URL: /widgetsett
-IP: ::1  TIME: 2019-6-28 02:24:41  URL: /widgetsett
-IP: ::1  TIME: 2019-6-28 02:24:46  URL: /widgetsett
