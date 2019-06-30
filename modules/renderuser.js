@@ -92,8 +92,15 @@ let renderuser = (req, res) => {
                                 permissSurname: ``,
                                 permissUserid: ``,
                                 vskillsall: `${userObj[0].vskillsall}`,
-                                vskillsme: `${userObj[0].vskillsme}`,
-                                tryy:`ssssssssssss`,
+                                vskillsme:`${ userObj[0].vskillsme}`,
+                                vprojectsall: `${userObj[0].vprojectsall}`,
+                                vprojectsme: `${userObj[0].vprojectsme}`,
+                                vskillsalltop: `${userObj[0].vskillsalltop}`,
+                                vskillsmetop: `${userObj[0].vskillsmetop}`,
+                                vprojectsalltop: `${userObj[0].vprojectsalltop}`,
+                                vprojectsmetop: `${userObj[0].vprojectsmetop}`,
+                                vblogall: `${userObj[0].vblogall}`,
+                                vblogme: `${userObj[0].vblogme}`,
                             });
                         } else {
                             //if the user is found and is autorized
@@ -124,10 +131,17 @@ let renderuser = (req, res) => {
                                 permissEdit: `${permissionEdit}`,
                                 permissName: `${result[0].name}`,
                                 permissSurname: `${result[0].surname}`,
-                                permissUserid: `${result[0].userid}`,
+                                permissUserid: `${result[0].userid}`,                                
                                 vskillsall: `${userObj[0].vskillsall}`,
-                                vskillsme: `${userObj[0].vskillsme}`,
-                                tryy:`ssssssssssss`,
+                                vskillsme:`${ userObj[0].vskillsme}`,
+                                vprojectsall: `${userObj[0].vprojectsall}`,
+                                vprojectsme: `${userObj[0].vprojectsme}`,
+                                vskillsalltop: `${userObj[0].vskillsalltop}`,
+                                vskillsmetop: `${userObj[0].vskillsmetop}`,
+                                vprojectsalltop: `${userObj[0].vprojectsalltop}`,
+                                vprojectsmetop: `${userObj[0].vprojectsmetop}`,
+                                vblogall: `${userObj[0].vblogall}`,
+                                vblogme: `${userObj[0].vblogme}`,
                             });
                         }                
                     }

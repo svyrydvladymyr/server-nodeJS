@@ -368,28 +368,21 @@ let VW = (() => {
     
 //save settings widgets
     let saveWidgets = (val) => {
-        SE.$(val);
-        console.log(SE.$(val));
-        if (SE.$(val).checked){
-            console.log('ceacked');            
-        } else {
-            console.log('no');            
-
-        }
-        let obj = {
-            "k":SE.$(val).id
-        }
-        console.log(obj);
-        
-
-        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);
-
-        
-    };   
+        let obj;
+        SE.$(val).checked ? obj = {"el":SE.$(val).id, "value":"on"} : obj = {"el":SE.$(val).id, "value":"off"};
+        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
+    };  
     
-    let saveWidgetsMess = (val) => {
-        console.log(val);
-        
+    let saveWidgetsMess = (res) => {
+        let parseObj = JSON.parse(res);
+        if (parseObj.res.changedRows === 0){
+            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().nedautoriz}`;            
+        } else {
+            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},500);
+            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = '';},1000);
+        }
+
     }
 
 

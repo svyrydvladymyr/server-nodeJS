@@ -160,6 +160,7 @@ let SE = (() => {
             let notSame = "Старий і новий паролі не можуть співпадати!";
             let save = "зберігається...";
             let saved = "Збережено!";
+            let nedautoriz = "Потрібно авторизуватися!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -181,7 +182,8 @@ let SE = (() => {
                 enterPassword,
                 notSame,
                 save,
-                saved
+                saved,
+                nedautoriz
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -205,6 +207,7 @@ let SE = (() => {
             let notSame = "Old and new passwords can not match!";
             let save = "save...";
             let saved = "Saved!";
+            let nedautoriz = "You must be logged in!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -226,7 +229,8 @@ let SE = (() => {
                 enterPassword,
                 notSame,
                 save,
-                saved
+                saved,
+                nedautoriz
             };
         }
     };    
@@ -594,7 +598,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").style.cursor = 'no-drop';            
             }
         }
-
     }; 
  
 //clear message if not empty name surname or E-mail input
@@ -623,7 +626,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = 'no-drop'; 
                 SE.registerUserToDB();
-
             }
         } 
     };    
