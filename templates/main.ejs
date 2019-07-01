@@ -4,67 +4,34 @@
     <%- include("./parts/head.ejs") %>
 </head>
 <body>
-<!--HEADER-->
     <%- include("./parts/header.ejs") %>
-<!--SETTINGS-->
     <%- include("./parts/settings.ejs") %> 
-<!--WRAP BODY--> 
     <div class="wrap">  
-    <!--NAV-->
-        <div class="nav">     
-            <%- include("./parts/nav.ejs") %>  
-        </div>
-    <!--EMPTY SIDE BLOKS-->
         <div class="out1"></div>
         <div class="out2"></div>
-    <!--SIDE-INFO-->
         <div class="side">
-        <!--MAIN INFO-->
             <%- include("./parts/info.ejs") %>
-        <!--SKILLS-->
             <% if((permissEdit === 'true') && (vskillsme === 'on')) {%>
-                <div class="side_sub">         
-                    <% if(permissEdit === 'true') {%>
-                        <p id="town"><%=name %> <%=surname %></p>
-                    <% } %>  
-                    <p>fghfgh</p>
-                    <p>fghfghf</p>
-                    <p>fghfghfggfhf</p>
-                    <p>fghfghfghfghfghfg</p>
-                    <p>fghfgh</p>              
-                </div>
+                <%- include("./parts/skills.ejs") %> 
             <% } %>
-
-            <% if(vskillsall === 'on') {%>
-                <div class="side_sub">  
-                    <% if(permissEdit === 'true') {%>
-                        <p id="town"><%=name %> <%=surname %></p>
-                    <% } %>  
-                    <p>fghfgh</p>
-                    <p>fghfghf</p>
-                    <p>fghfghfggfhf</p>
-                    <p>fghfghfghfghfghfg</p>
-                    <p>fghfgh</p> 
-                </div>
+            <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
+                <%- include("./parts/skills.ejs") %> 
             <% } %>
-
-
-        <!--MAIN THREE-->
-            <!-- <% if(permissEdit === 'true') {%>
-            <div class="side_sub">
-            </div>
-            <% } %> -->
+            <% if((permissEdit === 'true') && (vprojectsme === 'on')) {%>
+                <%- include("./parts/projects.ejs") %> 
+            <% } %>
+            <% if((permissEdit === 'false') && (vprojectsall === 'on')) {%>
+                <%- include("./parts/projects.ejs") %> 
+            <% } %>
         </div>
-    <!--CONTENT-->
-        <div class="article">    
+        <div class="article">   
+            <%- include("./parts/nav.ejs") %>  
             <%- include("./parts/article.ejs") %> 
         </div>
-    <!--BLOK ON TOP FOOTER-->
         <div class="blok">
             <%- include("./parts/ontopfooter.ejs") %>
         </div>       
     </div>
-<!--FOOTER-->
     <div class="footer-main-info">
         <%- include("./parts/footer.ejs") %>
     </div>
@@ -75,9 +42,7 @@
     <script src="./js/controller.js"></script>
     <% if(permissEdit === 'true') {%>
         <script>
-            //file------------------------------------------------------------------------------------
             SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
         </script>
     <% } %>
-
 </body>

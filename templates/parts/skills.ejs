@@ -1,0 +1,84 @@
+<div class="side_sub">         
+    <div class="skills-title-wrap">
+        <p id="widget-skills-t" class="skills-title"></p>
+        <% if(permissEdit === 'true') {%>
+            <div class="skills-edit-blok">
+                <i class='far fa-save' id="save-skills"></i>
+                <i class='far fa-edit' id="edit-skills" onclick="VW.showEditSkils()"></i>
+            </div>        
+        <% } %>  
+    </div>
+
+    <div class="skills-conteiner" id="skills-conteiner">
+        <div class="skills-wrap">   
+            <div class="skills-boks">
+                <div class="skills-text">
+                    <% if(permissEdit === 'true') {%>
+                        <input type="checkbox" name="" id="">
+                    <% } %>  
+                    <p>HTML</p>
+                </div>
+                <div class="skills-range-wrap">
+                    <div class="skills-range"></div>
+                </div>
+            </div> 
+            <% if(permissEdit === 'true') {%>
+            <div class="skills-edit">
+                <i class='far fa-edit'></i>
+                <i class='far fa-trash-alt'></i>
+            </div>    
+            <% } %> 
+        </div>     
+
+        <div class="skills-wrap">   
+            <div class="skills-boks">
+                <div class="skills-text">
+                    <% if(permissEdit === 'true') {%>
+                        <input type="checkbox" name="" id="">
+                    <% } %>  
+                    <p>CSS</p>
+                </div>
+                <div class="skills-range-wrap">
+                    <div class="skills-range"></div>
+                </div>
+            </div> 
+            <% if(permissEdit === 'true') {%>
+            <div class="skills-edit">
+                <i class='far fa-edit'></i>
+                <i class='far fa-trash-alt'></i>
+            </div>    
+            <% } %> 
+        </div>     
+
+        <div class="skills-wrap">   
+            <div class="skills-boks">
+                <div class="skills-text">
+                    <% if(permissEdit === 'true') {%>
+                        <input type="checkbox" name="" id="">
+                    <% } %>  
+                    <p>JavaScript</p>
+                </div>
+                <div class="skills-range-wrap">
+                    <div class="skills-range"></div>
+                </div>
+            </div> 
+            <% if(permissEdit === 'true') {%>
+            <div class="skills-edit">
+                <i class='far fa-edit'></i>
+                <i class='far fa-trash-alt'></i>
+            </div>    
+            <% } %> 
+        </div>  
+    </div>
+
+    
+    
+
+    <% if(permissEdit === 'true') {%>
+        <div id="skills-add-form"></div>
+        <i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>
+    <% } %>  
+
+          
+         
+</div>

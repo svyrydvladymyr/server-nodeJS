@@ -160,6 +160,10 @@ let SE = (() => {
             let notSame = "Старий і новий паролі не можуть співпадати!";
             let save = "зберігається...";
             let saved = "Збережено!";
+            let nedautoriz = "Потрібно авторизуватися!";
+            let skillslevel = "Встановіть рівень, який на вашу думку ва маєте. Від 1 до 10.";
+            let skillsname = "Введіть назву вашого навику.";
+            let skillschack = "Показувати чи ні.";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -181,7 +185,11 @@ let SE = (() => {
                 enterPassword,
                 notSame,
                 save,
-                saved
+                saved,
+                nedautoriz,
+                skillslevel,
+                skillsname,
+                skillschack
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -205,6 +213,10 @@ let SE = (() => {
             let notSame = "Old and new passwords can not match!";
             let save = "save...";
             let saved = "Saved!";
+            let nedautoriz = "You must be logged in!";
+            let skillslevel = "Set the level that you think you have. From 1 to 10.";
+            let skillsname = "Enter the name of your skill.";
+            let skillschack = "Show or not.";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -226,7 +238,11 @@ let SE = (() => {
                 enterPassword,
                 notSame,
                 save,
-                saved
+                saved,
+                nedautoriz,
+                skillslevel,
+                skillsname,
+                skillschack
             };
         }
     };    
@@ -594,7 +610,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").style.cursor = 'no-drop';            
             }
         }
-
     }; 
  
 //clear message if not empty name surname or E-mail input
@@ -623,7 +638,6 @@ console.log(regPrototype);
                 SE.$("reg-form-send").classList.remove('reg_send_active');
                 SE.$("reg-form-send").style.cursor = 'no-drop'; 
                 SE.registerUserToDB();
-
             }
         } 
     };    
@@ -782,6 +796,7 @@ let registerUserToDB = function(){
         }
 
     };    
+
 
 
     return {

@@ -3,10 +3,8 @@
     min-width: 302px;
     display: grid;
     grid-template-columns:100%;
-    grid-template-rows: auto auto auto auto auto;   
-    grid-template-areas: 'set'
-                         'side'
-                         'nav'
+    grid-template-rows: auto auto auto;   
+    grid-template-areas: 'side'
                          'article'
                          'blok';
 }
@@ -79,6 +77,12 @@
 .login-message {
     bottom: 1%;
     right: 35%;
+}
+.naw-wrap {
+    margin: 0px;
+}
+.article-wrap {
+    margin: 10px 0px 0px 0px;
 }
 
 /*------------------------EMPTY BLOKS---------------------------*/

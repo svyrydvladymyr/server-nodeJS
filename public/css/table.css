@@ -2,11 +2,9 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns:35px  300px auto auto 35px;
-    grid-template-rows: auto auto auto auto;   
+    grid-template-rows: auto auto;   
     grid-gap: 1px; 
-    grid-template-areas: 'out1 side set set out2'
-                         'out1 side nav nav out2'
-                         'out1 side article article out2'
+    grid-template-areas: 'out1 side article article out2'
                          'blok blok blok blok blok';
 }
 

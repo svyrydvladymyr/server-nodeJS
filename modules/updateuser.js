@@ -39,7 +39,7 @@ let updaterender = (req, res) => {
             title:``
         });
     } else {
-        let sql = `SELECT userid, name, surname, email, birthday, phone, message, country, town, profession FROM users WHERE token = '${clientToken}'`;
+        let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.token = '${clientToken}'`;
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
@@ -73,7 +73,17 @@ let updaterender = (req, res) => {
                 messagecod: messagecod,
                 country: country,
                 town: town,
-                profession: result[0].profession
+                profession: result[0].profession,
+                vskillsall: result[0].vskillsall,
+                vskillsme: result[0].vskillsme,
+                vprojectsall: result[0].vprojectsall,
+                vprojectsme: result[0].vprojectsme,
+                vskillsalltop: result[0].vskillsalltop,
+                vskillsmetop: result[0].vskillsmetop,
+                vprojectsalltop: result[0].vprojectsalltop,
+                vprojectsmetop: result[0].vprojectsmetop,
+                vblogall: result[0].vblogall,
+                vblogme: result[0].vblogme,
             });
         }); 
     }
@@ -264,18 +274,34 @@ let updateAvatoDB = (req, res) => {
             });           
         }        
     });
-
-
-
-
-
-
 };
+
+let widgetsett = (req, res) => {
+    let cookies, clientToken, widget, values;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    widget = req.body.el;
+    values = req.body.value;
+    console.log("--client-token--", clientToken);
+    console.log("--widget--",widget);
+    console.log("--value--",values);
+    let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err":err});
+        } else {
+            console.log("--widget-sett-updated--",result.affectedRows);
+            res.send({"res":result});
+        }
+    });    
+}
 
 module.exports = {
     updaterender,
     updatesecurity,    
     updatemain,
     updateother,
-    updateAvatoDB
+    updateAvatoDB,
+    widgetsett
 };

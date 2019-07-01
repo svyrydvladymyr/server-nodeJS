@@ -25,19 +25,16 @@
             <a href="/<%=userid %>" style="color: #111111;"><p id="form_toback" class="form_toback"></p></a>
         <!--UPDATE FORM-->
             <p id="reg-form-send" param="up" class="reg-form-send" style="display: none;"></p>
-
             <div class="form_wrap">
                 <div class="tabs-form-head-wrap">
                     <p class="tabs-form-head-tab tab-active" id="tab-1" onclick="VW.clickTabs(this)"></p>
                     <p class="tabs-form-head-tab" id="tab-2" onclick="VW.clickTabs(this)"></p>
                     <p class="tabs-form-head-tab" id="tab-3" onclick="VW.clickTabs(this)"></p>
+                    <p class="tabs-form-head-tab" id="tab-4" onclick="VW.clickTabs(this)"></p>
                 </div>
                 <div class="tabs-form-body-wrap">
-
                 <!----SECURITY AND ENTER----------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
-
-
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
@@ -69,23 +66,16 @@
                             </div>
                             <div class="form_message password"><span id="reg-password-mess" class="reg-message "></span></div>                    
                         </div>
-
-
-
                         <!--send-->             
                         <div class="form_blok_send">
                             <div class="form_label" onclick="SE.updateUser('s')"><p id="reg-up-send1" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
                         </div>               
                         <!--main message form-->
                         <p class="main-form-message" id="main-form-messageone"></p>
-
-
                     </div>
 
                 <!----MAIN_INFO--------------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-2">
-
-
                         <!--name-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-name"></p></div>
@@ -149,93 +139,154 @@
                             </div>
                             <div class="form_message"><p id="reg-message-mess" class="reg-message"></p></div>   
                         </div>
-
-
-
-
                         <!--send-->             
                         <div class="form_blok_send">
                             <div class="form_label" onclick="SE.updateUser('m')"><p id="reg-up-send2" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
                         </div>               
                         <!--main message form-->
                         <p class="main-form-message" id="main-form-messagetwo"></p>
-
-
                     </div>
 
                 <!----OTHER------------------------------------------------------>
                     <div class="tabs-form-body-one" id="tabs-body-3">
-
-
                         <!--country-->
                         <div class="form_blok">
-                                <div class="form_label"><p id="reg-label-country"></p></div>
-                                <div class="form_input">
-                                    <select name="reg-country" id="reg-country">
-                                        <option disabled selected value id="select_empty"></option>
-                                        <option value="ukraine" id="ukraine"></option>
-                                        <option value="russian" id="russian"></option>
-                                        <option value="greatbritain" id="greatbritain"></option>
-                                        <option value="usa" id="usa"></option>
-                                    </select>
-                                </div>
-                                <div class="form_message"><p id="reg-country-mess" class="reg-message"></p></div>  
+                            <div class="form_label"><p id="reg-label-country"></p></div>
+                            <div class="form_input">
+                                <select name="reg-country" id="reg-country">
+                                    <option disabled selected value id="select_empty"></option>
+                                    <option value="ukraine" id="ukraine"></option>
+                                    <option value="russian" id="russian"></option>
+                                    <option value="greatbritain" id="greatbritain"></option>
+                                    <option value="usa" id="usa"></option>
+                                </select>
                             </div>
-                            <!--town-->
-                            <div class="form_blok">
-                                <div class="form_label"><p id="reg-label-town"></p></div>
-                                <div class="form_input">
-                                    <select name="reg-town" id="reg-town">
-                                    </select>
-                                </div>
-                                <div class="form_message"><p id="reg-town-mess" class="reg-message"></p></div>   
+                            <div class="form_message"><p id="reg-country-mess" class="reg-message"></p></div>  
+                        </div>
+                        <!--town-->
+                        <div class="form_blok">
+                            <div class="form_label"><p id="reg-label-town"></p></div>
+                            <div class="form_input">
+                                <select name="reg-town" id="reg-town">
+                                </select>
                             </div>
-                            <!--profession-->
-                            <div class="form_blok">
-                                <div class="form_label"><p id="reg-label-profession"></p></div>
-                                <div class="form_input">
-                                    <input type="text" name="reg-profession"  id="reg-profession" maxlength="30" value="<%=profession %>">
+                            <div class="form_message"><p id="reg-town-mess" class="reg-message"></p></div>   
+                        </div>
+                        <!--profession-->
+                        <div class="form_blok">
+                            <div class="form_label"><p id="reg-label-profession"></p></div>
+                            <div class="form_input">
+                                <input type="text" name="reg-profession"  id="reg-profession" maxlength="30" value="<%=profession %>">
+                            </div>
+                            <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
+                        </div> 
+
+                        <!--send-->             
+                        <div class="form_blok_send">
+                            <div class="form_label" onclick="SE.updateUser('o')"><p id="reg-up-send3" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
+                        </div>               
+                        <!--main message form-->
+                        <p class="main-form-message" id="main-form-messagethree"></p>                                
+                    </div>
+
+                <!----WIDGET------------------------------------------------------>
+                    <div class="tabs-form-body-one" id="tabs-body-4">
+                        <div class="set_blok set_blok_update">
+                            <p id="settings_v_side"></p>
+                            <div class="height-blok-set" style="padding: 8px;">
+                                <div class="widget-head">
+                                    <div class="widget-head-wrap">
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all"></span>
+                                        <span class="widget-head-text" id="widget-me"></span>
+                                    </div>
                                 </div>
-                                <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
-                            </div> 
-
-
-                            <!--send-->             
-                            <div class="form_blok_send">
-                                <div class="form_label" onclick="SE.updateUser('o')"><p id="reg-up-send3" param="up" class="reg-form-send reg_send_active" style="color:#ffffff;"></p></div>
-                            </div>               
-                            <!--main message form-->
-                            <p class="main-form-message" id="main-form-messagethree"></p>
-
-                            
+                                <div class="widget-body">
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vskillsall" id="vskillsall" onchange="VW.saveWidgets('vskillsall')" <% if(vskillsall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vskillsme" id="vskillsme" onchange="VW.saveWidgets('vskillsme')" <% if(vskillsme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-skills"></span>
+                                    </div>
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall')" <% if(vprojectsall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme')" <% if(vprojectsme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-project"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                     
+                        <div class="set_blok set_blok_update">
+                            <p id="settings_t_side"></p>
+                            <div class="height-blok-set" style="padding: 8px;">
+                                <div class="widget-head">
+                                    <div class="widget-head-wrap">
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all-t"></span>
+                                        <span class="widget-head-text" id="widget-me-t"></span>
+                                    </div>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vskillsalltop" id="vskillsalltop" onchange="VW.saveWidgets('vskillsalltop')" <% if(vskillsalltop === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vskillsmetop" id="vskillsmetop" onchange="VW.saveWidgets('vskillsmetop')" <% if(vskillsmetop === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-skills-t"></span>
+                                    </div>
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vprojectsalltop" id="vprojectsalltop" onchange="VW.saveWidgets('vprojectsalltop')" <% if(vprojectsalltop === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vprojectsmetop" id="vprojectsmetop" onchange="VW.saveWidgets('vprojectsmetop')" <% if(vprojectsmetop === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-project-t"></span>
+                                    </div>
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vblogall" id="vblogall" onchange="VW.saveWidgets('vblogall')" <% if(vblogall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vblogme" id="vblogme" onchange="VW.saveWidgets('vblogme')" <% if(vblogme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-blog-t"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <!--main message form-->
+                        <p class="main-form-message" id="main-form-messagefour"></p>                       
                     </div>
                 </div>
-
-
-
-               
-
             </div>
         </div>
 
-    <!--SETTINGS-->
+<!--SETTINGS-->
     <div class="set_close" id="set"> 
-            <div class="setting_close" style="background:#44709c;" id="setting" onclick="VW.openSetting()">
-                <i class="fa fa-gear fa-spin"></i>
-            </div>
-            <div class="set_wrap" id="set-wrap">
-                <div class="set_blok_lang" style="border:0px solid" >
-                    <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
-                        <img src="img/en.png" alt="EN">
-                        <p>ENGLISH</p>
-                    </div>
-                    <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
-                        <img src="img/ua.png" alt="UA">
-                        <p>УКРАЇНСЬКА</p>
-                    </div>
-                </div>                    
-            </div>                   
-        </div>   
+        <div class="setting_close" style="background:#44709c;" id="setting" onclick="VW.openSetting()">
+            <i class="fa fa-gear fa-spin"></i>
+        </div>
+        <div class="set_wrap" id="set-wrap">
+            <div class="set_blok_lang" style="border:0px solid" >
+                <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
+                    <img src="img/en.png" alt="EN">
+                    <p>ENGLISH</p>
+                </div>
+                <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
+                    <img src="img/ua.png" alt="UA">
+                    <p>УКРАЇНСЬКА</p>
+                </div>
+            </div>                    
+        </div>                   
+    </div>   
         
 <!--FOOTER-->
     <div class="footer-main-info" style="margin-top: -120px; background: transparent; border-top: 2px solid transparent; box-shadow: 0px -2px 3px transparent;">

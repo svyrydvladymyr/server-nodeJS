@@ -364,7 +364,83 @@ let VW = (() => {
                 SE.readURLPreview();                             
             }
         }
-    };    
+    };  
+
+//-----------------------------------------------------------------------------------------------------
+//--------------------------------function work with widgets-------------------------------------------
+//-----------------------------------------------------------------------------------------------------   
+
+//save settings widgets
+    let saveWidgets = (val) => {
+        let obj;
+        SE.$(val).checked ? obj = {"el":SE.$(val).id, "value":"on"} : obj = {"el":SE.$(val).id, "value":"off"};
+        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
+    };  
+    
+    let saveWidgetsMess = (res) => {
+        let parseObj = JSON.parse(res);
+        if (parseObj.res.changedRows === 0){
+            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().nedautoriz}`;            
+        } else {
+            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},500);
+            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = '';},1000);
+        }
+
+    };
+
+//for show edit in widget skills
+    let showEditSkills = () => {
+
+    };
+
+//for show add form to skills list
+    let showAddSkillsform = () => {
+        let getidconteiner = SE.$('skills-add-form');
+        SE.$('skills-show-regform').style.display = "none";
+        let skillslevel = SE.errorFormMessage().skillslevel;
+        let skillsname = SE.errorFormMessage().skillsname;
+        let skillchack = SE.errorFormMessage().skillschack;
+        getidconteiner.innerHTML += `
+        <div class="skills-wrap" id="">   
+            <div class="skills-boks">
+                <div class="skills-text">
+                <p>${skillchack}</p>
+                <input type="checkbox" name="skillchack" id="skillchack">
+                <p style="width:100%;">${skillsname}</p>
+                <input type="text" name="skillsname" id="skillsname" class="skills-input">
+                <p>${skillslevel}</p>
+                <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
+                <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
+                <div class="skills-button">
+                    <i class='fas fa-times' id="close-skills" style="color:#792424;" onclick="VW.closeSkillsAddForm()"></i>
+                    <i class='far fa-save' id="save-skills" style="color:#1a6a1a;" onclick="VW.addSkillstoList()"></i>          
+                </div>
+
+                </div>
+            </div> 
+        </div>
+        `;
+    };
+
+    
+//for add skill tom list
+    let addSkillstoList = () => {
+        console.log("send");
+    };
+
+//for delete skill from list
+    let delSkillsfromList = () => {
+        
+    };
+
+//for delete skill from list
+    let closeSkillsAddForm = () => {
+        let getidconteiner = SE.$('skills-add-form');
+        getidconteiner.innerHTML = ``;
+        SE.$('skills-show-regform').style.display = "table";
+    };
+
 
 return {
     buttonLogin,
@@ -389,7 +465,14 @@ return {
     updateSecurity,
     updateMain,
     updateOther,
-    updateAva
+    updateAva,
+    saveWidgets,
+    saveWidgetsMess,
+    showEditSkills,
+    delSkillsfromList,
+    showAddSkillsform,
+    closeSkillsAddForm,
+    addSkillstoList
 };
 
 })();
