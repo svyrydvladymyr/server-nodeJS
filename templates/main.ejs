@@ -11,12 +11,14 @@
         <div class="out2"></div>
         <div class="side">
             <%- include("./parts/info.ejs") %>
+
             <% if((permissEdit === 'true') && (vskillsme === 'on')) {%>
                 <%- include("./parts/skills.ejs") %> 
             <% } %>
             <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
                 <%- include("./parts/skills.ejs") %> 
             <% } %>
+
             <% if((permissEdit === 'true') && (vprojectsme === 'on')) {%>
                 <%- include("./parts/projects.ejs") %> 
             <% } %>
@@ -43,6 +45,12 @@
     <% if(permissEdit === 'true') {%>
         <script>
             SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
+            SE.send({}, '/showskills', VW.showSkillsList);
+        </script>
+    <% } %>
+    <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
+        <script>
+            SE.send({"userid":window.location.href}, '/showskills', VW.showSkillsListForAll);
         </script>
     <% } %>
 </body>

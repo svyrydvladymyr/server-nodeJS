@@ -6,6 +6,7 @@ let app = express();
 let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
+let {showskills, addskills} = require('./modules/widgets');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {autorisation, exit} = require('./modules/autorisation');
@@ -18,6 +19,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
+
+app.post('/showskills', (req, res) => {showskills(req, res)});
+app.post('/addskills', (req, res) => {addskills(req, res)});
+
 
 app.post('/widgetsett', (req, res) => {widgetsett(req, res)});
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});

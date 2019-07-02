@@ -38,6 +38,7 @@ let registrationUsers = (req, res) => {
     let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
+    let sqlskills = `INSERT INTO userskills (userid) VALUES ('${prUs.userid}')`;
     con.query(sql, function (err, result) {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY'){
@@ -62,7 +63,16 @@ let registrationUsers = (req, res) => {
                     console.log("--err--", err);
                     res.send({"error":err});   
                 } else {
-                    console.log("--result-registr--", result);
+                    console.log("--result-registr-settings--", result);
+                    // res.send(result);
+                }
+            });
+            con.query(sqlskills, function (err, result) {
+                if (err) {
+                    console.log("--err--", err);
+                    res.send({"error":err});   
+                } else {
+                    console.log("--result-registr-skills--", result);
                     // res.send(result);
                 }
             });

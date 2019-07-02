@@ -389,56 +389,164 @@ let VW = (() => {
 
     };
 
-//for show edit in widget skills
-    let showEditSkills = () => {
+//for show widget skills
+    let showSkillsList = (res) => {
+        let parseObj = JSON.parse(res);
+        SE.$('skills-add-form').innerHTML = ``;
+        SE.$('save-skills-btnclose').innerHTML = ``;
+        SE.$('save-skills-btn').innerHTML = ``;
+        SE.$('skills-conteiner').innerHTML = ``;
+        for (let i = 0; i < parseObj.length; i++){
+            let trimobj = parseObj[i].slice(1, -1);
+            let readyskill = trimobj.split(", ");
+            if (readyskill[1] === 'on'){
+                SE.$('skills-conteiner').innerHTML += `
+                <div class="skills-wrap">   
+                    <div class="skills-boks">
+                        <div class="skills-text">
+                            <p class="skills-name" id="skills-name">${readyskill[2]}</p>
+                        </div>
+                        <div class="skills-range-wrap">
+                            <div class="skills-range" id="skills-range" style="width: ${readyskill[3]}%;"></div>
+                        </div>
+                    </div> 
+                </div>   
+                `;
+            }
+        }        
+    };
 
+//for show widget skills for all
+    let showSkillsListForAll = (res) => {
+        let parseObj = JSON.parse(res);
+        SE.$('skills-conteiner').innerHTML = ``;
+        for (let i = 0; i < parseObj.length; i++){
+            let trimobj = parseObj[i].slice(1, -1);
+            let readyskill = trimobj.split(", ");
+            if (readyskill[1] === 'on'){
+                SE.$('skills-conteiner').innerHTML += `
+                <div class="skills-wrap">   
+                    <div class="skills-boks">
+                        <div class="skills-text">
+                            <p class="skills-name" id="skills-name">${readyskill[2]}</p>
+                        </div>
+                        <div class="skills-range-wrap">
+                            <div class="skills-range" id="skills-range" style="width: ${readyskill[3]}%;"></div>
+                        </div>
+                    </div> 
+                </div>`;
+            }
+        }        
+    };
+
+//for show edit in widget skills
+    let showEditSkillsList = (res) => {
+        let parseObj = JSON.parse(res);
+        SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
+        SE.$('save-skills-btn').innerHTML = `<i class='far fa-save' id="save-skills" onclick="VW.saveSkillsfromList()"></i>`;
+        SE.$('save-skills-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick="SE.send({}, '/showskills', VW.showSkillsList);"></i>`;
+        SE.$('skills-conteiner').innerHTML = ``;
+        for (let i = 0; i < parseObj.length; i++){
+            let trimobj = parseObj[i].slice(1, -1);
+            let readyskill = trimobj.split(", ");
+            let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
+            SE.$('skills-conteiner').innerHTML += `
+            <div class="skills-wrap">   
+                <div class="skills-boks">
+                    <div class="skills-text">
+                        <input type="checkbox" name="skills-show" id="skills-show${i+1}" ${chackedskill}>
+                        <p class="skills-name" id="skills-name${i+1}">${readyskill[2]}</p>
+                    </div>
+                    <div class="skills-range-wrap">
+                        <div class="skills-range" id="skills-range${i+1}" style="width: ${readyskill[3]}%;"></div>
+                    </div>
+                </div> 
+                <div class="skills-edit">
+                    <i class='far fa-edit'></i>
+                    <i class='far fa-trash-alt'></i>
+                </div>   
+            </div>`;
+        } 
+        let kilkskills = document.getElementsByClassName('skills-name').length; 
+        if (kilkskills >= 10){
+            SE.$('skills-add-form').innerHTML = ``;
+        }        
     };
 
 //for show add form to skills list
     let showAddSkillsform = () => {
         let getidconteiner = SE.$('skills-add-form');
-        SE.$('skills-show-regform').style.display = "none";
         let skillslevel = SE.errorFormMessage().skillslevel;
         let skillsname = SE.errorFormMessage().skillsname;
         let skillchack = SE.errorFormMessage().skillschack;
-        getidconteiner.innerHTML += `
-        <div class="skills-wrap" id="">   
-            <div class="skills-boks">
-                <div class="skills-text">
-                <p>${skillchack}</p>
-                <input type="checkbox" name="skillchack" id="skillchack">
-                <p style="width:100%;">${skillsname}</p>
-                <input type="text" name="skillsname" id="skillsname" class="skills-input">
-                <p>${skillslevel}</p>
-                <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
-                <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
-                <div class="skills-button">
-                    <i class='fas fa-times' id="close-skills" style="color:#792424;" onclick="VW.closeSkillsAddForm()"></i>
-                    <i class='far fa-save' id="save-skills" style="color:#1a6a1a;" onclick="VW.addSkillstoList()"></i>          
-                </div>
-
-                </div>
-            </div> 
-        </div>
-        `;
+        let kilkskills = document.getElementsByClassName('skills-name').length; 
+        if (kilkskills <= 10){
+            getidconteiner.innerHTML = `
+            <div class="skills-wrap" id="">   
+                <div class="skills-boks">
+                    <div class="skills-text">
+                    <p>${skillchack}</p>
+                    <input type="checkbox" name="skillchack" id="skillchack">
+                    <p style="width:100%;">${skillsname}</p>
+                    <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="80">
+                    <p>${skillslevel}</p>
+                    <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
+                    <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
+                    <div class="skills-button">
+                        <i class='fas fa-times' id="close-skills" onclick="VW.closeSkillsAddForm()"></i>
+                        <i class='far fa-save' id="save-skills" onclick="VW.addSkillstoList()"></i>          
+                    </div>
+                    <p id="mess-addskills" style="width:100%; text-align:center; color:#b80000;"></p>
+                    </div>
+                </div> 
+            </div>`;
+        }
     };
 
     
 //for add skill tom list
     let addSkillstoList = () => {
-        console.log("send");
+        let kilkskills = document.getElementsByClassName('skills-name').length; 
+        if (kilkskills <= 10){
+            let name, chack, level, kilk, obj;
+            kilk = kilkskills + 1;
+            name = SE.$('skillsname').value;
+            chack = SE.$('skillchack').checked ? 'on' : 'off';            
+            level = SE.$('skillsregname').value;
+            if (name === ''){
+                SE.$('mess-addskills').innerHTML = SE.errorFormMessage().skillsemptyname;
+                SE.$("skillsname").addEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
+            } else {
+                SE.$("skillsname").removeEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
+                SE.$('mess-addskills').innerHTML = '';
+                obj = {
+                    "number":kilk,
+                    "name":name,
+                    "chacked":chack,
+                    "level":level
+                }
+                SE.send(obj, '/addskills', () => {SE.send({}, '/showskills', VW.showEditSkillsList);});
+            }
+        } else {
+            SE.$('skills-add-form').innerHTML = ``;
+        } 
     };
+
 
 //for delete skill from list
     let delSkillsfromList = () => {
         
     };
 
+//for save all skills list
+    let saveSkillsfromList = () => {
+        console.log('save');
+        
+    };
+
 //for delete skill from list
     let closeSkillsAddForm = () => {
-        let getidconteiner = SE.$('skills-add-form');
-        getidconteiner.innerHTML = ``;
-        SE.$('skills-show-regform').style.display = "table";
+        SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
     };
 
 
@@ -468,11 +576,15 @@ return {
     updateAva,
     saveWidgets,
     saveWidgetsMess,
-    showEditSkills,
+    showEditSkillsList,
     delSkillsfromList,
     showAddSkillsform,
     closeSkillsAddForm,
-    addSkillstoList
+    addSkillstoList,
+    showSkillsList,
+    saveSkillsfromList,
+    showSkillsListForAll
+    
 };
 
 })();

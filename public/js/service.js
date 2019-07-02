@@ -164,6 +164,7 @@ let SE = (() => {
             let skillslevel = "Встановіть рівень, який на вашу думку ва маєте. Від 1 до 10.";
             let skillsname = "Введіть назву вашого навику.";
             let skillschack = "Показувати чи ні.";
+            let skillsemptyname = "Вкажіть назву навику!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -189,7 +190,8 @@ let SE = (() => {
                 nedautoriz,
                 skillslevel,
                 skillsname,
-                skillschack
+                skillschack,
+                skillsemptyname
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -217,6 +219,7 @@ let SE = (() => {
             let skillslevel = "Set the level that you think you have. From 1 to 10.";
             let skillsname = "Enter the name of your skill.";
             let skillschack = "Show or not.";
+            let skillsemptyname = "Вкажіть назву навику!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -242,7 +245,8 @@ let SE = (() => {
                 nedautoriz,
                 skillslevel,
                 skillsname,
-                skillschack
+                skillschack,
+                skillsemptyname
             };
         }
     };    
