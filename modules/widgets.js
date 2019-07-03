@@ -71,7 +71,7 @@ let addskills = (req, res) => {
     console.log("--client-token--", clientToken);
     name = req.body.name;
     chack = req.body.chacked;
-    level = req.body.level;
+    level = req.body.level; 
     number = req.body.number;
     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skillchack${number} = '${chack}', skill${number} = '${name}',  skilllevel${number} = '${level}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
@@ -106,7 +106,77 @@ let addskills = (req, res) => {
     });
 };
 
+let showorhiddenskills = (req, res) => {
+    let cookies, clientToken, chack, number;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    chack = req.body.chack;
+    number = req.body.number;
+    let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--skill-updates--", result.affectedRows);
+            res.send({"res":result.affectedRows});
+        }        
+    });
+}
+
+let showskillsingle = (req, res) => {
+    let cookies, clientToken, number;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    number = req.body.number;
+    let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--skill-get--", result);
+            res.send({"res":result, "number":number});
+        }        
+    });
+}
+
+let editskill = (req, res) => {
+    let cookies, clientToken, number;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    number = req.body.number;
+    name = req.body.name;
+    level = req.body.level;
+    let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skill${number} = '${name}',  skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
+    let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
+    con.query(sqlup, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--skill-updates--", result.affectedRows);
+            con.query(sql, function (err, result) {
+                if (err) {
+                    console.log("err", err);
+                    res.send({"err": err});
+                } else {
+                    console.log("--skill-get--", result);
+                    res.send({"res":result, "number":number});
+                }        
+            });
+        }        
+    });
+}
+
+
 module.exports = {
     showskills,
-    addskills
+    addskills,
+    showorhiddenskills,
+    showskillsingle,
+    editskill
 };
