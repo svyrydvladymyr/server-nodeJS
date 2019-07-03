@@ -455,7 +455,7 @@ let VW = (() => {
                 <div class="skills-boks">
                     <div class="skills-text">
                         <input type="checkbox" name="skills-show" class="skills-show" id="skills-show${i+1}" ${chackedskill} onchange="VW.showORhidden(this)">
-                        <p class="skills-name" id="skills-name${i+1}">${readyskill[2]}</p>
+                        <p class="skills-name" id="skills-name${i+1}" style="width: 90%;">${readyskill[2]}</p>
                     </div>
                     <div class="skills-range-wrap">
                         <div class="skills-range" id="skills-range${i+1}" style="width: ${readyskill[3]}%;"></div>
