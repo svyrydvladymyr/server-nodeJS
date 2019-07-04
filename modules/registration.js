@@ -1,6 +1,6 @@
 let con = require('../db/connectToDB').con;
 let multer  = require('multer')
-let {translit, token} = require('./service');
+let {translit, token, clienttoken} = require('./service');
 let Cookies = require('cookies');
 
 class protoUsers{constructor(){ }}
@@ -135,9 +135,7 @@ let addAvatoDB = (req, res) => {
 let savesett = (req, res) => {
     let clientObg = req.body;
     console.log("--client-obj--", clientObg);
-    cookies = new Cookies(req, res);
-    clientToken = cookies.get('sessionisdd');
-    console.log("--client-token--", clientToken);
+    let clientToken = clienttoken(req, res);
     let sqlsel = `SELECT userid FROM users WHERE token = '${clientToken}'`;
     con.query(sqlsel, function (err, result) {
         if (err) {

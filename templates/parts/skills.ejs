@@ -5,7 +5,7 @@
             <div class="skills-edit-blok">
                 <div id="save-skills-btnclose"></div>
                 <div id="save-skills-btn"></div>
-                <i class='far fa-edit' id="edit-skills" onclick='SE.send({"userid":window.location.href}, "/showskills", VW.showEditSkillsList);'></i>
+                <i class='far fa-edit' id="edit-skills" onclick='SE.send({"userid":window.location.href}, "/showskills", WSKILLS.showEditSkillsList);'></i>
             </div>        
         <% } %>  
     </div>
@@ -71,7 +71,7 @@
 
     <% if(permissEdit === 'true') {%>
         <div id="skills-add-form">
-            <i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>
+            <i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>
         </div>
     <% } %>  
 

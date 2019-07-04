@@ -1,19 +1,10 @@
 let con = require('../db/connectToDB').con;
-let {translit, token} = require('./service');
+let {clienttoken} = require('./service');
 let url = require('url');
-let Cookies = require('cookies');
-
-class protoUsers{constructor(){ }}
-let prUs = new protoUsers();
 
 let showskills = (req, res) => {
-    let cookies, clientToken;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let clientToken = clienttoken(req, res);
     if ((clientToken === '') || (clientToken === undefined)){
-        console.log(req.body.userid);
-
         let pageurl = url.parse(req.body.userid, true);
         let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
         let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
@@ -40,12 +31,8 @@ let showskills = (req, res) => {
             }        
         });
     } else {
-        console.log(req.body.userid);
-        
         let pageurl = url.parse(req.body.userid, true);
         let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
-        console.log(sliceurl);
-        
         let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
         con.query(sql, function (err, result) {
             if (err) {
@@ -73,10 +60,8 @@ let showskills = (req, res) => {
 }
 
 let addskills = (req, res) => {
-    let cookies, clientToken, name, chack, level, number;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let name, chack, level, number;
+    let clientToken = clienttoken(req, res);
     name = req.body.name;
     chack = req.body.chacked;
     level = req.body.level; 
@@ -115,10 +100,8 @@ let addskills = (req, res) => {
 };
 
 let showorhiddenskills = (req, res) => {
-    let cookies, clientToken, chack, number;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let chack, number;
+    let clientToken = clienttoken(req, res);
     chack = req.body.chack;
     number = req.body.number;
     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
@@ -134,10 +117,8 @@ let showorhiddenskills = (req, res) => {
 }
 
 let showskillsingle = (req, res) => {
-    let cookies, clientToken, number;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let number;
+    let clientToken = clienttoken(req, res);
     number = req.body.number;
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sql, function (err, result) {
@@ -152,10 +133,8 @@ let showskillsingle = (req, res) => {
 }
 
 let editskill = (req, res) => {
-    let cookies, clientToken, number;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let number, name, level;
+    let clientToken = clienttoken(req, res);
     number = req.body.number;
     name = req.body.name;
     level = req.body.level;
@@ -181,10 +160,8 @@ let editskill = (req, res) => {
 }
 
 let updateallskill = (req, res) => {
-    let cookies, clientToken, name, level, chack;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let name, level, chack;
+    let clientToken = clienttoken(req, res);
     name = req.body.name;
     level = req.body.level;
     chack = req.body.chack;

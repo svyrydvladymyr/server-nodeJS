@@ -597,7 +597,6 @@ let clonePhoneNumber = () => {
         // console.log(regProto.prototype);        
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
-console.log(regPrototype);
         //for change button
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
             if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&

@@ -1,12 +1,11 @@
 let con = require('../db/connectToDB').con;
-let Cookies = require('cookies');
+let {clienttoken} = require('./service');
 
 let renderuser = (req, res) => {
-    let permissionAccess, permissionEdit, clientToken, cookies, getuserid;
+    let permissionAccess, permissionEdit, getuserid;
     //get variables
     getuserid = req.params['userid'];
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true}); 
+    let clientToken = clienttoken(req, res);
     // get user information using usrid
     let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${getuserid}'`;
     con.query(sql, function (err, result) {

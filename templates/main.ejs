@@ -42,15 +42,16 @@
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+    <script src="./js/skills.js"></script>
     <% if(permissEdit === 'true') {%>
         <script>
             SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
-            SE.send({"userid":window.location.href}, '/showskills', VW.showSkillsList);
+            SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
         </script>
     <% } %>
     <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
         <script>
-            SE.send({"userid":window.location.href}, '/showskills', VW.showSkillsListForAll);
+            SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsListForAll);
         </script>
     <% } %>
 

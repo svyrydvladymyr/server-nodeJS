@@ -1,8 +1,7 @@
 let con = require('../db/connectToDB').con;
 let fs = require('fs');
 let multer  = require('multer')
-let {translit, token} = require('./service');
-let Cookies = require('cookies');
+let {translit, token, clienttoken} = require('./service');
 
 class protoUsers{constructor(){ }}
 let prUs = new protoUsers();
@@ -20,12 +19,8 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
     }
 };
 
-
 let updaterender = (req, res) => {
-    let cookies, clientToken;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let clientToken = clienttoken(req, res);
     if (clientToken === undefined){
         permissionAccess = false;
         permissionEdit = false;
@@ -91,11 +86,9 @@ let updaterender = (req, res) => {
 };
 
 let updatesecurity = (req, res) => {
-    let cookies, clientToken, parseObjUsers, sql, sqlchack;
+    let parseObjUsers, sql, sqlchack;
+    let clientToken = clienttoken(req, res);
     parseObjUsers = req.body;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
     console.log("--client-registr-obj--", parseObjUsers); 
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad new password!", parseObjUsers, res);
@@ -138,13 +131,11 @@ let updatesecurity = (req, res) => {
 }; 
 
 let updatemain = (req, res) => {
-    let cookies, clientToken, parseObjUsers, sql, datetime, updatedatetime;
+    let parseObjUsers, sql, datetime, updatedatetime;
     parseObjUsers = req.body;
     datetime = new Date();
     updatedatetime = datetime.toISOString().slice(0,10);
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let clientToken = clienttoken(req, res);
     console.log("--client-registr-obj--", parseObjUsers); 
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "name", "Bad name!", parseObjUsers, res);
@@ -179,13 +170,11 @@ let updatemain = (req, res) => {
 
 
 let updateother = (req, res) => {
-    let cookies, clientToken, parseObjUsers, sql, datetime, updatedatetime, user;
+    let parseObjUsers, sql, datetime, updatedatetime, user;
     parseObjUsers = req.body;
     datetime = new Date();
     updatedatetime = datetime.toISOString().slice(0,10);
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let clientToken = clienttoken(req, res);
     console.log("--client-registr-obj--", parseObjUsers); 
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
@@ -209,10 +198,8 @@ let updateother = (req, res) => {
 
 //update ava to DB
 let updateAvatoDB = (req, res) => {
-    let cookies, clientToken, storage, upload, sqlsel, oldava, ava, avasettings;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token--", clientToken);
+    let storage, upload, sqlsel, oldava, ava, avasettings;
+    let clientToken = clienttoken(req, res);
     sqlsel = `SELECT ava, userid FROM users WHERE token = '${clientToken}'`;
     con.query(sqlsel, function (err, result) {
         if (err) {
@@ -277,12 +264,10 @@ let updateAvatoDB = (req, res) => {
 };
 
 let widgetsett = (req, res) => {
-    let cookies, clientToken, widget, values;
-    cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    clientToken = cookies.get('sessionisdd', {signed:true});
+    let widget, values;
+    let clientToken = clienttoken(req, res);
     widget = req.body.el;
     values = req.body.value;
-    console.log("--client-token--", clientToken);
     console.log("--widget--",widget);
     console.log("--value--",values);
     let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}'`;
