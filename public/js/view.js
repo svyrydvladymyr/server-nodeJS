@@ -395,7 +395,7 @@ let VW = (() => {
         SE.$('skills-add-form').innerHTML = ``;
         SE.$('save-skills-btnclose').innerHTML = ``;
         SE.$('save-skills-btn').innerHTML = ``;
-        SE.$('skills-conteiner').innerHTML = ``;
+        SE.$('skills-conteiner').innerHTML = ``;        
         for (let i = 0; i < parseObj.length; i++){
             let trimobj = parseObj[i].slice(1, -1);
             let readyskill = trimobj.split(", ");
@@ -413,7 +413,9 @@ let VW = (() => {
                 </div>   
                 `;
             }
-        }        
+        }   
+        VW.sortEnable();     
+        VW.sortDisable();     
     };
 
 //for show widget skills for all
@@ -444,14 +446,14 @@ let VW = (() => {
         let parseObj = JSON.parse(res);
         SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
         SE.$('save-skills-btn').innerHTML = `<i class='far fa-save' id="save-skills" onclick="VW.saveSkillsfromList()"></i>`;
-        SE.$('save-skills-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick="SE.send({}, '/showskills', VW.showSkillsList);"></i>`;
+        SE.$('save-skills-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick='SE.send({"userid":window.location.href}, "/showskills", VW.showSkillsList);'></i>`;
         SE.$('skills-conteiner').innerHTML = ``;
         for (let i = 0; i < parseObj.length; i++){
             let trimobj = parseObj[i].slice(1, -1);
             let readyskill = trimobj.split(", ");
             let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
-            SE.$('skills-conteiner').innerHTML += `
-            <div class="skills-wrap" id="skills-box${i+1}">   
+            SE.$('skills-conteiner').innerHTML += `            
+            <div class="skills-wrap" id="skills-box${i+1}" onmouseup="VW.saveAfterMove()">   
                 <div class="skills-boks">
                     <div class="skills-text">
                         <input type="checkbox" name="skills-show" class="skills-show" id="skills-show${i+1}" ${chackedskill} onchange="VW.showORhidden(this)">
@@ -467,6 +469,7 @@ let VW = (() => {
                 </div>   
             </div>`;
         } 
+        VW.sortEnable();
         let kilkskills = document.getElementsByClassName('skills-name').length; 
         if (kilkskills >= 10){
             SE.$('skills-add-form').innerHTML = ``;
@@ -480,9 +483,10 @@ let VW = (() => {
         let skillsname = SE.errorFormMessage().skillsname;
         let skillchack = SE.errorFormMessage().skillschack;
         let kilkskills = document.getElementsByClassName('skills-name').length; 
+        VW.sortDisable();
         if (kilkskills <= 10){
             getidconteiner.innerHTML = `
-            <div class="skills-wrap" id="">   
+            <div class="skills-wrap-form" id="">   
                 <div class="skills-boks">
                     <div class="skills-text">
                     <p>${skillchack}</p>
@@ -525,7 +529,7 @@ let VW = (() => {
                     "chacked":chack,
                     "level":level
                 }
-                SE.send(obj, '/addskills', () => {SE.send({}, '/showskills', VW.showEditSkillsList);});
+                SE.send(obj, '/addskills', () => {SE.send({"userid":window.location.href}, '/showskills', VW.showEditSkillsList);});
             }
         } else {
             SE.$('skills-add-form').innerHTML = ``;
@@ -538,7 +542,7 @@ let VW = (() => {
         let obj;
         let numberskill = el.id.slice(11);
         el.checked ? obj = {"number":numberskill, "chack":"on"} : obj = {"number":numberskill, "chack":"off"};
-        SE.send(obj, '/showorhiddenskills', () => {SE.send(obj, '/showskillsingle', VW.showEditSkillSingle);});        
+        SE.send(obj, '/showorhiddenskills', () => {SE.send(obj, '/showskillsingle', VW.showEditSkillSingle);});
     };
 
 //for show edit form for single skill
@@ -561,6 +565,7 @@ let VW = (() => {
             </div>
         </div>
         `;
+        VW.sortDisable();
     };
 
 //for show single skill
@@ -570,7 +575,7 @@ let VW = (() => {
     };
 //for show single skill
     let showEditSkillSingle = (res) => {
-        let name, chack, level, number, chackedskill, openeditform, kilkskills;
+        let name, chack, level, number, chackedskill, openeditform, opendelform, kilkskills;
         let parseObj = JSON.parse(res);
         nameval = `skill${parseObj.number}`;
         name = parseObj.res[0][nameval];
@@ -595,11 +600,15 @@ let VW = (() => {
             <i class='far fa-edit' id="skills-edit${parseObj.number}" onclick="VW.showEditForm(this)"></i>
             <i class='far fa-trash-alt' id="skills-del${parseObj.number}" onclick="VW.showButtonConfirm(this)"></i>
         </div>
-        `;
+        `;      
+        opendelform = document.getElementsByClassName('skills-confirm-box').length;
         openeditform = document.getElementsByClassName('edit-skill-form').length;
         kilkskills = document.getElementsByClassName('skills-wrap').length;
-        if ((openeditform === 0) && (kilkskills < 10)){
+        if ((openeditform === 0) && (opendelform === 0) && (kilkskills < 10)){
             SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
+        }
+        if ((openeditform === 0) && (opendelform === 0)){
+            VW.sortEnable();
         }
     };
 
@@ -618,32 +627,30 @@ let VW = (() => {
 
 //for show button for confirm delete
     let showButtonConfirm = (el) => {
-        console.log(el);
-        numberskill = el.id.slice(10);
-        console.log(numberskill);
-        SE.$(`skills-box${numberskill}`).innerHTML = `
-        <div class="skills-confirm-box">
-        </div>
-        `;
+        let opendelform, openeditform;
+        opendelform = document.getElementsByClassName('skills-confirm-box').length;
+        openeditform = document.getElementsByClassName('edit-skill-form').length;
+        if ((openeditform === 0) && (opendelform === 0)){
+            numberskill = el.id.slice(10);
+            SE.$('skills-add-form').innerHTML = ``;
+            SE.$(`skills-box${numberskill}`).innerHTML = `
+            <div class="skills-confirm-box">
+                <div class="skills-confirm-icon">
+                    <i class='fas fa-trash-alt' onclick="VW.delSkillsfromList(${numberskill})"></i>
+                    <i class='fas fa-reply-all' style="transform: rotateY(180deg);" onclick="VW.showEditSkillSingleObj(${numberskill})"></i>
+                </div>
+            </div>
+            `;
+            VW.sortDisable();
+        }
     }
 
 //for delete skill from list
     let delSkillsfromList = (el) => {
-        console.log(el);
-        let numberskill, allnames, allchack, alllevel, masnames = [], maschacks = [], maslevels = [];
-        numberskill = el.id.slice(10);
-        console.log(numberskill);
-
-        SE.$(`skills-box${numberskill}`).innerHTML = ``;
-        SE.$(`skills-box${numberskill}`).style.display = 'none';
-
+        let allnames, obj, masnames = [], maschacks = [], maslevels = [];
+        SE.$(`skills-box${el}`).innerHTML = ``;
+        SE.$(`skills-box${el}`).style.display = 'none';
         allnames = document.getElementsByClassName('skills-name');
-        allchack = document.getElementsByClassName('skills-show');
-        alllevel = document.getElementsByClassName('skills-range');
-        console.log(allnames.length);
-        console.log(allchack.length);
-        console.log(alllevel.length);
-
         for (let i = 1; i <= allnames.length; i++){
             masnames.push(allnames[i-1].textContent);
         }
@@ -659,8 +666,6 @@ let VW = (() => {
         for (let i = 1; i <= 10; i++){
             if (SE.$(`skills-range${i}`)){  
                 let level = SE.$(`skills-range${i}`).style.width.slice(0, SE.$(`skills-range${i}`).style.width.length-1);      
-                console.log(level);
-                
                 maslevels.push(level);
             }
         }
@@ -672,19 +677,55 @@ let VW = (() => {
         console.log(masnames);
         console.log(maschacks);
         console.log(maslevels);
-        
-    };
 
-//for save all skills list
-    let saveSkillsfromList = () => {
-        console.log('save');
-        
+        obj = {
+            "name":masnames,
+            "chack":maschacks,
+            "level":maslevels
+        }
+        SE.send(obj, '/updateallskill', () => {SE.send({"userid":window.location.href}, '/showskills', VW.showEditSkillsList);});
+        SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
     };
 
 //for delete skill from list
     let closeSkillsAddForm = () => {
+        VW.sortEnable();
         SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="VW.showAddSkillsform()" id="skills-show-regform"></i>`;
     };
+
+//for save list after drag list
+    let saveAfterMove = () => {
+        let allnames;
+        allnames = document.getElementsByClassName('skills-wrap');
+        console.log(allnames.length);
+        console.log(allnames[0].id);
+        
+        setTimeout(() => {
+            for (let i = 0; i < allnames.length; i++){
+                let boxid = allnames[i].id.slice(10)-1;
+                console.log(boxid);
+                if (i !== boxid){
+                    SE.$('save-skills').style.color = 'red';
+    
+                }
+            }
+        }, 1500);
+
+    };
+
+//for enable sort list
+    let sortEnable = () => {
+        $( "#skills-conteiner" ).sortable();
+        $( "#skills-conteiner" ).sortable( "option", "disabled", false );
+        // ^^^ this is required otherwise re-enabling sortable will not work!
+        $( "#skills-conteiner" ).disableSelection();
+        return false;
+    }    
+//for disable sort list
+    let sortDisable = () => {
+        $( "#skills-conteiner" ).sortable("disable");
+        return false;
+    }    
 
 
 return {
@@ -719,14 +760,16 @@ return {
     closeSkillsAddForm,
     addSkillstoList,
     showSkillsList,
-    saveSkillsfromList,
     showSkillsListForAll,
     showORhidden,
     showEditForm,
     showEditSkillSingleObj,
     showEditSkillSingle,
     editSkill,
-    showButtonConfirm 
+    showButtonConfirm,
+    saveAfterMove,
+    sortEnable,
+    sortDisable 
 };
 
 })();

@@ -12,9 +12,11 @@ let showskills = (req, res) => {
     clientToken = cookies.get('sessionisdd', {signed:true});
     console.log("--client-token--", clientToken);
     if ((clientToken === '') || (clientToken === undefined)){
+        console.log(req.body.userid);
+
         let pageurl = url.parse(req.body.userid, true);
         let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
-        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE U.userid = '${sliceurl}' AND S.userid = '${sliceurl}'`;
+        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
@@ -38,7 +40,13 @@ let showskills = (req, res) => {
             }        
         });
     } else {
-        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE U.token = '${clientToken}'`;
+        console.log(req.body.userid);
+        
+        let pageurl = url.parse(req.body.userid, true);
+        let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
+        console.log(sliceurl);
+        
+        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
@@ -51,7 +59,7 @@ let showskills = (req, res) => {
                         chack = result[0][`skillchack${i}`];
                         name = result[0][`skill${i}`];
                         level = result[0][`skilllevel${i}`];
-                        if ((num !== null) && (chack !== null) && (name !== null) && (level !== null)){
+                        if (((chack !== 'null') && (name !== 'null') && (level !== 'null')) && ((chack !== null) && (name !== null) && (level !== null))){
                             objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
                             console.log("--skill--",objSkills);
                             masskills.push(objSkills);    
@@ -169,7 +177,31 @@ let editskill = (req, res) => {
                 }        
             });
         }        
-    });
+    });    
+}
+
+let updateallskill = (req, res) => {
+    let cookies, clientToken, name, level, chack;
+    cookies = new Cookies(req, res, {"keys":['volodymyr']});
+    clientToken = cookies.get('sessionisdd', {signed:true});
+    console.log("--client-token--", clientToken);
+    name = req.body.name;
+    level = req.body.level;
+    chack = req.body.chack;
+    for (let i = 1; i <= 10; i++){
+        let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${i} = '${i}', skill${i} = '${name[i-1]}',  skillchack${i} = '${chack[i-1]}',  skilllevel${i} = '${level[i-1]}'  WHERE U.token = '${clientToken}' `;
+        con.query(sqlup, function (err, result) {
+            if (err) {
+                console.log("err", err);
+                res.send({"err": err});
+            } else {
+                console.log("--up-skill--", result.affectedRows);
+                if (i ===10){
+                    res.send({"res":"skill-del"});
+                }
+            }        
+        });
+    }  
 }
 
 
@@ -178,5 +210,6 @@ module.exports = {
     addskills,
     showorhiddenskills,
     showskillsingle,
-    editskill
+    editskill,
+    updateallskill
 };

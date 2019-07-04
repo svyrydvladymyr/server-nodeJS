@@ -771,6 +771,19 @@ body{
     min-width: 250px;
     background: #f1f1f1;
 }
+.skills-wrap-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 3px 5px;
+    margin: 5px auto;
+    max-width: 250px;
+    min-width: 250px;
+    background: #f1f1f1;
+}
 .skills-boks{
     width: 90%;
     margin: 0px auto;
@@ -917,8 +930,25 @@ body{
     justify-content: space-around;
     width: 100%;
     height: 37px;
-    outline: 1px solid red;
 }
+.skills-confirm-icon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 37px;
+}
+.skills-confirm-icon i{
+    cursor: pointer;
+    font-size: 18px;
+}
+.fa-trash-alt{
+    transform: rotateY(180deg);
+}
+
+
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------FOOTER MAIN PAGE---------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

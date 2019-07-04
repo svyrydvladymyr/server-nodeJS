@@ -5,13 +5,13 @@
             <div class="skills-edit-blok">
                 <div id="save-skills-btnclose"></div>
                 <div id="save-skills-btn"></div>
-                <i class='far fa-edit' id="edit-skills" onclick="SE.send({}, '/showskills', VW.showEditSkillsList);"></i>
+                <i class='far fa-edit' id="edit-skills" onclick='SE.send({"userid":window.location.href}, "/showskills", VW.showEditSkillsList);'></i>
             </div>        
         <% } %>  
     </div>
 
-    <div class="skills-conteiner" id="skills-conteiner">
-
+    <div class="skills-conteiner drag-container" id="skills-conteiner">
+        
         <!-- <div class="skills-wrap">   
             <div class="skills-boks">
                 <div class="skills-text">
