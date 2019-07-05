@@ -203,19 +203,19 @@
                                 <div class="widget-body">
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vskillsall" id="vskillsall" onchange="VW.saveWidgets('vskillsall')" <% if(vskillsall === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vskillsall" id="vskillsall" onchange="VW.saveWidgets('vskillsall', 'vskillsalltop')" <% if(vskillsall === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
-                                            <input type="checkbox" name="vskillsme" id="vskillsme" onchange="VW.saveWidgets('vskillsme')" <% if(vskillsme === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vskillsme" id="vskillsme" onchange="VW.saveWidgets('vskillsme', 'vskillsmetop')" '<% if(vskillsme === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-skills"></span>
                                     </div>
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall')" <% if(vprojectsall === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall', 'vprojectsalltop')" <% if(vprojectsall === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
-                                            <input type="checkbox" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme')" <% if(vprojectsme === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme', 'vprojectsmetop')" <% if(vprojectsme === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-project"></span>
                                     </div>
@@ -234,19 +234,19 @@
                                 <div class="widget-body">
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vskillsalltop" id="vskillsalltop" onchange="VW.saveWidgets('vskillsalltop')" <% if(vskillsalltop === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vskillsall" id="vskillsalltop" onchange="VW.saveWidgets('vskillsalltop', 'vskillsall')" <% if(vskillsalltop === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
-                                            <input type="checkbox" name="vskillsmetop" id="vskillsmetop" onchange="VW.saveWidgets('vskillsmetop')" <% if(vskillsmetop === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vskillsme" id="vskillsmetop" onchange="VW.saveWidgets('vskillsmetop', 'vskillsme')" <% if(vskillsmetop === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-skills-t"></span>
                                     </div>
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vprojectsalltop" id="vprojectsalltop" onchange="VW.saveWidgets('vprojectsalltop')" <% if(vprojectsalltop === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vprojectsall" id="vprojectsalltop" onchange="VW.saveWidgets('vprojectsalltop', 'vprojectsall')" <% if(vprojectsalltop === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
-                                            <input type="checkbox" name="vprojectsmetop" id="vprojectsmetop" onchange="VW.saveWidgets('vprojectsmetop')" <% if(vprojectsmetop === 'on') {%> checked <% } %>>
+                                            <input type="radio" name="vprojectsme" id="vprojectsmetop" onchange="VW.saveWidgets('vprojectsmetop', 'vprojectsme')" <% if(vprojectsmetop === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-project-t"></span>
                                     </div>

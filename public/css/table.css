@@ -32,7 +32,9 @@
 .header-login {
     padding: 10px 0px;
 }
-
+.header_logo img {
+    margin: 10px 15%;
+}
 /*logo*/
 .header_logo{
     order: 1;

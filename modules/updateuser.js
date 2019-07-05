@@ -270,7 +270,11 @@ let widgetsett = (req, res) => {
     values = req.body.value;
     console.log("--widget--",widget);
     console.log("--value--",values);
-    let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}'`;
+    widget2 = req.body.el2;
+    values2 = req.body.value2;
+    console.log("--widget--",widget2);
+    console.log("--value--",values2);
+    let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}', ${widget2} = '${values2}'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);

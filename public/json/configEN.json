@@ -56,7 +56,23 @@
 
         "placeholder":{
                 "search":"search..."
-        }
+        },
+
+"__comment-page-about":"text for page about",
+        "about-title":"<b>The site is being developed for educational purposes</b>",  
+        "about-tehnologi":"The following technologies were used in the development",  
+        "about-resours":"The following resources were also used",  
+        "about-npm":"NPM modules were also used",  
+        "about-autor":"Site developer: <b>Svirid Volodymyr Stepanovich</b>",  
+        "about-place-work":"Place of work: <b> Ivano-Frankivsk National Medical University </ b>",  
+        "about-posada":"Position: <b> Program Engineer </ b>",  
+        "about-other-projects":"Other project developer",  
+        "about-arnika":"<b>The site for keeping records of settlements at the recreation center Arnika</b>",  
+        "about-ifnmu":"<b>The main site of the Ivano-Frankivsk National University and other university websites</b>",  
+        "about-other":"<b>Other sites</b>"    
+
+
+      
 }
 
 

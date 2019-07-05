@@ -1,4 +1,39 @@
+<% if((permissEdit === 'true') && (vskillsmetop === 'on')) {%>
     <div class="naw-wrap">
-        <div class="naw-body">
-        </div>
+        <% if((permissEdit === 'true') && (vskillsme === 'off') && (vskillsmetop === 'on')) {%>
+            <div class="naw-body">
+                <%- include("./skills.ejs") %> 
+            </div>                    
+        <% } %>
     </div>   
+<% } %>
+
+<% if((permissEdit === 'false') && (vskillsalltop === 'on')) {%>
+    <div class="naw-wrap">
+        <% if((permissEdit === 'false') && (vskillsall === 'off') && (vskillsalltop === 'on')) {%>
+            <div class="naw-body">
+                <%- include("./skills.ejs") %> 
+            </div>  
+        <% } %>
+    </div>   
+<% } %>
+
+<% if((permissEdit === 'true') && (vprojectsmetop === 'on')) {%>
+    <div class="naw-wrap">
+        <% if((permissEdit === 'true') && (vprojectsme === 'off') && (vprojectsmetop === 'on')) {%>
+            <div class="naw-body">
+                <%- include("./projects.ejs") %>
+            </div> 
+        <% } %>
+    </div>   
+<% } %>
+
+<% if((permissEdit === 'false') &&(vprojectsalltop === 'on')) {%>
+    <div class="naw-wrap">
+        <% if((permissEdit === 'false') && (vprojectsall === 'off') && (vprojectsalltop === 'on')) {%>
+            <div class="naw-body">
+                <%- include("./projects.ejs") %>
+            </div> 
+        <% } %>
+    </div>   
+<% } %>

@@ -371,9 +371,19 @@ let VW = (() => {
 //-----------------------------------------------------------------------------------------------------   
 
 //save settings widgets
-    let saveWidgets = (val) => {
+    let saveWidgets = (val, val2) => {
         let obj;
-        SE.$(val).checked ? obj = {"el":SE.$(val).id, "value":"on"} : obj = {"el":SE.$(val).id, "value":"off"};
+        console.log(val);
+        console.log(val2);
+        
+        if (SE.$(val).checked){
+            obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}; 
+        }  
+        if (SE.$(val2).checked){
+            obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"};  
+        }  
+        console.log(obj);
+        
         SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
     };  
     

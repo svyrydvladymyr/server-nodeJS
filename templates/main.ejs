@@ -12,18 +12,18 @@
         <div class="side">
             <%- include("./parts/info.ejs") %>
 
-            <% if((permissEdit === 'true') && (vskillsme === 'on')) {%>
-                <%- include("./parts/skills.ejs") %> 
+            <% if((permissEdit === 'true') && (vskillsme === 'on') && (vskillsmetop === 'off')) {%>
+                <%- include("./parts/skillsside.ejs") %> 
             <% } %>
-            <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
-                <%- include("./parts/skills.ejs") %> 
+            <% if((permissEdit === 'false') && (vskillsall === 'on') && (vskillsalltop === 'off')) {%>
+                <%- include("./parts/skillsside.ejs") %> 
             <% } %>
 
-            <% if((permissEdit === 'true') && (vprojectsme === 'on')) {%>
-                <%- include("./parts/projects.ejs") %> 
+            <% if((permissEdit === 'true') && (vprojectsme === 'on') && (vprojectsmetop === 'off')) {%>
+                <%- include("./parts/projectsside.ejs") %> 
             <% } %>
-            <% if((permissEdit === 'false') && (vprojectsall === 'on')) {%>
-                <%- include("./parts/projects.ejs") %> 
+            <% if((permissEdit === 'false') && (vprojectsall === 'on') && (vprojectsalltop === 'off')) {%>
+                <%- include("./parts/projectsside.ejs") %> 
             <% } %>
         </div>
         <div class="article">   
@@ -49,7 +49,12 @@
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
         </script>
     <% } %>
-    <% if((permissEdit === 'false') && (vskillsall === 'on')) {%>
+    <% if((permissEdit === 'false') && (vskillsall === 'on') && (vskillsalltop === 'off')) {%>
+        <script>
+            SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsListForAll);
+        </script>
+    <% } %>
+    <% if((permissEdit === 'false') && (vskillsall === 'off') && (vskillsalltop === 'on')) {%>
         <script>
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsListForAll);
         </script>

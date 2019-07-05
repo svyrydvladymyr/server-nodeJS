@@ -81,6 +81,11 @@
 .naw-wrap {
     margin: 0px;
 }
+
+.naw-body{
+    padding: 2px;
+}
+
 .article-wrap {
     margin: 10px 0px 0px 0px;
 }
