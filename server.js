@@ -7,6 +7,7 @@ let bodyParser = require('body-parser');
 let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/widgets');
+let {showprojects} = require('./modules/projects');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {autorisation, exit} = require('./modules/autorisation');
@@ -26,6 +27,13 @@ app.post('/showorhiddenskills', (req, res) => {showorhiddenskills(req, res)});
 app.post('/showskillsingle', (req, res) => {showskillsingle(req, res)});
 app.post('/editskill', (req, res) => {editskill(req, res)});
 app.post('/updateallskill', (req, res) => {updateallskill(req, res)});
+
+app.post('/showprojects', (req, res) => {showprojects(req, res)});
+// app.post('/addskills', (req, res) => {addskills(req, res)});
+// app.post('/showorhiddenskills', (req, res) => {showorhiddenskills(req, res)});
+// app.post('/showskillsingle', (req, res) => {showskillsingle(req, res)});
+// app.post('/editskill', (req, res) => {editskill(req, res)});
+// app.post('/updateallskill', (req, res) => {updateallskill(req, res)});
 
 
 app.post('/widgetsett', (req, res) => {widgetsett(req, res)});

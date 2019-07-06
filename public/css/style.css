@@ -734,12 +734,24 @@ body{
 }
 .widget-chack-last{
     padding: 2px 4px; 
-    width: 130px;
+    width: 70px;
     text-align: left;
 }
+.widget-chack-last2{
+    padding: 2px 4px; 
+    width: 70px;
+    text-align: right;
+}
 .widget-head-text{
-    width: 30px;
-    text-align: center;
+    width: 50%;
+    text-align: right;
+    padding: 0px 10px;
+}
+.widget-head-text2{
+    width: 50%;
+    text-align: left;
+    padding: 0px 10px;
+
 }
 .widget-head-text-one{
     border-right: 1px solid #111111;
@@ -756,9 +768,22 @@ body{
 .skills-title{
     font-size: 14px;
     font-weight: bold;
-    margin: 0px 0px 12px 0px;
+    margin: 0px 0px 12px 10px;
 }
 .skills-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 3px 5px;
+    margin: 5px auto;
+    width: 48%;
+    min-width: 250px;
+    background: #f1f1f1;
+}
+.projects-wrap{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -792,6 +817,7 @@ body{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    max-width: 30px;
     width: 10%;
     height: 35px;
 }
@@ -946,7 +972,22 @@ body{
 .fa-trash-alt{
     transform: rotateY(180deg);
 }
-
+.project-header{
+    font-weight: bold;
+    font-size: 12px;
+    margin: 5px 0px;
+    text-align: justify;
+}
+.project-body{
+    margin: 5px 0px;
+    font-size: 12px;
+    text-align: justify;
+}
+.projects-boks{
+    width:100%; 
+    background:#ffffff; 
+    padding: 5px 10px;
+}
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/

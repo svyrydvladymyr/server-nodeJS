@@ -11,7 +11,7 @@ let WSKILLS = (() => {
                 let readyskill = trimobj.split(", ");
                 if (readyskill[1] === 'on'){
                     SE.$('skills-conteiner').innerHTML += `
-                    <div class="skills-wrap">   
+                    <div class="skills-wrap" id="skills-boxx${i+1}">   
                         <div class="skills-boks">
                             <div class="skills-text">
                                 <p class="skills-name" id="skills-name">${readyskill[2]}</p>
@@ -37,7 +37,7 @@ let WSKILLS = (() => {
                 let readyskill = trimobj.split(", ");
                 if (readyskill[1] === 'on'){
                     SE.$('skills-conteiner').innerHTML += `
-                    <div class="skills-wrap">   
+                    <div class="skills-wrap" id="skills-boxx${i+1}">   
                         <div class="skills-boks">
                             <div class="skills-text">
                                 <p class="skills-name" id="skills-name">${readyskill[2]}</p>
@@ -312,7 +312,6 @@ let WSKILLS = (() => {
         let sortEnable = () => {
             $( "#skills-conteiner" ).sortable();
             $( "#skills-conteiner" ).sortable( "option", "disabled", false );
-            // ^^^ this is required otherwise re-enabling sortable will not work!
             $( "#skills-conteiner" ).disableSelection();
             return false;
         }    
