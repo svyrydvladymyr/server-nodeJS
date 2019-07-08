@@ -5,13 +5,14 @@ let WSKILLS = (() => {
             SE.$('skills-add-form').innerHTML = ``;
             SE.$('save-skills-btnclose').innerHTML = ``;
             SE.$('save-skills-btn').innerHTML = ``;
-            SE.$('skills-conteiner').innerHTML = ``;        
+            SE.$('skills-conteiner').innerHTML = ``;   
+            SE.$('save-skills-savelist').innerHTML = ``;
             for (let i = 0; i < parseObj.length; i++){
                 let trimobj = parseObj[i].slice(1, -1);
                 let readyskill = trimobj.split(", ");
                 if (readyskill[1] === 'on'){
                     SE.$('skills-conteiner').innerHTML += `
-                    <div class="skills-wrap" id="skills-boxx${i+1}">   
+                    <div class="skills-wrap" id="skills-box${i+1}">   
                         <div class="skills-boks">
                             <div class="skills-text">
                                 <p class="skills-name" id="skills-name">${readyskill[2]}</p>
@@ -23,7 +24,8 @@ let WSKILLS = (() => {
                     </div>   
                     `;
                 }
-            }   
+            }  
+            VW.adColorToLists('skills');          
             WSKILLS.sortEnable();     
             WSKILLS.sortDisable();     
         };
@@ -37,7 +39,7 @@ let WSKILLS = (() => {
                 let readyskill = trimobj.split(", ");
                 if (readyskill[1] === 'on'){
                     SE.$('skills-conteiner').innerHTML += `
-                    <div class="skills-wrap" id="skills-boxx${i+1}">   
+                    <div class="skills-wrap" id="skills-box${i+1}">   
                         <div class="skills-boks">
                             <div class="skills-text">
                                 <p class="skills-name" id="skills-name">${readyskill[2]}</p>
@@ -48,13 +50,15 @@ let WSKILLS = (() => {
                         </div> 
                     </div>`;
                 }
-            }        
+            }
+            VW.adColorToLists('skills');          
         };
     
     //for show edit in widget skills
         let showEditSkillsList = (res) => {
             let parseObj = JSON.parse(res);
             SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
+            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             SE.$('save-skills-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick='SE.send({"userid":window.location.href}, "/showskills", WSKILLS.showSkillsList);'></i>`;
             SE.$('skills-conteiner').innerHTML = ``;
             for (let i = 0; i < parseObj.length; i++){
@@ -62,7 +66,7 @@ let WSKILLS = (() => {
                 let readyskill = trimobj.split(", ");
                 let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
                 SE.$('skills-conteiner').innerHTML += `            
-                <div class="skills-wrap" id="skills-box${i+1}" onmouseup="WSKILLS.saveAfterMove()">   
+                <div class="skills-wrap" id="skills-box${i+1}">   
                     <div class="skills-boks">
                         <div class="skills-text">
                             <input type="checkbox" name="skills-show" class="skills-show" id="skills-show${i+1}" ${chackedskill} onchange="WSKILLS.showORhidden(this)">
@@ -78,6 +82,8 @@ let WSKILLS = (() => {
                     </div>   
                 </div>`;
             } 
+            VW.adColorToLists('skills');          
+            WSKILLS.sortDisable();
             WSKILLS.sortEnable();
             let kilkskills = document.getElementsByClassName('skills-name').length; 
             if (kilkskills >= 10){
@@ -88,6 +94,7 @@ let WSKILLS = (() => {
     //for show add form to skills list
         let showAddSkillsform = () => {
             let getidconteiner = SE.$('skills-add-form');
+            SE.$('save-skills-savelist').innerHTML = ``;
             let skillslevel = SE.errorFormMessage().skillslevel;
             let skillsname = SE.errorFormMessage().skillsname;
             let skillchack = SE.errorFormMessage().skillschack;
@@ -140,6 +147,7 @@ let WSKILLS = (() => {
                         "level":level
                     }
                     SE.send(obj, '/addskills', () => {SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showEditSkillsList);});
+                    SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
                 }
             } else {
                 SE.$('skills-add-form').innerHTML = ``;
@@ -162,6 +170,7 @@ let WSKILLS = (() => {
             nameskill = SE.$(`skills-name${numberskill}`).textContent;
             levelskill = SE.$(`skills-range${numberskill}`).style.width.slice(0, SE.$(`skills-range${numberskill}`).style.width.length-1);
             SE.$('skills-add-form').innerHTML = ``;
+            SE.$('save-skills-savelist').innerHTML = ``;
             SE.$(`skills-box${numberskill}`).innerHTML = `
             <div class="edit-skill-form" id="edit-skill-form${numberskill}">
                 <div class="edit-skill-body">
@@ -183,10 +192,12 @@ let WSKILLS = (() => {
             obj = {"number":val};
             SE.send(obj, '/showskillsingle', WSKILLS.showEditSkillSingle);
         };
+
     //for show single skill
         let showEditSkillSingle = (res) => {
             let name, chack, level, number, chackedskill, openeditform, opendelform, kilkskills;
             let parseObj = JSON.parse(res);
+            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             nameval = `skill${parseObj.number}`;
             name = parseObj.res[0][nameval];
             chackval = `skillchack${parseObj.number}`;
@@ -238,6 +249,7 @@ let WSKILLS = (() => {
     //for show button for confirm delete
         let showButtonConfirm = (el) => {
             let opendelform, openeditform;
+            SE.$('save-skills-savelist').innerHTML = ``;
             opendelform = document.getElementsByClassName('skills-confirm-box').length;
             openeditform = document.getElementsByClassName('edit-skill-form').length;
             if ((openeditform === 0) && (opendelform === 0)){
@@ -258,6 +270,7 @@ let WSKILLS = (() => {
     //for delete skill from list
         let delSkillsfromList = (el) => {
             let allnames, allchack, alllevel, opendelform, openeditform, kilkskills, obj, masnames = [], maschacks = [], maslevels = [];
+            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             if (el < 11){
                 SE.$(`skills-box${el}`).innerHTML = ``;
                 SE.$(`skills-box${el}`).style.display = 'none';
@@ -294,18 +307,23 @@ let WSKILLS = (() => {
         let closeSkillsAddForm = () => {
             WSKILLS.sortEnable();
             SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
+            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
         };
     
     //for save list after drag list
         let saveAfterMove = () => {
             let allnames;
             allnames = document.getElementsByClassName('skills-wrap');
+            SE.$('save-sortlist').innerHTML = SE.errorFormMessage().saved;         
             setTimeout(() => {
                 for (let i = 0; i < allnames.length; i++){
                     let boxid = allnames[i].id.slice(10)-1;
-                    if (i !== boxid){WSKILLS.delSkillsfromList(12)}
+                    if (i !== boxid){WSKILLS.delSkillsfromList(82);
+                        break;
+                    }
                 }
-            }, 500);
+                SE.$('save-sortlist').innerHTML = '';       
+            }, 1000);
         };
     
     //for enable sort list

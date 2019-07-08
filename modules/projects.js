@@ -32,62 +32,63 @@ let showprojects = (req, res) => {
 
 }
 
-// let addskills = (req, res) => {
-//     let name, chack, level, number;
-//     let clientToken = clienttoken(req, res);
-//     name = req.body.name;
-//     chack = req.body.chacked;
-//     level = req.body.level; 
-//     number = req.body.number;
-//     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skillchack${number} = '${chack}', skill${number} = '${name}',  skilllevel${number} = '${level}' WHERE U.token = '${clientToken}' `;
-//     con.query(sql, function (err, result) {
-//         if (err) {
-//             console.log("err", err);
-//             res.send({"err": err});
-//         } else {
-//             if (result.affectedRows === 0){                 
-//                 let sqlskills = `INSERT INTO userskills (userid) SELECT userid FROM users WHERE token = '${clientToken}'`;
-//                 con.query(sqlskills, function (err, result) {
-//                     if (err) {
-//                         console.log("--err--", err);
-//                         res.send({"error":err});   
-//                     } else {
-//                         console.log("--result-registr-skills--", result.affectedRows);
-//                         con.query(sql, function (err, result) {
-//                             if (err) {
-//                                 console.log("err", err);
-//                                 res.send({"err": err});
-//                             } else {
-//                                 console.log("--skill-added--", result.affectedRows);
-//                                 res.send(result);
-//                             }
-//                         });
-//                     }            
-//                 });
-//             } else {
-//                 console.log("--skill-added--", result.affectedRows);
-//                 res.send(result);
-//             }
-//         }        
-//     });
-// };
+let addprojects = (req, res) => {
+    let name, chack, descript, number, projurl;
+    let clientToken = clienttoken(req, res);
+    name = req.body.name;
+    chack = req.body.chacked;
+    descript = req.body.descript; 
+    number = req.body.number;
+    projurl = req.body.projurl;
+    let sql = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${number} = '${number}', projchack${number} = '${chack}', projname${number} = '${name}',  projdescript${number} = '${descript}',  projurl${number} = '${projurl}' WHERE U.token = '${clientToken}' `;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            if (result.affectedRows === 0){                 
+                let sqlproj = `INSERT INTO userprojects (userid) SELECT userid FROM users WHERE token = '${clientToken}'`;
+                con.query(sqlproj, function (err, result) {
+                    if (err) {
+                        console.log("--err--", err);
+                        res.send({"error":err});   
+                    } else {
+                        console.log("--result-registr-project--", result.affectedRows);
+                        con.query(sql, function (err, result) {
+                            if (err) {
+                                console.log("err", err);
+                                res.send({"err": err});
+                            } else {
+                                console.log("--project-added--", result.affectedRows);
+                                res.send(result);
+                            }
+                        });
+                    }            
+                });
+            } else {
+                console.log("--skill-project--", result.affectedRows);
+                res.send(result);
+            }
+        }        
+    });
+};
 
-// let showorhiddenskills = (req, res) => {
-//     let chack, number;
-//     let clientToken = clienttoken(req, res);
-//     chack = req.body.chack;
-//     number = req.body.number;
-//     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
-//     con.query(sql, function (err, result) {
-//         if (err) {
-//             console.log("err", err);
-//             res.send({"err": err});
-//         } else {
-//             console.log("--skill-updates--", result.affectedRows);
-//             res.send({"res":result.affectedRows});
-//         }        
-//     });
-// }
+let showorhiddenproj = (req, res) => {
+    let chack, number;
+    let clientToken = clienttoken(req, res);
+    chack = req.body.chack;
+    number = req.body.number;
+    let sql = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--project-updates--", result.affectedRows);
+            res.send({"res":result.affectedRows});
+        }        
+    });
+}
 
 // let showskillsingle = (req, res) => {
 //     let number;
@@ -156,9 +157,9 @@ let showprojects = (req, res) => {
 
 
 module.exports = {
-    showprojects
-    // addskills,
-    // showorhiddenskills,
+    showprojects,
+    addprojects,
+    showorhiddenproj,
     // showskillsingle,
     // editskill,
     // updateallskill

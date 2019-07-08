@@ -1,13 +1,12 @@
 let WPROJ = (() => {    
     //for show widget skills
         let showProjectsList = (res) => {
-            let parseObj = JSON.parse(res);
-            
+            let parseObj = JSON.parse(res);            
             SE.$('projects-add-form').innerHTML = ``;
             SE.$('save-projects-btnclose').innerHTML = ``;
             SE.$('save-projects-btn').innerHTML = ``;
             SE.$('projects-conteiner').innerHTML = ``;   
-
+            SE.$('save-projects-savelist').innerHTML = ``;
             for (let i = 0; i < parseObj.length; i++){
                 let resdyurl; 
                 let trimobj = parseObj[i].slice(1, -1);
@@ -33,25 +32,21 @@ let WPROJ = (() => {
                     `;
                 }
             }   
+            VW.adColorToLists('projects');      
             WPROJ.sortEnable();     
             WPROJ.sortDisable();     
         };
 
-    //for show widget skills for all
+    //for show widget projects for all
         let showProjectsListAll = (res) => {
             let parseObj = JSON.parse(res);
-
             for (let i = 0; i < parseObj.length; i++){
                 let resdyurl; 
                 let trimobj = parseObj[i].slice(1, -1);
                 let readyproject = trimobj.split(", ");
                 let reg = /^https?:\/\//;
                 let regexpnew = new RegExp(reg, 'gi');
-                if (regexpnew.test(readyproject[4])){
-                    resdyurl = readyproject[4];
-                } else {
-                    resdyurl = `http://${readyproject[4]}`;
-                }
+                regexpnew.test(readyproject[4]) ? resdyurl = readyproject[4] : resdyurl = `http://${readyproject[4]}`;
                 if (readyproject[1] === 'on'){
                     SE.$('projects-conteiner').innerHTML += `
                     <div class="projects-wrap projects-boks" id="progects-boks${i+1}">   
@@ -65,135 +60,120 @@ let WPROJ = (() => {
                     </div>   
                     `;
                 }
+                VW.adColorToLists('projects');    
             }   
+        };  
+
+    //for show edit in widget projects
+        let showEditProjectsList = (res) => {
+            let parseObj = JSON.parse(res);
+            SE.$('projects-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="projects-show-regform"></i>`;
+            SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' onclick="WSKILLS.showAddSkillsform()" id="projects-save-list"></i>`;
+            SE.$('save-projects-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick='SE.send({"userid":window.location.href}, "/showprojects", WPROJ.showProjectsList);'></i>`;
+            SE.$('projects-conteiner').innerHTML = ``;
+            for (let i = 0; i < parseObj.length; i++){
+                let trimobj = parseObj[i].slice(1, -1);
+                let readyskill = trimobj.split(", ");
+                let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
+                SE.$('projects-conteiner').innerHTML += `            
+                <div class="skills-wrap" id="projects-box${i+1}" style="width:100%;">   
+                    <div class="skills-boks">
+                        <div class="skills-text" style="padding:4px 0px;">
+                            <input type="checkbox" name="projects-show" class="skills-show" id="projects-show${i+1}" ${chackedskill} onchange="WPROJ.showORhidden(this)">
+                            <p class="projects-name" id="projects-name${i+1}" style="width: 90%;">${readyskill[2]}</p>
+                        </div>
+                        <div class="skills-text">
+                            <p class="project-description" style="font-weight:normal;" id="projects-description${i+1}">${readyskill[3]}</p>
+                        </div>
+                    </div> 
+                    <div class="skills-edit">
+                        <i class='far fa-edit' id="projects-edit${i+1}" onclick="WSKILLS.showEditForm(this)"></i>
+                        <i class='far fa-trash-alt' id="projects-del${i+1}" onclick="WSKILLS.showButtonConfirm(this)"></i>
+                    </div>   
+                </div>`;
+            } 
+            VW.adColorToLists('projects');
+            WPROJ.sortEnable();
+            let kilkskills = document.getElementsByClassName('projects-name').length; 
+            if (kilkskills >= 10){
+                SE.$('projects-add-form').innerHTML = ``;
+            }        
         };
     
-    // //for show widget skills for all
-    //     let showSkillsListForAll = (res) => {
-    //         let parseObj = JSON.parse(res);
-    //         SE.$('skills-conteiner').innerHTML = ``;
-    //         for (let i = 0; i < parseObj.length; i++){
-    //             let trimobj = parseObj[i].slice(1, -1);
-    //             let readyskill = trimobj.split(", ");
-    //             if (readyskill[1] === 'on'){
-    //                 SE.$('skills-conteiner').innerHTML += `
-    //                 <div class="skills-wrap">   
-    //                     <div class="skills-boks">
-    //                         <div class="skills-text">
-    //                             <p class="skills-name" id="skills-name">${readyskill[2]}</p>
-    //                         </div>
-    //                         <div class="skills-range-wrap">
-    //                             <div class="skills-range" id="skills-range" style="width: ${readyskill[3]}%;"></div>
-    //                         </div>
-    //                     </div> 
-    //                 </div>`;
-    //             }
-    //         }        
-    //     };
-    
-    // //for show edit in widget skills
-    //     let showEditSkillsList = (res) => {
-    //         let parseObj = JSON.parse(res);
-    //         SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
-    //         SE.$('save-skills-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick='SE.send({"userid":window.location.href}, "/showskills", WSKILLS.showSkillsList);'></i>`;
-    //         SE.$('skills-conteiner').innerHTML = ``;
-    //         for (let i = 0; i < parseObj.length; i++){
-    //             let trimobj = parseObj[i].slice(1, -1);
-    //             let readyskill = trimobj.split(", ");
-    //             let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
-    //             SE.$('skills-conteiner').innerHTML += `            
-    //             <div class="skills-wrap" id="skills-box${i+1}" onmouseup="WSKILLS.saveAfterMove()">   
-    //                 <div class="skills-boks">
-    //                     <div class="skills-text">
-    //                         <input type="checkbox" name="skills-show" class="skills-show" id="skills-show${i+1}" ${chackedskill} onchange="WSKILLS.showORhidden(this)">
-    //                         <p class="skills-name" id="skills-name${i+1}" style="width: 90%;">${readyskill[2]}</p>
-    //                     </div>
-    //                     <div class="skills-range-wrap">
-    //                         <div class="skills-range" id="skills-range${i+1}" style="width: ${readyskill[3]}%;"></div>
-    //                     </div>
-    //                 </div> 
-    //                 <div class="skills-edit">
-    //                     <i class='far fa-edit' id="skills-edit${i+1}" onclick="WSKILLS.showEditForm(this)"></i>
-    //                     <i class='far fa-trash-alt' id="skills-del${i+1}" onclick="WSKILLS.showButtonConfirm(this)"></i>
-    //                 </div>   
-    //             </div>`;
-    //         } 
-    //         WSKILLS.sortEnable();
-    //         let kilkskills = document.getElementsByClassName('skills-name').length; 
-    //         if (kilkskills >= 10){
-    //             SE.$('skills-add-form').innerHTML = ``;
-    //         }        
-    //     };
-    
-    // //for show add form to skills list
-    //     let showAddSkillsform = () => {
-    //         let getidconteiner = SE.$('skills-add-form');
-    //         let skillslevel = SE.errorFormMessage().skillslevel;
-    //         let skillsname = SE.errorFormMessage().skillsname;
-    //         let skillchack = SE.errorFormMessage().skillschack;
-    //         let kilkskills = document.getElementsByClassName('skills-name').length; 
-    //         WSKILLS.sortEnable();
-    //         WSKILLS.sortDisable();
-    //         if (kilkskills <= 10){
-    //             getidconteiner.innerHTML = `
-    //             <div class="skills-wrap-form" id="">   
-    //                 <div class="skills-boks">
-    //                     <div class="skills-text">
-    //                     <p>${skillchack}</p>
-    //                     <input type="checkbox" name="skillchack" id="skillchack">
-    //                     <p style="width:100%;">${skillsname}</p>
-    //                     <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70">
-    //                     <p>${skillslevel}</p>
-    //                     <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
-    //                     <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
-    //                     <div class="skills-button">
-    //                         <i class='fas fa-times' id="close-skills" onclick="WSKILLS.closeSkillsAddForm()"></i>
-    //                         <i class='far fa-save' id="save-skills" onclick="WSKILLS.addSkillstoList()"></i>          
-    //                     </div>
-    //                     <p id="mess-addskills" style="width:100%; text-align:center; color:#b80000;"></p>
-    //                     </div>
-    //                 </div> 
-    //             </div>`;
-    //         }
-    //     };
+    //for show add form to skills list
+        let showAddProjectsform = () => {
+            let getidconteiner = SE.$('projects-add-form');
+            let projectdescription = SE.errorFormMessage().projectdescription;
+            let projectname = SE.errorFormMessage().projectname;
+            let projecturl = SE.errorFormMessage().projecturl;
+            let projectchack = SE.errorFormMessage().skillschack;
+            let kilkprojects = document.getElementsByClassName('projects-name').length; 
+            SE.$('save-projects-savelist').innerHTML = ``;
+            WPROJ.sortEnable();
+            WPROJ.sortDisable();
+            if (kilkprojects <= 10){
+                getidconteiner.innerHTML = `
+                <div class="skills-wrap-form" style="max-width:100%; width:100%; background:#ffffff; padding: 10px 0px; border: 2px solid #9e9e9e;">   
+                    <div class="skills-boks">
+                        <div class="skills-text">
+                        <p>${projectchack}</p>
+                        <input type="checkbox" name="projectchack" id="projectchack">
+                        <p style="width:100%;">${projectname}</p>
+                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80">
+                        <p style="width:100%;">${projecturl}</p>
+                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100">
+                        <p>${projectdescription}</p>
+                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;"></textarea>
+                        <div class="skills-button">
+                            <i class='fas fa-times' id="close-skills" onclick="WPROJ.closeProjectsAddForm()"></i>
+                            <i class='far fa-save' id="save-skills" onclick="WPROJ.addProjectstoList()"></i>          
+                        </div>
+                        <p id="mess-addproj" style="width:100%; text-align:center; color:#b80000;"></p>
+                        </div>
+                    </div> 
+                </div>`;
+            }
+        };
     
         
-    // //for add skill tom list
-    //     let addSkillstoList = () => {
-    //         let kilkskills = document.getElementsByClassName('skills-name').length; 
-    //         if (kilkskills <= 10){
-    //             let name, chack, level, kilk, obj;
-    //             kilk = kilkskills + 1;
-    //             name = SE.$('skillsname').value;
-    //             chack = SE.$('skillchack').checked ? 'on' : 'off';            
-    //             level = SE.$('skillsregname').value;
-    //             if (name === ''){
-    //                 SE.$('mess-addskills').innerHTML = SE.errorFormMessage().skillsemptyname;
-    //                 SE.$("skillsname").addEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
-    //             } else {
-    //                 SE.$("skillsname").removeEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
-    //                 SE.$('mess-addskills').innerHTML = '';
-    //                 obj = {
-    //                     "number":kilk,
-    //                     "name":name,
-    //                     "chacked":chack,
-    //                     "level":level
-    //                 }
-    //                 SE.send(obj, '/addskills', () => {SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showEditSkillsList);});
-    //             }
-    //         } else {
-    //             SE.$('skills-add-form').innerHTML = ``;
-    //         } 
-    //     };
+    //for add skill to list
+        let addProjectstoList = () => {
+            let kilkskills = document.getElementsByClassName('projects-name').length; 
+            if (kilkskills <= 10){
+                let name, chack, descript, kilk, projurl, obj;
+                kilk = kilkskills + 1;
+                name = SE.$('projectname').value;
+                projurl = SE.$('projecturl').value;
+                chack = SE.$('projectchack').checked ? 'on' : 'off';            
+                descript = SE.$('projectdescription').value;
+                if (name === ''){
+                    SE.$('mess-addproj').innerHTML = SE.errorFormMessage().projectname;
+                    SE.$("projectname").addEventListener("input", () => {SE.$('mess-addproj').innerHTML = '';}); 
+                } else {
+                    SE.$("projectname").removeEventListener("input", () => {SE.$('mess-addproj').innerHTML = '';}); 
+                    SE.$('mess-addproj').innerHTML = '';
+                    obj = {
+                        "number":kilk,
+                        "name":name,
+                        "chacked":chack,
+                        "descript":descript,
+                        "projurl":projurl
+                    }
+                    SE.send(obj, '/addprojects', () => {SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showEditProjectsList);});
+                }
+            } else {
+                SE.$('projects-add-form').innerHTML = ``;
+            } 
+        };
     
     
-    // //for show or hidden skill in al user list
-    //     let showORhidden = (el) => {
-    //         let obj;
-    //         let numberskill = el.id.slice(11);
-    //         el.checked ? obj = {"number":numberskill, "chack":"on"} : obj = {"number":numberskill, "chack":"off"};
-    //         SE.send(obj, '/showorhiddenskills', () => {SE.send(obj, '/showskillsingle', WSKILLS.showEditSkillSingle);});
-    //     };
+    //for show or hidden skill in al user list
+        let showORhidden = (el) => {
+            let obj;
+            let numberskill = el.id.slice(13);
+            el.checked ? obj = {"number":numberskill, "chack":"on"} : obj = {"number":numberskill, "chack":"off"};
+            SE.send(obj, '/showorhiddenproj', () => {SE.send(obj, '/showprojsingle', WPROJ.showEditProjSingle);});
+        };
     
     // //for show edit form for single skill
     //     let showEditForm = (el) => {
@@ -330,11 +310,12 @@ let WPROJ = (() => {
     //         }
     //     };
     
-    // //for delete skill from list
-    //     let closeSkillsAddForm = () => {
-    //         WSKILLS.sortEnable();
-    //         SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
-    //     };
+    //for close add project form
+    let closeProjectsAddForm = () => {
+        WPROJ.sortEnable();
+        SE.$('projects-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="skills-show-regform"></i>`;
+        SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WPROJ.saveAfterMove()'></i>`;
+    };
     
     // //for save list after drag list
     //     let saveAfterMove = () => {
@@ -370,7 +351,11 @@ let WPROJ = (() => {
         // addSkillstoList,
         showProjectsList,
         showProjectsListAll,
-        // showORhidden,
+        showEditProjectsList,
+        showAddProjectsform,
+        closeProjectsAddForm,
+        addProjectstoList,
+        showORhidden,
         // showEditForm,
         // showEditSkillSingleObj,
         // showEditSkillSingle,

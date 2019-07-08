@@ -761,6 +761,7 @@ body{
 .skills-conteiner{
     width: 100%;
     margin: 0px;
+    position: relative;
     padding: 0px;
     display: flex;
     flex-wrap: wrap;
@@ -866,8 +867,15 @@ body{
 .skills-edit-blok{
     display: flex;
     justify-content: space-between;
-    width: 45px;
+    width: 120px;
     height: 20px;
+}
+.skills-edit-blok p{
+    margin: 4px 5px 4px 0px;
+    font-size: 10px;
+    text-align: right;
+    width: 60px;
+    color: green;
 }
 .skills-edit-blok i{
     cursor: pointer;
@@ -988,7 +996,13 @@ body{
     background:#ffffff; 
     padding: 5px 10px;
 }
-
+.project-description{
+    width: 100%;
+    padding: 2px!important;
+    border-radius: 5px;
+    margin-bottom: 3px!important;
+    width: 100%;
+}
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------FOOTER MAIN PAGE---------------------------------------------------*/

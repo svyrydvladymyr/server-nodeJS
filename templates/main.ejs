@@ -107,52 +107,6 @@
         </script>
     <% } %>
 
-    <!--color projects-->
-    <% if((permissEdit === 'true') && (vprojectsme === 'on') && (vprojectsmetop === 'off')) {%>
-        <script>
-            setTimeout(() => {
-                for (let i = 1; i <= 10; i++){
-                    if (SE.$(`progects-boks${i}`)){
-                        SE.$(`progects-boks${i}`).style.backgroundColor = "#f1f1f1";
-                    }
-                }
-            },500);
-        </script>
-    <% } %>
-    <% if((permissEdit === 'true') && (vprojectsme === 'off') && (vprojectsmetop === 'on')) {%>
-        <script>
-            setTimeout(() => {
-                for (let i = 1; i <= 10; i++){
-                    if (SE.$(`progects-boks${i}`)){
-                        SE.$(`progects-boks${i}`).style.backgroundColor = "#ffffff";
-                    }
-                }
-            },500);       
-        </script>
-    <% } %>
 
-    <!--color skills-->
-    <% if((permissEdit === 'true') && (vskillsme === 'on') && (vskillsmetop === 'off')) {%>
-        <script>
-            setTimeout(() => {
-                for (let i = 1; i <= 10; i++){
-                    if (SE.$(`skills-boxx${i}`)){
-                        SE.$(`skills-boxx${i}`).style.backgroundColor = "#f1f1f1";
-                    }
-                }
-            },500);
-        </script>
-    <% } %>
-    <% if((permissEdit === 'true') && (vskillsme === 'off') && (vskillsmetop === 'on')) {%>
-        <script>
-            setTimeout(() => {
-                for (let i = 1; i <= 10; i++){
-                    if (SE.$(`skills-boxx${i}`)){
-                        SE.$(`skills-boxx${i}`).style.backgroundColor = "#ffffff";
-                    }
-                }
-            },500);       
-        </script>
-    <% } %>
 
 </body>

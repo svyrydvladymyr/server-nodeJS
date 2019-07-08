@@ -165,6 +165,9 @@ let SE = (() => {
             let skillsname = "Введіть назву вашого навику.";
             let skillschack = "Показувати чи ні.";
             let skillsemptyname = "Вкажіть назву навику!";
+            let projectdescription = "Вкажіть опис проекту!";
+            let projectname = "Вкажіть назву проекту!";
+            let projecturl = "Вкажіть посилання на проект!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -191,7 +194,10 @@ let SE = (() => {
                 skillslevel,
                 skillsname,
                 skillschack,
-                skillsemptyname
+                skillsemptyname,
+                projectname,
+                projectdescription,
+                projecturl
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -220,6 +226,9 @@ let SE = (() => {
             let skillsname = "Enter the name of your skill.";
             let skillschack = "Show or not.";
             let skillsemptyname = "Вкажіть назву навику!";
+            let projectdescription = "Specify the description of the project!";
+            let projectname = "Specify the name of the project!";
+            let projecturl = "Specify a reference to the project!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -246,7 +255,10 @@ let SE = (() => {
                 skillslevel,
                 skillsname,
                 skillschack,
-                skillsemptyname
+                skillsemptyname,
+                projectname,
+                projectdescription,
+                projecturl
             };
         }
     };    
