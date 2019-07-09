@@ -90,77 +90,79 @@ let showorhiddenproj = (req, res) => {
     });
 }
 
-// let showskillsingle = (req, res) => {
-//     let number;
-//     let clientToken = clienttoken(req, res);
-//     number = req.body.number;
-//     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
-//     con.query(sql, function (err, result) {
-//         if (err) {
-//             console.log("err", err);
-//             res.send({"err": err});
-//         } else {
-//             console.log("--skill-get--", result);
-//             res.send({"res":result, "number":number});
-//         }        
-//     });
-// }
+let showprojsingle = (req, res) => {
+    let number;
+    let clientToken = clienttoken(req, res);
+    number = req.body.number;
+    let sql = `SELECT S.projnumber${number}, S.projchack${number}, S.projname${number}, S.projdescript${number}, S.projurl${number} FROM users U INNER JOIN userprojects S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--projects-get--", result);
+            res.send({"res":result, "number":number});
+        }        
+    });
+}
 
-// let editskill = (req, res) => {
-//     let number, name, level;
-//     let clientToken = clienttoken(req, res);
-//     number = req.body.number;
-//     name = req.body.name;
-//     level = req.body.level;
-//     let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skill${number} = '${name}',  skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
-//     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
-//     con.query(sqlup, function (err, result) {
-//         if (err) {
-//             console.log("err", err);
-//             res.send({"err": err});
-//         } else {
-//             console.log("--skill-updates--", result.affectedRows);
-//             con.query(sql, function (err, result) {
-//                 if (err) {
-//                     console.log("err", err);
-//                     res.send({"err": err});
-//                 } else {
-//                     console.log("--skill-get--", result);
-//                     res.send({"res":result, "number":number});
-//                 }        
-//             });
-//         }        
-//     });    
-// }
+let editproject = (req, res) => {
+    let number, name, descript, urlproj;
+    let clientToken = clienttoken(req, res);
+    number = req.body.number;
+    name = req.body.name;
+    descript = req.body.descript;
+    urlproj = req.body.urlproj;
+    let sqlup = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${number} = '${number}', projname${number} = '${name}',  projdescript${number} = '${descript}',  projurl${number} = '${urlproj}'  WHERE U.token = '${clientToken}' `;
+    let sql = `SELECT S.projnumber${number}, S.projchack${number}, S.projname${number},  S.projdescript${number},  S.projurl${number} FROM users U INNER JOIN userprojects S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
+    con.query(sqlup, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            console.log("--project-updates--", result.affectedRows);
+            con.query(sql, function (err, result) {
+                if (err) {
+                    console.log("err", err);
+                    res.send({"err": err});
+                } else {
+                    console.log("--project-get--", result);
+                    res.send({"res":result, "number":number});
+                }        
+            });
+        }        
+    });    
+}
 
-// let updateallskill = (req, res) => {
-//     let name, level, chack;
-//     let clientToken = clienttoken(req, res);
-//     name = req.body.name;
-//     level = req.body.level;
-//     chack = req.body.chack;
-//     for (let i = 1; i <= 10; i++){
-//         let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${i} = '${i}', skill${i} = '${name[i-1]}',  skillchack${i} = '${chack[i-1]}',  skilllevel${i} = '${level[i-1]}'  WHERE U.token = '${clientToken}' `;
-//         con.query(sqlup, function (err, result) {
-//             if (err) {
-//                 console.log("err", err);
-//                 res.send({"err": err});
-//             } else {
-//                 console.log("--up-skill--", result.affectedRows);
-//                 if (i ===10){
-//                     res.send({"res":"skill-del"});
-//                 }
-//             }        
-//         });
-//     }  
-// }
+let updateallprojects = (req, res) => {
+    let name, descript, chack, urlproj;
+    let clientToken = clienttoken(req, res);
+    name = req.body.name;
+    descript = req.body.descript;
+    chack = req.body.chack;
+    urlproj = req.body.urlproj;
+    for (let i = 1; i <= 10; i++){
+        let sqlup = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${i} = '${i}', projname${i} = '${name[i-1]}',  projchack${i} = '${chack[i-1]}',  projdescript${i} = '${descript[i-1]}',  projurl${i} = '${urlproj[i-1]}'  WHERE U.token = '${clientToken}' `;
+        con.query(sqlup, function (err, result) {
+            if (err) {
+                console.log("err", err);
+                res.send({"err": err});
+            } else {
+                console.log("--up-projects--", result.affectedRows);
+                if (i === 10){
+                    res.send({"res":"project-del"});
+                }
+            }        
+        });
+    }  
+}
 
 
 module.exports = {
     showprojects,
     addprojects,
     showorhiddenproj,
-    // showskillsingle,
-    // editskill,
-    // updateallskill
+    editproject,
+    showprojsingle,
+    updateallprojects
 };

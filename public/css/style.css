@@ -922,6 +922,13 @@ body{
     height: 37px;
     /* outline: 1px solid red; */
 }
+.edit-proj-form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
 .edit-skill-body{
     display: flex;
     flex-direction: column;
@@ -929,12 +936,18 @@ body{
     height: 37px;
     /* outline: 1px solid red; */
 }
+.edit-proj-body{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 5px 0px;
+}
 .edit-skill-edit{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    width: 10%;
+    width: 20px;
     height: 37px;
     /* outline: 1px solid red; */
 }
@@ -948,6 +961,15 @@ body{
     padding: 1px 5px;
     border-radius: 4px;
     border: 1px solid #a7a7a7;
+    outline: 0!important;
+}
+.edit-proj-name{
+    width: 94%;
+    margin: 3px 3%;
+    padding: 5px 10px;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 2px solid #adadad;
     outline: 0!important;
 }
 .edit-skill-level{
@@ -977,6 +999,18 @@ body{
     cursor: pointer;
     font-size: 18px;
 }
+.proj-confirm-icon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 49px;
+}
+.proj-confirm-icon i{
+    cursor: pointer;
+    font-size: 18px;
+}
 .fa-trash-alt{
     transform: rotateY(180deg);
 }
@@ -996,8 +1030,9 @@ body{
     background:#ffffff; 
     padding: 5px 10px;
 }
-.project-description{
+.projects-description{
     width: 100%;
+    font-size: 12px;
     padding: 2px!important;
     border-radius: 5px;
     margin-bottom: 3px!important;

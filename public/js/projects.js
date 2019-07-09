@@ -20,10 +20,10 @@ let WPROJ = (() => {
                 }
                 if (readyproject[1] === 'on'){
                     SE.$('projects-conteiner').innerHTML += `
-                    <div class="projects-wrap projects-boks" id="progects-boks${i+1}">   
+                    <div class="projects-wrap projects-boks" id="projects-box${i+1}">   
                         <div class="skills-boks">
                             <p class="projects-name project-header" id="projects-name">${readyproject[2]}</p>
-                            <p class="projects-name project-body" id="projects-description">${readyproject[3]}</p>
+                            <div class="projects-name project-body" id="projects-description">${readyproject[3]}</div>
                         </div> 
                         <div class="skills-edit">
                             <i class='fas fa-share' id="projects-edit${i+1}" onclick="SE.redirect('${resdyurl}')"></i>
@@ -52,7 +52,7 @@ let WPROJ = (() => {
                     <div class="projects-wrap projects-boks" id="progects-boks${i+1}">   
                         <div class="skills-boks">
                             <p class="projects-name project-header" id="projects-name">${readyproject[2]}</p>
-                            <p class="projects-name project-body" id="projects-description">${readyproject[3]}</p>
+                            <div class="projects-name project-body" id="projects-description">${readyproject[3]}</div>
                         </div> 
                         <div class="skills-edit">
                             <i class='fas fa-share' id="projects-edit${i+1}" onclick="SE.redirect('${resdyurl}')"></i>
@@ -68,7 +68,7 @@ let WPROJ = (() => {
         let showEditProjectsList = (res) => {
             let parseObj = JSON.parse(res);
             SE.$('projects-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="projects-show-regform"></i>`;
-            SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' onclick="WSKILLS.showAddSkillsform()" id="projects-save-list"></i>`;
+            SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' onclick="WPROJ.saveAfterMove()" id="projects-save-list"></i>`;
             SE.$('save-projects-btnclose').innerHTML = `<i class='fas fa-times' id="close-skills-edit" onclick='SE.send({"userid":window.location.href}, "/showprojects", WPROJ.showProjectsList);'></i>`;
             SE.$('projects-conteiner').innerHTML = ``;
             for (let i = 0; i < parseObj.length; i++){
@@ -76,19 +76,20 @@ let WPROJ = (() => {
                 let readyskill = trimobj.split(", ");
                 let chackedskill = readyskill[1] === 'on' ? 'checked' : '';
                 SE.$('projects-conteiner').innerHTML += `            
-                <div class="skills-wrap" id="projects-box${i+1}" style="width:100%;">   
+                <div class="projects-wrap" id="projects-box${i+1}" style="width:100%;">   
                     <div class="skills-boks">
                         <div class="skills-text" style="padding:4px 0px;">
-                            <input type="checkbox" name="projects-show" class="skills-show" id="projects-show${i+1}" ${chackedskill} onchange="WPROJ.showORhidden(this)">
+                            <input type="checkbox" name="projects-show" class="projects-show" id="projects-show${i+1}" ${chackedskill} onchange="WPROJ.showORhidden(this)">
                             <p class="projects-name" id="projects-name${i+1}" style="width: 90%;">${readyskill[2]}</p>
                         </div>
                         <div class="skills-text">
-                            <p class="project-description" style="font-weight:normal;" id="projects-description${i+1}">${readyskill[3]}</p>
+                            <div class="projects-description" style="font-weight:normal;" id="projects-description${i+1}">${readyskill[3]}</div>
                         </div>
+                        <p id="project-url${i+1}" class="project-url" urlproj="${readyskill[4]}" style="margin:0px;"></p>
                     </div> 
                     <div class="skills-edit">
-                        <i class='far fa-edit' id="projects-edit${i+1}" onclick="WSKILLS.showEditForm(this)"></i>
-                        <i class='far fa-trash-alt' id="projects-del${i+1}" onclick="WSKILLS.showButtonConfirm(this)"></i>
+                        <i class='far fa-edit' id="projects-edit${i+1}" onclick="WPROJ.showEditForm(this)"></i>
+                        <i class='far fa-trash-alt' id="projects-del${i+1}" onclick="WPROJ.showButtonConfirm(this)"></i>
                     </div>   
                 </div>`;
             } 
@@ -100,7 +101,7 @@ let WPROJ = (() => {
             }        
         };
     
-    //for show add form to skills list
+    //for show add form to projects list
         let showAddProjectsform = () => {
             let getidconteiner = SE.$('projects-add-form');
             let projectdescription = SE.errorFormMessage().projectdescription;
@@ -136,7 +137,7 @@ let WPROJ = (() => {
         };
     
         
-    //for add skill to list
+    //for add project to list
         let addProjectstoList = () => {
             let kilkskills = document.getElementsByClassName('projects-name').length; 
             if (kilkskills <= 10){
@@ -167,7 +168,7 @@ let WPROJ = (() => {
         };
     
     
-    //for show or hidden skill in al user list
+    //for show or hidden project in projects list
         let showORhidden = (el) => {
             let obj;
             let numberskill = el.id.slice(13);
@@ -175,141 +176,153 @@ let WPROJ = (() => {
             SE.send(obj, '/showorhiddenproj', () => {SE.send(obj, '/showprojsingle', WPROJ.showEditProjSingle);});
         };
     
-    // //for show edit form for single skill
-    //     let showEditForm = (el) => {
-    //         let nameskill, numberskill, levelskill;
-    //         numberskill = el.id.slice(11);
-    //         nameskill = SE.$(`skills-name${numberskill}`).textContent;
-    //         levelskill = SE.$(`skills-range${numberskill}`).style.width.slice(0, SE.$(`skills-range${numberskill}`).style.width.length-1);
-    //         SE.$('skills-add-form').innerHTML = ``;
-    //         SE.$(`skills-box${numberskill}`).innerHTML = `
-    //         <div class="edit-skill-form" id="edit-skill-form${numberskill}">
-    //             <div class="edit-skill-body">
-    //                 <input type="text" name="edit-skill-name" class="edit-skill-name" id="edit-skill-name${numberskill}" value="${nameskill}"  maxlength="70">
-    //                 <div class="skills-line edit-skill-level2"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
-    //                 <input type="range" name="edit-skill-level" class="edit-skill-level" id="edit-skill-level${numberskill}" min="0" max="100" step="10" value="${levelskill}">
-    //             </div>
-    //             <div class="edit-skill-edit">
-    //                 <i class='far fa-save' onclick="WSKILLS.editSkill(${numberskill})"></i>
-    //                 <i class='fas fa-times' onclick="WSKILLS.showEditSkillSingleObj(${numberskill})"></i>
-    //             </div>
-    //         </div>
-    //         `;
-    //         WSKILLS.sortDisable();
-    //     };
+    //for show edit form for single project
+        let showEditForm = (el) => {
+            let nameproj, numberproj, descriptproj, projurl;
+            numberproj = el.id.slice(13);
+            nameproj = SE.$(`projects-name${numberproj}`).textContent;
+            descriptproj = SE.$(`projects-description${numberproj}`).innerHTML;
+            projurl = SE.$(`project-url${numberproj}`).getAttribute("urlproj");
+            SE.$('projects-add-form').innerHTML = ``;
+            SE.$('save-projects-savelist').innerHTML = ``;
+            SE.$(`projects-box${numberproj}`).innerHTML = `
+            <div class="edit-proj-form" id="edit-proj-form${numberproj}">
+                <div class="edit-proj-body">
+                    <input type="text" name="edit-proj-name" class="edit-proj-name" id="edit-proj-name${numberproj}" value="${nameproj}"  maxlength="80">
+                    <input type="text" name="edit-proj-url" class="edit-proj-name" id="edit-proj-url${numberproj}" value="${projurl}"  maxlength="100">
+                    <textarea name="edit-projdescript" class="edit-proj-name" id="edit-proj-descript${numberproj}" style="resize: none; min-height: 120px;" maxlength="200">${descriptproj}</textarea>
+                </div>
+                <div class="edit-skill-edit" style="width:20px;">
+                    <i class='far fa-save' onclick="WPROJ.editProjects(${numberproj})"></i>
+                    <i class='fas fa-times' onclick="WPROJ.showEditProjSingleObj(${numberproj})"></i>
+                </div>
+            </div>
+            `;
+            WPROJ.sortDisable();
+        };
     
-    // //for show single skill
-    //     let showEditSkillSingleObj = (val) => {
-    //         obj = {"number":val};
-    //         SE.send(obj, '/showskillsingle', WSKILLS.showEditSkillSingle);
-    //     };
-    // //for show single skill
-    //     let showEditSkillSingle = (res) => {
-    //         let name, chack, level, number, chackedskill, openeditform, opendelform, kilkskills;
-    //         let parseObj = JSON.parse(res);
-    //         nameval = `skill${parseObj.number}`;
-    //         name = parseObj.res[0][nameval];
-    //         chackval = `skillchack${parseObj.number}`;
-    //         chack = parseObj.res[0][chackval].toString();
-    //         chackedskill = chack === 'on' ? 'checked' : '';
-    //         levelval = `skilllevel${parseObj.number}`;
-    //         level = parseObj.res[0][levelval];
-    //         numberval = `skillnumber${parseObj.number}`;
-    //         number = parseObj.res[0][numberval];        
-    //         SE.$(`skills-box${number}`).innerHTML = `
-    //         <div class="skills-boks">
-    //             <div class="skills-text">
-    //                 <input type="checkbox" name="skills-show" class="skills-show" id="skills-show${parseObj.number}" ${chackedskill} onchange="WSKILLS.showORhidden(this)">
-    //                 <p class="skills-name" id="skills-name${parseObj.number}">${name}</p>
-    //             </div>
-    //             <div class="skills-range-wrap">
-    //                 <div class="skills-range" id="skills-range${parseObj.number}" style="width: ${level}%;"></div>
-    //             </div>
-    //         </div> 
-    //         <div class="skills-edit">
-    //             <i class='far fa-edit' id="skills-edit${parseObj.number}" onclick="WSKILLS.showEditForm(this)"></i>
-    //             <i class='far fa-trash-alt' id="skills-del${parseObj.number}" onclick="WSKILLS.showButtonConfirm(this)"></i>
-    //         </div>
-    //         `;      
-    //         opendelform = document.getElementsByClassName('skills-confirm-box').length;
-    //         openeditform = document.getElementsByClassName('edit-skill-form').length;
-    //         kilkskills = document.getElementsByClassName('skills-wrap').length;
-    //         if ((openeditform === 0) && (opendelform === 0) && (kilkskills < 10)){
-    //             SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
-    //         }
-    //         if ((openeditform === 0) && (opendelform === 0)){
-    //             WSKILLS.sortEnable();
-    //         }
-    //     };
+    //for show single project
+        let showEditProjSingleObj = (val) => {
+            obj = {"number":val};
+            SE.send(obj, '/showprojsingle', WPROJ.showEditProjSingle);
+        };
+
+    //for show single project
+        let showEditProjSingle = (res) => {
+            let name, nameval, chack, chackval, descript, descriptval, number, numberval, urlval, urlproj, chackedproj, openeditform, opendelform, kilkskills;
+            let parseObj = JSON.parse(res);
+            nameval = `projname${parseObj.number}`;
+            name = parseObj.res[0][nameval];
+            numberval = `projnumber${parseObj.number}`;
+            number = parseObj.res[0][numberval];            
+            descriptval = `projdescript${parseObj.number}`;
+            descript = parseObj.res[0][descriptval]; 
+            chackval = `projchack${parseObj.number}`;
+            chack = parseObj.res[0][chackval].toString();
+            chackedproj = chack === 'on' ? 'checked' : '';
+            urlval = `projurl${parseObj.number}`;
+            urlproj = parseObj.res[0][urlval];
+            SE.$(`projects-box${number}`).innerHTML = ` 
+            <div class="skills-boks">
+                <div class="skills-text" style="padding:4px 0px;">
+                    <input type="checkbox" name="projects-show" class="projects-show" id="projects-show${number}" ${chackedproj} onchange="WPROJ.showORhidden(this)">
+                    <p class="projects-name" id="projects-name${number}" style="width: 90%;">${name}</p>
+                </div>
+                <div class="skills-text">
+                    <div class="projects-description" style="font-weight:normal;" id="projects-description${number}">${descript}</div>
+                </div>
+                <p id="project-url${number}" class="project-url" urlproj="${urlproj}" style="margin:0px;"></p>
+            </div> 
+            <div class="skills-edit">
+                <i class='far fa-edit' id="projects-edit${number}" onclick="WPROJ.showEditForm(this)"></i>
+                <i class='far fa-trash-alt' id="projects-del${number}" onclick="WPROJ.showButtonConfirm(this)"></i>
+            </div>`;   
+            opendelform = document.getElementsByClassName('projects-confirm-box').length;
+            openeditform = document.getElementsByClassName('edit-proj-form').length;
+            kilkskills = document.getElementsByClassName('projects-wrap').length;
+            if ((openeditform === 0) && (opendelform === 0) && (kilkskills < 10)){
+                SE.$('projects-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="skills-show-regform"></i>`;
+            }
+            if ((openeditform === 0) && (opendelform === 0)){
+                WPROJ.sortEnable();
+                SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WPROJ.saveAfterMove()'></i>`;
+            }
+        };
     
-    // //for edit single skill 
-    //     let editSkill = (val) => {
-    //         let name, level, obj;
-    //         name = SE.$(`edit-skill-name${val}`).value;
-    //         level = SE.$(`edit-skill-level${val}`).value;
-    //         obj = {
-    //             "number":val,
-    //             "name":name,
-    //             "level":level,
-    //         };
-    //         SE.send(obj, '/editskill', WSKILLS.showEditSkillSingle);
-    //     };
+    //for edit single project 
+        let editProjects = (val) => {
+            let name, descript, urlproj, obj;
+            name = SE.$(`edit-proj-name${val}`).value;
+            descript = SE.$(`edit-proj-descript${val}`).value;
+            urlproj = SE.$(`edit-proj-url${val}`).value;
+            obj = {
+                "number":val,
+                "name":name,
+                "descript":descript,
+                "urlproj":urlproj
+            };
+            SE.send(obj, '/editproject', WPROJ.showEditProjSingle);
+        };
     
-    // //for show button for confirm delete
-    //     let showButtonConfirm = (el) => {
-    //         let opendelform, openeditform;
-    //         opendelform = document.getElementsByClassName('skills-confirm-box').length;
-    //         openeditform = document.getElementsByClassName('edit-skill-form').length;
-    //         if ((openeditform === 0) && (opendelform === 0)){
-    //             numberskill = el.id.slice(10);
-    //             SE.$('skills-add-form').innerHTML = ``;
-    //             SE.$(`skills-box${numberskill}`).innerHTML = `
-    //             <div class="skills-confirm-box">
-    //                 <div class="skills-confirm-icon">
-    //                     <i class='fas fa-trash-alt' onclick="WSKILLS.delSkillsfromList(${numberskill})"></i>
-    //                     <i class='fas fa-reply-all' style="transform: rotateY(180deg);" onclick="WSKILLS.showEditSkillSingleObj(${numberskill})"></i>
-    //                 </div>
-    //             </div>
-    //             `;
-    //             WSKILLS.sortDisable();
-    //         }
-    //     }
-    
-    // //for delete skill from list
-    //     let delSkillsfromList = (el) => {
-    //         let allnames, allchack, alllevel, opendelform, openeditform, kilkskills, obj, masnames = [], maschacks = [], maslevels = [];
-    //         if (el < 11){
-    //             SE.$(`skills-box${el}`).innerHTML = ``;
-    //             SE.$(`skills-box${el}`).style.display = 'none';
-    //         }
-    //         allnames = document.getElementsByClassName('skills-name');
-    //         allchack = document.getElementsByClassName('skills-show');
-    //         alllevel = document.getElementsByClassName('skills-range');
-    //         for (let i = 1; i <= allnames.length; i++){
-    //             masnames.push(allnames[i-1].textContent);
-    //             allchack[i-1].checked ? maschacks.push('on') : maschacks.push('off'); 
-    //             let level = alllevel[i-1].style.width.slice(0, alllevel[i-1].style.width.length-1);      
-    //             maslevels.push(level);
-    //         }
-    //         for (let i = 1; i <= 10; i++){
-    //             if (masnames.length !== 10 ){masnames.push(null);}           
-    //             if (maschacks.length !== 10 ){maschacks.push(null);}           
-    //             if (maslevels.length !== 10 ){maslevels.push(null);}           
-    //         }
-    //         obj = {
-    //             "name":masnames,
-    //             "chack":maschacks,
-    //             "level":maslevels
-    //         }
-    //         SE.send(obj, '/updateallskill', () => {SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showEditSkillsList);});
-    //         opendelform = document.getElementsByClassName('skills-confirm-box').length;
-    //         openeditform = document.getElementsByClassName('edit-skill-form').length;
-    //         kilkskills = document.getElementsByClassName('skills-wrap').length;
-    //         if ((openeditform === 0) && (opendelform === 0) && (kilkskills < 10)){
-    //             SE.$('skills-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WSKILLS.showAddSkillsform()" id="skills-show-regform"></i>`;
-    //         }
-    //     };
-    
+    //for show button for confirm delete
+        let showButtonConfirm = (el) => {
+            let opendelform, openeditform;            
+            opendelform = document.getElementsByClassName('projects-confirm-box').length;
+            openeditform = document.getElementsByClassName('edit-proj-form').length;
+            if ((openeditform === 0) && (opendelform === 0)){
+                numberskill = el.id.slice(12);
+                SE.$('save-projects-savelist').innerHTML = ``;
+                SE.$('projects-add-form').innerHTML = ``;
+                SE.$(`projects-box${numberskill}`).innerHTML = `
+                <div class="projects-confirm-box">
+                    <div class="proj-confirm-icon">
+                        <i class='fas fa-trash-alt' onclick="WPROJ.delProjfromList(${numberskill})"></i>
+                        <i class='fas fa-reply-all' style="transform: rotateY(180deg);" onclick="WPROJ.showEditProjSingleObj(${numberskill})"></i>
+                    </div>
+                </div>
+                `;
+                WPROJ.sortDisable();
+            }
+        } 
+
+    //for delete projects from list
+        let delProjfromList = (el) => {
+            let allnames, allchack, alldescript, allurl, opendelform, openeditform, kilkskills, obj, masnames = [], masdescripts = [], maschacks = [], masurls = [];
+            if (el < 11){
+                SE.$(`projects-box${el}`).innerHTML = ``;
+                SE.$(`projects-box${el}`).style.display = 'none';
+            }
+            allnames = document.getElementsByClassName('projects-name');
+            allchack = document.getElementsByClassName('projects-show');
+            alldescript = document.getElementsByClassName('projects-description');
+            allurl = document.getElementsByClassName('project-url');
+            for (let i = 1; i <= allnames.length; i++){
+                masnames.push(allnames[i-1].textContent);
+                allchack[i-1].checked ? maschacks.push('on') : maschacks.push('off'); 
+                masdescripts.push(alldescript[i-1].innerHTML);
+                masurls.push(allurl[i-1].getAttribute('urlproj'))
+            }
+            for (let i = 1; i <= 10; i++){
+                if (masnames.length !== 10 ){masnames.push(null);}           
+                if (maschacks.length !== 10 ){maschacks.push(null);}           
+                if (masdescripts.length !== 10 ){masdescripts.push(null);}           
+                if (masurls.length !== 10 ){masurls.push(null);}           
+            }
+            obj = {
+                "name":masnames,
+                "chack":maschacks,
+                "descript":masdescripts,
+                "urlproj":masurls
+            }
+            SE.send(obj, '/updateallprojects', () => {SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showEditProjectsList);});
+            opendelform = document.getElementsByClassName('projects-confirm-box').length;
+            openeditform = document.getElementsByClassName('edit-proj-form').length;
+            kilkskills = document.getElementsByClassName('projects-wrap').length;
+            if ((openeditform === 0) && (opendelform === 0) && (kilkskills < 10)){
+                SE.$('projects-add-form').innerHTML = `<i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="skills-show-regform"></i>`;
+            }
+        };  
+
     //for close add project form
     let closeProjectsAddForm = () => {
         WPROJ.sortEnable();
@@ -317,17 +330,21 @@ let WPROJ = (() => {
         SE.$('save-projects-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WPROJ.saveAfterMove()'></i>`;
     };
     
-    // //for save list after drag list
-    //     let saveAfterMove = () => {
-    //         let allnames;
-    //         allnames = document.getElementsByClassName('skills-wrap');
-    //         setTimeout(() => {
-    //             for (let i = 0; i < allnames.length; i++){
-    //                 let boxid = allnames[i].id.slice(10)-1;
-    //                 if (i !== boxid){WSKILLS.delSkillsfromList(12)}
-    //             }
-    //         }, 500);
-    //     };
+    //for save list after drag list
+        let saveAfterMove = () => {
+            let allnames;
+            allnames = document.getElementsByClassName('projects-wrap');
+            SE.$('save-sortlist-proj').innerHTML = SE.errorFormMessage().saved;         
+            setTimeout(() => {
+                for (let i = 0; i < allnames.length; i++){
+                    let boxid = allnames[i].id.slice(12)-1;
+                    if (i !== boxid){WPROJ.delProjfromList(92);
+                        break;
+                    }
+                }
+                SE.$('save-sortlist-proj').innerHTML = ''; 
+            }, 1000);
+        };
     
     //for enable sort list
         let sortEnable = () => {
@@ -340,15 +357,11 @@ let WPROJ = (() => {
         let sortDisable = () => {
             $( "#projects-conteiner" ).sortable("disable");
             return false;
-        }    
-     
-    
+        }        
+       
+        
+
     return {
-        // showEditSkillsList,
-        // delSkillsfromList,
-        // showAddSkillsform,
-        // closeSkillsAddForm,
-        // addSkillstoList,
         showProjectsList,
         showProjectsListAll,
         showEditProjectsList,
@@ -356,12 +369,13 @@ let WPROJ = (() => {
         closeProjectsAddForm,
         addProjectstoList,
         showORhidden,
-        // showEditForm,
-        // showEditSkillSingleObj,
-        // showEditSkillSingle,
-        // editSkill,
-        // showButtonConfirm,
-        // saveAfterMove,
+        showEditForm,
+        editProjects,
+        showEditProjSingleObj,
+        showEditProjSingle,
+        showButtonConfirm,
+        delProjfromList,
+        saveAfterMove,
         sortEnable,
         sortDisable 
     };

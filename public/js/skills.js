@@ -197,7 +197,6 @@ let WSKILLS = (() => {
         let showEditSkillSingle = (res) => {
             let name, chack, level, number, chackedskill, openeditform, opendelform, kilkskills;
             let parseObj = JSON.parse(res);
-            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             nameval = `skill${parseObj.number}`;
             name = parseObj.res[0][nameval];
             chackval = `skillchack${parseObj.number}`;
@@ -230,6 +229,7 @@ let WSKILLS = (() => {
             }
             if ((openeditform === 0) && (opendelform === 0)){
                 WSKILLS.sortEnable();
+                SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             }
         };
     
@@ -270,7 +270,6 @@ let WSKILLS = (() => {
     //for delete skill from list
         let delSkillsfromList = (el) => {
             let allnames, allchack, alllevel, opendelform, openeditform, kilkskills, obj, masnames = [], maschacks = [], maslevels = [];
-            SE.$('save-skills-savelist').innerHTML = `<i class='far fa-save' id="close-skills-edit" onclick='WSKILLS.saveAfterMove()'></i>`;
             if (el < 11){
                 SE.$(`skills-box${el}`).innerHTML = ``;
                 SE.$(`skills-box${el}`).style.display = 'none';

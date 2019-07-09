@@ -110,7 +110,7 @@ let editskill = (req, res) => {
     number = req.body.number;
     name = req.body.name;
     level = req.body.level;
-    let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skill${number} = '${name}',  skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
+    let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skill${number} = '${name}', skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sqlup, function (err, result) {
         if (err) {
