@@ -19,13 +19,13 @@
     </head>    
     
     <body style="background: hsl(0, 0%, 100%); font-family: 'PT Sans', sans-serif;">
-        <div class="form_body_wrap">
+        <div class="form_body_wrap" style="background: transparent;">
             <a href="/<%=userid %>" ><img src="./img/logo.png" class="logo-form"></a>
         <!--BUTTON TO BACK-->
             <a href="/<%=userid %>" style="color: #111111;"><p id="form_toback" class="form_toback"></p></a>
         <!--UPDATE FORM-->
             <p id="reg-form-send" param="up" class="reg-form-send" style="display: none;"></p>
-            <div class="form_wrap">
+            <div class="form_wrap" style="border: 7px solid transparent; border-radius: 30px 30px;">
                 <div class="tabs-form-head-wrap">
                     <p class="tabs-form-head-tab tab-active" id="tab-1" onclick="VW.clickTabs(this)"></p>
                     <p class="tabs-form-head-tab" id="tab-2" onclick="VW.clickTabs(this)"></p>
