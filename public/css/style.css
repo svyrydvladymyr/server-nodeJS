@@ -734,12 +734,24 @@ body{
 }
 .widget-chack-last{
     padding: 2px 4px; 
-    width: 130px;
+    width: 70px;
     text-align: left;
 }
+.widget-chack-last2{
+    padding: 2px 4px; 
+    width: 70px;
+    text-align: right;
+}
 .widget-head-text{
-    width: 30px;
-    text-align: center;
+    width: 50%;
+    text-align: right;
+    padding: 0px 10px;
+}
+.widget-head-text2{
+    width: 50%;
+    text-align: left;
+    padding: 0px 10px;
+
 }
 .widget-head-text-one{
     border-right: 1px solid #111111;
@@ -749,6 +761,7 @@ body{
 .skills-conteiner{
     width: 100%;
     margin: 0px;
+    position: relative;
     padding: 0px;
     display: flex;
     flex-wrap: wrap;
@@ -756,9 +769,22 @@ body{
 .skills-title{
     font-size: 14px;
     font-weight: bold;
-    margin: 0px 0px 12px 0px;
+    margin: 0px 0px 12px 10px;
 }
 .skills-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 3px 5px;
+    margin: 5px auto;
+    width: 48%;
+    min-width: 250px;
+    background: #f1f1f1;
+}
+.projects-wrap{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -792,6 +818,7 @@ body{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    max-width: 30px;
     width: 10%;
     height: 35px;
 }
@@ -840,8 +867,15 @@ body{
 .skills-edit-blok{
     display: flex;
     justify-content: space-between;
-    width: 45px;
+    width: 120px;
     height: 20px;
+}
+.skills-edit-blok p{
+    margin: 4px 5px 4px 0px;
+    font-size: 10px;
+    text-align: right;
+    width: 60px;
+    color: green;
 }
 .skills-edit-blok i{
     cursor: pointer;
@@ -888,6 +922,13 @@ body{
     height: 37px;
     /* outline: 1px solid red; */
 }
+.edit-proj-form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
 .edit-skill-body{
     display: flex;
     flex-direction: column;
@@ -895,12 +936,18 @@ body{
     height: 37px;
     /* outline: 1px solid red; */
 }
+.edit-proj-body{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 5px 0px;
+}
 .edit-skill-edit{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    width: 10%;
+    width: 20px;
     height: 37px;
     /* outline: 1px solid red; */
 }
@@ -914,6 +961,15 @@ body{
     padding: 1px 5px;
     border-radius: 4px;
     border: 1px solid #a7a7a7;
+    outline: 0!important;
+}
+.edit-proj-name{
+    width: 94%;
+    margin: 3px 3%;
+    padding: 5px 10px;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 2px solid #adadad;
     outline: 0!important;
 }
 .edit-skill-level{
@@ -943,11 +999,45 @@ body{
     cursor: pointer;
     font-size: 18px;
 }
+.proj-confirm-icon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 49px;
+}
+.proj-confirm-icon i{
+    cursor: pointer;
+    font-size: 18px;
+}
 .fa-trash-alt{
     transform: rotateY(180deg);
 }
-
-
+.project-header{
+    font-weight: bold;
+    font-size: 12px;
+    margin: 5px 0px;
+    text-align: justify;
+}
+.project-body{
+    margin: 5px 0px;
+    font-size: 12px;
+    text-align: justify;
+}
+.projects-boks{
+    width:100%; 
+    background:#ffffff; 
+    padding: 5px 10px;
+}
+.projects-description{
+    width: 100%;
+    font-size: 12px;
+    padding: 2px!important;
+    border-radius: 5px;
+    margin-bottom: 3px!important;
+    width: 100%;
+}
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------FOOTER MAIN PAGE---------------------------------------------------*/

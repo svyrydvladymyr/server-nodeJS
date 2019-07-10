@@ -3,60 +3,32 @@ let {clienttoken} = require('./service');
 let url = require('url');
 
 let showskills = (req, res) => {
-    let clientToken = clienttoken(req, res);
-    if ((clientToken === '') || (clientToken === undefined)){
-        let pageurl = url.parse(req.body.userid, true);
-        let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
-        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
-        con.query(sql, function (err, result) {
-            if (err) {
-                console.log("err", err);
-                res.send({"err": err});
-            } else {
-                if (result != ''){
-                    let num, chack, name, level, masskills = [], objSkills; 
-                    for (let i = 1; i <= 10; i++){                
-                        num = result[0][`skillnumber${i}`];
-                        chack = result[0][`skillchack${i}`];
-                        name = result[0][`skill${i}`];
-                        level = result[0][`skilllevel${i}`];
-                        if ((num !== null) && (chack !== null) && (name !== null) && (level !== null)){
-                            objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
-                            console.log("--skill--",objSkills);
-                            masskills.push(objSkills);    
-                        }
+    let pageurl = url.parse(req.body.userid, true);
+    let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
+    let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err": err});
+        } else {
+            if (result != ''){
+                let num, chack, name, level, masskills = [], objSkills; 
+                for (let i = 1; i <= 10; i++){                
+                    num = result[0][`skillnumber${i}`];
+                    chack = result[0][`skillchack${i}`];
+                    name = result[0][`skill${i}`];
+                    level = result[0][`skilllevel${i}`];
+                    if (((chack !== 'null') && (name !== 'null') && (level !== 'null')) && ((chack !== null) && (name !== null) && (level !== null))){
+                        objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
+                        console.log("--skill--",objSkills);
+                        masskills.push(objSkills);    
                     }
-                    res.send(masskills);       
-                }      
-            }        
-        });
-    } else {
-        let pageurl = url.parse(req.body.userid, true);
-        let sliceurl = pageurl.pathname.slice(1, pageurl.pathname.length);
-        let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
-        con.query(sql, function (err, result) {
-            if (err) {
-                console.log("err", err);
-                res.send({"err": err});
-            } else {
-                if (result != ''){
-                    let num, chack, name, level, masskills = [], objSkills; 
-                    for (let i = 1; i <= 10; i++){                
-                        num = result[0][`skillnumber${i}`];
-                        chack = result[0][`skillchack${i}`];
-                        name = result[0][`skill${i}`];
-                        level = result[0][`skilllevel${i}`];
-                        if (((chack !== 'null') && (name !== 'null') && (level !== 'null')) && ((chack !== null) && (name !== null) && (level !== null))){
-                            objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
-                            console.log("--skill--",objSkills);
-                            masskills.push(objSkills);    
-                        }
-                    }
-                    res.send(masskills);
                 }
-            }        
-        });
-    }
+                res.send(masskills);
+            }
+        }        
+    });
+
 }
 
 let addskills = (req, res) => {
@@ -138,7 +110,7 @@ let editskill = (req, res) => {
     number = req.body.number;
     name = req.body.name;
     level = req.body.level;
-    let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skill${number} = '${name}',  skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
+    let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skill${number} = '${name}', skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sqlup, function (err, result) {
         if (err) {

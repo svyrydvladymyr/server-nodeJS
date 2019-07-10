@@ -392,6 +392,23 @@ let VW = (() => {
             setTimeout(() => {SE.$('main-form-messagefour').innerHTML = '';},1000);
         }
     };  
+
+//add color to list widgets
+    let adColorToLists = (el) => {
+        if (SE.$(`side-sub-${el}`) === null) {
+            for (let i = 1; i <= 10; i++){
+                if (SE.$(`${el}-box${i}`)){
+                    SE.$(`${el}-box${i}`).style.backgroundColor = "#ffffff";
+                }
+            }
+        } else {
+            for (let i = 1; i <= 10; i++){
+                if (SE.$(`${el}-box${i}`)){
+                    SE.$(`${el}-box${i}`).style.backgroundColor = "#f1f1f1";
+                }
+            }
+        } 
+    }    
  
 
 return {
@@ -419,7 +436,8 @@ return {
     updateOther,
     updateAva,
     saveWidgets,
-    saveWidgetsMess
+    saveWidgetsMess,
+    adColorToLists
 
 };
 

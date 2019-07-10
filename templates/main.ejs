@@ -43,21 +43,70 @@
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
     <script src="./js/skills.js"></script>
+    <script src="./js/projects.js"></script>
     <% if(permissEdit === 'true') {%>
         <script>
             SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
+            SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsList);
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
         </script>
     <% } %>
+
+
+
+
+    <!--skills-->
     <% if((permissEdit === 'false') && (vskillsall === 'on') && (vskillsalltop === 'off')) {%>
         <script>
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsListForAll);
+            setTimeout(() => {
+                for (let i = 1; i <= 10; i++){
+                    if (SE.$(`skills-box${i}`)){
+                        SE.$(`skills-box${i}`).style.backgroundColor = "#f1f1f1";
+                    }
+                }
+            },500);
         </script>
     <% } %>
     <% if((permissEdit === 'false') && (vskillsall === 'off') && (vskillsalltop === 'on')) {%>
         <script>
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsListForAll);
+            setTimeout(() => {
+                for (let i = 1; i <= 10; i++){
+                    if (SE.$(`skills-box${i}`)){
+                        SE.$(`skills-box${i}`).style.backgroundColor = "#ffffff";
+                    }
+                }
+            },500);  
         </script>
     <% } %>
+
+    <!--projects-->
+    <% if((permissEdit === 'false') && (vprojectsall === 'on') && (vprojectsalltop === 'off')) {%>
+        <script>
+            SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsListAll);
+            setTimeout(() => {
+                for (let i = 1; i <= 10; i++){
+                    if (SE.$(`progects-boks${i}`)){
+                        SE.$(`progects-boks${i}`).style.backgroundColor = "#f1f1f1";
+                    }
+                }
+            },500);        
+        </script>
+    <% } %>
+    <% if((permissEdit === 'false') && (vprojectsall === 'off') && (vprojectsalltop === 'on')) {%>
+        <script>
+            SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsListAll);
+            setTimeout(() => {
+                for (let i = 1; i <= 10; i++){
+                    if (SE.$(`progects-boks${i}`)){
+                        SE.$(`progects-boks${i}`).style.backgroundColor = "#ffffff";
+                    }
+                }
+            },500);   
+        </script>
+    <% } %>
+
+
 
 </body>

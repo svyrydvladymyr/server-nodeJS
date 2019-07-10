@@ -1,5 +1,21 @@
+    <div class="skills-title-wrap">
+        <p id="widget-project-t" class="skills-title"></p>
+        <% if(permissEdit === 'true') {%>
+            <div class="skills-edit-blok">
+                <p id="save-sortlist-proj"></p>
+                <div id="save-projects-savelist"></div>
+                <div id="save-projects-btnclose"></div>
+                <div id="save-projects-btn"></div>
+                <i class='far fa-edit' id="edit-skills" onclick='SE.send({"userid":window.location.href}, "/showprojects", WPROJ.showEditProjectsList);'></i>
+            </div>        
+        <% } %>  
+    </div>
+
+    <div class="skills-conteiner drag-container" id="projects-conteiner">        
+    </div>   
+
     <% if(permissEdit === 'true') {%>
-        <p id="town"><%=name %> <%=surname %></p>
+        <div id="projects-add-form">
+            <i class='fas fa-plus skills-add' onclick="WPROJ.showAddProjectsform()" id="projects-show-regform"></i>
+        </div>
     <% } %>  
-    <p>fghfgh</p>
-    <p>fghfghf</p>
