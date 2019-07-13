@@ -109,7 +109,7 @@ let WSKILLS = (() => {
                         <p>${skillchack}</p>
                         <input type="checkbox" name="skillchack" id="skillchack">
                         <p style="width:100%;">${skillsname}</p>
-                        <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70">
+                        <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70" oninput="SE.checkWidgetsVal(this)">
                         <p>${skillslevel}</p>
                         <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
                         <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
@@ -174,7 +174,7 @@ let WSKILLS = (() => {
             SE.$(`skills-box${numberskill}`).innerHTML = `
             <div class="edit-skill-form" id="edit-skill-form${numberskill}">
                 <div class="edit-skill-body">
-                    <input type="text" name="edit-skill-name" class="edit-skill-name" id="edit-skill-name${numberskill}" value="${nameskill}"  maxlength="70">
+                    <input type="text" name="edit-skill-name" class="edit-skill-name" id="edit-skill-name${numberskill}" value="${nameskill}"  maxlength="70" oninput="SE.checkWidgetsVal(this)">
                     <div class="skills-line edit-skill-level2"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
                     <input type="range" name="edit-skill-level" class="edit-skill-level" id="edit-skill-level${numberskill}" min="0" max="100" step="10" value="${levelskill}">
                 </div>

@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken} = require('./service');
+let {clienttoken, checOnTrueVal} = require('./service');
 let url = require('url');
 
 let showprojects = (req, res) => {
@@ -29,17 +29,19 @@ let showprojects = (req, res) => {
             }
         }        
     });
-
 }
 
 let addprojects = (req, res) => {
-    let name, chack, descript, number, projurl;
+    let name, nameObj, chack, descript, descriptObj, number, projurl, projurlObj;
     let clientToken = clienttoken(req, res);
-    name = req.body.name;
+    nameObj = req.body.name;
+    name = checOnTrueVal(nameObj);
     chack = req.body.chacked;
-    descript = req.body.descript; 
+    descriptObj = req.body.descript; 
+    descript = checOnTrueVal(descriptObj);
     number = req.body.number;
-    projurl = req.body.projurl;
+    projurlObj = req.body.projurl;
+    projurl = checOnTrueVal(projurlObj);
     let sql = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${number} = '${number}', projchack${number} = '${chack}', projname${number} = '${name}',  projdescript${number} = '${descript}',  projurl${number} = '${projurl}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
         if (err) {
@@ -107,12 +109,15 @@ let showprojsingle = (req, res) => {
 }
 
 let editproject = (req, res) => {
-    let number, name, descript, urlproj;
+    let number,  name, nameObj, descript, descriptObj, urlproj, urlprojObj;
     let clientToken = clienttoken(req, res);
     number = req.body.number;
-    name = req.body.name;
-    descript = req.body.descript;
-    urlproj = req.body.urlproj;
+    nameObj = req.body.name;
+    name = checOnTrueVal(nameObj);
+    descriptObj = req.body.descript;
+    descript = checOnTrueVal(descriptObj);
+    urlprojObj = req.body.urlproj;
+    urlproj = checOnTrueVal(urlprojObj);
     let sqlup = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${number} = '${number}', projname${number} = '${name}',  projdescript${number} = '${descript}',  projurl${number} = '${urlproj}'  WHERE U.token = '${clientToken}' `;
     let sql = `SELECT S.projnumber${number}, S.projchack${number}, S.projname${number},  S.projdescript${number},  S.projurl${number} FROM users U INNER JOIN userprojects S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sqlup, function (err, result) {
@@ -137,9 +142,9 @@ let editproject = (req, res) => {
 let updateallprojects = (req, res) => {
     let name, descript, chack, urlproj;
     let clientToken = clienttoken(req, res);
-    name = req.body.name;
-    descript = req.body.descript;
     chack = req.body.chack;
+    name = req.body.name;    
+    descript = req.body.descript;
     urlproj = req.body.urlproj;
     for (let i = 1; i <= 10; i++){
         let sqlup = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${i} = '${i}', projname${i} = '${name[i-1]}',  projchack${i} = '${chack[i-1]}',  projdescript${i} = '${descript[i-1]}',  projurl${i} = '${urlproj[i-1]}'  WHERE U.token = '${clientToken}' `;
@@ -156,7 +161,6 @@ let updateallprojects = (req, res) => {
         });
     }  
 }
-
 
 module.exports = {
     showprojects,

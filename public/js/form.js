@@ -75,6 +75,10 @@ window.onload = function(){
         SE.$("reg-profession").addEventListener("change", () => {SE.checkCut("reg-profession", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
         SE.$("reg-profession").addEventListener("input", () => {SE.checkTest("reg-profession", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
         SE.$("reg-profession").addEventListener("change", SE.messageSendErrorClear);
+    //education-----------------------------------------------------------------------------------
+        SE.$("reg-education").addEventListener("change", () => {SE.checkCut("reg-education", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
+        SE.$("reg-education").addEventListener("input", () => {SE.checkTest("reg-education", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
+        SE.$("reg-education").addEventListener("change", SE.messageSendErrorClear);
     //file------------------------------------------------------------------------------------
         SE.$("reg-file").addEventListener("change", () => {SE.checkCut("reg-file", "")});
         SE.$("reg-file").addEventListener("change", SE.messageSendErrorClear);

@@ -14,6 +14,7 @@ let sql = `CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,
                                 country VARCHAR(40),
                                 town VARCHAR(40), 
                                 profession VARCHAR(100),                            
+                                education VARCHAR(100),                            
                                 registrdata DATE,                            
                                 updateuser DATE                            
                                 )`;            

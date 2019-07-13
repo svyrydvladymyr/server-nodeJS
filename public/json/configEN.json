@@ -53,6 +53,7 @@
         "reg-label-tel":"PHONE NUMBER",          
         "reg-label-message":"MESSENGER NUMBER",          
         "reg-label-profession":"PROFESION",
+        "reg-label-education":"EDUCATION",
         "reg-label-file":"PHOTO",
         "reg-form-send":"REGISTER",          
         "reg-up-send1":"SAVE",          
@@ -74,6 +75,8 @@
         "about-other-projects":"Other project developer",  
         "about-arnika":"<b>The site for keeping records of settlements at the recreation center Arnika</b>",  
         "about-ifnmu":"<b>The main site of the Ivano-Frankivsk National University and other university websites</b>",  
+        "email-proj":"Email project: <b>6b616c6369666572@gmail.com</b>",
+        "email-autor":"Email developer: <b>svyrydvladymyr@gmail.com</b>",
         "about-other":"<b>Other sites</b>"    
 
 

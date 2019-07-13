@@ -120,11 +120,11 @@ let WPROJ = (() => {
                         <p>${projectchack}</p>
                         <input type="checkbox" name="projectchack" id="projectchack">
                         <p style="width:100%;">${projectname}</p>
-                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80">
+                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80" oninput="SE.checkWidgetsVal(this)">
                         <p style="width:100%;">${projecturl}</p>
-                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100">
+                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100" oninput="SE.checkWidgetsVal(this)">
                         <p>${projectdescription}</p>
-                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;"></textarea>
+                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;" oninput="SE.checkWidgetsVal(this)"></textarea>
                         <div class="skills-button">
                             <i class='fas fa-times' id="close-skills" onclick="WPROJ.closeProjectsAddForm()"></i>
                             <i class='far fa-save' id="save-skills" onclick="WPROJ.addProjectstoList()"></i>          
@@ -181,16 +181,16 @@ let WPROJ = (() => {
             let nameproj, numberproj, descriptproj, projurl;
             numberproj = el.id.slice(13);
             nameproj = SE.$(`projects-name${numberproj}`).textContent;
-            descriptproj = SE.$(`projects-description${numberproj}`).innerHTML;
+            descriptproj = SE.$(`projects-description${numberproj}`).textContent;
             projurl = SE.$(`project-url${numberproj}`).getAttribute("urlproj");
             SE.$('projects-add-form').innerHTML = ``;
             SE.$('save-projects-savelist').innerHTML = ``;
             SE.$(`projects-box${numberproj}`).innerHTML = `
             <div class="edit-proj-form" id="edit-proj-form${numberproj}">
                 <div class="edit-proj-body">
-                    <input type="text" name="edit-proj-name" class="edit-proj-name" id="edit-proj-name${numberproj}" value="${nameproj}"  maxlength="80">
-                    <input type="text" name="edit-proj-url" class="edit-proj-name" id="edit-proj-url${numberproj}" value="${projurl}"  maxlength="100">
-                    <textarea name="edit-projdescript" class="edit-proj-name" id="edit-proj-descript${numberproj}" style="resize: none; min-height: 120px;" maxlength="200">${descriptproj}</textarea>
+                    <input type="text" name="edit-proj-name" class="edit-proj-name" id="edit-proj-name${numberproj}" value="${nameproj}"  maxlength="80" oninput="SE.checkWidgetsVal(this)">
+                    <input type="text" name="edit-proj-url" class="edit-proj-name" id="edit-proj-url${numberproj}" value="${projurl}"  maxlength="100" oninput="SE.checkWidgetsVal(this)">
+                    <textarea name="edit-projdescript" class="edit-proj-name" id="edit-proj-descript${numberproj}" style="resize: none; min-height: 120px;" maxlength="200" oninput="SE.checkWidgetsVal(this)">${descriptproj}</textarea>
                 </div>
                 <div class="edit-skill-edit" style="width:20px;">
                     <i class='far fa-save' onclick="WPROJ.editProjects(${numberproj})"></i>
@@ -299,7 +299,7 @@ let WPROJ = (() => {
             for (let i = 1; i <= allnames.length; i++){
                 masnames.push(allnames[i-1].textContent);
                 allchack[i-1].checked ? maschacks.push('on') : maschacks.push('off'); 
-                masdescripts.push(alldescript[i-1].innerHTML);
+                masdescripts.push(alldescript[i-1].textContent);
                 masurls.push(allurl[i-1].getAttribute('urlproj'))
             }
             for (let i = 1; i <= 10; i++){

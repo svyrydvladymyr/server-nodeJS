@@ -1,4 +1,22 @@
-<!--ARTICLE-->   
+<% if((permissEdit === 'true') && ((vblogme === 'on') || (vblogall === 'on'))) {%>
     <div class="article-wrap">
+        <% if(permissEdit === 'true') {%>
+            <%- include("./articleeditbox.ejs") %>  
+        <% } %>
+        <!-- <object width="100%" height="500px" data="./cssproj/volodymyrsvyryd-kQnOheDxIc/index.html"></object> -->
+        <!-- <embed  width="100%" height="500px" src="./cssproj/volodymyrsvyryd-kQnOheDxIc/"> -->
+        <embed  width="100%" height="500px" src="">
+    </div> 
+<% } %>
 
-    </div>   
+<% if((permissEdit === 'false') && ((vblogme === 'on') || (vblogall === 'on'))) {%>
+    <div class="article-wrap">
+        <% if(permissEdit === 'true') {%>
+            <%- include("./articleeditbox.ejs") %>  
+        <% } %>
+        <!-- <object width="100%" height="500px" data="./cssproj/volodymyrsvyryd-kQnOheDxIc/index.html"></object> -->
+        <!-- <embed  width="100%" height="500px" src="./cssproj/volodymyrsvyryd-kQnOheDxIc/"> -->
+        <embed  width="100%" height="500px" src="">
+    </div> 
+<% } %>
+  

@@ -24,8 +24,7 @@ window.onload = function(){
     SE.$("password").addEventListener("change", () => {SE.checkAutorisation("password", "[^a-zA-Z0-9]", "^[a-zA-Z0-9]+$")});
     SE.$("password").addEventListener("input", () => {SE.checkTest("password", "^[a-zA-Z0-9]+$")}); 
     
-
-        
+  
 
 
 

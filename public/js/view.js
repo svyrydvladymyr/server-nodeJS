@@ -293,7 +293,7 @@ let VW = (() => {
         } else if (parseObj.res === 1){
             SE.$('main-form-messageone').innerHTML = `${SE.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messageone').innerHTML = '';},3000);
+            setTimeout(() => {SE.$('main-form-messageone').innerHTML = '';},2000);
             SE.$('reg-login-up').value = '';
             SE.$('reg-oldpassword').value = '';
             SE.$('reg-password').value = '';
@@ -317,7 +317,7 @@ let VW = (() => {
         } else if (parseObj.res === 1){
             SE.$('main-form-messagetwo').innerHTML = `${SE.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},3000);
+            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},2000);
             if (SE.$('reg-name-mess').classList.contains('reg-message-true')){
                 SE.$('reg-name-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){
@@ -341,13 +341,15 @@ let VW = (() => {
         } else if (parseObj.res === 1){
             SE.$('main-form-messagethree').innerHTML = `${SE.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},3000);
+            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},2000);
             if (SE.$('reg-country-mess').classList.contains('reg-message-true')){
                 SE.$('reg-country-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-town-mess').classList.contains('reg-message-true')){
                 SE.$('reg-town-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-profession-mess').classList.contains('reg-message-true')){
                 SE.$('reg-profession-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-education-mess').classList.contains('reg-message-true')){
+                SE.$('reg-education-mess').classList.remove('reg-message-true');}
         }
     };  
     
@@ -372,13 +374,14 @@ let VW = (() => {
 
 //save settings widgets
     let saveWidgets = (val, val2) => {
-        let obj;
-        if (SE.$(val).checked){
-            obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}; 
-        }  
-        if (SE.$(val2).checked){
-            obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"};  
-        }  
+        let obj, blogme, blogall;
+        if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
+        if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
+        if ((val === 'vblogall') || (val === 'vblogme')){
+            SE.$(val).checked ? blogme = 'on' : blogme = 'off';
+            SE.$(val2).checked ? blogall = 'on' : blogall = 'off';
+            obj = {"el":"vblogme", "value":blogme, "el2":"vblogall", "value2":blogall};  
+        }
         SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
     };  
     

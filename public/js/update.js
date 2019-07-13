@@ -59,6 +59,9 @@ window.onload = function(){
     //profession-----------------------------------------------------------------------------------
         SE.$("reg-profession").addEventListener("change", () => {SE.checkCut("reg-profession", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
         SE.$("reg-profession").addEventListener("input", () => {SE.checkTest("reg-profession", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
+    //profession-----------------------------------------------------------------------------------
+        SE.$("reg-education").addEventListener("change", () => {SE.checkCut("reg-education", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
+        SE.$("reg-education").addEventListener("input", () => {SE.checkTest("reg-education", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
     //send-----------------------------------------------------------------------------------
         SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
 

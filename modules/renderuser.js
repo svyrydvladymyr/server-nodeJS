@@ -54,7 +54,6 @@ let renderuser = (req, res) => {
                 })            
             } else {
             //if a user is found, rendering the user's page    
-                console.log("good", result);
                 let userObj = result;
                 //get and set ava url    
                 let avaurl;
@@ -83,6 +82,7 @@ let renderuser = (req, res) => {
                                 country: `${userObj[0].country}`,
                                 town: `${userObj[0].town}`,
                                 profession: `${userObj[0].profession}`,
+                                education: `${userObj[0].education}`,
                                 ava: `${avaurl}`,
                                 avasettings: `${userObj[0].avasettings}`,
                                 permissAccess: `${permissionAccess}`,
@@ -124,6 +124,7 @@ let renderuser = (req, res) => {
                                 country: `${userObj[0].country}`,
                                 town: `${userObj[0].town}`,
                                 profession: `${userObj[0].profession}`,
+                                education: `${userObj[0].education}`,
                                 ava: `${avaurl}`,
                                 avasettings: `${userObj[0].avasettings}`,
                                 permissAccess: `${permissionAccess}`,

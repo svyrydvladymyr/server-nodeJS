@@ -51,7 +51,7 @@
                 </div>
             </div>
             <% } %>
-            <% if(birthday !== '') {%>
+            <% if((birthday !== '') && (birthday !== 'null')) {%>
             <div class="info-blok">
                 <i class="fas fa-calendar-alt"></i>
                 <div class="info-blok-text">
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <% } %>
-            <% if(phone !== '') {%>
+            <% if((phone !== '') && (phone !== 'null')) {%>
             <div class="info-blok">
                 <i class="fas fa-phone-volume"></i>
                 <div class="info-blok-text">
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <% } %>
-            <% if(message !== '') {%>
+            <% if((message !== '') && (message !== 'null')) {%>
             <div class="info-blok">
                 <i class="fas fa-comment"></i>
                 <div class="info-blok-text">
@@ -83,11 +83,19 @@
                 </div>
             </div>
             <% } %>
-            <% if(profession !== '') {%>
+            <% if((profession !== '') && (profession !== 'null')) {%>
             <div class="info-blok">
                 <i class="fas fa-laptop"></i>
                 <div class="info-blok-text">
                     <p id="profession"><%=profession %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if((education !== '') && (education !== 'null')) {%>
+            <div class="info-blok">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="info-blok-text">
+                    <p id="education"><%=education %></p>
                 </div>
             </div>
             <% } %>
