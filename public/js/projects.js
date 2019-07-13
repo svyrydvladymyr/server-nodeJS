@@ -343,7 +343,7 @@ let WPROJ = (() => {
                     }
                 }
                 SE.$('save-sortlist-proj').innerHTML = ''; 
-            }, 1000);
+            }, 500);
         };
     
     //for enable sort list

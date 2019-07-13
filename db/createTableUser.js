@@ -1,7 +1,8 @@
 let con = require('./connectToDB').con;
 let sql = `CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,
                                 userid VARCHAR(100) NOT NULL UNIQUE,
-                                token VARCHAR(100),
+                                token VARCHAR(30),
+                                active VARCHAR(20),
                                 login VARCHAR(40) NOT NULL UNIQUE, 
                                 password VARCHAR(40) NOT NULL,
                                 name VARCHAR(80) NOT NULL, 

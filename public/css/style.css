@@ -212,7 +212,7 @@ body{
     transition: 0.4s;
 }
 
-.emodge{
+.emodgeee{
     width: 100%;
     max-width: 200px;
     margin: 50px auto;
@@ -221,7 +221,7 @@ body{
     opacity: 0.8;
 }
 
-.emodge img{
+.emodgeee img{
     width: 100%;
 }
 
@@ -347,7 +347,7 @@ body{
     cursor: pointer;
     position: absolute;
     bottom: 9%;
-    right: 4%;
+    right: 5%;
     font-size: 12px;
     margin: 0px;
     color: #ffffff;

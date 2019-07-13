@@ -10,7 +10,7 @@ let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, upda
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
-let {autorisation, exit} = require('./modules/autorisation');
+let {autorisation, exit, sendemail} = require('./modules/autorisation');
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
@@ -35,6 +35,7 @@ app.post('/showprojsingle', (req, res) => {showprojsingle(req, res)});
 app.post('/editproject', (req, res) => {editproject(req, res)});
 app.post('/updateallprojects', (req, res) => {updateallprojects(req, res)});
 
+app.post('/sendemail', (req, res) => {sendemail(req, res)});
 app.post('/widgetsett', (req, res) => {widgetsett(req, res)});
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});
 app.post('/updatemain', (req, res) => {updatemain(req, res)});

@@ -413,6 +413,13 @@ let VW = (() => {
         } 
     }    
  
+// animation after send email
+    let animationAfterSend = (res) => {    
+        SE.$('send-email').style.width = "0px";
+        setTimeout(() => {
+            SE.$('send-email').style.width = "60px";
+        }, 50000);
+    };
 
 return {
     buttonLogin,
@@ -440,8 +447,8 @@ return {
     updateAva,
     saveWidgets,
     saveWidgetsMess,
-    adColorToLists
-
+    adColorToLists,
+    animationAfterSend
 };
 
 })();

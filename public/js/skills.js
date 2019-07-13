@@ -322,7 +322,7 @@ let WSKILLS = (() => {
                     }
                 }
                 SE.$('save-sortlist').innerHTML = '';       
-            }, 1000);
+            }, 500);
         };
     
     //for enable sort list

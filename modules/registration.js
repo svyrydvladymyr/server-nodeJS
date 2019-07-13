@@ -48,18 +48,25 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "education", "Bad education!", parseObjUsers, res);     
-    let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, education, registrdata) 
-               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}')`;
+    let verifyToken = token(10);    
+    let hostname = req.headers.host; 
+    let verifyUrl = `${hostname}/verify/${prUs.userid}${verifyToken}`;
+    let tokenId = token(20);
+    console.log("--verifyToken--", verifyToken); 
+    console.log("--verifyUrl--", verifyUrl);
+    console.log("--clientToken--", tokenId); 
+    let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, education, registrdata, active, token) 
+               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}', '${verifyToken}', '${tokenId}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
     let sqlskills = `INSERT INTO userskills (userid) VALUES ('${prUs.userid}')`;
     let sqlproj = `INSERT INTO userprojects (userid) VALUES ('${prUs.userid}')`;
-    var mailOptions = {
+    let mailOptions = {
         from: '6b616c6369666572@gmail.com',
         to: `${prUs.email}`,
         subject: 'Verify Email Address',
         html: `<h2>Hello!</h2>
                 <p>Please click the button below to verify your email address.</p>
-                <a href="https://www.google.com/">
+                <a href="${verifyUrl}">
                 <p style = "margin: 20px auto;
                             cursor:pointer;
                             padding: 6px;
@@ -115,6 +122,12 @@ let registrationUsers = (req, res) => {
                 }
             });
             console.log("--result-registr--", result);
+            let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+            let param = {
+                maxAge: '', 
+                path: '/', 
+                signed:true}
+            cookies.set('sessionisdd', `${tokenId}`, param); 
             res.send(result);
         }
     });  

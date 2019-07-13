@@ -4,23 +4,25 @@
     <%- include("./parts/head.ejs") %>
 </head>
 <body>
-    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news')) {%>
-        <% if(permissUserid !== '') {%>
-            <script>       
-                window.location.href = '<%=permissUserid %>';                   
-            </script>
-        <% } %>
-    <% } %>
 <!--------HEADER--------->
     <%- include("./parts/header.ejs") %>
 <!-------SETTINGS-------->    
     <%- include("./parts/settings.ejs") %>
 <!-------NOT FIND-------->
-    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news')) {%>
+    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (activee == 'active')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
-    <div class="emodge">
-        <img src="./img/smile.png">
+    <div class="emodgeee">
+        <img src="img/smile.png" alt="EMODG">
     </div>
+    <% } %>
+
+    <% if((onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (activee != 'active')) {%>
+    <div style="max-width: 700px; margin: 100px auto 50px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
+        <p id="verify-mess"></p>
+        <p id="verify-mess-repeat"></p>
+        <img src="img/mail.png" alt="MAIL" style="width: 60px; margin:10px auto; cursor:pointer; transition: 1s;" id="send-email" onclick="SE.send({}, '/sendemail', VW.animationAfterSend)">
+    </div>    
+
     <% } %>
 <!--------ABOUTUS---------> 
     <% if(onindex === 'aboutus') {%>
