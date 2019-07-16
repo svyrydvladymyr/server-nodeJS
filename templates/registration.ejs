@@ -137,9 +137,17 @@
                 <div class="form_blok">
                     <div class="form_label"><p id="reg-label-profession"></p></div>
                     <div class="form_input">
-                        <input type="text" name="reg-profession"  id="reg-profession" maxlength="30">
+                        <input type="text" name="reg-profession"  id="reg-profession" maxlength="40">
                     </div>
                     <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
+                </div> 
+                <!--education-->
+                <div class="form_blok">
+                    <div class="form_label"><p id="reg-label-education"></p></div>
+                    <div class="form_input">
+                        <input type="text" name="reg-education"  id="reg-education" maxlength="90">
+                    </div>
+                    <div class="form_message"><p id="reg-education-mess" class="reg-message"></p></div>   
                 </div> 
                 <!--file-->   
                 <div class="form_blok">
@@ -202,7 +210,7 @@
         </div>   
         
 <!--FOOTER-->
-    <div class="footer-main-info reg-footer" style="margin-top: -120px; background: transparent; border-top: 2px solid transparent; box-shadow: 0px -2px 3px transparent; color:#ffffff;">
+    <div class="footer-main-info reg-footer" style="background: transparent; border-top: 2px solid transparent; box-shadow: 0px -2px 3px transparent; color:#ffffff;">
         <%- include("./parts/footer.ejs") %>
     </div>
 

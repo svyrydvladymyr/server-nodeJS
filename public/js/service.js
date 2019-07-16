@@ -168,6 +168,7 @@ let SE = (() => {
             let projectdescription = "Вкажіть опис проекту!";
             let projectname = "Вкажіть назву проекту!";
             let projecturl = "Вкажіть посилання на проект!";
+            let aftersendemail = "Лист для підтвердження надіслано на вашу пошту!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -197,7 +198,8 @@ let SE = (() => {
                 skillsemptyname,
                 projectname,
                 projectdescription,
-                projecturl
+                projecturl,
+                aftersendemail
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -229,6 +231,7 @@ let SE = (() => {
             let projectdescription = "Specify the description of the project!";
             let projectname = "Specify the name of the project!";
             let projecturl = "Specify a reference to the project!";
+            let aftersendemail = "A confirmation letter has been sent to your mail!";
             return {
                 notCunEmpty,
                 notCorectNum,
@@ -258,21 +261,22 @@ let SE = (() => {
                 skillsemptyname,
                 projectname,
                 projectdescription,
-                projecturl
+                projecturl,
+                aftersendemail
             };
         }
     };    
     
 //clone phone number
-let clonePhoneNumber = () => {
-    let phoneNum = SE.$('reg-tel').value;
-    if ((phoneNum !== '') && (phoneNum.length === 10) && (/^[0-9]+$/g.test(phoneNum))){
-        SE.$('reg-message_cod').value = SE.$('reg-tel_cod').value;
-        SE.$('reg-message').value = SE.$('reg-tel').value;
-        SE.iconON('reg-message', "true", '');
-        SE.readyToSend('reg-message', SE.$(`reg-message_cod`).options[SE.$(`reg-message_cod`).selectedIndex].text + SE.$('reg-message').value); 
-    }        
-}; 
+    let clonePhoneNumber = () => {
+        let phoneNum = SE.$('reg-tel').value;
+        if ((phoneNum !== '') && (phoneNum.length === 10) && (/^[0-9]+$/g.test(phoneNum))){
+            SE.$('reg-message_cod').value = SE.$('reg-tel_cod').value;
+            SE.$('reg-message').value = SE.$('reg-tel').value;
+            SE.iconON('reg-message', "true", '');
+            SE.readyToSend('reg-message', SE.$(`reg-message_cod`).options[SE.$(`reg-message_cod`).selectedIndex].text + SE.$('reg-message').value); 
+        }        
+    }; 
 
 //phone and message exclusion
     let checkPhoneAndMessInput = (idF) => {
@@ -736,6 +740,7 @@ let registerUserToDB = function(){
             "country":regPrototype.regcountry, 
             "town":regPrototype.regtown, 
             "profession":regPrototype.regprofession, 
+            "education":regPrototype.regeducation, 
             "registrdata":regPrototype.registr,
             "avasettings":regPrototype.avasettings};
         SE.send(obj, "/registrationUser", VW.registerUserToDB);
@@ -804,15 +809,22 @@ let registerUserToDB = function(){
         } else if (val === 'o'){
             let obj = {"country":regPrototype.regcountry, 
                         "town":regPrototype.regtown, 
-                        "profession":regPrototype.regprofession};
-            if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '')){
+                        "profession":regPrototype.regprofession,
+                        "education":regPrototype.regeducation};
+            if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '') || (regPrototype.regeducation !== '')){
                 SE.send(obj, '/updateother', VW.updateOther);                
             }
         }
-
     };    
 
-
+//chack widget values    
+    let checkWidgetsVal = (el) => {
+        let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.:/\,іІїЇ /\n]";
+        let newReg = new RegExp(reg, "gi");
+        let input = SE.$(el.id).value;
+        let res = input.replace(newReg, '');
+        SE.$(el.id).value = res;    
+    }
 
     return {
         $, 
@@ -850,6 +862,7 @@ let registerUserToDB = function(){
         send,
         showUsersList,
         saveSett,
-        updateAvaToDB
+        updateAvaToDB,
+        checkWidgetsVal
     };
 })();    

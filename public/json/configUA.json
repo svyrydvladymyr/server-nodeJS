@@ -32,6 +32,8 @@
     "tab-2":"Загальне",
     "tab-3":"Інше",
     "tab-4":"Віджет",
+    "verify-mess":"Для підтвердження реєстрації перейдіть на свою пошту",
+    "verify-mess-repeat":"Щоб надіслати листа ще раз, натисніть кнопку",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  
@@ -53,6 +55,7 @@
     "reg-label-tel":"НОМЕР ТЕЛЕФОНУ",          
     "reg-label-message":"НОМЕР МЕСЕНДЖЕРА",          
     "reg-label-profession":"ПРОФЕСІЯ",          
+    "reg-label-education":"ОСВІТА",          
     "reg-label-file":"ФОТО",          
     "reg-form-send":"ЗАРЕЄСТРУВАТИСЯ",    
     "reg-up-send1":"ЗБЕРЕГТИ",       
@@ -75,6 +78,8 @@
     "about-other-projects":"Інші проекти розробника",  
     "about-arnika":"<b>Сайт для ведення обліку заселення на базі відпочинку Арніка</b>",  
     "about-ifnmu":"<b>Головний сайт Івано-Франківського Національного університету та інші сайти університету</b>",  
+    "email-proj":"Email проекту: <b>6b616c6369666572@gmail.com</b>",
+    "email-autor":"Email розробника: <b>svyrydvladymyr@gmail.com</b>",
     "about-other":"<b>Інші сайти</b>"
 }
 

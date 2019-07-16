@@ -69,6 +69,7 @@ let updaterender = (req, res) => {
                 country: country,
                 town: town,
                 profession: result[0].profession,
+                education: result[0].education,
                 vskillsall: result[0].vskillsall,
                 vskillsme: result[0].vskillsme,
                 vprojectsall: result[0].vprojectsall,
@@ -180,11 +181,13 @@ let updateother = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "education", "Bad education!", parseObjUsers, res); 
     console.log("--ready-obj--", prUs);
     prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
     prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;
     prUs.profession !== '' ? professionR = ` profession = '${prUs.profession}',` : professionR = ``;
-    sql = `UPDATE users SET ${countryR}${townR}${professionR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
+    prUs.education !== '' ? educationR = ` education = '${prUs.education}',` : educationR = ``;
+    sql = `UPDATE users SET ${countryR}${townR}${professionR}${educationR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -268,12 +271,10 @@ let widgetsett = (req, res) => {
     let clientToken = clienttoken(req, res);
     widget = req.body.el;
     values = req.body.value;
-    console.log("--widget--",widget);
-    console.log("--value--",values);
+    console.log("--widget--", widget, "--value--",values);
     widget2 = req.body.el2;
     values2 = req.body.value2;
-    console.log("--widget--",widget2);
-    console.log("--value--",values2);
+    console.log("--widget--", widget2, "--value--", values2);
     let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}', ${widget2} = '${values2}'`;
     con.query(sql, function (err, result) {
         if (err) {

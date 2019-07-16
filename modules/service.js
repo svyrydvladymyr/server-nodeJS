@@ -21,9 +21,16 @@ let clienttoken = (req, res) => {
     return clientToken;
 };
 
+let checOnTrueVal = (el) => {
+    let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.:/\,іІїЇ /\n]";
+    let newReg = new RegExp(reg, "gi");    
+    let res = el.replace(newReg, '');
+    return res;    
+}
 
 module.exports = {
     translit,
     token,
-    clienttoken
+    clienttoken,
+    checOnTrueVal
 };

@@ -17,6 +17,7 @@ let CLEAR = (function(){
         regProto.prototype.regcountry = "";
         regProto.prototype.regtown = "";
         regProto.prototype.regprofession = "";
+        regProto.prototype.regeducation = "";
         regProto.prototype.registr = "";
     };
 

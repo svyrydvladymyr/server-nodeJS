@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken} = require('./service');
+let {clienttoken, checOnTrueVal} = require('./service');
 let url = require('url');
 
 let showskills = (req, res) => {
@@ -32,9 +32,10 @@ let showskills = (req, res) => {
 }
 
 let addskills = (req, res) => {
-    let name, chack, level, number;
+    let name, nameObj, chack, level, number;
     let clientToken = clienttoken(req, res);
-    name = req.body.name;
+    nameObj = req.body.name;
+    name = checOnTrueVal(nameObj);
     chack = req.body.chacked;
     level = req.body.level; 
     number = req.body.number;
@@ -105,10 +106,11 @@ let showskillsingle = (req, res) => {
 }
 
 let editskill = (req, res) => {
-    let number, name, level;
+    let number, name, nameObj, level;
     let clientToken = clienttoken(req, res);
     number = req.body.number;
-    name = req.body.name;
+    nameObj = req.body.name;
+    name = checOnTrueVal(nameObj);
     level = req.body.level;
     let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skill${number} = '${name}', skilllevel${number} = '${level}'  WHERE U.token = '${clientToken}' `;
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    

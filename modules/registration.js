@@ -2,6 +2,20 @@ let con = require('../db/connectToDB').con;
 let multer  = require('multer')
 let {translit, token, clienttoken} = require('./service');
 let Cookies = require('cookies');
+let nodemailer = require('nodemailer');
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: false,
+    auth: {
+        user: '6b616c6369666572@gmail.com',
+        pass: 'kalcifer1988'
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});  
 
 class protoUsers{constructor(){ }}
 let prUs = new protoUsers();
@@ -14,12 +28,11 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
             console.log("--bad-input--", mess);            
             res.status(404).send(mess);
         }
-    } else {
-        prUs[val] = '';
-    }
+    } else { prUs[val] = '';}
 };
 
-let registrationUsers = (req, res) => {     
+let registrationUsers = (req, res) => {
+    let settproof, skilsproof, projectproof;     
     let parseObjUsers = req.body;
     console.log("--client-registr-obj--", parseObjUsers);    
     prUs.userid = translit(`${parseObjUsers.surname}${parseObjUsers.name}`).toLowerCase() + '-' + token(10);
@@ -35,10 +48,41 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
-    let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, registrdata) 
-               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.registrdata}')`;
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "education", "Bad education!", parseObjUsers, res);     
+    let verifyToken = token(10);    
+    let hostname = req.headers.host; 
+    let verifyUrl = `${hostname}/verify?userid=${prUs.userid}&verifycod=${verifyToken}`;
+    let tokenId = token(20);
+    console.log("--verifyToken--", verifyToken); 
+    console.log("--verifyUrl--", verifyUrl);
+    console.log("--clientToken--", tokenId); 
+    let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, education, registrdata, active, token) 
+               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}', '${verifyToken}', '${tokenId}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
     let sqlskills = `INSERT INTO userskills (userid) VALUES ('${prUs.userid}')`;
+    let sqlproj = `INSERT INTO userprojects (userid) VALUES ('${prUs.userid}')`;
+    let mailOptions = {
+        from: '6b616c6369666572@gmail.com',
+        to: `${prUs.email}`,
+        subject: 'Verify Email Address',
+        html: `<h2>Hello!</h2>
+                <p>Please click the button below to verify your email address.</p>
+                <a href="${verifyUrl}">
+                <p style = "margin: 20px auto;
+                            cursor:pointer;
+                            padding: 6px;
+                            border-radius: 7px;
+                            border: 1px solid #5fa7e0;
+                            width: 140px;
+                            color: #ffffff;
+                            font-weight: bold;
+                            text-align: center;
+                            text-decoration: underline;
+                            box-shadow: 0px 0px 3px #111111;
+                            background: #76c9ef;">
+                Verify Email Address</p></a>
+                <p>If you did not create an account, no further action is required.</p>`
+    };
     con.query(sql, function (err, result) {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY'){
@@ -59,27 +103,40 @@ let registrationUsers = (req, res) => {
             }
         } else {
             con.query(sqlsett, function (err, result) {
-                if (err) {
+                if (err) { 
                     console.log("--err--", err);
                     res.send({"error":err});   
                 } else {
-                    console.log("--result-registr-settings--", result);
-                    // res.send(result);
+                    console.log("--result-registr-settings--", result.affectedRows);
+                    settproof = result.affectedRows;
                 }
             });
             con.query(sqlskills, function (err, result) {
-                if (err) {
-                    console.log("--err--", err);
-                    res.send({"error":err});   
+                err ? console.log("--err--", err) : console.log("--result-registr-skills--", result.affectedRows);
+            });
+            con.query(sqlproj, function (err, result) {
+                err ? console.log("--err--", err) : console.log("--result-registr-projects--", result.affectedRows);
+            });               
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                    res.send({"error":error});
                 } else {
-                    console.log("--result-registr-skills--", result);
-                    // res.send(result);
+                    console.log('Email sent: ' + info.response);
                 }
             });
-            console.log("--result-registr--", result);
+            console.log("--result-registr--", result.affectedRows);
+            console.log("----------------------------------------------",settproof);
+            
+            let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+            let param = {
+                maxAge: '', 
+                path: '/', 
+                signed:true}
+            cookies.set('sessionisdd', `${tokenId}`, param);
             res.send(result);
         }
-    });          
+    });  
 };
 
 //if registration true add ava to DB
@@ -114,7 +171,7 @@ let addAvatoDB = (req, res) => {
                             console.log("err", err);
                             res.send(err);
                         }
-                        console.log(result.affectedRows + " foto updated");
+                        console.log(result.affectedRows + " settings foto updated");
                         // res.send({"result":result, "userid":prUs.userid});
                     }); 
                     console.log(result.affectedRows + " foto updated");
@@ -143,8 +200,7 @@ let savesett = (req, res) => {
             res.send(err);
         }
         console.log("--upd-sett-userid--", result[0].userid);  
-        let sqlupt = `UPDATE userssettings 
-        SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
+        let sqlupt = `UPDATE userssettings SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
         con.query(sqlupt, function (err, result) {
             if (err) {
                 console.log("err", err);
