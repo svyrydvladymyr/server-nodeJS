@@ -26,7 +26,7 @@ let autorisation = (req, res) => {
             console.log("err", err);
             res.send({"error":err});
         } else {
-            console.log("--result-autoriz--",result.changedRows);
+            console.log("--result-autoriz---->> ",result.changedRows);
             if (result.changedRows === 0){
                 let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                 let param = {
@@ -42,7 +42,7 @@ let autorisation = (req, res) => {
                         console.log("err", err);
                         res.send({"error":err});
                     } else {
-                        console.log("--result-userSett--", result);
+                        console.log("--result-userSett---->> ", result);
                         let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                         let param = {
                             maxAge: '', 
@@ -75,10 +75,10 @@ let sendemail = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--get-info-for-email--", result);
+            console.log("--get-info-for-email---->> ", result);
             let hostname = req.headers.host; 
             let verifyUrl = `${hostname}/verify?userid=${result[0].userid}&verifycod=${result[0].active}`;
-            console.log("--verify-url--", verifyUrl);            
+            console.log("--verify-url---->> ", verifyUrl);            
             let mailOptions = {
                 from: '6b616c6369666572@gmail.com',
                 to: `${result[0].email}`,
@@ -106,7 +106,7 @@ let sendemail = (req, res) => {
                     console.log(error);
                     res.send({"error":error});
                 } else {
-                    console.log('--Email-sent:--' + info.response);                  
+                    console.log('--Email-sent---->> ' + info.response);                  
                     res.send({"res":info.response});
                 }
             });
@@ -122,8 +122,8 @@ let verifyuser = (req, res) => {
     cod = verifyobj.verifycod;
     userid = verifyobj.userid;
     clientToken = clienttoken(req, res);
-    console.log("--verify-cod--",cod);
-    console.log("--verify-user--",userid);
+    console.log("--verify-cod---->> ",cod);
+    console.log("--verify-user---->> ",userid);
     let sql = `UPDATE users SET active = 'active' WHERE token = '${clientToken}' AND userid = '${userid}' AND active = '${cod}'`;
     con.query(sql, function (err, result) {
         if (err) {

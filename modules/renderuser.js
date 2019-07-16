@@ -25,7 +25,7 @@ let renderuser = (req, res) => {
                         if (result == ''){
                             permissionAccess = false;
                             permissionEdit = false;
-                            console.log('--render-user--', result[0]);                            
+                            console.log('--render-user---->> ', result[0]);                            
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
                                 permissEdit: `${permissionEdit}`,
@@ -41,7 +41,7 @@ let renderuser = (req, res) => {
                         //if the user is not found but is authorized    
                             (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
                             (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
-                            console.log('--render-user--', result[0]);                     
+                            console.log('--render-user---->> ', result[0]);                     
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
                                 permissEdit: `${permissionEdit}`,
@@ -74,7 +74,7 @@ let renderuser = (req, res) => {
                             permissionEdit = false;         
                             permissionAccess = false;
                             //render user page and send variables   
-                            console.log('--render-user--', result[0]);                     
+                            console.log('--render-user---->> ', result[0]);                     
                             res.render(`main`, {
                                 title: `${userObj[0].surname} ${userObj[0].name}`,
                                 name: `${userObj[0].name}`,
@@ -117,7 +117,7 @@ let renderuser = (req, res) => {
                                 permissionAccess = true : 
                                 permissionAccess = false;
                                 //render user page and send variables  
-                                console.log('--render-user--', result[0]);        
+                                console.log('--render-user---->> ', result[0]);        
                                 res.render(`main`, {
                                     title: `${userObj[0].surname} ${userObj[0].name}`,
                                     name: `${userObj[0].name}`,
@@ -154,7 +154,7 @@ let renderuser = (req, res) => {
                                 permissionAccess = true : 
                                 permissionAccess = false;
                                 //render user page and send variables   
-                                console.log('--render-user--', result[0]);                     
+                                console.log('--render-user---->> ', result[0]);                     
                                 res.render(`main`, {
                                     title: `${userObj[0].surname} ${userObj[0].name}`,
                                     name: `${userObj[0].name}`,
@@ -188,7 +188,7 @@ let renderuser = (req, res) => {
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
                                 (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
-                                console.log('--render-user--', result[0]);                     
+                                console.log('--render-user---->> ', result[0]);                     
                                 res.render(`nouser`, {
                                     permissAccess: `${permissionAccess}`,
                                     permissEdit: `${permissionEdit}`,

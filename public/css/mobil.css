@@ -191,7 +191,7 @@
     .set{width: 98%}
     .set_close{width: 98%}
     .login-message-autoris {
-        bottom: -10%;
+        bottom: -5%;
     }
 }
 
@@ -199,13 +199,13 @@
     .set{width: 97.5%}
     .set_close{width: 97.5%}    
     .login-message-autoris {
-        bottom: -10%;
+        bottom: -5%;
         margin: 0px 0px 0px 10px;
     }
 }
 @media screen and (max-width:400px){
     .login-message-autoris {
-        bottom: -10%;
+        bottom: -5%;
         margin: 0px 0px 0px 10px;
     }
 }

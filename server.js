@@ -1,6 +1,3 @@
-let http = require('http');
-let path = require('path');
-let fs = require('fs');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
@@ -10,12 +7,13 @@ let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, upda
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let searchUser = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
+let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
 
-app.use((req, res, next) => {console.log(`${req.method} --> ${req.url}`); next();});
+app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
@@ -50,12 +48,7 @@ app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.post('/exit', (req, res) => {exit(req, res)});
 
-app.use((req, res, next) => {
-    let logs = `IP: ${req.ip}  TIME: ${new Date().toLocaleString()}  URL: ${req.url}\n`;
-    //make for all date logs
-    fs.appendFile('./log/access-log.txt', logs, (err) => {console.log(err)});
-    next();
-});
+app.use((req, res, next) => {accessLog(req, res, next)});
 app.use('/:userid', (req, res) => {renderuser(req, res)});
 app.use('/', (req, res, next) => {res.redirect('index'); next()});
 

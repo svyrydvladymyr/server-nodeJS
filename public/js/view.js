@@ -425,14 +425,15 @@ let VW = (() => {
             }, 500);
         }
     };
+    
 //  animation after send email spiner
     let animationAfterSendSpiner = () => {   
         SE.$('email-spinet').innerHTML = `<i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 25px;"></i>`;
     };
+
 // redirect after verify email 
     let redirectAfterVerify = (res) => {   
         let parseObj = JSON.parse(res).res; 
-        console.log(parseObj);
         setTimeout(() => {
             SE.redirect(parseObj);
         }, 2000);

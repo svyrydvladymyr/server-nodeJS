@@ -53,9 +53,9 @@ let registrationUsers = (req, res) => {
     let hostname = req.headers.host; 
     let verifyUrl = `${hostname}/verify?userid=${prUs.userid}&verifycod=${verifyToken}`;
     let tokenId = token(20);
-    console.log("--verifyToken--", verifyToken); 
-    console.log("--verifyUrl--", verifyUrl);
-    console.log("--clientToken--", tokenId); 
+    console.log("--verifyToken---->> ", verifyToken); 
+    console.log("--verifyUrl---->>", verifyUrl);
+    console.log("--clientToken---->>", tokenId); 
     let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, education, registrdata, active, token) 
                VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}', '${verifyToken}', '${tokenId}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
@@ -107,27 +107,24 @@ let registrationUsers = (req, res) => {
                     console.log("--err--", err);
                     res.send({"error":err});   
                 } else {
-                    console.log("--result-registr-settings--", result.affectedRows);
-                    settproof = result.affectedRows;
+                    console.log("--result-registr-settings---->> ", result.affectedRows);
                 }
             });
             con.query(sqlskills, function (err, result) {
-                err ? console.log("--err--", err) : console.log("--result-registr-skills--", result.affectedRows);
+                err ? console.log("--err--", err) : console.log("--result-registr-skills---->> ", result.affectedRows);
             });
             con.query(sqlproj, function (err, result) {
-                err ? console.log("--err--", err) : console.log("--result-registr-projects--", result.affectedRows);
+                err ? console.log("--err--", err) : console.log("--result-registr-projects---->> ", result.affectedRows);
             });               
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
                     res.send({"error":error});
                 } else {
-                    console.log('Email sent: ' + info.response);
+                    console.log('--Email-sent---->> ' + info.response);
                 }
             });
-            console.log("--result-registr--", result.affectedRows);
-            console.log("----------------------------------------------",settproof);
-            
+            console.log("--result-registr-user---->> ", result.affectedRows);            
             let cookies = new Cookies(req, res, {"keys":['volodymyr']});
             let param = {
                 maxAge: '', 
@@ -171,12 +168,10 @@ let addAvatoDB = (req, res) => {
                             console.log("err", err);
                             res.send(err);
                         }
-                        console.log(result.affectedRows + " settings foto updated");
+                        console.log("--settings-foto-updated---->> ",result.affectedRows);
                         // res.send({"result":result, "userid":prUs.userid});
                     }); 
-                    console.log(result.affectedRows + " foto updated");
-                    let cookies = new Cookies(req, res);
-                    cookies.set('sessionisdd', ``, {maxAge: -1, path: '/'}); 
+                    console.log("--foto-updated---->> ",result.affectedRows);
                     res.send({"result":result, "userid":prUs.userid});
                 }); 
             } else {
@@ -199,14 +194,14 @@ let savesett = (req, res) => {
             console.log("err", err);
             res.send(err);
         }
-        console.log("--upd-sett-userid--", result[0].userid);  
+        console.log("--upd-sett-userid---->> ", result[0].userid);  
         let sqlupt = `UPDATE userssettings SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
         con.query(sqlupt, function (err, result) {
             if (err) {
                 console.log("err", err);
                 res.send(err);
             }
-            console.log(result.changedRows ," settings updated");
+            console.log("--settings-updated---->> ",result.changedRows);
             res.send({});
         }); 
     }); 

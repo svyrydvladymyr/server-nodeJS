@@ -79,9 +79,17 @@
         "about-ifnmu":"<b>The main site of the Ivano-Frankivsk National University and other university websites</b>",  
         "email-proj":"Email project: <b>6b616c6369666572@gmail.com</b>",
         "email-autor":"Email developer: <b>svyrydvladymyr@gmail.com</b>",
-        "about-other":"<b>Other sites</b>"    
+        "about-other":"<b>Other sites</b>",    
 
-
+"__news-page":"news text",
+        "news-one":"Start of project development. The visual structure of the site is made.",  
+        "news-two":"A visual adjustment unit is made. And also the ability to store them in localStorage.",  
+        "news-three":"User registration form completed. The whole registration and authorization scheme has been developed. And also an email confirmation.",  
+        "news-four":"Added search field for all registered users.",  
+        "news-five":"Added the ability to edit user data, and also change the alert. You can now configure the visual styles not only locally but also in the database.",  
+        "news-six":"The skill unit is developed. It can add a list of skills and their level that you think you have.",  
+        "news-seven":"Completion of project block development. It can add a list of projects and a description of them. If it's internet projects then you can add links to them."  
+    
       
 }
 

@@ -12,7 +12,7 @@ let searchUser = (req, res) => {
             console.log("err", err);
             res.send({"error":err});
         } else {
-            console.log("--result-seurch--", result);
+            console.log("--result-seurch---->> ", result);
             res.send(result);
         }
     });

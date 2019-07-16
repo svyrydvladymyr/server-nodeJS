@@ -21,7 +21,7 @@ let showprojects = (req, res) => {
                     prurl = result[0][`projurl${i}`];
                     if (((name !== 'null') && (descript !== 'null') && (prurl !== 'null')) && ((name !== null) && (descript !== null) && (prurl !== null))){
                         objProj = `[${num}, ${chack}, ${name}, ${descript}, ${prurl}]`;
-                        console.log("--projects--",objProj);
+                        console.log("--projects---->> ",objProj);
                         masskills.push(objProj);    
                     }
                 }
@@ -55,20 +55,20 @@ let addprojects = (req, res) => {
                         console.log("--err--", err);
                         res.send({"error":err});   
                     } else {
-                        console.log("--result-registr-project--", result.affectedRows);
+                        console.log("--result-registr-project---->> ", result.affectedRows);
                         con.query(sql, function (err, result) {
                             if (err) {
                                 console.log("err", err);
                                 res.send({"err": err});
                             } else {
-                                console.log("--project-added--", result.affectedRows);
+                                console.log("--project-added---->> ", result.affectedRows);
                                 res.send(result);
                             }
                         });
                     }            
                 });
             } else {
-                console.log("--skill-project--", result.affectedRows);
+                console.log("--project-add---->> ", result.affectedRows);
                 res.send(result);
             }
         }        
@@ -86,7 +86,7 @@ let showorhiddenproj = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--project-updates--", result.affectedRows);
+            console.log("--project-updates---->> ", result.affectedRows);
             res.send({"res":result.affectedRows});
         }        
     });
@@ -102,7 +102,7 @@ let showprojsingle = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--projects-get--", result);
+            console.log("--projects-get---->> ", result);
             res.send({"res":result, "number":number});
         }        
     });
@@ -125,13 +125,13 @@ let editproject = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--project-updates--", result.affectedRows);
+            console.log("--project-updates---->> ", result.affectedRows);
             con.query(sql, function (err, result) {
                 if (err) {
                     console.log("err", err);
                     res.send({"err": err});
                 } else {
-                    console.log("--project-get--", result);
+                    console.log("--project-get---->> ", result);
                     res.send({"res":result, "number":number});
                 }        
             });
@@ -153,7 +153,7 @@ let updateallprojects = (req, res) => {
                 console.log("err", err);
                 res.send({"err": err});
             } else {
-                console.log("--up-projects--", result.affectedRows);
+                console.log("--up-projects---->> ", result.affectedRows);
                 if (i === 10){
                     res.send({"res":"project-del"});
                 }

@@ -691,7 +691,7 @@ let SE = (() => {
                     SE.$("main-form-message").innerHTML = '';
                     CLEAR.clearRegProto();
                     SE.redirect(`/${response.data.userid}`);
-                }, 2000);
+                }, 1000);
             }
         })
         .catch(function (error) {

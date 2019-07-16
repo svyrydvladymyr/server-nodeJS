@@ -20,7 +20,7 @@ let showskills = (req, res) => {
                     level = result[0][`skilllevel${i}`];
                     if (((chack !== 'null') && (name !== 'null') && (level !== 'null')) && ((chack !== null) && (name !== null) && (level !== null))){
                         objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
-                        console.log("--skill--",objSkills);
+                        console.log("--skill---->> ",objSkills);
                         masskills.push(objSkills);    
                     }
                 }
@@ -52,20 +52,20 @@ let addskills = (req, res) => {
                         console.log("--err--", err);
                         res.send({"error":err});   
                     } else {
-                        console.log("--result-registr-skills--", result.affectedRows);
+                        console.log("--result-registr-skills---->> ", result.affectedRows);
                         con.query(sql, function (err, result) {
                             if (err) {
                                 console.log("err", err);
                                 res.send({"err": err});
                             } else {
-                                console.log("--skill-added--", result.affectedRows);
+                                console.log("--skill-added---->> ", result.affectedRows);
                                 res.send(result);
                             }
                         });
                     }            
                 });
             } else {
-                console.log("--skill-added--", result.affectedRows);
+                console.log("--skill-added---->> ", result.affectedRows);
                 res.send(result);
             }
         }        
@@ -83,7 +83,7 @@ let showorhiddenskills = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--skill-updates--", result.affectedRows);
+            console.log("--skill-updates---->> ", result.affectedRows);
             res.send({"res":result.affectedRows});
         }        
     });
@@ -99,7 +99,7 @@ let showskillsingle = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--skill-get--", result);
+            console.log("--skill-get---->> ", result);
             res.send({"res":result, "number":number});
         }        
     });
@@ -119,13 +119,13 @@ let editskill = (req, res) => {
             console.log("err", err);
             res.send({"err": err});
         } else {
-            console.log("--skill-updates--", result.affectedRows);
+            console.log("--skill-updates---->> ", result.affectedRows);
             con.query(sql, function (err, result) {
                 if (err) {
                     console.log("err", err);
                     res.send({"err": err});
                 } else {
-                    console.log("--skill-get--", result);
+                    console.log("--skill-get---->> ", result);
                     res.send({"res":result, "number":number});
                 }        
             });
@@ -146,7 +146,7 @@ let updateallskill = (req, res) => {
                 console.log("err", err);
                 res.send({"err": err});
             } else {
-                console.log("--up-skill--", result.affectedRows);
+                console.log("--up-skill---->> ", result.affectedRows);
                 if (i ===10){
                     res.send({"res":"skill-del"});
                 }
