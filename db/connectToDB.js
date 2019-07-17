@@ -15,7 +15,7 @@ let con, db_config = {
     driver: "mysql",
     host: "localhost",
     user: "root",
-    password: "kalcifer1988",
+    password: "",
     charset: 'utf8',
     collation: 'utf8_unicode_ci',
     prefix: '',

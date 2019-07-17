@@ -271,6 +271,16 @@
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-blog-t"></span>
                                     </div>
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-chack-last2" id="widget-friend-t2"></span>
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendall', 'vfriendme')" <% if(vfriendall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-friend-t"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div> 

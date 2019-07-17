@@ -1,5 +1,5 @@
 let con = require('./connectToDB').con;
-let sql = `CREATE TABLE friends_bbbbbbbbbb_05vyK7ZObz (id INT AUTO_INCREMENT PRIMARY KEY,
+let sql = `CREATE TABLE friends_volodymyrsvyryd_kQnOheDxIc (id INT AUTO_INCREMENT PRIMARY KEY,
                                 userid VARCHAR(100),
                                 friendid VARCHAR(100) NOT NULL UNIQUE,
                                 friendvisit VARCHAR(10),

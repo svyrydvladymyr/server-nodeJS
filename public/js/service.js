@@ -172,7 +172,9 @@ let SE = (() => {
             let yourarefriends = "Ви вже друзі!";
             let friendsdel = "Видалити";
             let friendsadd = "Додати";
+            let friendsmess = "Повідомлення";
             return {
+                friendsmess,
                 friendsdel,
                 friendsadd,
                 notCunEmpty,
@@ -241,7 +243,9 @@ let SE = (() => {
             let yourarefriends = "You are friends!";
             let friendsdel = "Remove";
             let friendsadd = "Add";
+            let friendsmess = "Message";
             return {
+                friendsmess,
                 friendsdel,
                 friendsadd,
                 notCunEmpty,

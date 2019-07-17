@@ -38,9 +38,14 @@
             <% } %>
 
                 <!--message-->
-            <% if(permissionFriend === 'true') {%>    
-                <div class='add-to-friends'>
-                    <div class="add-to-friends-wrap"><i class='far fa-comments' onclick=""><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess"></b></i></div>
+            <% if((permissionFriend === 'true') && (permissionisFriend === 'false')) {%>    
+                <div class='add-to-friends-mess' id="mess-friend-wrap">
+                </div>            
+            <% } %>
+                <!--message-show-->
+            <% if((permissionFriend === 'true') && (permissionisFriend === 'true')) {%>    
+                <div class='add-to-friends-mess' id="mess-friend-wrap">
+                    <div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess"></b></i></div>
                 </div>            
             <% } %>
                 <!--add-->
@@ -51,8 +56,8 @@
             <% } %>
                 <!--del-->
             <% if((permissionFriend === 'true') && (permissionisFriend === 'true')) {%>   
-                <div class='add-to-friends' id="del-friend-wrap">             
-                    <div class="add-to-friends-wrap"  onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
+                <div class='add-to-friends' id="add-friend-wrap">             
+                    <div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
                 </div>
             <% } %>
 

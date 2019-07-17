@@ -382,6 +382,11 @@ let VW = (() => {
             SE.$(val2).checked ? blogall = 'on' : blogall = 'off';
             obj = {"el":"vblogme", "value":blogme, "el2":"vblogall", "value2":blogall};  
         }
+        if ((val === 'vfriendme') || (val === 'vfriendall')){
+            SE.$(val).checked ? friendme = 'on' : friendme = 'off';
+            SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
+            obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
+        }
         SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
     };  
     
@@ -447,28 +452,47 @@ let VW = (() => {
             setTimeout(() => {
                 SE.$('mess-about-add-friend').innerHTML = '';
             }, 2000);
-        } 
-        if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+        } else if (parseObj.res === 1){
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+            SE.$('mess-friend-wrap').innerHTML = `<div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess">${SE.errorFormMessage().friendsmess}</b></i></div>`;
         } 
     };
 
-//change button after add to friends
+//show confirm button for delete
+    let confirmDelFriend = () => {   
+        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap add-to-friends-wrap2">
+        <i class='far fa-trash-alt' onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)"></i>
+        <i class='fas fa-times' onclick="VW.closeConfirmDelFriend()"></i>
+        </div>`;
+    };
+
+//close confirm button for delete
+    let closeConfirmDelFriend = () => {   
+        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+    };
+
+//change button after del from friends
     let delFromFriends = (res) => {   
         let parseObj = JSON.parse(res); 
-        console.log(parseObj);      
         if (parseObj.res === 0){
             SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
             setTimeout(() => {
                 SE.$('mess-about-add-friend').innerHTML = '';
             }, 2000);
-        } 
-        if (parseObj.res === 1){
-            SE.$('del-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="SE.send({}, '/addtofriends', VW.addToFriends)" ><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${SE.errorFormMessage().friendsadd}</b></i></div>`;
-        } 
-        if (parseObj.err){
+        } else if (parseObj.res === 1){
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', VW.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${SE.errorFormMessage().friendsadd}</b></i></div>`;
+            SE.$('mess-friend-wrap').innerHTML = ``;
+        } else if (parseObj.err){
             console.log(parseObj.err);            
         }
+    };
+
+//---------------------------------
+    let inwork = () => {   
+        SE.$('mess-about-add-friend').innerHTML = `В розробці (Under development)`;
+        setTimeout(() => {
+            SE.$('mess-about-add-friend').innerHTML = '';
+        }, 2000);
     };
 
 return {
@@ -502,7 +526,10 @@ return {
     animationAfterSendSpiner,
     redirectAfterVerify,
     addToFriends,
-    delFromFriends
+    delFromFriends,
+    confirmDelFriend,
+    closeConfirmDelFriend,
+    inwork
 };
 
 })();

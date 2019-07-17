@@ -80,6 +80,8 @@ let updaterender = (req, res) => {
                 vprojectsmetop: result[0].vprojectsmetop,
                 vblogall: result[0].vblogall,
                 vblogme: result[0].vblogme,
+                vfriendme: result[0].vfriendme,
+                vfriendall: result[0].vfriendall,
             });
         }); 
     }

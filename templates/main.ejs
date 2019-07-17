@@ -12,12 +12,21 @@
         <div class="side">
             <%- include("./parts/info.ejs") %>
 
+            <% if((permissEdit === 'true') && (vfriendme === 'on')) {%>
+                <%- include("./parts/friendside.ejs") %>
+            <% } %>
+            <% if((permissEdit === 'false') && (vfriendall === 'on')) {%>
+                <%- include("./parts/friendside.ejs") %>
+            <% } %>
+
+
             <% if((permissEdit === 'true') && (vskillsme === 'on') && (vskillsmetop === 'off')) {%>
                 <%- include("./parts/skillsside.ejs") %> 
             <% } %>
             <% if((permissEdit === 'false') && (vskillsall === 'on') && (vskillsalltop === 'off')) {%>
                 <%- include("./parts/skillsside.ejs") %> 
             <% } %>
+
 
             <% if((permissEdit === 'true') && (vprojectsme === 'on') && (vprojectsmetop === 'off')) {%>
                 <%- include("./parts/projectsside.ejs") %> 
