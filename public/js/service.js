@@ -169,7 +169,12 @@ let SE = (() => {
             let projectname = "Вкажіть назву проекту!";
             let projecturl = "Вкажіть посилання на проект!";
             let aftersendemail = "Лист для підтвердження надіслано на вашу пошту!";
+            let yourarefriends = "Ви вже друзі!";
+            let friendsdel = "Видалити";
+            let friendsadd = "Додати";
             return {
+                friendsdel,
+                friendsadd,
                 notCunEmpty,
                 notCorectNum,
                 notCorectVar,
@@ -199,7 +204,8 @@ let SE = (() => {
                 projectname,
                 projectdescription,
                 projecturl,
-                aftersendemail
+                aftersendemail,
+                yourarefriends
             };
         } else if (localStorage.kalciferLang === "en"){
             let allInputs = "Fill in all required fields!";
@@ -232,7 +238,12 @@ let SE = (() => {
             let projectname = "Specify the name of the project!";
             let projecturl = "Specify a reference to the project!";
             let aftersendemail = "A confirmation letter has been sent to your mail!";
+            let yourarefriends = "You are friends!";
+            let friendsdel = "Remove";
+            let friendsadd = "Add";
             return {
+                friendsdel,
+                friendsadd,
                 notCunEmpty,
                 notCorectNum,
                 notCorectVar,
@@ -262,7 +273,8 @@ let SE = (() => {
                 projectname,
                 projectdescription,
                 projecturl,
-                aftersendemail
+                aftersendemail,
+                yourarefriends
             };
         }
     };    
@@ -689,7 +701,7 @@ let SE = (() => {
                 SE.$("main-form-message").innerHTML = SE.errorFormMessage().registrationGood;
                 setTimeout(() => {
                     SE.$("main-form-message").innerHTML = '';
-                    CLEAR.clearRegProto();
+                    // CLEAR.clearRegProto();
                     SE.redirect(`/${response.data.userid}`);
                 }, 1000);
             }

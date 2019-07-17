@@ -1,8 +1,10 @@
 let con = require('../db/connectToDB').con;
 let {clienttoken} = require('./service');
 
+
+
 let renderuser = (req, res) => {
-    let permissionAccess, permissionEdit, getuserid;
+    let permissionAccess, permissionEdit, permissionisFriend, permissionFriend, getuserid;
     //get variables
     getuserid = req.params['userid'];
     let clientToken = clienttoken(req, res);
@@ -25,6 +27,7 @@ let renderuser = (req, res) => {
                         if (result == ''){
                             permissionAccess = false;
                             permissionEdit = false;
+                            permissionFriend = false;
                             console.log('--render-user---->> ', result[0]);                            
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
@@ -41,6 +44,7 @@ let renderuser = (req, res) => {
                         //if the user is not found but is authorized    
                             (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
                             (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
+                            permissionFriend = false;
                             console.log('--render-user---->> ', result[0]);                     
                             res.render(`nouser`, {
                                 permissAccess: `${permissionAccess}`,
@@ -73,6 +77,7 @@ let renderuser = (req, res) => {
                         if (result == ''){
                             permissionEdit = false;         
                             permissionAccess = false;
+                            permissionFriend = false;
                             //render user page and send variables   
                             console.log('--render-user---->> ', result[0]);                     
                             res.render(`main`, {
@@ -91,6 +96,7 @@ let renderuser = (req, res) => {
                                 avasettings: `${userObj[0].avasettings}`,
                                 permissAccess: `${permissionAccess}`,
                                 permissEdit: `${permissionEdit}`,
+                                permissionFriend: `${permissionFriend}`,
                                 permissName: ``,
                                 permissSurname: ``,
                                 permissUserid: ``,
@@ -108,6 +114,26 @@ let renderuser = (req, res) => {
                         } else {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
+                                //add to friends
+                                if ((result[0].token === clientToken) && (result[0].userid !== req.params['userid'])) {
+                                    let sqlsel = `SELECT U.userid, S.userid, S.friendid FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
+                                    con.query(sqlsel, function (err, result) {
+                                        if (err) {
+                                            console.log("err", err);
+                                            res.send({"error":err});
+                                        } else {
+                                            console.log("--result-friends----->> ", result);
+                                            if (result  == ''){
+                                                permissionisFriend = false;
+                                            } else {
+                                                permissionisFriend = true;
+                                            }
+                                        }
+                                    }); 
+                                    permissionFriend = true;
+                                } else {
+                                    permissionFriend = false;
+                                }
                                 //permission for edit
                                 ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? 
                                 permissionEdit = true : 
@@ -116,40 +142,50 @@ let renderuser = (req, res) => {
                                 (result[0].token === clientToken) ? 
                                 permissionAccess = true : 
                                 permissionAccess = false;
+
                                 //render user page and send variables  
-                                console.log('--render-user---->> ', result[0]);        
-                                res.render(`main`, {
-                                    title: `${userObj[0].surname} ${userObj[0].name}`,
-                                    name: `${userObj[0].name}`,
-                                    surname: `${userObj[0].surname}`,
-                                    email: `${userObj[0].email}`,
-                                    birthday: `${userObj[0].birthday}`,
-                                    phone: `${userObj[0].phone}`,
-                                    message: `${userObj[0].message}`,
-                                    country: `${userObj[0].country}`,
-                                    town: `${userObj[0].town}`,
-                                    profession: `${userObj[0].profession}`,
-                                    education: `${userObj[0].education}`,
-                                    ava: `${avaurl}`,
-                                    avasettings: `${userObj[0].avasettings}`,
-                                    permissAccess: `${permissionAccess}`,
-                                    permissEdit: `${permissionEdit}`,
-                                    permissName: `${result[0].name}`,
-                                    permissSurname: `${result[0].surname}`,
-                                    permissUserid: `${result[0].userid}`,
-                                    vskillsall: `${userObj[0].vskillsall}`,
-                                    vskillsme:`${ userObj[0].vskillsme}`,
-                                    vprojectsall: `${userObj[0].vprojectsall}`,
-                                    vprojectsme: `${userObj[0].vprojectsme}`,
-                                    vskillsalltop: `${userObj[0].vskillsalltop}`,
-                                    vskillsmetop: `${userObj[0].vskillsmetop}`,
-                                    vprojectsalltop: `${userObj[0].vprojectsalltop}`,
-                                    vprojectsmetop: `${userObj[0].vprojectsmetop}`,
-                                    vblogall: `${userObj[0].vblogall}`,
-                                    vblogme: `${userObj[0].vblogme}`,                                    
-                                });
+                                // setTimeout(() => {
+                                    console.log("-------------------------------------------", permissionisFriend);
+                                    console.log('--render-user---->> ', result[0]);        
+                                    res.render(`main`, {
+                                        title: `${userObj[0].surname} ${userObj[0].name}`,
+                                        name: `${userObj[0].name}`,
+                                        surname: `${userObj[0].surname}`,
+                                        email: `${userObj[0].email}`,
+                                        birthday: `${userObj[0].birthday}`,
+                                        phone: `${userObj[0].phone}`,
+                                        message: `${userObj[0].message}`,
+                                        country: `${userObj[0].country}`,
+                                        town: `${userObj[0].town}`,
+                                        profession: `${userObj[0].profession}`,
+                                        education: `${userObj[0].education}`,
+                                        ava: `${avaurl}`,
+                                        avasettings: `${userObj[0].avasettings}`,
+                                        permissAccess: `${permissionAccess}`,
+                                        permissEdit: `${permissionEdit}`,
+                                        permissionFriend: `${permissionFriend}`,
+                                        permissionisFriend: `${permissionisFriend}`,
+                                        permissName: `${result[0].name}`,
+                                        permissSurname: `${result[0].surname}`,
+                                        permissUserid: `${result[0].userid}`,
+                                        vskillsall: `${userObj[0].vskillsall}`,
+                                        vskillsme:`${ userObj[0].vskillsme}`,
+                                        vprojectsall: `${userObj[0].vprojectsall}`,
+                                        vprojectsme: `${userObj[0].vprojectsme}`,
+                                        vskillsalltop: `${userObj[0].vskillsalltop}`,
+                                        vskillsmetop: `${userObj[0].vskillsmetop}`,
+                                        vprojectsalltop: `${userObj[0].vprojectsalltop}`,
+                                        vprojectsmetop: `${userObj[0].vprojectsmetop}`,
+                                        vblogall: `${userObj[0].vblogall}`,
+                                        vblogme: `${userObj[0].vblogme}`,                                    
+                                    });
+                                // }, 200);
+
+                                
+
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
-                                permissionEdit = false;         
+                                permissionEdit = false;  
+                                permissionFriend = false;
                                 (result[0].token === clientToken) ? 
                                 permissionAccess = true : 
                                 permissionAccess = false;
@@ -171,6 +207,7 @@ let renderuser = (req, res) => {
                                     avasettings: `${userObj[0].avasettings}`,
                                     permissAccess: `${permissionAccess}`,
                                     permissEdit: `${permissionEdit}`,
+                                    permissionFriend: `${permissionFriend}`,
                                     permissName: `${result[0].name}`,
                                     permissSurname: `${result[0].surname}`,
                                     permissUserid: `${result[0].userid}`,
@@ -188,10 +225,12 @@ let renderuser = (req, res) => {
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
                                 (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
+                                permissionFriend = false;
                                 console.log('--render-user---->> ', result[0]);                     
                                 res.render(`nouser`, {
                                     permissAccess: `${permissionAccess}`,
                                     permissEdit: `${permissionEdit}`,
+                                    permissionFriend: `${permissionFriend}`,
                                     permissName: `${result[0].name}`,
                                     permissSurname: `${result[0].surname}`,
                                     permissUserid: `${result[0].userid}`,

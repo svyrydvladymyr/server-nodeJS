@@ -37,7 +37,26 @@
                 <i style='font-size:16px; float:right; cursor: pointer; margin: -5px 0px 7px 0px;' class='far' onclick="window.location.href = '/updateuser';">&#xf044;</i>
             <% } %>
 
+                <!--message-->
+            <% if(permissionFriend === 'true') {%>    
+                <div class='add-to-friends'>
+                    <div class="add-to-friends-wrap"><i class='far fa-comments' onclick=""><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess"></b></i></div>
+                </div>            
+            <% } %>
+                <!--add-->
+            <% if((permissionFriend === 'true') && (permissionisFriend === 'false')) {%>   
+                <div class='add-to-friends' id="add-friend-wrap">  
+                    <div class="add-to-friends-wrap"  onclick="SE.send({}, '/addtofriends', VW.addToFriends)" ><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend"></b></i></div>           
+                </div>
+            <% } %>
+                <!--del-->
+            <% if((permissionFriend === 'true') && (permissionisFriend === 'true')) {%>   
+                <div class='add-to-friends' id="del-friend-wrap">             
+                    <div class="add-to-friends-wrap"  onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
+                </div>
+            <% } %>
 
+            <p id="mess-about-add-friend" style="margin: 0px; width:100%; color: red; text-align:center; font-size: 14px; font-weight: bold;"></p>
             <% if((country !== '') || (town !== '')) {%>
             <div class="info-blok">
                 <i class="fas fa-map-marker-alt"></i>

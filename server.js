@@ -5,7 +5,7 @@ let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration'
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
-let searchUser = require('./modules/searchuser');
+let {searchUser, addtofriends, delfromfriends} = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
@@ -16,26 +16,30 @@ app.set('view engine', 'ejs');
 app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+//render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
-
+//skills
 app.post('/showskills', (req, res) => {showskills(req, res)});
 app.post('/addskills', (req, res) => {addskills(req, res)});
 app.post('/showorhiddenskills', (req, res) => {showorhiddenskills(req, res)});
 app.post('/showskillsingle', (req, res) => {showskillsingle(req, res)});
 app.post('/editskill', (req, res) => {editskill(req, res)});
 app.post('/updateallskill', (req, res) => {updateallskill(req, res)});
-
+//projects
 app.post('/showprojects', (req, res) => {showprojects(req, res)});
 app.post('/addprojects', (req, res) => {addprojects(req, res)});
 app.post('/showorhiddenproj', (req, res) => {showorhiddenproj(req, res)});
 app.post('/showprojsingle', (req, res) => {showprojsingle(req, res)});
 app.post('/editproject', (req, res) => {editproject(req, res)});
 app.post('/updateallprojects', (req, res) => {updateallprojects(req, res)});
-
+//verify email
 app.post('/verifyuser', (req, res) => {verifyuser(req, res)});
 app.post('/sendemail', (req, res) => {sendemail(req, res)});
-
+//to friends
+app.post('/addtofriends', (req, res) => {addtofriends(req, res)});
+app.post('/delfromfriends', (req, res) => {delfromfriends(req, res)});
+//main routs
 app.post('/widgetsett', (req, res) => {widgetsett(req, res)});
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});
 app.post('/updatemain', (req, res) => {updatemain(req, res)});
@@ -47,11 +51,11 @@ app.post('/savesett', (req, res) => {savesett(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.post('/exit', (req, res) => {exit(req, res)});
-
+//logs
 app.use((req, res, next) => {accessLog(req, res, next)});
+//user pages
 app.use('/:userid', (req, res) => {renderuser(req, res)});
 app.use('/', (req, res, next) => {res.redirect('index'); next()});
-
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 
 

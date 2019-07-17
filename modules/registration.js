@@ -35,7 +35,7 @@ let registrationUsers = (req, res) => {
     let settproof, skilsproof, projectproof;     
     let parseObjUsers = req.body;
     console.log("--client-registr-obj--", parseObjUsers);    
-    prUs.userid = translit(`${parseObjUsers.surname}${parseObjUsers.name}`).toLowerCase() + '-' + token(10);
+    prUs.userid = translit(`${parseObjUsers.surname}${parseObjUsers.name}`).toLowerCase() + '_' + token(10);
     checkObjValues("^[0-9-]+$", "registrdata", "Bad registration date!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad password!", parseObjUsers, res);
@@ -61,6 +61,12 @@ let registrationUsers = (req, res) => {
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
     let sqlskills = `INSERT INTO userskills (userid) VALUES ('${prUs.userid}')`;
     let sqlproj = `INSERT INTO userprojects (userid) VALUES ('${prUs.userid}')`;
+    let sqlfriends = `CREATE TABLE friends_${prUs.userid} (id INT AUTO_INCREMENT PRIMARY KEY,
+        userid VARCHAR(100),
+        friendid VARCHAR(100),
+        friendvisit VARCHAR(10),
+        friendadd DATE                           
+        )`;  
     let mailOptions = {
         from: '6b616c6369666572@gmail.com',
         to: `${prUs.email}`,
@@ -115,7 +121,10 @@ let registrationUsers = (req, res) => {
             });
             con.query(sqlproj, function (err, result) {
                 err ? console.log("--err--", err) : console.log("--result-registr-projects---->> ", result.affectedRows);
-            });               
+            });  
+            con.query(sqlfriends, function (err, result) {
+                err ? console.log("--err--", err) : console.log("--Table-friends-created---->> ", result.protocol41);
+            });
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
@@ -177,7 +186,7 @@ let addAvatoDB = (req, res) => {
             } else {
                 prUs.ava = '';
                 prUs.avasettings = '';
-                res.send({"result":"ava_no"});
+                res.send({"result":"ava_no", "userid":prUs.userid});
             }
         }
     });  

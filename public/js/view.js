@@ -439,6 +439,38 @@ let VW = (() => {
         }, 2000);
     };
 
+//change button after add to friends
+    let addToFriends = (res) => {   
+        let parseObj = JSON.parse(res); 
+        if (parseObj.error === 'ER_DUP_ENTRY'){
+            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
+            setTimeout(() => {
+                SE.$('mess-about-add-friend').innerHTML = '';
+            }, 2000);
+        } 
+        if (parseObj.res === 1){
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+        } 
+    };
+
+//change button after add to friends
+    let delFromFriends = (res) => {   
+        let parseObj = JSON.parse(res); 
+        console.log(parseObj);      
+        if (parseObj.res === 0){
+            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
+            setTimeout(() => {
+                SE.$('mess-about-add-friend').innerHTML = '';
+            }, 2000);
+        } 
+        if (parseObj.res === 1){
+            SE.$('del-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="SE.send({}, '/addtofriends', VW.addToFriends)" ><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${SE.errorFormMessage().friendsadd}</b></i></div>`;
+        } 
+        if (parseObj.err){
+            console.log(parseObj.err);            
+        }
+    };
+
 return {
     buttonLogin,
     openSetting,
@@ -468,7 +500,9 @@ return {
     adColorToLists,
     animationAfterSend,
     animationAfterSendSpiner,
-    redirectAfterVerify
+    redirectAfterVerify,
+    addToFriends,
+    delFromFriends
 };
 
 })();
