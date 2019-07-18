@@ -144,7 +144,7 @@ let showfriends = (req, res) => {
     getuserid = req.headers.referer;
     userid = url.parse(getuserid, true).pathname.replace('/', '');
     console.log("--userid-for-friends---->> ",userid);
-    let sqlsel = `SELECT friendid, friendvisit FROM friends_${userid} WHERE userid = '${userid}' AND friendstatus = 'friend' ORDER BY friendvisit + 0 DESC LIMIT 6;`;
+    let sqlsel = `SELECT friendid, friendvisit FROM friends_${userid} WHERE userid = '${userid}' AND friendstatus = 'friend' ORDER BY friendvisit + 0 DESC LIMIT 20;`;
     con.query(sqlsel, function (err, result) {
         if (err) {
             console.log("--err-get-friends--", err.code);

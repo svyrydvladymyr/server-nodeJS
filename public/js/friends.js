@@ -21,12 +21,12 @@ let WFRIENDS = (() => {
 
                     SE.$('friends-conteiner').innerHTML += `
 
-                    <div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
-                    <div class="listusers-img" 
-                        style="background-image: url('${avafoto}'); 
-                        background-position: ${parseObj[i].avasettings};">
-                    </div>    
-                    <p>${parseObj[i].name} ${parseObj[i].surname}</p>
+                    <div class="listusers-boks2" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
+                        <div class="listusers-img" 
+                            style="background-image: url('${avafoto}'); 
+                            background-position: ${parseObj[i].avasettings};">
+                        </div>    
+                        <p>${parseObj[i].name} ${parseObj[i].surname}</p>
                     </div>
                     
                     

@@ -22,6 +22,7 @@
         "widget-blog-t2":"BLOG", 
         "widget-friend-t":"FRIENDS",
         "widget-friend-t2":"FRIENDS", 
+        "widget-friends-t":"ALL FRIENDS",  
         "registration":"REGISTRATION",
         "form_toback":"BACK TO MAIN", 
         "button-preview-form":"CONFIRM",
@@ -37,7 +38,7 @@
         "verify-mess":"To confirm your registration, go to your mail",
         "verify-mess-repeat":"To send the letter again, press the button",
         "add-to-friend":"Add",
-        "add-to-куй":"Confirm",
+        "add-to-req":"Confirm",
         "del-to-friend":"Remove",
         "friend-mess":"Message",
 

@@ -1,10 +1,21 @@
-    <div class="skills-title-wrap">
-        <!-- <p id="widget-skills-t" class="skills-title"></p> -->
+<div class="skills-title-wrap">
+    <p id="widget-friends-t" class="skills-title" style="cursor: pointer; text-decoration:underline;"></p>
+    <% if(permissEdit === 'true') {%>
+        <div class="friends-reqto">
+            <div class="friends-reqto-wrap">
+                <p class="friends-reqto-text" id="friend-req-add"></p>
+                <i class='fas fa-user-plus'></i>
+            </div>
+            <div class="friends-reqto-wrap">
+                <p class="friends-reqto-text" id="friend-req-proof"></p>
+                <i class='fas fa-user-check'></i>
+            </div>
+        </div>  
+    <% } %>   
+</div>
 
-    </div>
-
-    <div class="skills-conteiner" id="friends-conteiner">        
-    </div>   
+<div class="skills-conteiner" style="max-height: 355px; overflow-y: auto;" id="friends-conteiner">        
+</div>   
 
 
 
