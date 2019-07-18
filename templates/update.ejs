@@ -154,7 +154,7 @@
                             <div class="form_label"><p id="reg-label-country"></p></div>
                             <div class="form_input">
                                 <select name="reg-country" id="reg-country">
-                                    <option value="" id=""></option>
+                                    <option value="" id="" disabled></option>
                                     <option value="ukraine" id="ukraine"></option>
                                     <option value="russian" id="russian"></option>
                                     <option value="greatbritain" id="greatbritain"></option>
@@ -176,7 +176,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-profession"></p></div>
                             <div class="form_input">
-                                <input type="text" name="reg-profession"  id="reg-profession" maxlength="40" value="<%=profession %>">
+                                <input type="text" name="reg-profession"  id="reg-profession" maxlength="90" value="<%=profession %>">
                             </div>
                             <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
                         </div> 
@@ -228,6 +228,16 @@
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-project"></span>
                                     </div>
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-chack-last2" id="widget-friend-t2"></span>
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendall', 'vfriendme')" <% if(vfriendall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-friend-t"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>                                     
@@ -270,16 +280,6 @@
                                             <input type="checkbox" name="vblogme" id="vblogme" onchange="VW.saveWidgets('vblogme', 'vblogall')" <% if(vblogme === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-blog-t"></span>
-                                    </div>
-                                    <div class="widget-blok">
-                                        <span class="widget-chack widget-chack-last2" id="widget-friend-t2"></span>
-                                        <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendall', 'vfriendme')" <% if(vfriendall === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack">
-                                            <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack widget-chack-last" id="widget-friend-t"></span>
                                     </div>
                                 </div>
                             </div>

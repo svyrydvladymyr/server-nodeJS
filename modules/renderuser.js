@@ -44,8 +44,8 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl) => {
     });
 };
 
-let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend) => {
-    console.log('--render-user---->> ', result[0]);        
+let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq) => {
+    console.log('--render-user---->> ', result[0]);  
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         name: `${userObj[0].name}`,
@@ -64,6 +64,7 @@ let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionA
         permissEdit: `${permissionEdit}`,
         permissionFriend: `${permissionFriend}`,
         permissionisFriend: `${permissionisFriend}`,
+        permissionidreq: `${permissionidreq}`,
         permissName: `${result[0].name}`,
         permissSurname: `${result[0].surname}`,
         permissUserid: `${result[0].userid}`,
@@ -230,7 +231,7 @@ let renderuser = (req, res) => {
                                         }
                                     }); 
                                 }                               
-                                let sqlsel = `SELECT U.userid, S.userid, S.friendid FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
+                                let sqlsel = `SELECT U.userid, S.userid, S.friendid, S.friendstatus FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
                                 con.query(sqlsel, function (err, result) {
                                     if (err) {
                                         console.log("err", err);
@@ -239,10 +240,12 @@ let renderuser = (req, res) => {
                                         console.log("--result-friends----->> ", result);
                                         if (result  == ''){
                                             permissionisFriend = false;
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend);
+                                            permissionidreq = 'null';
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
                                         } else {
                                             permissionisFriend = true;
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend);
+                                            permissionidreq = result[0].friendstatus;
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
                                         }
                                     }
                                 }); 

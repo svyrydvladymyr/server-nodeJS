@@ -162,18 +162,20 @@ let SE = (() => {
             let saved = "Збережено!";
             let nedautoriz = "Потрібно авторизуватися!";
             let skillslevel = "Встановіть рівень, який на вашу думку ва маєте. Від 1 до 10.";
-            let skillsname = "Введіть назву вашого навику.";
+            let skillsname = "Введіть назву вашого навику. *";
             let skillschack = "Показувати чи ні.";
             let skillsemptyname = "Вкажіть назву навику!";
             let projectdescription = "Вкажіть опис проекту!";
-            let projectname = "Вкажіть назву проекту!";
+            let projectname = "Вкажіть назву проекту! *";
             let projecturl = "Вкажіть посилання на проект!";
             let aftersendemail = "Лист для підтвердження надіслано на вашу пошту!";
             let yourarefriends = "Ви вже друзі!";
             let friendsdel = "Видалити";
             let friendsadd = "Додати";
             let friendsmess = "Повідомлення";
+            let prooffriends = "Підтвердити";
             return {
+                prooffriends,
                 friendsmess,
                 friendsdel,
                 friendsadd,
@@ -233,18 +235,20 @@ let SE = (() => {
             let saved = "Saved!";
             let nedautoriz = "You must be logged in!";
             let skillslevel = "Set the level that you think you have. From 1 to 10.";
-            let skillsname = "Enter the name of your skill.";
+            let skillsname = "Enter the name of your skill. *";
             let skillschack = "Show or not.";
             let skillsemptyname = "Вкажіть назву навику!";
             let projectdescription = "Specify the description of the project!";
-            let projectname = "Specify the name of the project!";
+            let projectname = "Specify the name of the project! *";
             let projecturl = "Specify a reference to the project!";
             let aftersendemail = "A confirmation letter has been sent to your mail!";
             let yourarefriends = "You are friends!";
             let friendsdel = "Remove";
             let friendsadd = "Add";
             let friendsmess = "Message";
+            let prooffriends = "Confirm";
             return {
+                prooffriends,
                 friendsmess,
                 friendsdel,
                 friendsadd,

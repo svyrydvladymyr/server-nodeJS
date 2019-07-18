@@ -48,8 +48,24 @@ let autorisation = (req, res) => {
                             maxAge: '', 
                             path: '/', 
                             signed:true}
-                        cookies.set('sessionisdd', `${tokenId}`, param); 
-                        res.send({"res":result[0]});
+                        cookies.set('sessionisdd', `${tokenId}`, param);
+                        let renameres = result[0];    
+                        let sqlfriends = `CREATE TABLE friends_${result[0].userid} (id INT AUTO_INCREMENT PRIMARY KEY,
+                            userid VARCHAR(100),
+                            friendid VARCHAR(100),
+                            friendstatus VARCHAR(10),
+                            friendvisit VARCHAR(10),
+                            friendadd DATE                           
+                            )`;
+                        con.query(sqlfriends, function (err, result) {
+                            if (err) {
+                                console.log("--err--", err.code) 
+                                if (err.code === 'ER_TABLE_EXISTS_ERROR'){res.send({"res":renameres})}
+                            } else {
+                                console.log("--Table-friends-created---->> ", result.protocol41);
+                                res.send({"res":renameres});
+                            }    
+                        });                        
                     }
                 }); 
             }           

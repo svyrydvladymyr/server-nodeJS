@@ -64,6 +64,7 @@ let registrationUsers = (req, res) => {
     let sqlfriends = `CREATE TABLE friends_${prUs.userid} (id INT AUTO_INCREMENT PRIMARY KEY,
         userid VARCHAR(100),
         friendid VARCHAR(100),
+        friendstatus VARCHAR(10),
         friendvisit VARCHAR(10),
         friendadd DATE                           
         )`;  

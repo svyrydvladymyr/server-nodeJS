@@ -5,7 +5,7 @@ let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration'
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
-let {searchUser, addtofriends, delfromfriends} = require('./modules/searchuser');
+let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
@@ -38,7 +38,9 @@ app.post('/verifyuser', (req, res) => {verifyuser(req, res)});
 app.post('/sendemail', (req, res) => {sendemail(req, res)});
 //to friends
 app.post('/addtofriends', (req, res) => {addtofriends(req, res)});
+app.post('/prooftofriends', (req, res) => {prooftofriends(req, res)});
 app.post('/delfromfriends', (req, res) => {delfromfriends(req, res)});
+app.post('/showfriends', (req, res) => {showfriends(req, res)});
 //main routs
 app.post('/widgetsett', (req, res) => {widgetsett(req, res)});
 app.post('/updatesecurity', (req, res) => {updatesecurity(req, res)});

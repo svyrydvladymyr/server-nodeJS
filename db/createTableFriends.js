@@ -2,6 +2,7 @@ let con = require('./connectToDB').con;
 let sql = `CREATE TABLE friends_volodymyrsvyryd_kQnOheDxIc (id INT AUTO_INCREMENT PRIMARY KEY,
                                 userid VARCHAR(100),
                                 friendid VARCHAR(100) NOT NULL UNIQUE,
+                                friendstatus VARCHAR(10),
                                 friendvisit VARCHAR(10),
                                 friendadd DATE                           
                                 )`;            

@@ -53,6 +53,7 @@
     <script src="./js/controller.js"></script>
     <script src="./js/skills.js"></script>
     <script src="./js/projects.js"></script>
+    <script src="./js/friends.js"></script>
     <% if(permissEdit === 'true') {%>
         <script>
             SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
@@ -60,6 +61,29 @@
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
         </script>
     <% } %>
+
+
+
+    <!--friends-for-all-->
+    <% if((vfriendall === 'on') && (permissionFriend === 'false')) {%>
+        <script>
+            SE.send({}, '/showfriends', WFRIENDS.showFriends);
+        </script>
+    <% } %>
+
+    <!--friends-for-me-->
+    <% if((permissionFriend === 'true') && (vfriendme === 'on')) {%>
+        <script>
+            SE.send({}, '/showfriends', WFRIENDS.showFriends);
+        </script>
+    <% } %>
+
+    <!--friends-for-me-my-page-->
+    <!-- <% if((permissionFriend === 'false') && (permissEdit === 'false') && (vfriendme === 'on')) {%>
+        <script>
+            SE.send({}, '/showfriends', WFRIENDS.showFriends);
+        </script>
+    <% } %> -->
 
 
 
