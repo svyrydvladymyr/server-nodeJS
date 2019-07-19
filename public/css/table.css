@@ -76,6 +76,16 @@
     grid-area: out1;
 }
 
+/*--------------------------friends-----------------------------*/
+
+.wrap-all-friends{
+    margin: 20px 45px;
+}
+
+.friend-full-wrap{
+    width: 45%;
+    min-width: 300px;
+}
 
 @media screen and (max-width:970px){
     .header_logo, .header_search, .header_button{

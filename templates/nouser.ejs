@@ -4,17 +4,18 @@
     <%- include("./parts/head.ejs") %>
 </head>
 <body>
+        
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -46,15 +47,36 @@
         </script>
     <% } %>
 
+    <% if(onindex === 'friends') {%>
+        <div class="wrap-all-friends" >
+            <div class="friends-all-title">
+                <p  class="friends-name-title"><%=permissSurname %> <%=permissName %></p>
+                <p id="widget-friends-t" class="friends-text-title"></p>
+            </div>
+            <div class="friends-all-body" id="show-all-user-friends">
+
+            </div>
+        </div>
+    <% } %>
+
     <div class="footer-main-info" style="background: transparent; border-top: 2px solid transparent; box-shadow: 0px -2px 3px transparent;">
         <%- include("./parts/footer.ejs") %>
     </div>
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/friends.js"></script>
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+    <% if(onindex === 'friends') {%>
+        <script>
+            let x = /\?friends\=/g;
+            let clearurl = window.location.search.replace(x, '');
+            SE.send({"type":"friend", "limit":20, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+        </script>
+    <% } %>
+
 
  
 

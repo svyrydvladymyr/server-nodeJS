@@ -51,7 +51,7 @@
     top: 50px;
     left: 5%;
     width: 90%;
-    z-index: 1;
+    z-index: 5;
 }
 
 /*button*/
@@ -187,6 +187,15 @@
     margin: -2px 0px 0px -10px;
 }
 
+/*--------------------------friends-------------------------------*/
+
+.wrap-all-friends{
+    margin: 20px 10px;
+}
+
+.friend-full-wrap{
+    width: 90%;
+}
 @media screen and (min-width:500px) and (max-width:766px){
     .set{width: 98%}
     .set_close{width: 98%}
@@ -202,11 +211,31 @@
         bottom: -5%;
         margin: 0px 0px 0px 10px;
     }
+    .friend-full-wrap{
+        width: 100%;
+        min-width: 260px;
+    }
 }
 @media screen and (max-width:400px){
     .login-message-autoris {
         bottom: -5%;
         margin: 0px 0px 0px 10px;
+    }
+    .friends-all-title {
+        padding: 0px;
+    }
+    .friend-full-wrap{
+        width: 100%;
+        min-width: 260px;
+    }
+    .friends-name-title {
+        width: 180px;
+        padding: 10px 4px;
+        align-items: center;
+    }
+    .friends-text-title {
+        padding: 10px 4px;
+        max-width: 60px;
     }
 }
 

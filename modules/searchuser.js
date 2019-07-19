@@ -116,14 +116,14 @@ let delfromfriends = (req, res) => {
         } else {
             console.log("--my-userid---->> ", result[0].userid);
             let myid = result[0].userid;
-            let sqlsel = `DELETE FROM friends_${result[0].userid} WHERE userid = '${result[0].userid}' AND friendid = '${userid}' AND (friendstatus = 'reqto' OR friendstatus = 'reqfrom' OR friendstatus = 'friend');`;
+            let sqlsel = `DELETE FROM friends_${result[0].userid} WHERE userid = '${result[0].userid}' AND friendid = '${userid}';`;
             con.query(sqlsel, function (err, result) {
                 if (err) {
                     console.log("err", err);
                     res.send({"error":err});
                 } else {
                     console.log("--friends-remove---->> ", result.affectedRows);        
-                    let sqlsel = `DELETE FROM friends_${userid} WHERE userid = '${userid}' AND friendid = '${myid}' AND (friendstatus = 'reqfrom' OR friendstatus = 'reqto' OR friendstatus = 'friend');`;
+                    let sqlsel = `DELETE FROM friends_${userid} WHERE userid = '${userid}' AND friendid = '${myid}';`;
                     con.query(sqlsel, function (err, result) {
                         if (err) {
                             console.log("err", err);
@@ -140,11 +140,21 @@ let delfromfriends = (req, res) => {
 };
 
 let showfriends = (req, res) => {
-    let getuserid, userid;
-    getuserid = req.headers.referer;
-    userid = url.parse(getuserid, true).pathname.replace('/', '');
+    let getuserid, userid, typesearch, limitsearch, stepsearch, limistep;
+    typesearch = req.body.type;
+    limitsearch = req.body.limit;
+    stepsearch = req .body.step;
+    userurlsearch = req .body.userurl;
+    console.log(userurlsearch);
+    if (userurlsearch === undefined){
+        getuserid = req.headers.referer;
+        userid = url.parse(getuserid, true).pathname.replace('/', '');
+    } else {
+        userid = userurlsearch;
+    }
+    limistep = `LIMIT ${stepsearch} ${limitsearch}`;   
     console.log("--userid-for-friends---->> ",userid);
-    let sqlsel = `SELECT friendid, friendvisit FROM friends_${userid} WHERE userid = '${userid}' AND friendstatus = 'friend' ORDER BY friendvisit + 0 DESC LIMIT 20;`;
+    let sqlsel = `SELECT friendid, friendvisit FROM friends_${userid} WHERE userid = '${userid}' AND friendstatus = '${typesearch}' ORDER BY friendvisit + 0 DESC ${limistep};`;
     con.query(sqlsel, function (err, result) {
         if (err) {
             console.log("--err-get-friends--", err.code);
@@ -154,13 +164,13 @@ let showfriends = (req, res) => {
             let kilkfriends = result.length;
             let masfriends = [];
             for(let i = 1; i <= kilkfriends; i++){
-                let sqlsel = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${result[i-1].friendid}';`;
+                let sqlsel = `SELECT userid, name, surname, email, birthday, phone, country, town, profession, education, ava, avasettings FROM users WHERE userid = '${result[i-1].friendid}';`;
                 con.query(sqlsel, function (err, result) {
                     if (err) {
                         console.log("err", err);
                         res.send({"error":err});
                     } else {                       
-                        masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings})
+                        masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":result[0].email, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
                         if (i === kilkfriends) {
                             res.send({"res":masfriends});
                         }

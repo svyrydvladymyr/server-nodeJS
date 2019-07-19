@@ -71,7 +71,7 @@
             <% } %>
             
                 <!--del-->
-            <% if((permissionFriend === 'true') && (permissionisFriend === 'true') && ((permissionidreq === 'friend') || (permissionidreq === 'reqto'))) {%>   
+            <% if((permissionFriend === 'true') && (permissionisFriend === 'true') && ((permissionidreq === 'friend') || (permissionidreq === 'reqto') || (permissionidreq === 'null'))) {%>   
                 <div class='add-to-friends' id="add-friend-wrap">             
                     <div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
                 </div>

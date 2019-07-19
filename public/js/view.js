@@ -377,12 +377,12 @@ let VW = (() => {
         let obj, blogme, blogall;
         if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
         if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
-        if ((val === 'vblogall') || (val === 'vblogme')){
+        if ((val === 'vblogall') || (val === 'vblogme') || (val === 'vblogall') || (val === 'vblogme')){
             SE.$(val).checked ? blogme = 'on' : blogme = 'off';
             SE.$(val2).checked ? blogall = 'on' : blogall = 'off';
             obj = {"el":"vblogme", "value":blogme, "el2":"vblogall", "value2":blogall};  
         }
-        if ((val === 'vfriendme') || (val === 'vfriendall')){
+        if ((val === 'vfriendme') || (val === 'vfriendall') || (val2 === 'vfriendme') || (val2 === 'vfriendall')){
             SE.$(val).checked ? friendme = 'on' : friendme = 'off';
             SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
             obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
@@ -511,6 +511,7 @@ let VW = (() => {
             console.log(parseObj.err);            
         }
     };
+
 
 //---------------------------------
     let inwork = () => {   

@@ -16,6 +16,7 @@ app.set('view engine', 'ejs');
 app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
@@ -56,8 +57,14 @@ app.post('/exit', (req, res) => {exit(req, res)});
 //logs
 app.use((req, res, next) => {accessLog(req, res, next)});
 //user pages
+// app.use('/:userid/friends', (req, res) => {(req, res) => {
+//     res.render(`tr`, {});
+// }});
+
 app.use('/:userid', (req, res) => {renderuser(req, res)});
 app.use('/', (req, res, next) => {res.redirect('index'); next()});
+
+
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
 
 
