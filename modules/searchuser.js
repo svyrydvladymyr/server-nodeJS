@@ -145,7 +145,6 @@ let showfriends = (req, res) => {
     limitsearch = req.body.limit;
     stepsearch = req .body.step;
     userurlsearch = req .body.userurl;
-    console.log(userurlsearch);
     if (userurlsearch === undefined){
         getuserid = req.headers.referer;
         userid = url.parse(getuserid, true).pathname.replace('/', '');
@@ -154,25 +153,27 @@ let showfriends = (req, res) => {
     }
     limistep = `LIMIT ${stepsearch} ${limitsearch}`;   
     console.log("--userid-for-friends---->> ",userid);
-    let sqlsel = `SELECT friendid, friendvisit FROM friends_${userid} WHERE userid = '${userid}' AND friendstatus = '${typesearch}' ORDER BY friendvisit + 0 DESC ${limistep};`;
+    let sqlsel = `SELECT U.userid, U.name, U.surname, S.friendid, S.friendvisit FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC ${limistep};`;
     con.query(sqlsel, function (err, result) {
         if (err) {
-            console.log("--err-get-friends--", err.code);
+            console.log("--err-get-friends--", err);
         } else {
             console.log("--my-friends---->> ", result);
             let renameres = result;
             let kilkfriends = result.length;
-            let masfriends = [];
+            let masfriends = [];            
             for(let i = 1; i <= kilkfriends; i++){
                 let sqlsel = `SELECT userid, name, surname, email, birthday, phone, country, town, profession, education, ava, avasettings FROM users WHERE userid = '${result[i-1].friendid}';`;
                 con.query(sqlsel, function (err, result) {
                     if (err) {
                         console.log("err", err);
                         res.send({"error":err});
-                    } else {                       
-                        masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":result[0].email, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
+                    } else {            
+                        if (result[0] !== undefined){
+                            masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":result[0].email, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
+                        }       
                         if (i === kilkfriends) {
-                            res.send({"res":masfriends});
+                            res.send({"res":masfriends, "myid":renameres[0].userid, "name":renameres[0].name, "surname":renameres[0].surname});
                         }
                     }
                 });

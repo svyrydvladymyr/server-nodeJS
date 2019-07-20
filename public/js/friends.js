@@ -51,11 +51,12 @@ let WFRIENDS = (() => {
 
 //show list all friends full info
     let showAllFriendsListFull  = (res) => {   
-        parseObj = JSON.parse(res).res;
-        console.log("dfgsdgdsfgsdfgdfg");
-
-        console.log(parseObj);
-        console.log(parseObj.length);
+        let parseObj = JSON.parse(res).res;
+        let parseMyId = JSON.parse(res).myid;
+        let parseName = JSON.parse(res).name;
+        let parseSurname = JSON.parse(res).surname;
+        SE.$('friends-name-title').innerHTML = `${parseSurname} ${parseName}`;
+        SE.$('friends-name-title-href').setAttribute("href", `${parseMyId}`);
         for (let i = 0; i < parseObj.length; i++){
             SE.$('show-all-user-friends').innerHTML += `
             <div class="friend-full-wrap">

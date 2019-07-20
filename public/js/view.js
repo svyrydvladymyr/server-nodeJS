@@ -374,6 +374,7 @@ let VW = (() => {
 
 //save settings widgets
     let saveWidgets = (val, val2) => {
+        setTimeout(() => {
         let obj, blogme, blogall;
         if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
         if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
@@ -387,7 +388,9 @@ let VW = (() => {
             SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
             obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
         }
-        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
+
+            SE.send(obj, '/widgetsett', VW.saveWidgetsMess);     
+        }, 200);
     };  
     
     let saveWidgetsMess = (res) => {
