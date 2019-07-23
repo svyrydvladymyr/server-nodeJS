@@ -35,6 +35,7 @@
                 <div class="tabs-form-body-wrap">
                 <!----SECURITY AND ENTER----------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
+                        <% if(regtype !== 'facebook') {%>
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
@@ -72,6 +73,7 @@
                         </div>               
                         <!--main message form-->
                         <p class="main-form-message" id="main-form-messageone"></p>
+                        <% } %>
                     </div>
 
                 <!----MAIN_INFO--------------------------------------------------->

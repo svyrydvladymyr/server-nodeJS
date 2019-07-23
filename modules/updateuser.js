@@ -58,6 +58,7 @@ let updaterender = (req, res) => {
             town = translit(result[0].town);        
             res.render(`update`, {
                 userid: result[0].userid,
+                regtype: result[0].regtype,
                 name: result[0].name,
                 surname: result[0].surname,
                 email: result[0].email,

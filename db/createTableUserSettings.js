@@ -1,7 +1,6 @@
 let con = require('./connectToDB').con;
 let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         userid VARCHAR(100) NOT NULL UNIQUE,
-                                        avasettings VARCHAR(10) DEFAULT '50% 50%',
 
                                         maincolor VARCHAR(11) DEFAULT '#2d5e8e',
                                         secondcolor VARCHAR(11) DEFAULT '#5c8ab9',
