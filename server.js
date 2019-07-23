@@ -9,6 +9,19 @@ let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = re
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
+let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
+// passport.use(new FacebookStrategy({
+//         clientID: '435548787037664',
+//         clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
+//         callbackURL: "http://localhost:4000/auth/facebook/callback",
+//         profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
+//     },
+//     function(accessToken, refreshToken, profile, done) {
+//         process.nextTick(function () {                
+//             console.log(profile)
+//         });
+//     }
+// ));
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
@@ -16,26 +29,8 @@ app.set('view engine', 'ejs');
 app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-
-// let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
-// passport.use(new FacebookStrategy({
-//     clientID: '435548787037664',
-//     clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
-//     callbackURL: "http://localhost:4000/auth/facebook/callback",
-//     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-
-//    process.nextTick(function () {                
-//     console.log(profile)
-//     });
-//     }
-// ));
-
 // app.get('/auth/facebook', passport.authenticate('facebook'));
 // app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/registration' }));
-
-
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
