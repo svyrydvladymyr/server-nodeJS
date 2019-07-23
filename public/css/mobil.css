@@ -229,13 +229,19 @@
         min-width: 260px;
     }
     .friends-name-title {
-        width: 180px;
+        min-width: 140px;
         padding: 10px 4px;
         align-items: center;
     }
     .friends-text-title {
         padding: 10px 4px;
-        max-width: 60px;
+        max-width: 100px;
+    }
+    .friend-full-img {
+        max-height: 80%;
+    }
+    .friend-full-info{
+        width: 60%;
     }
 }
 

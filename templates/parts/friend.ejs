@@ -2,11 +2,11 @@
     <a onclick="WFRIENDS.showAllFriends()"><p id="widget-friends-t" class="skills-title" style="cursor: pointer; color: #3e3e3e; text-decoration:underline;"></p></a>
     <% if(permissEdit === 'true') {%>
         <div class="friends-reqto">
-            <div class="friends-reqto-wrap">
+            <div class="friends-reqto-wrap"  onclick="WFRIENDS.showAllFriends('to')">
                 <p class="friends-reqto-text" id="friend-req-add"></p>
                 <i class='fas fa-user-plus'></i>
             </div>
-            <div class="friends-reqto-wrap">
+            <div class="friends-reqto-wrap"  onclick="WFRIENDS.showAllFriends('from')">
                 <p class="friends-reqto-text" id="friend-req-proof"></p>
                 <i class='fas fa-user-check'></i>
             </div>

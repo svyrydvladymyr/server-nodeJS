@@ -2,13 +2,10 @@ let con = require('../db/connectToDB').con;
 let url = require('url');
 let {clienttoken} = require('./service');
 
-let renderIfNotVerify = (req, res, result, userObj, avaurl) => {
-    let permissionAccess, permissionEdit, permissionFriend;
+let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
+    let permissionEdit, permissionFriend;
     permissionEdit = false;  
     permissionFriend = false;
-    (result[0].token === clientToken) ? 
-    permissionAccess = true : 
-    permissionAccess = false;
     console.log('--render-user---->> ', result[0]);                     
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
@@ -254,7 +251,8 @@ let renderuser = (req, res) => {
                                 }); 
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
                                 //if the user is found and is autorized but not verify and not my page
-                                renderIfNotVerify(req, res, result, userObj, avaurl);
+                                (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
+                                renderIfNotVerify(req, res, result, userObj, avaurl, permissionAccess);
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 //if the user is found and is autorized and its my page but not verify 
                                 (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;

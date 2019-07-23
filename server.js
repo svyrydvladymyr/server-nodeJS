@@ -57,10 +57,6 @@ app.post('/exit', (req, res) => {exit(req, res)});
 //logs
 app.use((req, res, next) => {accessLog(req, res, next)});
 //user pages
-// app.use('/:userid/friends', (req, res) => {(req, res) => {
-//     res.render(`tr`, {});
-// }});
-
 app.use('/:userid', (req, res) => {renderuser(req, res)});
 app.use('/', (req, res, next) => {res.redirect('index'); next()});
 

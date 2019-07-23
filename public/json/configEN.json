@@ -22,7 +22,9 @@
         "widget-blog-t2":"BLOG", 
         "widget-friend-t":"FRIENDS",
         "widget-friend-t2":"FRIENDS", 
-        "widget-friends-t":"ALL FRIENDS",  
+        "widget-friends-t":"ALL FRIENDS", 
+        "widget-friends-proof":"CONFIRM",  
+        "widget-friends-req":"REQUEST",   
         "registration":"REGISTRATION",
         "form_toback":"BACK TO MAIN", 
         "button-preview-form":"CONFIRM",
@@ -41,6 +43,7 @@
         "add-to-req":"Confirm",
         "del-to-friend":"Remove",
         "friend-mess":"Message",
+        "friends-show-more-button":"Show more",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  
@@ -95,8 +98,9 @@
         "news-four":"Added search field for all registered users.",  
         "news-five":"Added the ability to edit user data, and also change the alert. You can now configure the visual styles not only locally but also in the database.",  
         "news-six":"The skill unit is developed. It can add a list of skills and their level that you think you have.",  
-        "news-seven":"Completion of project block development. It can add a list of projects and a description of them. If it's internet projects then you can add links to them."  
-    
+        "news-seven":"Completion of project block development. It can add a list of projects and a description of them. If it's internet projects then you can add links to them.",  
+        "news-eight":"The ability to add users to your friends list is developed."  
+
       
 }
 
