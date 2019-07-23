@@ -12,7 +12,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
             prUs[val] = parseObjUsers[val];
         } else {
             console.log("--bad-input---->> ", mess);            
-            res.status(404).send(mess);
+            res.send({"err":mess});
         }
     } else {
         prUs[val] = '';
@@ -38,7 +38,7 @@ let updaterender = (req, res) => {
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
-                res.send(err);
+                res.send({"err":err});
             }
             console.log("--user-for-update---->> ", result[0]);  
             let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
@@ -180,10 +180,10 @@ let updateother = (req, res) => {
     let clientToken = clienttoken(req, res);
     console.log("--client-registr-obj---->> ", parseObjUsers); 
     prUs.updateuser = updatedatetime;
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-_ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-_ ]+$", "education", "Bad education!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "education", "Bad education!", parseObjUsers, res); 
     console.log("--ready-obj--", prUs);
     prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
     prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;
