@@ -147,8 +147,6 @@ let showfriends = (req, res) => {
     limitsearch = req.body.limit;
     stepsearch = req .body.step;
     userurlsearch = req .body.userurl;
-    console.log("===============",userurlsearch);
-    
     getuserid = req.headers.referer;
     userurlsearch === undefined ? userid = url.parse(getuserid, true).pathname.replace('/', '') : userid = userurlsearch;
     stepsearch === '' ? step = '' : step = `${stepsearch},`;
