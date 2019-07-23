@@ -9,7 +9,7 @@ let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = re
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
-let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
+// let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
 // passport.use(new FacebookStrategy({
 //         clientID: '435548787037664',
 //         clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
