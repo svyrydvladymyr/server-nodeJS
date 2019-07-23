@@ -235,28 +235,20 @@ let updateAvatoDB = (req, res) => {
                         avasettings = parseAvasettings.avasettings;
                         console.log("--new-ava---->> ",ava);
                         console.log("--new-ava-sett---->> ",avasettings);                   
-                        let sql = `UPDATE users SET ava = '${ava}' WHERE token = '${clientToken}'`;
-                        let sqlsett = `UPDATE userssettings SET avasettings = '${avasettings}' WHERE userid = '${user}'`;
+                        let sql = `UPDATE users SET ava = '${ava}', avasettings = '${avasettings}' WHERE token = '${clientToken}'`;
                         con.query(sql, function (err, result) {
                             if (err) {
                                 console.log("err", err);
                                 res.send({"err":err});
-                            }
-                            con.query(sqlsett, function (err, result) {
+                            }            
+                            console.log("--ava-updated---->> ",result.affectedRows);
+                            fs.unlink(__dirname+`/../public/uploads/${oldava}`, (err) => {
                                 if (err) {
                                     console.log("err", err);
-                                    res.send({"err":err});
                                 }
-                                console.log("--ava-name-updated---->> ",result.affectedRows);
-                                fs.unlink(__dirname+`/../public/uploads/${oldava}`, (err) => {
-                                    if (err) {
-                                        console.log("err", err);
-                                    }
-                                    console.log('--old-ava-delete---->> ',oldava);
-                                    res.send({"result":result});
-                                });
-                            }); 
-                            console.log("--ava-sett-updated---->> ",result.affectedRows);
+                                console.log('--old-ava-delete---->> ',oldava);
+                                res.send({"result":result});
+                            });
                         }); 
                     } else {
                         ava = '';

@@ -166,21 +166,12 @@ let addAvatoDB = (req, res) => {
             if (req.file !== undefined){
                 prUs.ava = req.file.filename;
                 prUs.avasettings = parseAvasettings.avasettings;
-                let sql = `UPDATE users SET ava = '${prUs.ava}' WHERE userid = '${prUs.userid}'`;
-                let sqlsett = `UPDATE userssettings SET avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
+                let sql = `UPDATE users SET ava = '${prUs.ava}', avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
                         console.log("err", err);
                         res.send(err);
                     }
-                    con.query(sqlsett, function (err, result) {
-                        if (err) {
-                            console.log("err", err);
-                            res.send(err);
-                        }
-                        console.log("--settings-foto-updated---->> ",result.affectedRows);
-                        // res.send({"result":result, "userid":prUs.userid});
-                    }); 
                     console.log("--foto-updated---->> ",result.affectedRows);
                     res.send({"result":result, "userid":prUs.userid});
                 }); 
