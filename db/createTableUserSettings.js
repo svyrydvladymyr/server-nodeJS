@@ -26,7 +26,7 @@ let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         vprojectsmetop VARCHAR(5) DEFAULT 'off',    
 
                                         vblogall VARCHAR(5) DEFAULT 'off',                                                               
-                                        vblogme VARCHAR(5) DEFAULT 'on'   
+                                        vblogme VARCHAR(5) DEFAULT 'on',   
 
                                         vfriendme VARCHAR(5) DEFAULT 'on',                                                               
                                         vfriendall VARCHAR(5) DEFAULT 'off'  
