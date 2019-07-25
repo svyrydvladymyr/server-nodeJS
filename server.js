@@ -1,7 +1,8 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
+let con = require('./db/connectToDB').con;
+let {registrationUsers, addAvatoDB, savesett, registrationFacebook} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
@@ -9,28 +10,76 @@ let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = re
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
-// let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
-// passport.use(new FacebookStrategy({
-//         clientID: '435548787037664',
-//         clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
-//         callbackURL: "http://localhost:4000/auth/facebook/callback",
-//         profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
-//     },
-//     function(accessToken, refreshToken, profile, done) {
-//         process.nextTick(function () {                
-//             console.log(profile)
-//         });
-//     }
-// ));
+
+
+
+let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+  
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+  });
+
+app.use(passport.initialize());
+
+passport.use(new FacebookStrategy({
+        clientID: '435548787037664',
+        clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
+        callbackURL: "http://localhost:4000/auth/facebook/callback",
+        profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
+    },    
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+          //Check whether the User exists or not using profile.id
+  
+            // if sets to true
+            con.query(`SELECT * FROM users WHERE userid = ${profile.id}`, (err, result) => {
+              if(err) throw err;
+              if(result && result.length === 0) {
+                  console.log("There is no such user, adding now");
+                  con.query(`INSERT INTO users (userid, name, surname, login, password, email, active) VALUES ('${profile.id}', '${profile.name.givenName}', '${profile.name.familyName}', 'ggg', 'ggg', '${profile.emails[0].value}', 'active')`);
+              } else {
+                  console.log("User already exists in database");
+              }
+            });
+          
+          return done(null, profile);
+        });
+      }
+));
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/registration' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        setTimeout(() => {
+            res.redirect('/');
+
+        }, 10000);
+    });
+app.get('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/login'); }
+        req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect('/users/' + user.username);
+        });
+    })(req, res, next);
+    });
+
+
 
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
-
+//logs
 app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
+//static files
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-// app.get('/auth/facebook', passport.authenticate('facebook'));
-// app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/registration' }));
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`)});
