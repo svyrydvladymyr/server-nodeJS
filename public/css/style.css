@@ -860,7 +860,7 @@ body{
     align-items: center;
     max-width: 30px;
     width: 10%;
-    height: 35px;
+    height: 50px;
 }
 .skills-edit i{
     cursor: pointer;
@@ -920,7 +920,7 @@ body{
 .skills-edit-blok i{
     cursor: pointer;
     font-size: 16px;
-    margin: 1px 3px;
+    margin: 1px 11px;
 }
 .skills-input{
     width: 100%;
@@ -1094,9 +1094,9 @@ body{
 
 .footer-copyright-links{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     font-size: 14px;
-    width: 150px;
+    width: 170px;
     margin: 5px auto;
 }
 
