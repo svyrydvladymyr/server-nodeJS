@@ -12,7 +12,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
             prUs[val] = parseObjUsers[val];
         } else {
             console.log("--bad-input---->> ", mess);            
-            res.send({"err":mess});
+            prUs[val] = '';
         }
     } else {
         prUs[val] = '';

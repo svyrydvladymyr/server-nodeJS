@@ -240,7 +240,6 @@ let VW = (() => {
 
 //get and render page    
     let renderPage = (el) => {
-        console.log(el.id);
         SE.redirect(el.id);        
     }
 
@@ -268,7 +267,14 @@ let VW = (() => {
 // function for add user to DB
     let registerUserToDB = function(res){
         let parseObj = JSON.parse(res);
-        if (parseObj.error === 'duplicate_entry_login'){
+        if (parseObj.error === 'bad_data'){
+            SE.$("main-form-message").innerHTML = 'Bad data';
+        } else if (parseObj.error === 'server_error'){
+            SE.$("main-form-message").innerHTML = 'Server error';
+            setTimeout(() => {
+                SE.redirect('/');
+            },1000);
+        } else if (parseObj.error === 'duplicate_entry_login'){
             SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
             SE.$('reg-login').addEventListener('change', showErrorMainMess);
         } else if (parseObj.error === 'duplicate_entry_email'){

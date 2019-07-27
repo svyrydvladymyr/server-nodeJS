@@ -1,6 +1,23 @@
 let con = require('../db/connectToDB').con;
 let {clienttoken} = require('./service');
 
+let createTableFriends = (getuserid) => {
+    let sqlfriends = `CREATE TABLE friends_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+        userid VARCHAR(100),
+        friendid VARCHAR(100),
+        friendstatus VARCHAR(10),
+        friendvisit VARCHAR(10),
+        friendadd DATE                           
+        )`;
+    con.query(sqlfriends, function (err, result) {
+        if (err) {
+            console.log("--err-create-table-friends--", err.code) 
+        } else {
+            console.log("--Table-friends-created---->> ", result.protocol41);
+        }    
+    });  
+}
+
 let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
     let permissionEdit, permissionFriend;
     permissionEdit = false;  
@@ -193,10 +210,12 @@ let renderuser = (req, res) => {
                     } else {
                         //if the user is found but is not authorized                       
                         if (result == ''){
+                            createTableFriends(getuserid);
                             renderIfFoundAndNotAutoris(req, res, userObj, avaurl);
                         } else {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
+                                createTableFriends(getuserid);
                                 userObjAutoris = result;
                                 //permission for edit
                                 ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? 
@@ -251,6 +270,7 @@ let renderuser = (req, res) => {
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
                                 //if the user is found and is autorized but not verify and not my page
                                 (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
+                                createTableFriends(getuserid);
                                 renderIfNotVerify(req, res, result, userObj, avaurl, permissionAccess);
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 //if the user is found and is autorized and its my page but not verify 
