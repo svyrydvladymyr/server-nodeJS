@@ -245,7 +245,7 @@ let renderuser = (req, res) => {
                                             renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
                                         } else {
                                             permissionisFriend = true;
-                                            permissionidreq = result[0].friendstatus;
+                                            result[0].friendstatus !== undefined ? permissionidreq = result[0].friendstatus : permissionidreq = 'null';
                                             renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
                                         }
                                     }

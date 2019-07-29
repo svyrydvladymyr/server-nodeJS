@@ -1,7 +1,6 @@
 let con = require('./connectToDB').con;
 let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         userid VARCHAR(100) NOT NULL UNIQUE,
-                                        avasettings VARCHAR(10) DEFAULT '50% 50%',
 
                                         maincolor VARCHAR(11) DEFAULT '#2d5e8e',
                                         secondcolor VARCHAR(11) DEFAULT '#5c8ab9',
@@ -26,7 +25,7 @@ let sql = `CREATE TABLE userssettings (id INT AUTO_INCREMENT PRIMARY KEY,
                                         vprojectsmetop VARCHAR(5) DEFAULT 'off',    
 
                                         vblogall VARCHAR(5) DEFAULT 'off',                                                               
-                                        vblogme VARCHAR(5) DEFAULT 'on'   
+                                        vblogme VARCHAR(5) DEFAULT 'on',   
 
                                         vfriendme VARCHAR(5) DEFAULT 'on',                                                               
                                         vfriendall VARCHAR(5) DEFAULT 'off'  
