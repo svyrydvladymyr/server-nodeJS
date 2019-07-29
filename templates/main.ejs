@@ -56,7 +56,7 @@
     <script src="./js/friends.js"></script>
     <% if(permissEdit === 'true') {%>
         <script>
-            SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
+            // SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
             SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsList);
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
         </script>

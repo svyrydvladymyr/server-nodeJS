@@ -60,9 +60,10 @@
 }
 .header-login {
     padding: 10px 0px;
+    height: 60px;
 }
 .click {
-    margin: 0px 20px 17px 20px;
+    margin: 10px 20px 5px 20px;
 }
 .click-login-open{
     width: 145px;
@@ -88,6 +89,15 @@
 
 .article-wrap {
     margin: 10px 0px 0px 0px;
+}
+
+.social-login-wrap{
+    height: 50px;
+    padding: 2px 8px;
+}
+.social-login-wrap img{
+    height: 42px;
+    margin: 0px 15px;
 }
 
 /*------------------------EMPTY BLOKS---------------------------*/
@@ -187,6 +197,11 @@
     margin: -2px 0px 0px -10px;
 }
 
+.skills-wrap{
+    max-width: 395px;
+    width: 100%;
+}
+
 /*--------------------------friends-------------------------------*/
 
 .wrap-all-friends{
@@ -200,7 +215,7 @@
     .set{width: 98%}
     .set_close{width: 98%}
     .login-message-autoris {
-        bottom: -5%;
+        bottom: 0%;
     }
 }
 
@@ -208,8 +223,8 @@
     .set{width: 97.5%}
     .set_close{width: 97.5%}    
     .login-message-autoris {
-        bottom: -5%;
-        margin: 0px 0px 0px 10px;
+        bottom: 0%;
+        margin: 0px 15px 0px 10px;
     }
     .friend-full-wrap{
         width: 100%;
@@ -219,7 +234,7 @@
 @media screen and (max-width:400px){
     .login-message-autoris {
         bottom: -5%;
-        margin: 0px 0px 0px 10px;
+        margin: 0px 15px 0px 10px;
     }
     .friends-all-title {
         padding: 0px;

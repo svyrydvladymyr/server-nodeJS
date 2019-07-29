@@ -13,6 +13,13 @@
                 </div>
                 <!--button-->
                 <div class="header_button">
+                    <% if(permissAccess === 'false') {%>  
+                        <div class="social-login-wrap">
+                            <a href="/facebook"><img src="./img/google.png"></a>
+                            <a href="/facebook"><img src="./img/instagram.png"></a>
+                            <a href="/facebook"><img src="./img/facebook.png"></a>                            
+                        </div>
+                    <% } %>
                     <div class="header-login">
                         <% if(permissAccess === 'false') {%>
                         <!--button for enter-->
@@ -47,7 +54,7 @@
                     <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
                     <% } %>
                     <% if(permissAccess === 'true') {%>
-                        <a href="/<%=permissUserid %>"><p class="login-message-autoris"><%=permissSurname %> <%=permissName %></p></a>
+                        <a href="/<%=permissUserid %>" class="login-message-autoris"><%=permissSurname %> <%=permissName %></a>
                     <% } %>
                     <p class="login-message"  id="login-message" style="display: none;"></p>
                 </div>

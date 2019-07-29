@@ -19,7 +19,7 @@
 }
 
 .click {
-    margin: 19px 20px;
+    margin: 10px 20px 0px 20px;
 }
 
 .header_logo, .header_search, .header_button{
@@ -59,6 +59,7 @@
 }
 .registration{
     bottom: 10%;
+    right: 7%;
 }
 .login-message {
     right: 29%;
@@ -66,7 +67,11 @@
 .login-message-autoris{
     right: 6.5%;
 }
-
+.social-login-wrap {
+    height: 40px;
+    margin-top: 5px;
+    padding: 7px 17px;
+}
 /*--------------------------EMPTY BLOKS-----------------------------*/
 .out2{
     grid-area: out2;
@@ -90,7 +95,7 @@
 @media screen and (max-width:970px){
     .header_logo, .header_search, .header_button{
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-end;
         width: 90%;
         min-width: 280px;
         min-height: 35px;
@@ -138,5 +143,13 @@
     }
     .login-message-autoris{
         right: 14%;
+    }
+    .social-login-wrap{
+        height: 60px;
+        padding: 10px 8px;
+    }
+    .social-login-wrap img{
+        height: 42px;
+        margin: 0px 15px;
     }
 }

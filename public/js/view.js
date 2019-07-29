@@ -222,10 +222,12 @@ let VW = (() => {
             SE.$('userlist').innerHTML = '';
             for(let i = 0; i < parseObj.length; i++){
                 let avafoto;
-                if ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)){
-                    avafoto = `./img/ava_empty.jpg`;
+                let reg = /^http:/i;
+                let reg2 = /^https:/i;
+                if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
+                    avafoto = `${parseObj[i].ava}`;
                 } else {
-                    avafoto = `./uploads/${parseObj[i].ava}`;
+                    avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
                 }
                 SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
                                                 <div class="listusers-img" 
@@ -328,8 +330,8 @@ let VW = (() => {
                 SE.$('reg-name-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){
                 SE.$('reg-surname-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-email-mess').classList.contains('reg-message-true')){
-                SE.$('reg-email-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-email-mess')){
+                if (SE.$('reg-email-mess').classList.contains('reg-message-true')){SE.$('reg-email-mess').classList.remove('reg-message-true');}}
             if (SE.$('reg-age-mess').classList.contains('reg-message-true')){
                 SE.$('reg-age-mess').classList.remove('reg-message-true');}
             if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){

@@ -8,6 +8,7 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
     console.log('--render-user---->> ', result[0]);                     
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
+        regtype: `${userObj[0].regtype}`,
         name: `${userObj[0].name}`,
         surname: `${userObj[0].surname}`,
         email: `${userObj[0].email}`,
@@ -46,6 +47,7 @@ let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionA
     console.log('--render-user---->> ', result[0]);  
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
+        regtype: `${userObj[0].regtype}`,
         name: `${userObj[0].name}`,
         surname: `${userObj[0].surname}`,
         email: `${userObj[0].email}`,
@@ -87,6 +89,7 @@ let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
     permissionFriend = false;
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
+        regtype: `${userObj[0].regtype}`,
         name: `${userObj[0].name}`,
         surname: `${userObj[0].surname}`,
         email: `${userObj[0].email}`,
@@ -183,7 +186,13 @@ let renderuser = (req, res) => {
                 let userObj = result;
                 //get and set ava url    
                 let avaurl;
-                (result[0].ava === null) ? avaurl = `./img/ava_empty.jpg` : avaurl = `./uploads/${result[0].ava}`;
+                let reg = /^http:/i;
+                let reg2 = /^https:/i;
+                if ((reg.test(result[0].ava)) || (reg2.test(result[0].ava))){
+                    avaurl = `${result[0].ava}`;
+                } else {
+                    avaurl = ((result[0].ava === null) || (result[0].ava === '') || (result[0].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${result[0].ava}`;
+                }
                 //select user information from DB
                 let sql = `SELECT token, name, surname, userid, active FROM users WHERE token = '${clientToken}'`;
                 con.query(sql, function (err, result) {

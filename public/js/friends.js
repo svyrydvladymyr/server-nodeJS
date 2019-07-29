@@ -108,7 +108,13 @@ let WFRIENDS = (() => {
         SE.$('friends-conteiner').innerHTML = ``;
         for (let i = 0; i < parseObj.length; i++){
             let avafoto;
-            avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
+            let reg = /^http:/i;
+            let reg2 = /^https:/i;
+            if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
+                avafoto = `${parseObj[i].ava}`;
+            } else {
+                avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
+            }
             SE.$('friends-conteiner').innerHTML += `
             <div class="listusers-boks2" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
                 <div class="listusers-img" 
@@ -170,7 +176,13 @@ let WFRIENDS = (() => {
         SE.$('friends-name-title-href').setAttribute("href", `${parseMyId}`);
         for (let i = 0; i < parseObj.length; i++){
             let avafoto, status;
-            avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
+            let reg = /^http:/i;
+            let reg2 = /^https:/i;
+            if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
+                avafoto = `${parseObj[i].ava}`;
+            } else {
+                avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
+            }
             if (parseStatus === 'reqto'){
                 status = `<div class="add-to-friends-wrap friend-req-plus"  
                     onclick="WFRIENDS.confirmDelFriendFull('${parseObj[i].userid}')" >

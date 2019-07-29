@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {token, clienttoken} = require('./service');
+let {token, clienttoken, renderIfErrAutoriz} = require('./service');
 let Cookies = require('cookies');
 let url = require('url');
 let nodemailer = require('nodemailer');
@@ -137,7 +137,7 @@ let verifyuser = (req, res) => {
 }
 
 let autorisationSocial = (profile, done) => {
-    con.query(`SELECT * FROM users WHERE userid = ${profile.id}`, (err, result) => {
+    con.query(`SELECT * FROM users WHERE userid = '${profile.id}'`, (err, result) => {
         if(err) {
             console.log("--err-autoriz---->>",err);    
             return done(null, profile);             
@@ -164,28 +164,49 @@ let autorisationSocial = (profile, done) => {
                         return done(`${err}`, null);
                     }
                 } else {
-                con.query(sqlsett, function (err, result) {
-                    if (err){
-                    console.log("--err-create-row-settinds--", err);
-                    let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
-                        con.query(sqldel, function (err, result) {
-                            if (err){
-                                console.log("--err-clear-user-if-fail--", err);
-                            } else {
-                                console.log("--result-user-clear---->> ", result.affectedRows);
-                            return done('ER_SERVER', null);
-                            }
-                        });
-                    } else {
-                        console.log("--result-add-row-settings---->> ", result.affectedRows);
-                    return done(null, profile);
-                    }  
-                });
+                    con.query(sqlsett, function (err, result) {
+                        if (err){
+                        console.log("--err-create-row-settinds--", err);
+                        let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
+                            con.query(sqldel, function (err, result) {
+                                if (err){
+                                    console.log("--err-clear-user-if-fail--", err);
+                                } else {
+                                    console.log("--result-user-clear---->> ", result.affectedRows);
+                                return done('ER_SERVER', null);
+                                }
+                            });
+                        } else {
+                            console.log("--result-add-row-settings---->> ", result.affectedRows);
+                        return done(null, profile);
+                        }  
+                    });
                 }
             }); 
         } else if (result[0].userid === profile.id){
-            console.log("--user-is-authorized---->>".profile);
-            return done(null, profile);
+            console.log("--user-is-authorized---->>",profile.id);
+            con.query(`UPDATE users SET name = '${profile.name.givenName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
+            con.query(`UPDATE users SET surname = '${profile.name.familyName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
+            con.query(`UPDATE users SET ava = '${profile.photos[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
+            con.query(`UPDATE users SET email = '${profile.emails[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {
+                if (err) {
+                    if (err.code === 'ER_DUP_ENTRY'){
+                        let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
+                        if (parseSQLmess === 'login'){ 
+                            return done('ER_DUP_LOGIN', null);
+                        } else if (parseSQLmess === 'email'){
+                            return done('ER_DUP_EMAIL', null);
+                        } else {
+                            return done(`${err}`, null);
+                        }             
+                    } else {
+                        return done(`${err}`, null);
+                    }
+                } else {
+                    console.log("--set-new-email---->>",result.affectedRows);
+                    return done(null, profile);
+                }
+            });
         }
     }); 
 }
@@ -214,7 +235,7 @@ let autorisSocialSetCookie = (req, res, user) => {
                     console.log("err", err);
                     res.redirect(user.id);
                 } else {
-                    console.log("--result-userSett---->> ", result.changedRows);
+                    console.log("--result-userSett---->> ", result[0].userid);
                     let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                     let param = {
                     maxAge: '', 
@@ -229,11 +250,27 @@ let autorisSocialSetCookie = (req, res, user) => {
     });    
 }
 
+let autorisRouts = (req, res, err, user) => {
+    if(err){
+        if (err === 'ER_DUP_EMAIL'){
+            renderIfErrAutoriz(req, res, 'err_autoriz_email');
+        } else if (err === 'ER_DUP_LOGIN'){
+            renderIfErrAutoriz(req, res, 'err_autoriz_login');
+        } else if (err === 'ER_SERVER'){
+            renderIfErrAutoriz(req, res, 'err_autoriz_server');
+        } else {
+            res.redirect('/');
+        }    
+    } else {
+        autorisSocialSetCookie(req, res, user); 
+    }     
+}
+
 module.exports = {
     autorisation,
     exit,
     sendemail,
     verifyuser,
     autorisationSocial,
-    autorisSocialSetCookie
+    autorisRouts
 };

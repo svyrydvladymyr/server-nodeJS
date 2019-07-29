@@ -1,59 +1,30 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let con = require('./db/connectToDB').con;
-let Cookies = require('cookies');
-let {registrationUsers, addAvatoDB, savesett, registrationFacebook} = require('./modules/registration');
+let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
-let {accessLog, token} = require('./modules/service');
-let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisSocialSetCookie} = require('./modules/autorisation');
+let {accessLog} = require('./modules/service');
+let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts} = require('./modules/autorisation');
 let passport = require('passport'); 
 let FacebookStrategy = require('passport-facebook').Strategy;
 
-passport.serializeUser(function(user, done) {
-      done(null, user);
-  });
-  
-passport.deserializeUser(function(obj, done) {
-      done(null, obj);
-  });
-
+passport.serializeUser(function(user, done) {done(null, user)});  
+passport.deserializeUser(function(obj, done) {done(null, obj)});
 app.use(passport.initialize());
 
 passport.use(new FacebookStrategy({
     clientID: '435548787037664',
     clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
     callbackURL: "http://localhost:4000/facebookcallback",
-    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
-}, 
-    function(accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {autorisationSocial(profile, done)});
-    }
-));
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+}, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
 
 app.get('/facebook', passport.authenticate('facebook'));
-app.get('/facebookcallback', function(req, res, next) {
-    passport.authenticate('facebook', function(err, user, info) {
-        if(err){
-            console.log("--err-autoriz--",err); 
-            if (err === 'ER_DUP_EMAIL'){
-                renderIfErrAutoriz = (req, res, 'err_autoriz_email');
-            } else if (err === 'ER_DUP_LOGIN'){
-                renderIfErrAutoriz = (req, res, 'err_autoriz_login');
-            } else if (err === 'ER_SERVER'){
-                renderIfErrAutoriz = (req, res, 'err_autoriz_server');
-            } else {
-                res.redirect('/');
-            }    
-        } else {
-            autorisSocialSetCookie(req, res, user); 
-        }  
-    })(req, res, next);
-});
+app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
 
 
 
