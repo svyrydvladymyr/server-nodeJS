@@ -49,23 +49,7 @@ let autorisation = (req, res) => {
                             path: '/', 
                             signed:true}
                         cookies.set('sessionisdd', `${tokenId}`, param);
-                        let renameres = result[0];    
-                        let sqlfriends = `CREATE TABLE friends_${result[0].userid} (id INT AUTO_INCREMENT PRIMARY KEY,
-                            userid VARCHAR(100),
-                            friendid VARCHAR(100),
-                            friendstatus VARCHAR(10),
-                            friendvisit VARCHAR(10),
-                            friendadd DATE                           
-                            )`;
-                        con.query(sqlfriends, function (err, result) {
-                            if (err) {
-                                console.log("--err--", err.code) 
-                                if (err.code === 'ER_TABLE_EXISTS_ERROR'){res.send({"res":renameres})}
-                            } else {
-                                console.log("--Table-friends-created---->> ", result.protocol41);
-                                res.send({"res":renameres});
-                            }    
-                        });                        
+                        res.send({"res":result[0]});                      
                     }
                 }); 
             }           
@@ -150,12 +134,106 @@ let verifyuser = (req, res) => {
             res.send({"res":userid});
         }
     });
+}
 
+let autorisationSocial = (profile, done) => {
+    con.query(`SELECT * FROM users WHERE userid = ${profile.id}`, (err, result) => {
+        if(err) {
+            console.log("--err-autoriz---->>",err);    
+            return done(null, profile);             
+        } else if (result && result.length === 0) {
+            console.log("--register-user---->>");
+            let login = token(10);
+            let password = token(10);
+            let datetime = new Date();
+            let updatedatetime = datetime.toISOString().slice(0,10);
+            let sql = `INSERT INTO users (userid, name, surname, login, password, email, active, regtype, registrdata, ava) VALUES ('${profile.id}', '${profile.name.givenName}', '${profile.name.familyName}', '${login}', '${password}', '${profile.emails[0].value}', 'active', 'facebook', '${updatedatetime}',  '${profile.photos[0].value}')`;
+            let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${profile.id}')`;          
+            con.query(sql, function (err, result) {
+                if (err) {
+                    if (err.code === 'ER_DUP_ENTRY'){
+                        let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
+                        if (parseSQLmess === 'login'){ 
+                            return done('ER_DUP_LOGIN', null);
+                        } else if (parseSQLmess === 'email'){
+                            return done('ER_DUP_EMAIL', null);
+                        } else {
+                            return done(`${err}`, null);
+                        }             
+                    } else {
+                        return done(`${err}`, null);
+                    }
+                } else {
+                con.query(sqlsett, function (err, result) {
+                    if (err){
+                    console.log("--err-create-row-settinds--", err);
+                    let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
+                        con.query(sqldel, function (err, result) {
+                            if (err){
+                                console.log("--err-clear-user-if-fail--", err);
+                            } else {
+                                console.log("--result-user-clear---->> ", result.affectedRows);
+                            return done('ER_SERVER', null);
+                            }
+                        });
+                    } else {
+                        console.log("--result-add-row-settings---->> ", result.affectedRows);
+                    return done(null, profile);
+                    }  
+                });
+                }
+            }); 
+        } else if (result[0].userid === profile.id){
+            console.log("--user-is-authorized---->>".profile);
+            return done(null, profile);
+        }
+    }); 
+}
+
+let autorisSocialSetCookie = (req, res, user) => {
+    let tokenId = token(20);
+    let sql = `UPDATE users SET token = '${tokenId}' WHERE userid = '${user.id}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.redirect('/');
+        } else {
+            console.log("--result-autoriz---->> ",result.changedRows);
+            if (result.changedRows === 0){
+                let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                let param = {
+                maxAge: '-1', 
+                path: '/', 
+                signed:true}
+                cookies.set('sessionisdd', ``, param); 
+                res.redirect(user.id);
+            } else {
+                let sqlsel = `SELECT userid FROM users WHERE userid = '${user.id}'`;
+                con.query(sqlsel, function (err, result) {
+                if (err) {
+                    console.log("err", err);
+                    res.redirect(user.id);
+                } else {
+                    console.log("--result-userSett---->> ", result.changedRows);
+                    let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                    let param = {
+                    maxAge: '', 
+                    path: '/', 
+                    signed:true}
+                    cookies.set('sessionisdd', `${tokenId}`, param);
+                    res.redirect(user.id);                      
+                }
+                }); 
+            }           
+        }
+    });    
 }
 
 module.exports = {
     autorisation,
     exit,
     sendemail,
-    verifyuser
+    verifyuser,
+    autorisationSocial,
+    autorisSocialSetCookie
 };

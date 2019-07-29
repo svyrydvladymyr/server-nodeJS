@@ -12,7 +12,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
             prUs[val] = parseObjUsers[val];
         } else {
             console.log("--bad-input---->> ", mess);            
-            res.status(404).send(mess);
+            prUs[val] = '';
         }
     } else {
         prUs[val] = '';
@@ -38,14 +38,18 @@ let updaterender = (req, res) => {
         con.query(sql, function (err, result) {
             if (err) {
                 console.log("err", err);
-                res.send(err);
+                res.send({"err":err});
             }
             console.log("--user-for-update---->> ", result[0]);  
             let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
-            phone = result[0].phone.slice(3 ,13);
-            phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
-            message = result[0].message.slice(3 ,13);
-            messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
+            if (result[0].phone !== null){
+                phone = result[0].phone.slice(3 ,13);
+                phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
+            }
+            if (result[0].message !== null){
+                message = result[0].message.slice(3 ,13);
+                messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
+            }
             if ((RC === 'Ukraine') || (RC === 'Україна')){
                 country = 'ukraine';
             } else if ((RC === 'Russian') || (RC === 'Росія')){
@@ -58,6 +62,7 @@ let updaterender = (req, res) => {
             town = translit(result[0].town);        
             res.render(`update`, {
                 userid: result[0].userid,
+                regtype: result[0].regtype,
                 name: result[0].name,
                 surname: result[0].surname,
                 email: result[0].email,
@@ -180,10 +185,10 @@ let updateother = (req, res) => {
     let clientToken = clienttoken(req, res);
     console.log("--client-registr-obj---->> ", parseObjUsers); 
     prUs.updateuser = updatedatetime;
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "education", "Bad education!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "education", "Bad education!", parseObjUsers, res); 
     console.log("--ready-obj--", prUs);
     prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
     prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;
@@ -234,28 +239,20 @@ let updateAvatoDB = (req, res) => {
                         avasettings = parseAvasettings.avasettings;
                         console.log("--new-ava---->> ",ava);
                         console.log("--new-ava-sett---->> ",avasettings);                   
-                        let sql = `UPDATE users SET ava = '${ava}' WHERE token = '${clientToken}'`;
-                        let sqlsett = `UPDATE userssettings SET avasettings = '${avasettings}' WHERE userid = '${user}'`;
+                        let sql = `UPDATE users SET ava = '${ava}', avasettings = '${avasettings}' WHERE token = '${clientToken}'`;
                         con.query(sql, function (err, result) {
                             if (err) {
                                 console.log("err", err);
                                 res.send({"err":err});
-                            }
-                            con.query(sqlsett, function (err, result) {
+                            }            
+                            console.log("--ava-updated---->> ",result.affectedRows);
+                            fs.unlink(__dirname+`/../public/uploads/${oldava}`, (err) => {
                                 if (err) {
                                     console.log("err", err);
-                                    res.send({"err":err});
                                 }
-                                console.log("--ava-name-updated---->> ",result.affectedRows);
-                                fs.unlink(__dirname+`/../public/uploads/${oldava}`, (err) => {
-                                    if (err) {
-                                        console.log("err", err);
-                                    }
-                                    console.log('--old-ava-delete---->> ',oldava);
-                                    res.send({"result":result});
-                                });
-                            }); 
-                            console.log("--ava-sett-updated---->> ",result.affectedRows);
+                                console.log('--old-ava-delete---->> ',oldava);
+                                res.send({"result":result});
+                            });
                         }); 
                     } else {
                         ava = '';

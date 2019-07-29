@@ -240,7 +240,6 @@ let VW = (() => {
 
 //get and render page    
     let renderPage = (el) => {
-        console.log(el.id);
         SE.redirect(el.id);        
     }
 
@@ -268,7 +267,14 @@ let VW = (() => {
 // function for add user to DB
     let registerUserToDB = function(res){
         let parseObj = JSON.parse(res);
-        if (parseObj.error === 'duplicate_entry_login'){
+        if (parseObj.error === 'bad_data'){
+            SE.$("main-form-message").innerHTML = 'Bad data';
+        } else if (parseObj.error === 'server_error'){
+            SE.$("main-form-message").innerHTML = 'Server error';
+            setTimeout(() => {
+                SE.redirect('/');
+            },1000);
+        } else if (parseObj.error === 'duplicate_entry_login'){
             SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
             SE.$('reg-login').addEventListener('change', showErrorMainMess);
         } else if (parseObj.error === 'duplicate_entry_email'){
@@ -374,6 +380,7 @@ let VW = (() => {
 
 //save settings widgets
     let saveWidgets = (val, val2) => {
+        setTimeout(() => {
         let obj, blogme, blogall;
         if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
         if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
@@ -387,7 +394,9 @@ let VW = (() => {
             SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
             obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
         }
-        SE.send(obj, '/widgetsett', VW.saveWidgetsMess);        
+
+            SE.send(obj, '/widgetsett', VW.saveWidgetsMess);     
+        }, 200);
     };  
     
     let saveWidgetsMess = (res) => {
@@ -444,73 +453,7 @@ let VW = (() => {
         }, 2000);
     };
 
-//change button after add to friends
-    let addToFriends = (res) => {   
-        let parseObj = JSON.parse(res); 
-        if (parseObj.error === 'ER_DUP_ENTRY'){
-            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
-            setTimeout(() => {
-                SE.$('mess-about-add-friend').innerHTML = '';
-            }, 2000);
-        } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
-        } 
-    };
 
-//show confirm button for delete
-    let confirmDelFriend = () => {   
-        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap add-to-friends-wrap2">
-        <i class='far fa-trash-alt' onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)"></i>
-        <i class='fas fa-times' onclick="VW.closeConfirmDelFriend()"></i>
-        </div>`;
-    };
-
-//show confirm button for delete
-    let confirmProof = () => {   
-        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap add-to-friends-wrap2">
-        <i class='fas fa-check' onclick="SE.send({}, '/prooftofriends', VW.proofToFriends)"></i>
-        <i class='fas fa-times' onclick="SE.send({}, '/delfromfriends', VW.delFromFriends)"></i>
-        </div>`;
-    };
-
-//close confirm button for delete
-    let closeConfirmDelFriend = () => {   
-        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
-    };
-
-//change button after del from friends
-    let delFromFriends = (res) => {   
-        let parseObj = JSON.parse(res); 
-        if (parseObj.res === 0){
-            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
-            setTimeout(() => {
-                SE.$('mess-about-add-friend').innerHTML = '';
-            }, 2000);
-        } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', VW.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${SE.errorFormMessage().friendsadd}</b></i></div>`;
-            if(SE.$('mess-friend-wrap')){
-                SE.$('mess-friend-wrap').innerHTML = ``;
-            }
-        } else if (parseObj.err){
-            console.log(parseObj.err);            
-        }
-    };
-
-//change button after proof friend  
-    let proofToFriends = (res) => {   
-        let parseObj = JSON.parse(res); 
-        console.log(parseObj);
-        if (parseObj.res === 0){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req">${SE.errorFormMessage().prooffriends}</b></i></div>`;
-        } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
-            // if(SE.$('mess-friend-wrap')){
-                SE.$('mess-friend-wrap').innerHTML = `<div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess">${SE.errorFormMessage().friendsmess}</b></i></div>`;
-            // }
-        } else if (parseObj.err){
-            console.log(parseObj.err);            
-        }
-    };
 
 
 //---------------------------------
@@ -551,12 +494,6 @@ return {
     animationAfterSend,
     animationAfterSendSpiner,
     redirectAfterVerify,
-    addToFriends,
-    delFromFriends,
-    confirmDelFriend,
-    closeConfirmDelFriend,
-    confirmProof,
-    proofToFriends,
     inwork
 };
 

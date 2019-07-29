@@ -25,8 +25,8 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
         if (new RegExp(reg, "gi").test(parseObjUsers[val]) == true){
             prUs[val] = parseObjUsers[val];
         } else {
-            console.log("--bad-input--", mess);            
-            res.status(404).send(mess);
+            console.log("--bad-input--", mess);    
+            prUs[val] = '';        
         }
     } else { prUs[val] = '';}
 };
@@ -45,10 +45,10 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ ]+$", "education", "Bad education!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "country", "Bad country!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ ]+$", "town", "Bad town!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "education", "Bad education!", parseObjUsers, res);     
     let verifyToken = token(10);    
     let hostname = req.headers.host; 
     let verifyUrl = `${hostname}/verify?userid=${prUs.userid}&verifycod=${verifyToken}`;
@@ -90,60 +90,64 @@ let registrationUsers = (req, res) => {
                 Verify Email Address</p></a>
                 <p>If you did not create an account, no further action is required.</p>`
     };
-    con.query(sql, function (err, result) {
-        if (err) {
-            if (err.code === 'ER_DUP_ENTRY'){
-                let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
-                if (parseSQLmess === 'login'){
-                    console.log("--err--", err.sqlMessage);
-                    res.send({"error":'duplicate_entry_login'});
-                } else if (parseSQLmess === 'email'){
-                    console.log("--err--", err.sqlMessage);
-                    res.send({"error":'duplicate_entry_email'});
+    if ((prUs.login !== '') && (prUs.password !== '') && (prUs.email !== '') && (prUs.name !== '') && (prUs.surname !== '')){
+        con.query(sql, function (err, result) {
+            if (err) {
+                if (err.code === 'ER_DUP_ENTRY'){
+                    let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
+                    if (parseSQLmess === 'login'){
+                        console.log("--err-dup-login--", err.sqlMessage);
+                        res.send({"error":'duplicate_entry_login'});
+                    } else if (parseSQLmess === 'email'){
+                        console.log("--err-dup-email--", err.sqlMessage);
+                        res.send({"error":'duplicate_entry_email'});
+                    } else {
+                        console.log("--err--", err);
+                        res.send({"error":err});
+                    }             
                 } else {
                     console.log("--err--", err);
                     res.send({"error":err});
-                }             
+                }
             } else {
-                console.log("--err--", err);
-                res.send({"error":err});
+                let renameres = result;
+                con.query(sqlsett, function (err, result) {
+                    if (err){
+                        console.log("--err-create-row-settinds--", err);
+                        let sqldel = `DELETE FROM users WHERE userid = ${prUs.userid}`;
+                        con.query(sqldel, function (err, result) {
+                            err ? console.log("--err-clear-user-if-fail--", err) : console.log("--result-user-clear---->> ", result.affectedRows);
+                            res.send({"error":"server_error"});
+                        });
+                    } else {
+                        console.log("--result-add-row-settings---->> ", result.affectedRows);
+                        con.query(sqlskills, function (err, result) {
+                            err ? console.log("--err--", err) : console.log("--result-add-row-skills---->> ", result.affectedRows);
+                        });
+                        con.query(sqlproj, function (err, result) {
+                            err ? console.log("--err--", err) : console.log("--result-add-row-projects---->> ", result.affectedRows);
+                        });  
+                        con.query(sqlfriends, function (err, result) {
+                            err ? console.log("--err--", err) : console.log("--result-cteated-table-friends---->> ", result.protocol41);
+                        });
+                        transporter.sendMail(mailOptions, function(err, info){
+                            err ? console.log("--err--", err) : console.log('--result-sent-Email---->> ' + info.response);
+                        });
+                        console.log("--result-registr-user---->> ", renameres.affectedRows);            
+                        let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                        let param = {
+                            maxAge: '', 
+                            path: '/', 
+                            signed:true}
+                        cookies.set('sessionisdd', `${tokenId}`, param);
+                        res.send(renameres);
+                    }  
+                });
             }
-        } else {
-            con.query(sqlsett, function (err, result) {
-                if (err) { 
-                    console.log("--err--", err);
-                    res.send({"error":err});   
-                } else {
-                    console.log("--result-registr-settings---->> ", result.affectedRows);
-                }
-            });
-            con.query(sqlskills, function (err, result) {
-                err ? console.log("--err--", err) : console.log("--result-registr-skills---->> ", result.affectedRows);
-            });
-            con.query(sqlproj, function (err, result) {
-                err ? console.log("--err--", err) : console.log("--result-registr-projects---->> ", result.affectedRows);
-            });  
-            con.query(sqlfriends, function (err, result) {
-                err ? console.log("--err--", err) : console.log("--Table-friends-created---->> ", result.protocol41);
-            });
-            transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                    console.log(error);
-                    res.send({"error":error});
-                } else {
-                    console.log('--Email-sent---->> ' + info.response);
-                }
-            });
-            console.log("--result-registr-user---->> ", result.affectedRows);            
-            let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-            let param = {
-                maxAge: '', 
-                path: '/', 
-                signed:true}
-            cookies.set('sessionisdd', `${tokenId}`, param);
-            res.send(result);
-        }
-    });  
+        }); 
+    } else {
+        res.send({"error":"bad_data"});
+    }
 };
 
 //if registration true add ava to DB
@@ -166,21 +170,12 @@ let addAvatoDB = (req, res) => {
             if (req.file !== undefined){
                 prUs.ava = req.file.filename;
                 prUs.avasettings = parseAvasettings.avasettings;
-                let sql = `UPDATE users SET ava = '${prUs.ava}' WHERE userid = '${prUs.userid}'`;
-                let sqlsett = `UPDATE userssettings SET avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
+                let sql = `UPDATE users SET ava = '${prUs.ava}', avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
                         console.log("err", err);
                         res.send(err);
                     }
-                    con.query(sqlsett, function (err, result) {
-                        if (err) {
-                            console.log("err", err);
-                            res.send(err);
-                        }
-                        console.log("--settings-foto-updated---->> ",result.affectedRows);
-                        // res.send({"result":result, "userid":prUs.userid});
-                    }); 
                     console.log("--foto-updated---->> ",result.affectedRows);
                     res.send({"result":result, "userid":prUs.userid});
                 }); 

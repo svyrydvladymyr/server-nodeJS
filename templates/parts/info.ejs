@@ -59,33 +59,33 @@
                 <!--add-->
             <% if((permissionFriend === 'true') && (permissionisFriend === 'false') && (permissionidreq === 'null')) {%>   
                 <div class='add-to-friends' id="add-friend-wrap">  
-                    <div class="add-to-friends-wrap"  onclick="SE.send({}, '/addtofriends', VW.addToFriends)" ><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend"></b></i></div>           
+                    <div class="add-to-friends-wrap"  onclick="SE.send({}, '/addtofriends', WFRIENDS.addToFriends)" ><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend"></b></i></div>           
                 </div>
             <% } %>
 
                 <!--add-proof-->
             <% if((permissionFriend === 'true') && (permissionisFriend === 'true') && (permissionidreq === 'reqfrom')) {%>   
                 <div class='add-to-friends' id="add-friend-wrap">  
-                    <div class="add-to-friends-wrap"  onclick="VW.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req"></b></i></div>           
+                    <div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req"></b></i></div>           
                 </div>
             <% } %>
             
                 <!--del-->
             <% if((permissionFriend === 'true') && (permissionisFriend === 'true') && ((permissionidreq === 'friend') || (permissionidreq === 'reqto') || (permissionidreq === 'null'))) {%>   
                 <div class='add-to-friends' id="add-friend-wrap">             
-                    <div class="add-to-friends-wrap"  onclick="VW.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
+                    <div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend"></b></i></div>
                 </div>
             <% } %>
 
             <p id="mess-about-add-friend" style="margin: 0px; width:100%; color: red; text-align:center; font-size: 14px; font-weight: bold;"></p>
-            <% if((country !== '') || (town !== '')) {%>
+            <% if(((country !== '') && (country !== 'null')) || ((town !== '') && (town !== 'null'))) {%>
             <div class="info-blok">
                 <i class="fas fa-map-marker-alt"></i>
                 <div  class="info-blok-text"> 
-                    <% if(country !== '') {%>   
+                    <% if((country !== '') && (country !== 'null')) {%>   
                     <p id="country"><%=country %></p>
                     <% } %>
-                    <% if(town !== '') {%>
+                    <% if((town !== '') && (town !== 'null')) {%>
                     <p id="town"><%=town %></p>
                     <% } %>
                 </div>

@@ -35,6 +35,7 @@
                 <div class="tabs-form-body-wrap">
                 <!----SECURITY AND ENTER----------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
+                        <% if(regtype !== 'facebook') {%>
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
@@ -72,6 +73,7 @@
                         </div>               
                         <!--main message form-->
                         <p class="main-form-message" id="main-form-messageone"></p>
+                        <% } %>
                     </div>
 
                 <!----MAIN_INFO--------------------------------------------------->
@@ -92,6 +94,7 @@
                             </div>
                             <div class="form_message"><p id="reg-surname-mess" class="reg-message "></p></div>   
                         </div>
+                        <% if(regtype !== 'facebook') {%>
                         <!--email-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
@@ -99,7 +102,8 @@
                                 <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=email %>">
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
-                        </div>                
+                        </div>    
+                        <% } %>            
                         <!--birthday-->
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-age"></p></div>
@@ -231,7 +235,7 @@
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-chack-last2" id="widget-friend-t2"></span>
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendall', 'vfriendme')" <% if(vfriendall === 'on') {%> checked <% } %>>
+                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendall === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
                                             <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
@@ -274,7 +278,7 @@
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-chack-last2" id="widget-blog-t2"></span>
                                         <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vblogall" id="vblogall" onchange="VW.saveWidgets('vblogall', 'vblogme')" <% if(vblogall === 'on') {%> checked <% } %>>
+                                            <input type="checkbox" name="vblogall" id="vblogall" onchange="VW.saveWidgets('vblogme', 'vblogall')" <% if(vblogall === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
                                             <input type="checkbox" name="vblogme" id="vblogme" onchange="VW.saveWidgets('vblogme', 'vblogall')" <% if(vblogme === 'on') {%> checked <% } %>>
@@ -322,7 +326,12 @@
         <script src="./js/proto.js"></script>
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
-        <script src="./js/update.js"></script>
+        <% if(regtype !== 'facebook') {%>
+            <script src="./js/update.js"></script>
+        <% } %>
+        <% if(regtype === 'facebook') {%>
+            <script src="./js/updateF.js"></script>
+        <% } %>
         <script>        
             SE.$('reg-country').value = "<%=country %>"
             SE.$('reg-tel_cod').value = "<%=phonecod %>"

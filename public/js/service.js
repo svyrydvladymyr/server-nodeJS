@@ -174,7 +174,9 @@ let SE = (() => {
             let friendsadd = "Додати";
             let friendsmess = "Повідомлення";
             let prooffriends = "Підтвердити";
+            let showmore = "Показати ще";
             return {
+                showmore,
                 prooffriends,
                 friendsmess,
                 friendsdel,
@@ -247,7 +249,9 @@ let SE = (() => {
             let friendsadd = "Add";
             let friendsmess = "Message";
             let prooffriends = "Confirm";
+            let showmore = "Show more";
             return {
+                showmore,
                 prooffriends,
                 friendsmess,
                 friendsdel,

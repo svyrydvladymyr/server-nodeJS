@@ -8,14 +8,14 @@
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -47,14 +47,58 @@
         </script>
     <% } %>
 
+    <% if(onindex === 'err_autoriz') {%>
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 0px auto;">
+            <% if(errautoriz === 'err_autoriz_email') {%>
+                <p id="autoriz-email"> </p>
+            <% } %>
+            <% if(errautoriz === 'err_autoriz_login') {%>
+                <p id="autoriz-login"> </p>
+            <% } %>
+            <% if(errautoriz === 'err_autoriz_server') {%>
+                <p id="autoriz-server"> </p>
+            <% } %>
+        </div>
+    <% } %>
+
     <% if(onindex === 'friends') {%>
         <div class="wrap-all-friends" >
             <div class="friends-all-title">
-                <p  class="friends-name-title"><%=permissSurname %> <%=permissName %></p>
+                <a id="friends-name-title-href" style="text-decoration-line:none; "><p class="friends-name-title" id="friends-name-title"></p></a>
                 <p id="widget-friends-t" class="friends-text-title"></p>
             </div>
             <div class="friends-all-body" id="show-all-user-friends">
+            </div>
+            <div class="friends-show-more-wrap" id="friends-show-more-wrap">
+                
+            </div>
+        </div>
+    <% } %>
+    
+    <% if((onindex === 'friendsproof') && (permissEdit === 'true')) {%>
+        <div class="wrap-all-friends" >
+            <div class="friends-all-title">
+                <a id="friends-name-title-href" style="text-decoration-line:none; "><p class="friends-name-title" id="friends-name-title"></p></a>
+                <p id="widget-friends-proof" class="friends-text-title"></p>
+            </div>
+            <div class="friends-all-body" id="show-all-user-friends">
+            </div>
+            <div class="friends-show-more-wrap" id="friends-show-more-wrap">
+                
+            </div>
+        </div>
+    <% } %>
 
+    <% if((onindex === 'friendsreq') && (permissEdit === 'true')) {%>
+        <div class="wrap-all-friends" >
+            <div class="friends-all-title">
+                <a id="friends-name-title-href" style="text-decoration-line:none; "><p class="friends-name-title" id="friends-name-title"></p></a>
+                <p id="widget-friends-req" class="friends-text-title"></p>
+            </div>
+            <div class="friends-all-body" id="show-all-user-friends">
+            </div>
+            <div class="friends-show-more-wrap" id="friends-show-more-wrap">
+                
             </div>
         </div>
     <% } %>
@@ -73,7 +117,21 @@
         <script>
             let x = /\?friends\=/g;
             let clearurl = window.location.search.replace(x, '');
-            SE.send({"type":"friend", "limit":20, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+            SE.send({"type":"friend", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+        </script>
+    <% } %>
+    <% if(onindex === 'friendsproof') {%>
+        <script>
+            let x = /\?friends\=/g;
+            let clearurl = window.location.search.replace(x, '');
+            SE.send({"type":"reqfrom", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+        </script>
+    <% } %>
+    <% if(onindex === 'friendsreq') {%>
+        <script>
+            let x = /\?friends\=/g;
+            let clearurl = window.location.search.replace(x, '');
+            SE.send({"type":"reqto", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
         </script>
     <% } %>
 

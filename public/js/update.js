@@ -57,11 +57,11 @@ window.onload = function(){
     //town------------------------------------------------------------------------------------
         SE.$("reg-town").addEventListener("change", () => {SE.checkCut("reg-town", "")});
     //profession-----------------------------------------------------------------------------------
-        SE.$("reg-profession").addEventListener("change", () => {SE.checkCut("reg-profession", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
-        SE.$("reg-profession").addEventListener("input", () => {SE.checkTest("reg-profession", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
-    //profession-----------------------------------------------------------------------------------
-        SE.$("reg-education").addEventListener("change", () => {SE.checkCut("reg-education", "[^a-zA-Zа-яА-ЯіІїЇ ]")});
-        SE.$("reg-education").addEventListener("input", () => {SE.checkTest("reg-education", "^[a-zA-Zа-яА-ЯіІїЇ ]+$")}); 
+        SE.$("reg-profession").addEventListener("change", () => {SE.checkCut("reg-profession", "[^a-zA-Zа-яА-Я-іІїЇ ]")});
+        SE.$("reg-profession").addEventListener("input", () => {SE.checkTest("reg-profession", "^[a-zA-Zа-яА-Я-іІїЇ ]+$")}); 
+    //education-----------------------------------------------------------------------------------
+        SE.$("reg-education").addEventListener("change", () => {SE.checkCut("reg-education", "[^a-zA-Zа-яА-Я-іІїЇ ]")});
+        SE.$("reg-education").addEventListener("input", () => {SE.checkTest("reg-education", "^[a-zA-Zа-яА-Я-іІїЇ ]+$")}); 
     //send-----------------------------------------------------------------------------------
         SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
 

@@ -1,14 +1,10 @@
 let con = require('../db/connectToDB').con;
-let url = require('url');
-let {clienttoken} = require('./service');
+let {clienttoken, createTableFriends} = require('./service');
 
-let renderIfNotVerify = (req, res, result, userObj, avaurl) => {
-    let permissionAccess, permissionEdit, permissionFriend;
+let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
+    let permissionEdit, permissionFriend;
     permissionEdit = false;  
     permissionFriend = false;
-    (result[0].token === clientToken) ? 
-    permissionAccess = true : 
-    permissionAccess = false;
     console.log('--render-user---->> ', result[0]);                     
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
@@ -27,6 +23,7 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl) => {
         permissAccess: `${permissionAccess}`,
         permissEdit: `${permissionEdit}`,
         permissionFriend: `${permissionFriend}`,
+        permissionidreq: `null`,
         permissName: `${result[0].name}`,
         permissSurname: `${result[0].surname}`,
         permissUserid: `${result[0].userid}`,
@@ -105,6 +102,7 @@ let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
         permissAccess: `${permissionAccess}`,
         permissEdit: `${permissionEdit}`,
         permissionFriend: `${permissionFriend}`,
+        permissionidreq: `null`,
         permissName: ``,
         permissSurname: ``,
         permissUserid: ``,
@@ -195,10 +193,12 @@ let renderuser = (req, res) => {
                     } else {
                         //if the user is found but is not authorized                       
                         if (result == ''){
+                            createTableFriends(getuserid);
                             renderIfFoundAndNotAutoris(req, res, userObj, avaurl);
                         } else {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
+                                createTableFriends(getuserid);
                                 userObjAutoris = result;
                                 //permission for edit
                                 ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? 
@@ -252,7 +252,9 @@ let renderuser = (req, res) => {
                                 }); 
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
                                 //if the user is found and is autorized but not verify and not my page
-                                renderIfNotVerify(req, res, result, userObj, avaurl);
+                                (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
+                                createTableFriends(getuserid);
+                                renderIfNotVerify(req, res, result, userObj, avaurl, permissionAccess);
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 //if the user is found and is autorized and its my page but not verify 
                                 (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;

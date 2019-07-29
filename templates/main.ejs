@@ -62,32 +62,26 @@
         </script>
     <% } %>
 
-
-
     <!--friends-for-all-->
-    <% if((vfriendall === 'on') && (permissionFriend === 'false')) {%>
+    <% if((vfriendall === 'on') && (permissEdit === 'false')) {%>
         <script>
             SE.send({"type":"friend", "limit":20, "step":''}, '/showfriends', WFRIENDS.showFriends);
         </script>
-            <% if(permissEdit === 'true') {%>            
-                <script>
-                    SE.send({"type":"reqto", "limit":200, "step":''}, '/showfriends', WFRIENDS.showFriendsAdd);            
-                    SE.send({"type":"reqfrom", "limit":200, "step":''}, '/showfriends', WFRIENDS.showFriendsProof);            
-                </script>
-            <% } %>
     <% } %>
 
     <!--friends-for-me-->
-    <% if((permissionFriend === 'true') && (vfriendme === 'on')) {%>
+    <% if((vfriendme === 'on') && (permissEdit === 'true')) {%>
         <script>
             SE.send({"type":"friend", "limit":20, "step":''}, '/showfriends', WFRIENDS.showFriends);
         </script>
+        <% if(permissEdit === 'true') {%>            
+            <script>
+                SE.send({"type":"reqto", "limit":200, "step":''}, '/showfriends', WFRIENDS.showFriendsAdd);            
+                SE.send({"type":"reqfrom", "limit":200, "step":''}, '/showfriends', WFRIENDS.showFriendsProof);            
+            </script>
+        <% } %>
     <% } %>
-
-
-
-
-
+    
 
     <!--skills-->
     <% if((permissEdit === 'false') && (vskillsall === 'on') && (vskillsalltop === 'off')) {%>
