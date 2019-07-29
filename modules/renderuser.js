@@ -1,22 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken} = require('./service');
-
-let createTableFriends = (getuserid) => {
-    let sqlfriends = `CREATE TABLE friends_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
-        userid VARCHAR(100),
-        friendid VARCHAR(100),
-        friendstatus VARCHAR(10),
-        friendvisit VARCHAR(10),
-        friendadd DATE                           
-        )`;
-    con.query(sqlfriends, function (err, result) {
-        if (err) {
-            console.log("--err-create-table-friends--", err.code) 
-        } else {
-            console.log("--Table-friends-created---->> ", result.protocol41);
-        }    
-    });  
-}
+let {clienttoken, createTableFriends} = require('./service');
 
 let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
     let permissionEdit, permissionFriend;

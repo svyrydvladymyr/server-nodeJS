@@ -44,6 +44,9 @@
         "del-to-friend":"Remove",
         "friend-mess":"Message",
         "friends-show-more-button":"Show more",
+        "autoriz-email":"The user with mail from your account already exists!",
+        "autoriz-login":"A user with this login already exists!",
+        "autoriz-server":"Error while creating a record in the database, try again!",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  

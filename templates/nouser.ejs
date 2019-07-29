@@ -8,14 +8,14 @@
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -45,6 +45,20 @@
                 SE.send({}, '/verifyuser', VW.redirectAfterVerify);    
             }, 1000);
         </script>
+    <% } %>
+
+    <% if(onindex === 'err_autoriz') {%>
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 0px auto;">
+            <% if(errautoriz === 'err_autoriz_email') {%>
+                <p id="autoriz-email"> </p>
+            <% } %>
+            <% if(errautoriz === 'err_autoriz_login') {%>
+                <p id="autoriz-login"> </p>
+            <% } %>
+            <% if(errautoriz === 'err_autoriz_server') {%>
+                <p id="autoriz-server"> </p>
+            <% } %>
+        </div>
     <% } %>
 
     <% if(onindex === 'friends') {%>

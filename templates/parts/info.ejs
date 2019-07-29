@@ -78,14 +78,14 @@
             <% } %>
 
             <p id="mess-about-add-friend" style="margin: 0px; width:100%; color: red; text-align:center; font-size: 14px; font-weight: bold;"></p>
-            <% if((country !== '') || (town !== '')) {%>
+            <% if(((country !== '') && (country !== 'null')) || ((town !== '') && (town !== 'null'))) {%>
             <div class="info-blok">
                 <i class="fas fa-map-marker-alt"></i>
                 <div  class="info-blok-text"> 
-                    <% if(country !== '') {%>   
+                    <% if((country !== '') && (country !== 'null')) {%>   
                     <p id="country"><%=country %></p>
                     <% } %>
-                    <% if(town !== '') {%>
+                    <% if((town !== '') && (town !== 'null')) {%>
                     <p id="town"><%=town %></p>
                     <% } %>
                 </div>

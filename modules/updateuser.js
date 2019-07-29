@@ -42,10 +42,14 @@ let updaterender = (req, res) => {
             }
             console.log("--user-for-update---->> ", result[0]);  
             let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
-            phone = result[0].phone.slice(3 ,13);
-            phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
-            message = result[0].message.slice(3 ,13);
-            messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
+            if (result[0].phone !== null){
+                phone = result[0].phone.slice(3 ,13);
+                phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
+            }
+            if (result[0].message !== null){
+                message = result[0].message.slice(3 ,13);
+                messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
+            }
             if ((RC === 'Ukraine') || (RC === 'Україна')){
                 country = 'ukraine';
             } else if ((RC === 'Russian') || (RC === 'Росія')){

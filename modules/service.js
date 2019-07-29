@@ -1,5 +1,6 @@
 let transliteration = require('transliteration.cyr');
 let Cookies = require('cookies');
+let con = require('../db/connectToDB').con;
 let fs = require('fs');
 
 //transliteration
@@ -38,10 +39,45 @@ let accessLog = (req, res, next) => {
     next();
 }
 
+//create table for user friends
+let createTableFriends = (getuserid) => {
+    let sqlfriends = `CREATE TABLE friends_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+        userid VARCHAR(100),
+        friendid VARCHAR(100),
+        friendstatus VARCHAR(10),
+        friendvisit VARCHAR(10),
+        friendadd DATE                           
+        )`;
+    con.query(sqlfriends, function (err, result) {
+        err ? console.log("--err-create-table-friends--", err.code) : console.log("--Table-friends-created---->> ", result.protocol41);
+    });  
+}
+
+//render page if bad autorization 
+let renderIfErrAutoriz = (req, res, err) => {
+    permissionAccess = false;
+    permissionEdit = false;
+    permissionFriend = false;
+    res.render(`nouser`, {
+        permissAccess: `${permissionAccess}`,
+        permissEdit: `${permissionEdit}`,
+        permissName: ``,
+        permissSurname: ``,
+        permissUserid: ``,
+        onindex:`err_autoriz`,
+        errautoriz:`${err}`,
+        userid: ``,
+        activee: `active`,
+        title:``
+    });
+}
+
 module.exports = {
     translit,
     token,
     clienttoken,
     checOnTrueVal,
-    accessLog
+    accessLog,
+    createTableFriends,
+    renderIfErrAutoriz
 };

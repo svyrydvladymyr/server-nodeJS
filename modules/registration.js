@@ -96,10 +96,10 @@ let registrationUsers = (req, res) => {
                 if (err.code === 'ER_DUP_ENTRY'){
                     let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
                     if (parseSQLmess === 'login'){
-                        console.log("--err--", err.sqlMessage);
+                        console.log("--err-dup-login--", err.sqlMessage);
                         res.send({"error":'duplicate_entry_login'});
                     } else if (parseSQLmess === 'email'){
-                        console.log("--err--", err.sqlMessage);
+                        console.log("--err-dup-email--", err.sqlMessage);
                         res.send({"error":'duplicate_entry_email'});
                     } else {
                         console.log("--err--", err);

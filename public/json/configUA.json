@@ -44,6 +44,9 @@
     "del-to-friend":"Видалити",
     "friend-mess":"Повідомлення",
     "friends-show-more-button":"Показати ще",
+    "autoriz-email":"Користувач з поштою з вашого акаунта вже існує!",
+    "autoriz-login":"Користувач з таким логіном вже існує!",
+    "autoriz-server":"Помилка при створенні запису в базі, спробуйте ще раз!",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  

@@ -2,74 +2,58 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let con = require('./db/connectToDB').con;
+let Cookies = require('cookies');
 let {registrationUsers, addAvatoDB, savesett, registrationFacebook} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let renderuser = require('./modules/renderuser');
-let {accessLog} = require('./modules/service');
-let {autorisation, exit, sendemail, verifyuser} = require('./modules/autorisation');
-
-
-
-let passport = require('passport'), FacebookStrategy = require('passport-facebook').Strategy;
+let {accessLog, token} = require('./modules/service');
+let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisSocialSetCookie} = require('./modules/autorisation');
+let passport = require('passport'); 
+let FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+      done(null, user);
   });
   
 passport.deserializeUser(function(obj, done) {
-    done(null, obj);
+      done(null, obj);
   });
 
 app.use(passport.initialize());
 
 passport.use(new FacebookStrategy({
-        clientID: '435548787037664',
-        clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
-        callbackURL: "http://localhost:4000/auth/facebook/callback",
-        profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
-    },    
+    clientID: '435548787037664',
+    clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
+    callbackURL: "http://localhost:4000/facebookcallback",
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'photos']
+}, 
     function(accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-          //Check whether the User exists or not using profile.id
-  
-            // if sets to true
-            con.query(`SELECT * FROM users WHERE userid = ${profile.id}`, (err, result) => {
-              if(err) throw err;
-              if(result && result.length === 0) {
-                  console.log("There is no such user, adding now");
-                  con.query(`INSERT INTO users (userid, name, surname, login, password, email, active) VALUES ('${profile.id}', '${profile.name.givenName}', '${profile.name.familyName}', 'ggg', 'ggg', '${profile.emails[0].value}', 'active')`);
-              } else {
-                  console.log("User already exists in database");
-              }
-            });
-          
-          return done(null, profile);
-        });
-      }
+        process.nextTick(function () {autorisationSocial(profile, done)});
+    }
 ));
-app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/registration' }),
-    function(req, res) {
-        // Successful authentication, redirect home.
-        setTimeout(() => {
-            res.redirect('/');
 
-        }, 10000);
-    });
-app.get('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err); }
-        if (!user) { return res.redirect('/login'); }
-        req.logIn(user, function(err) {
-        if (err) { return next(err); }
-        return res.redirect('/users/' + user.username);
-        });
+app.get('/facebook', passport.authenticate('facebook'));
+app.get('/facebookcallback', function(req, res, next) {
+    passport.authenticate('facebook', function(err, user, info) {
+        if(err){
+            console.log("--err-autoriz--",err); 
+            if (err === 'ER_DUP_EMAIL'){
+                renderIfErrAutoriz = (req, res, 'err_autoriz_email');
+            } else if (err === 'ER_DUP_LOGIN'){
+                renderIfErrAutoriz = (req, res, 'err_autoriz_login');
+            } else if (err === 'ER_SERVER'){
+                renderIfErrAutoriz = (req, res, 'err_autoriz_server');
+            } else {
+                res.redirect('/');
+            }    
+        } else {
+            autorisSocialSetCookie(req, res, user); 
+        }  
     })(req, res, next);
-    });
+});
 
 
 
