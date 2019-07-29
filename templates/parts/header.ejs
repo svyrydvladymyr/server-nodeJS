@@ -50,13 +50,13 @@
                         </div>
                         <% } %>
                     </div>
+                    <p class="login-message"  id="login-message" style="display: none;"></p>
                     <% if(permissAccess === 'false') {%>  
                     <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
                     <% } %>
                     <% if(permissAccess === 'true') {%>
                         <a href="/<%=permissUserid %>" class="login-message-autoris"><%=permissSurname %> <%=permissName %></a>
                     <% } %>
-                    <p class="login-message"  id="login-message" style="display: none;"></p>
                 </div>
             </div>
         </div>

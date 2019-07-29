@@ -65,6 +65,7 @@ let renderIfErrAutoriz = (req, res, err) => {
         permissSurname: ``,
         permissUserid: ``,
         onindex:`err_autoriz`,
+        setsettings:`false`,
         errautoriz:`${err}`,
         userid: ``,
         activee: `active`,

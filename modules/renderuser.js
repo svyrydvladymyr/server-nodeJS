@@ -157,6 +157,7 @@ let renderuser = (req, res) => {
                                 permissSurname: ``,
                                 permissUserid: ``,
                                 onindex:`${getuserid}`,
+                                setsettings:`false`,
                                 userid: ``,
                                 activee: `active`,
                                 title:``
@@ -174,6 +175,7 @@ let renderuser = (req, res) => {
                                 permissSurname: `${result[0].surname}`,
                                 permissUserid: `${result[0].userid}`,
                                 onindex:`${getuserid}`,
+                                setsettings:`false`,
                                 userid: ``,
                                 activee: `active`,
                                 title:``
@@ -278,6 +280,7 @@ let renderuser = (req, res) => {
                                     permissSurname: `${result[0].surname}`,
                                     permissUserid: `${result[0].userid}`,
                                     onindex:`${getuserid}`,
+                                    setsettings:`false`,
                                     activee: `${result[0].active}`,
                                     userid: `${result[0].userid}`,
                                     title:``

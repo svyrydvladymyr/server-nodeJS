@@ -326,10 +326,10 @@ let VW = (() => {
             SE.$('main-form-messagetwo').innerHTML = `${SE.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
             setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},2000);
-            if (SE.$('reg-name-mess').classList.contains('reg-message-true')){
-                SE.$('reg-name-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){
-                SE.$('reg-surname-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-name-mess')){
+                if (SE.$('reg-name-mess').classList.contains('reg-message-true')){SE.$('reg-name-mess').classList.remove('reg-message-true');}}
+            if (SE.$('reg-surname-mess')){
+                if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){SE.$('reg-surname-mess').classList.remove('reg-message-true');}}    
             if (SE.$('reg-email-mess')){
                 if (SE.$('reg-email-mess').classList.contains('reg-message-true')){SE.$('reg-email-mess').classList.remove('reg-message-true');}}
             if (SE.$('reg-age-mess').classList.contains('reg-message-true')){
@@ -458,6 +458,7 @@ let VW = (() => {
 
 
 
+
 //---------------------------------
     let inwork = () => {   
         SE.$('mess-about-add-friend').innerHTML = `В розробці (Under development)`;
@@ -497,6 +498,7 @@ return {
     animationAfterSendSpiner,
     redirectAfterVerify,
     inwork
+    
 };
 
 })();

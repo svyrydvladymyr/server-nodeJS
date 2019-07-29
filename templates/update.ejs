@@ -78,6 +78,7 @@
 
                 <!----MAIN_INFO--------------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-2">
+                        <% if(regtype !== 'facebook') {%>
                         <!--name-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-name"></p></div>
@@ -94,7 +95,6 @@
                             </div>
                             <div class="form_message"><p id="reg-surname-mess" class="reg-message "></p></div>   
                         </div>
-                        <% if(regtype !== 'facebook') {%>
                         <!--email-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>

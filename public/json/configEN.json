@@ -47,6 +47,7 @@
         "autoriz-email":"The user with mail from your account already exists!",
         "autoriz-login":"A user with this login already exists!",
         "autoriz-server":"Error while creating a record in the database, try again!",
+        "autoriz-email-send":"You can make a request and receive the data for recovery on your mail ...",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  
@@ -76,7 +77,9 @@
         "reg-up-send3":"SAVE",          
 
         "placeholder":{
-                "search":"search..."
+                "search":"search...",
+                "autoriz-email-send-input":"Enter your mail ..."
+
         },
 
 "__comment-page-about":"text for page about",
@@ -102,7 +105,8 @@
         "news-five":"Added the ability to edit user data, and also change the alert. You can now configure the visual styles not only locally but also in the database.",  
         "news-six":"The skill unit is developed. It can add a list of skills and their level that you think you have.",  
         "news-seven":"Completion of project block development. It can add a list of projects and a description of them. If it's internet projects then you can add links to them.",  
-        "news-eight":"The ability to add users to your friends list is developed."  
+        "news-eight":"The ability to add users to your friends list is developed.",  
+        "news-nine":"Added the ability to register and log in with third-party resources."  
 
       
 }

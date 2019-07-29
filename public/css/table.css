@@ -19,7 +19,7 @@
 }
 
 .click {
-    margin: 10px 20px 0px 20px;
+    margin: 5px 20px 5px 20px;
 }
 
 .header_logo, .header_search, .header_button{
@@ -30,7 +30,7 @@
 }
 
 .header-login {
-    padding: 10px 0px;
+    padding: 0px 0px;
 }
 .header_logo img {
     margin: 10px 15%;

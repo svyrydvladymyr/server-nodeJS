@@ -228,22 +228,46 @@ let autorisSocialSetCookie = (req, res, user) => {
                 signed:true}
                 cookies.set('sessionisdd', ``, param); 
                 res.redirect(user.id);
-            } else {
-                let sqlsel = `SELECT userid FROM users WHERE userid = '${user.id}'`;
+            } else {              
+                let sqlsel = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${user.id}'`;
                 con.query(sqlsel, function (err, result) {
-                if (err) {
-                    console.log("err", err);
-                    res.redirect(user.id);
-                } else {
-                    console.log("--result-userSett---->> ", result[0].userid);
-                    let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-                    let param = {
-                    maxAge: '', 
-                    path: '/', 
-                    signed:true}
-                    cookies.set('sessionisdd', `${tokenId}`, param);
-                    res.redirect(user.id);                      
-                }
+                    if (err) {
+                        console.log("err", err);
+                        res.redirect(user.id);
+                    } else {
+                        console.log("--result-userSett---->> ", result[0].userid);
+                        let clientToken = clienttoken(req, res);
+                        let cookies = new Cookies(req, res, {"keys":['volodymyr']});
+                        let param = {
+                        maxAge: '', 
+                        path: '/', 
+                        signed:true}
+                        cookies.set('sessionisdd', `${tokenId}`, param);
+                        let permissionEdit, permissionAccess;
+                        (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
+                        (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
+                        res.render(`nouser`, {
+                            permissAccess: `${permissionAccess}`,
+                            permissEdit: `${permissionEdit}`,
+                            permissName: `${result[0].name}`,
+                            permissSurname: `${result[0].surname}`,
+                            permissUserid: `${result[0].userid}`,
+                            onindex:`verifyuser`,
+                            setsettings:`true`,
+                            userid: ``,
+                            activee: `active`,
+                            title:``,
+                            maincolor:`${result[0].maincolor}`,
+                            secondcolor:`${result[0].secondcolor}`,
+                            bgcolor:`${result[0].bgcolor}`,
+                            topleft:`${result[0].bordertl}`,
+                            topright:`${result[0].bordertr}`,
+                            bottomleft:`${result[0].borderbl}`,
+                            bottomright:`${result[0].borderbr}`,
+                            font:`${result[0].fonts}`,
+                            lang:`${result[0].language}`
+                        });                 
+                    }
                 }); 
             }           
         }

@@ -8,14 +8,14 @@
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -47,13 +47,25 @@
         </script>
     <% } %>
 
+    <% if(onindex === 'verifyuser') {%>
+        <div style="width: 130px; text-align: center; margin:50px auto 0px auto;">
+            <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 55px;"></i>
+        </div>
+    <% } %>
+
     <% if(onindex === 'err_autoriz') {%>
-        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 0px auto;">
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 10px auto; padding: 5px 30px;">
             <% if(errautoriz === 'err_autoriz_email') {%>
                 <p id="autoriz-email"> </p>
+                <p id="autoriz-email-send"> </p>
+                <div class="autoriz-email-send-input-wrap">
+                    <input type="email" id="autoriz-email-send-input" class="autoriz-email-send-input">
+                    <i class='far fa-paper-plane farrrrr'></i>
+                </div>
             <% } %>
             <% if(errautoriz === 'err_autoriz_login') {%>
                 <p id="autoriz-login"> </p>
+                <p id="autoriz-email-send"> </p>
             <% } %>
             <% if(errautoriz === 'err_autoriz_server') {%>
                 <p id="autoriz-server"> </p>
@@ -113,6 +125,23 @@
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+    <% if(setsettings === 'true') {%>
+        <script>
+            localStorage.kalcifermaincolor = '<%=maincolor %>';
+            localStorage.kalcifersecondcolor = '<%=secondcolor %>';
+            localStorage.kalciferbgcolor = '<%=bgcolor %>';
+            localStorage.kalcifertopleft = '<%=topleft %>';
+            localStorage.kalcifertopright = '<%=topright %>';
+            localStorage.kalciferbottomleft = '<%=bottomleft %>';
+            localStorage.kalciferbottomright = '<%=bottomright %>';
+            localStorage.kalciferfont = '<%=font %>';
+            localStorage.kalciferLang = '<%=lang %>';
+            setTimeout(() => {
+                SE.redirect(`<%=permissUserid %>`);
+            }, 500);
+        </script>
+    <% } %>
+
     <% if(onindex === 'friends') {%>
         <script>
             let x = /\?friends\=/g;

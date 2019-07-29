@@ -370,7 +370,7 @@ body{
 
 .login-message{
     position: absolute;
-    bottom: 9%;
+    bottom: 0%;
     right: 25%;
     font-size: 10px;
     margin: 5px 0px 10px 0px;
@@ -1095,6 +1095,28 @@ body{
     border-radius: 5px;
     margin-bottom: 3px!important;
     width: 100%;
+}
+
+.autoriz-email-send-input-wrap{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.autoriz-email-send-input{
+    outline: 0!important;
+    min-width: 200px;
+    max-width: 400px;
+    height: 28px;
+    border: var(--border);
+    border-radius: 7px;
+    padding: 2px 7px;
+}
+.farrrrr{
+    cursor: pointer;
+    padding: 4px;
+    font-size: 18px;
+    color: var(--main-color);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
