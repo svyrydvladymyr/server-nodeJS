@@ -32,6 +32,7 @@
         "footer-copyright-link-about":"About us",
         "footer-copyright-link-registr":"Registration",
         "footer-copyright-link-news":"News",
+        "footer-copyright-link-recover":"Recover password",
         "nouser":"Sorry, this page isn't available...",
         "tab-1":"Security",
         "tab-2":"General",
@@ -48,6 +49,7 @@
         "autoriz-login":"A user with this login already exists!",
         "autoriz-server":"Error while creating a record in the database, try again!",
         "autoriz-email-send":"You can make a request and receive the data for recovery on your mail ...",
+        "autoriz-email-send-true":"You are authorized!",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  

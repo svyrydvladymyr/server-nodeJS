@@ -455,6 +455,16 @@ let VW = (() => {
         }, 2000);
     };
 
+// for change button after send recover email
+    let afterRecoverData = (res) => {   
+        let parseObj = JSON.parse(res); 
+        if (parseObj.res.slice(0, 12) == '250 2.0.0 OK'){
+            SE.$('recover-data').innerHTML = `<p style="color:var(--main-color);">${SE.errorFormMessage().recoverdatamess}</p>`;
+        } else if (parseObj.res  === 'err'){
+            SE.$('recover-data').innerHTML = `<p style="color:red;">${SE.errorFormMessage().recoverdataerr}</p>`;
+        }
+    };
+
 
 
 
@@ -497,6 +507,7 @@ return {
     animationAfterSend,
     animationAfterSendSpiner,
     redirectAfterVerify,
+    afterRecoverData,
     inwork
     
 };

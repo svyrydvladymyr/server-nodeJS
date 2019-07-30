@@ -175,7 +175,11 @@ let SE = (() => {
             let friendsmess = "Повідомлення";
             let prooffriends = "Підтвердити";
             let showmore = "Показати ще";
+            let recoverdatamess = "Лист з даними надіслано на вашу пошту. Це може зайняти кілька хвилин.";
+            let recoverdataerr = "Під час надсилання електронного листа сталася помилка ...";
             return {
+                recoverdatamess,
+                recoverdataerr,
                 showmore,
                 prooffriends,
                 friendsmess,
@@ -250,7 +254,11 @@ let SE = (() => {
             let friendsmess = "Message";
             let prooffriends = "Confirm";
             let showmore = "Show more";
+            let recoverdatamess = "A data letter has been sent to your mail. It may take a few minutes to receive.";
+            let recoverdataerr = "An error occurred while sending the email...";
             return {
+                recoverdatamess,
+                recoverdataerr,
                 showmore,
                 prooffriends,
                 friendsmess,
@@ -518,6 +526,8 @@ let SE = (() => {
                     SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
                     SE.readyToSend(idF, "");
+            } else if ((SE.$(idF).id === 'autoriz-email-send-input')){
+                SE.$('farrrrr').style.fontSize = "0px";
             } else {
                 let idFF;
                 if (idF === 'reg-password-two'){
@@ -554,6 +564,12 @@ let SE = (() => {
                         SE.checkPasswordInput(idF);
                     } else if((SE.$(idF).id === "reg-age") || (SE.$(idF).id === "reg-email")) {
                         SE.checkAgeEmailInput(idF);
+                    } else if(SE.$(idF).id === "autoriz-email-send-input") {
+                        if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
+                            SE.$('farrrrr').style.fontSize = "0px";
+                        } else {
+                            SE.$('farrrrr').style.fontSize = "18px";                         
+                        }
                     } else if ((SE.$(idF).id === "reg-country") || (SE.$(idF).id === "reg-town")){
                         SE.checkCountryInput(idF);
                     } else if (SE.$(idF).id === "reg-file"){         
@@ -577,7 +593,9 @@ let SE = (() => {
                         SE.readyToSend(idF, SE.$(idF).value);
                         SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
                     }
-                    SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
+                    if (SE.$("reg-form-send")){
+                        SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
+                    }
                 }
             }); 
         }
@@ -597,6 +615,12 @@ let SE = (() => {
             if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
                 if (idF === 'reg-password-two'){
                     SE.iconON('reg-password', "true", '');
+                } else if (idF === 'autoriz-email-send-input'){
+                    if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
+                        SE.$('farrrrr').style.fontSize = "0px";
+                    } else {
+                        SE.$('farrrrr').style.fontSize = "18px";                         
+                    }
                 } else {
                     SE.iconON(idF, "true", '');
                 }
@@ -605,6 +629,8 @@ let SE = (() => {
                     SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
                     SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
+                } else if (SE.$(idF).id == "autoriz-email-send-input"){
+                    SE.$('farrrrr').style.fontSize = "0px";
                 } else {
                     if (SE.$(idF).value === ''){
                         let idFF;

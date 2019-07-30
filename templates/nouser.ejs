@@ -8,14 +8,14 @@
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -48,27 +48,52 @@
     <% } %>
 
     <% if(onindex === 'verifyuser') {%>
-        <div style="width: 130px; text-align: center; margin:50px auto 0px auto;">
+        <div style="width: 130px; text-align: center; margin:50px auto 50px auto;">
             <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 55px;"></i>
         </div>
     <% } %>
 
     <% if(onindex === 'err_autoriz') {%>
-        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 10px auto; padding: 5px 30px;">
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 70px auto; padding: 5px 30px;" id="recover-data">
             <% if(errautoriz === 'err_autoriz_email') {%>
                 <p id="autoriz-email"> </p>
-                <p id="autoriz-email-send"> </p>
+                <p id="autoriz-email-send"> </p><br><br>
                 <div class="autoriz-email-send-input-wrap">
-                    <input type="email" id="autoriz-email-send-input" class="autoriz-email-send-input">
-                    <i class='far fa-paper-plane farrrrr'></i>
+                    <input type="email" maxlength="64" id="autoriz-email-send-input" class="autoriz-email-send-input">
+                    <div style="width:40px;">
+                        <i class='far fa-paper-plane farrrrr' id="farrrrr" onclick='SE.send({"email":`${document.getElementById("autoriz-email-send-input").value}`}, "/recoverdata", VW.afterRecoverData)'></i>
+                    </div>
                 </div>
             <% } %>
             <% if(errautoriz === 'err_autoriz_login') {%>
-                <p id="autoriz-login"> </p>
-                <p id="autoriz-email-send"> </p>
+                <p id="autoriz-email"> </p>
+                <p id="autoriz-email-send"> </p><br><br>
+                <div class="autoriz-email-send-input-wrap">
+                    <input type="email" maxlength="64" id="autoriz-email-send-input" class="autoriz-email-send-input">
+                    <div style="width:40px;">
+                        <i class='far fa-paper-plane farrrrr' id="farrrrr" onclick='SE.send({"email":`${document.getElementById("autoriz-email-send-input").value}`}, "/recoverdata", VW.afterRecoverData)'></i>
+                    </div>
+                </div>
             <% } %>
             <% if(errautoriz === 'err_autoriz_server') {%>
                 <p id="autoriz-server"> </p>
+            <% } %>
+        </div>
+    <% } %>
+
+    <% if(onindex === 'recover') {%>
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 70px auto; padding: 5px 30px;" id="recover-data">
+            <% if(permissAccess === 'false') {%>                
+                <p id="autoriz-email-send"> </p><br>
+                <div class="autoriz-email-send-input-wrap">
+                    <input type="email" maxlength="64" id="autoriz-email-send-input" class="autoriz-email-send-input">
+                    <div style="width:40px;">
+                        <i class='far fa-paper-plane farrrrr' id="farrrrr" onclick='SE.send({"email":`${document.getElementById("autoriz-email-send-input").value}`}, "/recoverdata", VW.afterRecoverData)'></i>
+                    </div>
+                </div>
+            <% } %>
+            <% if(permissAccess === 'true') {%>                
+                <p id="autoriz-email-send-true"></p><br>
             <% } %>
         </div>
     <% } %>
@@ -81,8 +106,7 @@
             </div>
             <div class="friends-all-body" id="show-all-user-friends">
             </div>
-            <div class="friends-show-more-wrap" id="friends-show-more-wrap">
-                
+            <div class="friends-show-more-wrap" id="friends-show-more-wrap">                
             </div>
         </div>
     <% } %>
@@ -125,6 +149,25 @@
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+
+    <% if(onindex === 'err_autoriz') {%>
+        <% if(errautoriz === 'err_autoriz_email') {%>
+            <script>
+                SE.$("autoriz-email-send-input").addEventListener("change", () => {SE.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
+                SE.$("autoriz-email-send-input").addEventListener("input", () => {SE.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
+            </script>
+        <% } %>
+    <% } %>
+
+    <% if(onindex === 'recover') {%>
+        <% if(permissAccess === 'false') {%>                
+            <script>
+                SE.$("autoriz-email-send-input").addEventListener("change", () => {SE.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
+                SE.$("autoriz-email-send-input").addEventListener("input", () => {SE.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
+            </script>
+        <% } %>
+    <% } %>
+
     <% if(setsettings === 'true') {%>
         <script>
             localStorage.kalcifermaincolor = '<%=maincolor %>';
@@ -149,6 +192,7 @@
             SE.send({"type":"friend", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
         </script>
     <% } %>
+
     <% if(onindex === 'friendsproof') {%>
         <script>
             let x = /\?friends\=/g;

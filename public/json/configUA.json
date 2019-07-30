@@ -32,6 +32,7 @@
     "footer-copyright-link-about":"Про нас",
     "footer-copyright-link-registr":"Реєстрація",
     "footer-copyright-link-news":"Новини",
+    "footer-copyright-link-recover":"Відновити пароль",
     "nouser":"На жаль, ця сторінка не доступна ...",
     "tab-1":"Безпека",
     "tab-2":"Загальне",
@@ -48,6 +49,7 @@
     "autoriz-login":"Користувач з таким логіном вже існує!",
     "autoriz-server":"Помилка при створенні запису в базі, спробуйте ще раз!",
     "autoriz-email-send":"Ви можете зробити запит і отримати дані для відновлення на вашу пошту...",
+    "autoriz-email-send-true":"Ви авторизовані!",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  

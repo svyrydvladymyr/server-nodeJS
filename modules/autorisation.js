@@ -114,6 +114,49 @@ let sendemail = (req, res) => {
     });
 };
 
+let recoverdata = (req, res) => {
+    let sql = `SELECT regtype, login, password FROM users  WHERE email = '${req.body.email}'`;    
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.redirect(user.id);
+        } else {
+            console.log("--get-info-for-email---->> ", result);
+            let messSoc, login, passsword;
+            if (result[0].regtype !== undefined){
+                if (result[0].regtype === 'facebook') {
+                    messSoc = `<span>You are registered with <b style="font-size:14px;">${result[0].regtype}</b> and You can login using this resource.</span>`
+                    login = ``;
+                    passsword = ``;
+                } else {
+                    messSoc = ``;
+                    login = `<span>Your login: <b style="font-size:14px;">${result[0].login};</b></span>`;
+                    passsword = `<span>Your password: <b style="font-size:14px;">${result[0].password};</b></span>`;
+                } 
+            }           
+            let mailOptions = {
+                from: '6b616c6369666572@gmail.com',
+                to: `${req.body.email}`,
+                subject: 'Recover data user',
+                html: `<h2>Hello!</h2>
+                        <p>${messSoc}</p>
+                        <p>${login}</p>
+                        <p>${passsword}</p>
+                        <p>Thank you for using our resource!</p>`
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log('--Error-email-sent---->> ',error);
+                    res.send({"res":"err"});
+                } else {
+                    console.log('--Email-sent---->> ' + info.response);                  
+                    res.send({"res":info.response});
+                }
+            });
+        }        
+    });
+};
+
 let verifyuser = (req, res) => {
     let getuserid, clientToken, verify, verifyobj, userid, cod;
     getuserid = req.headers.referer;
@@ -296,5 +339,6 @@ module.exports = {
     sendemail,
     verifyuser,
     autorisationSocial,
-    autorisRouts
+    autorisRouts,
+    recoverdata
 };

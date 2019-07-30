@@ -6,9 +6,9 @@ let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widge
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
+let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
 let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
-let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts} = require('./modules/autorisation');
 let passport = require('passport'); 
 let FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -55,6 +55,7 @@ app.post('/updateallprojects', (req, res) => {updateallprojects(req, res)});
 //verify email
 app.post('/verifyuser', (req, res) => {verifyuser(req, res)});
 app.post('/sendemail', (req, res) => {sendemail(req, res)});
+app.post('/recoverdata', (req, res) => {recoverdata(req, res)});
 //to friends
 app.post('/addtofriends', (req, res) => {addtofriends(req, res)});
 app.post('/prooftofriends', (req, res) => {prooftofriends(req, res)});

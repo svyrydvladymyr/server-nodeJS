@@ -411,10 +411,18 @@ body{
     padding: 2px 18px;
 }
 .social-login-wrap img{
-    height: 26px;
-    border:1px solid #ffffff;
+    height: 25px;
+    padding: 2px;
+    background: #ffffff;
+    border: 3px solid #5c8ab9;
     margin: 0px 5px;
     border-radius: 5px;
+}
+
+.social-login-wrap img:hover{
+    padding: 0px;
+    background: #ffffff;
+    border: 2px solid #ffffff;
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
@@ -1105,18 +1113,20 @@ body{
 }
 .autoriz-email-send-input{
     outline: 0!important;
-    min-width: 200px;
+    min-width: 180px;
     max-width: 400px;
     height: 28px;
     border: var(--border);
     border-radius: 7px;
     padding: 2px 7px;
+    margin-left: 15px;
 }
 .farrrrr{
     cursor: pointer;
     padding: 4px;
-    font-size: 18px;
+    font-size: 0px;
     color: var(--main-color);
+    transition: 0.3s;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -1134,9 +1144,9 @@ body{
 
 .footer-copyright-links{
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
     font-size: 14px;
-    width: 170px;
     margin: 5px auto;
 }
 
@@ -1157,7 +1167,7 @@ body{
 .footer-main-info p{
     text-align: center;
     font-size: 12px;
-    margin: 0px;
+    margin: 0px 5px;
     /* font-weight:bold;  */
 }
 
