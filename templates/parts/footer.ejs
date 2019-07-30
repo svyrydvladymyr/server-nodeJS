@@ -1,9 +1,11 @@
     <div class="footer-copyright-links">
         <a href="/aboutus"><p id="footer-copyright-link-about"></p></a>
-        <a href="/registration"><p id="footer-copyright-link-registr"></p></a>
+        <% if(permissAccess === 'false') {%> 
+            <a href="/registration"><p id="footer-copyright-link-registr"></p></a>
+        <% } %>
         <a href="/news"><p id="footer-copyright-link-news"></p></a>
         <% if(permissAccess === 'false') {%> 
-        <a href="/recover"><p id="footer-copyright-link-recover"></p></a>
+            <a href="/recover"><p id="footer-copyright-link-recover"></p></a>
         <% } %>
     </div>
     <p id="footer-copyright-person"></p>

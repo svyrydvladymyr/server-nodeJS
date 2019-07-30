@@ -37,7 +37,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
-app.use('/registration', (req, res) => {res.render(`registration`)});
+app.use('/registration', (req, res) => {res.render(`registration`, {permissAccess: `true`})});
 //skills
 app.post('/showskills', (req, res) => {showskills(req, res)});
 app.post('/addskills', (req, res) => {addskills(req, res)});

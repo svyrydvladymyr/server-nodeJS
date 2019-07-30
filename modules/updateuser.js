@@ -87,6 +87,7 @@ let updaterender = (req, res) => {
                 vblogme: result[0].vblogme,
                 vfriendme: result[0].vfriendme,
                 vfriendall: result[0].vfriendall,
+                permissAccess: `true`,
             });
         }); 
     }
