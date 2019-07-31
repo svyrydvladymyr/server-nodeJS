@@ -223,13 +223,6 @@ let autorisationSocial = (profile, done) => {
             emailadd = '';
             provider = profile.provider === undefined ? '' : `${profile.provider}`;
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
-        } else if (profile.provider === 'github'){
-            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
-            name = profile.displayName === undefined ? '' : `${profile.displayName}`;
-            surname = '';
-            emailadd = '';
-            provider = profile.provider === undefined ? '' : `${profile.provider}`;
-            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         } else {
             ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
             name = profile.name.givenName === undefined ? '' : `${profile.name.givenName}`;
