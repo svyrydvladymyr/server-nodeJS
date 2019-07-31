@@ -115,7 +115,7 @@ let sendemail = (req, res) => {
 };
 
 let recoverdata = (req, res) => {
-    let sql = `SELECT regtype, login, password FROM users  WHERE email = '${req.body.email}'`;    
+    let sql = `SELECT regtype, login, password, email, facebookemail, googleemail, instagramemail FROM users  WHERE email = '${req.body.email}' OR facebookemail = '${req.body.email}' OR googleemail = '${req.body.email}' OR instagramemail = '${req.body.email}'`;    
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -124,7 +124,7 @@ let recoverdata = (req, res) => {
             console.log("--get-info-for-email---->> ", result);
             let messSoc, login, passsword;
             if (result[0].regtype !== undefined){
-                if (result[0].regtype === 'facebook') {
+                if ((result[0].regtype === 'facebook') || (result[0].regtype === 'googleemail') || (result[0].regtype === 'instagramemail')) {
                     messSoc = `<span>You are registered with <b style="font-size:14px;">${result[0].regtype}</b> and You can login using this resource.</span>`
                     login = ``;
                     passsword = ``;
@@ -133,26 +133,26 @@ let recoverdata = (req, res) => {
                     login = `<span>Your login: <b style="font-size:14px;">${result[0].login};</b></span>`;
                     passsword = `<span>Your password: <b style="font-size:14px;">${result[0].password};</b></span>`;
                 } 
-            }           
-            let mailOptions = {
-                from: '6b616c6369666572@gmail.com',
-                to: `${req.body.email}`,
-                subject: 'Recover data user',
-                html: `<h2>Hello!</h2>
-                        <p>${messSoc}</p>
-                        <p>${login}</p>
-                        <p>${passsword}</p>
-                        <p>Thank you for using our resource!</p>`
-            };
-            transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                    console.log('--Error-email-sent---->> ',error);
-                    res.send({"res":"err"});
-                } else {
-                    console.log('--Email-sent---->> ' + info.response);                  
-                    res.send({"res":info.response});
-                }
-            });
+                let mailOptions = {
+                    from: '6b616c6369666572@gmail.com',
+                    to: `${req.body.email}`,
+                    subject: 'Recover data user',
+                    html: `<h2>Hello!</h2>
+                            <p>${messSoc}</p>
+                            <p>${login}</p>
+                            <p>${passsword}</p>
+                            <p>Thank you for using our resource!</p>`
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log('--Error-email-sent---->> ',error);
+                        res.send({"res":"err"});
+                    } else {
+                        console.log('--Email-sent---->> ' + info.response);                  
+                        res.send({"res":info.response});
+                    }
+                });
+            }        
         }        
     });
 };
@@ -181,6 +181,14 @@ let verifyuser = (req, res) => {
 
 let autorisationSocial = (profile, done) => {
     con.query(`SELECT * FROM users WHERE userid = '${profile.id}'`, (err, result) => {
+        console.log("0000000000000000",profile);
+        console.log("0000000000000000",profile.provider);
+        let ava = profile.photos[0].value === undefined ? 'null' : `${profile.photos[0].value}`;
+        let name = profile.name.givenName === undefined ? 'null' : `${profile.name.givenName}`;
+        let surname = profile.name.familyName === undefined ? 'null' : `${profile.name.familyName}`;
+        let emailadd = profile.emails[0].value === undefined ? 'null' : `${profile.emails[0].value}`;
+        let provider = profile.provider === undefined ? 'null' : `${profile.provider}`;
+        let emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         if(err) {
             console.log("--err-autoriz---->>",err);    
             return done(null, profile);             
@@ -190,7 +198,8 @@ let autorisationSocial = (profile, done) => {
             let password = token(10);
             let datetime = new Date();
             let updatedatetime = datetime.toISOString().slice(0,10);
-            let sql = `INSERT INTO users (userid, name, surname, login, password, email, active, regtype, registrdata, ava) VALUES ('${profile.id}', '${profile.name.givenName}', '${profile.name.familyName}', '${login}', '${password}', '${profile.emails[0].value}', 'active', 'facebook', '${updatedatetime}',  '${profile.photos[0].value}')`;
+
+            let sql = `INSERT INTO users (userid, name, surname, login, password, ${emailprovider}email, active, regtype, registrdata, ava) VALUES ('${profile.id}', '${name}', '${surname}', '${login}', '${password}', '${emailadd}', 'active', '${provider}', '${updatedatetime}',  '${ava}')`;
             let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${profile.id}')`;          
             con.query(sql, function (err, result) {
                 if (err) {
@@ -209,29 +218,30 @@ let autorisationSocial = (profile, done) => {
                 } else {
                     con.query(sqlsett, function (err, result) {
                         if (err){
-                        console.log("--err-create-row-settinds--", err);
-                        let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
+                            console.log("--err-create-row-settinds--", err);
+                            let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
                             con.query(sqldel, function (err, result) {
                                 if (err){
                                     console.log("--err-clear-user-if-fail--", err);
                                 } else {
                                     console.log("--result-user-clear---->> ", result.affectedRows);
-                                return done('ER_SERVER', null);
+                                    return done('ER_SERVER', null);
                                 }
                             });
                         } else {
                             console.log("--result-add-row-settings---->> ", result.affectedRows);
-                        return done(null, profile);
+                            return done(null, profile);
                         }  
                     });
                 }
             }); 
         } else if (result[0].userid === profile.id){
             console.log("--user-is-authorized---->>",profile.id);
-            con.query(`UPDATE users SET name = '${profile.name.givenName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
-            con.query(`UPDATE users SET surname = '${profile.name.familyName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
-            con.query(`UPDATE users SET ava = '${profile.photos[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
-            con.query(`UPDATE users SET email = '${profile.emails[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {
+            let emailproviderrr = profile.provider === undefined ? 'email' : `${profile.provider}email`;
+            con.query(`UPDATE users SET name = '${name}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
+            con.query(`UPDATE users SET surname = '${surname}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
+            con.query(`UPDATE users SET ava = '${ava}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
+            con.query(`UPDATE users SET ${emailproviderrr} = '${emailadd}' WHERE userid = '${profile.id}'`, function (err, result) {
                 if (err) {
                     if (err.code === 'ER_DUP_ENTRY'){
                         let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);

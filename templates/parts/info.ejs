@@ -101,11 +101,27 @@
                 </div>
             </div>
             <% } %>
-            <% if(email !== '') {%>
+            <% if((email !== '') && (email !== 'null')) {%>
             <div class="info-blok">
                 <i class="fas fa-at"></i>
                 <div class="info-blok-text">
                     <p id="email"><%=email %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if((facebookemail !== '') && (facebookemail !== 'null')) {%>
+            <div class="info-blok">
+                <i class="fas fa-at"></i>
+                <div class="info-blok-text">
+                    <p id="email"><%=facebookemail %></p>
+                </div>
+            </div>
+            <% } %>
+            <% if((googleemail !== '') && (googleemail !== 'null')) {%>
+            <div class="info-blok">
+                <i class="fas fa-at"></i>
+                <div class="info-blok-text">
+                    <p id="email"><%=googleemail %></p>
                 </div>
             </div>
             <% } %>

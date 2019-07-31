@@ -175,7 +175,7 @@ let WFRIENDS = (() => {
         SE.$('friends-name-title').innerHTML = `${parseSurname} ${parseName}`;
         SE.$('friends-name-title-href').setAttribute("href", `${parseMyId}`);
         for (let i = 0; i < parseObj.length; i++){
-            let avafoto, status;
+            let avafoto, status, email, town, country, phone;
             let reg = /^http:/i;
             let reg2 = /^https:/i;
             if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
@@ -194,6 +194,11 @@ let WFRIENDS = (() => {
             } else {
                 status = ``;
             }
+            email = ((parseObj[i].email === null) || (parseObj[i].email === undefined)) ? `` : `${parseObj[i].email}`;
+            country = ((parseObj[i].country === null) || (parseObj[i].country === undefined)) ? `` : `${parseObj[i].country}`;
+            town = ((parseObj[i].town === null) || (parseObj[i].town === undefined)) ? `` : `${parseObj[i].town}`;
+            phone = ((parseObj[i].phone === null) || (parseObj[i].phone === undefined)) ? `` : `${parseObj[i].phone}`;
+
             SE.$('show-all-user-friends').innerHTML += `
             <div class="friend-full-wrap">
                 <div class="friend-full-img-wrap">
@@ -205,9 +210,9 @@ let WFRIENDS = (() => {
                 </div>
                 <div class="friend-full-info">
                     <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${parseObj[i].surname} ${parseObj[i].name}</p>
-                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)" style="overflow:hidden;">${parseObj[i].email}</p>                    
-                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${parseObj[i].country} ${parseObj[i].town}</p>
-                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${parseObj[i].phone}</p>
+                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)" style="overflow:hidden;">${email}</p>                    
+                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${country} ${town}</p>
+                    <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${phone}</p>
                 </div>         
             </div>     
             `;

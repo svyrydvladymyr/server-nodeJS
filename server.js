@@ -11,6 +11,7 @@ let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let passport = require('passport'); 
 let FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.serializeUser(function(user, done) {done(null, user)});  
 passport.deserializeUser(function(obj, done) {done(null, obj)});
@@ -21,10 +22,35 @@ passport.use(new FacebookStrategy({
     clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
     callbackURL: "http://localhost:4000/facebookcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
-}, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
+}, function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("ffffff",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+passport.use(new GoogleStrategy({
+    clientID: '422337007127-73a8ofjsl3a6n7kesl3tnk0c11jo4ou6.apps.googleusercontent.com',
+    clientSecret: '1J24VS_1Yrk27ZZCgs5NMk60',
+    callbackURL: "http://localhost:4000/googlecallback",
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+  },  function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("ggggggggg",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
 
 app.get('/facebook', passport.authenticate('facebook'));
-app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
+app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
+
+app.get('/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+}));
+app.get('/googlecallback', function(req, res, next) {passport.authenticate('google', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
 
 
 

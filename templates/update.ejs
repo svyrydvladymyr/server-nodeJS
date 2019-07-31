@@ -35,7 +35,7 @@
                 <div class="tabs-form-body-wrap">
                 <!----SECURITY AND ENTER----------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
-                        <% if(regtype !== 'facebook') {%>
+                        <% if(regtype === 'null') {%>
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
@@ -78,7 +78,7 @@
 
                 <!----MAIN_INFO--------------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-2">
-                        <% if(regtype !== 'facebook') {%>
+                        <% if(regtype === 'null') {%>
                         <!--name-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-name"></p></div>
