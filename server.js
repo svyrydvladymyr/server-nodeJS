@@ -11,6 +11,10 @@ let renderuser = require('./modules/renderuser');
 let {accessLog} = require('./modules/service');
 let passport = require('passport'); 
 let FacebookStrategy = require('passport-facebook').Strategy;
+let GoogleStrategy = require('passport-google-oauth20').Strategy;
+let InstagramStrategy = require('passport-instagram').Strategy;
+let GitHubStrategy = require('passport-github').Strategy;
+let LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 
 passport.serializeUser(function(user, done) {done(null, user)});  
 passport.deserializeUser(function(obj, done) {done(null, obj)});
@@ -21,10 +25,91 @@ passport.use(new FacebookStrategy({
     clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
     callbackURL: "http://localhost:4000/facebookcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
-}, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
+}, function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("ffffff",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+
+passport.use(new InstagramStrategy({
+    clientID: '4f10a8f9ac6c4519825d4c5014ee231d',
+    clientSecret: 'd636c67db9ee4c1cbdd711dae4639550',
+    callbackURL: "http://localhost:4000/instagramcallback",
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+}, function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("iiiiiiiiiiiiii",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+
+passport.use(new GoogleStrategy({
+    clientID: '422337007127-73a8ofjsl3a6n7kesl3tnk0c11jo4ou6.apps.googleusercontent.com',
+    clientSecret: '1J24VS_1Yrk27ZZCgs5NMk60',
+    callbackURL: "http://localhost:4000/googlecallback",
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+  },  function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("ggggggggg",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+
+passport.use(new GitHubStrategy({
+    clientID: '306581483c8927ca31b4',
+    clientSecret: '13853ceb1fc550a6027df1efee453a9f941fd683',
+    callbackURL: "http://localhost:4000/githubcallback",
+    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+  },  function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("gigigigigigigiggigi",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+
+passport.use(new LinkedInStrategy({
+    clientID: '77jpxeqvndbl8a',
+    clientSecret: 'nG1r67j9cDA4gmU8',
+    callbackURL: "http://localhost:4000/linkedincallback"
+  },  function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log("llllllllllllllll",profile);        
+            autorisationSocial(profile, done)
+        })}));
+
+
+app.get('/linkedin', passport.authenticate('linkedin'));
+app.get('/linkedincallback', function(req, res, next) {passport.authenticate('linkedin', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
+
+
+app.get('/github', passport.authenticate('github'));
+app.get('/githubcallback', function(req, res, next) {passport.authenticate('github', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
+
+
 
 app.get('/facebook', passport.authenticate('facebook'));
-app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
+app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
+
+
+
+app.get('/instagram', passport.authenticate('instagram'));
+app.get('/instagramcallback', function(req, res, next) {passport.authenticate('instagram', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
+
+app.get('/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+}));
+app.get('/googlecallback', function(req, res, next) {passport.authenticate('google', function(err, user, info) {
+    autorisRouts(req, res, err, user);
+})(req, res, next)});
 
 
 

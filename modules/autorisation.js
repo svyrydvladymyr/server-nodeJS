@@ -115,44 +115,61 @@ let sendemail = (req, res) => {
 };
 
 let recoverdata = (req, res) => {
-    let sql = `SELECT regtype, login, password FROM users  WHERE email = '${req.body.email}'`;    
+    let sql = `SELECT regtype, login, password, email, facebookemail, googleemail, instagramemail FROM users  WHERE email = '${req.body.email}' OR facebookemail = '${req.body.email}' OR googleemail = '${req.body.email}' OR instagramemail = '${req.body.email}'`;    
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
             res.redirect(user.id);
         } else {
-            console.log("--get-info-for-email---->> ", result);
-            let messSoc, login, passsword;
+            let messSoc, login, passsword, arrprovider = ``, log, pass, and, koma;
+            if (result.length > 1){
+                and = `<span><b>You also have other registrations, but these are different accounts!</b></span>`;
+                koma = `,`;
+            } else if (result.length === 1){
+                and = ``;
+                koma = ``;
+                log = ``;
+                pass = ``;
+            }
+            for(let i = 0; i < result.length; i++){
+                if(result[i].regtype === null){
+                    log = `<span>Your login: <b style="font-size:14px;">${result[i].login};</b></span>`;
+                    pass = `<span>Your password: <b style="font-size:14px;">${result[i].password};</b></span>`;
+                } else if (result[i].regtype !== null) {
+                    arrprovider += `${result[i].regtype}${koma} `;
+                }
+            }
             if (result[0].regtype !== undefined){
-                if (result[0].regtype === 'facebook') {
-                    messSoc = `<span>You are registered with <b style="font-size:14px;">${result[0].regtype}</b> and You can login using this resource.</span>`
-                    login = ``;
-                    passsword = ``;
+                if ((result[0].regtype === 'facebook') || (result[0].regtype === 'googleemail') || (result[0].regtype === 'instagramemail')) {
+                    messSoc = `<span>You are registered with <b style="font-size:14px;">${arrprovider}</b> and You can login using this resources.</span>`
+                    login = `${log}`;
+                    passsword = `${pass}`;
                 } else {
                     messSoc = ``;
-                    login = `<span>Your login: <b style="font-size:14px;">${result[0].login};</b></span>`;
-                    passsword = `<span>Your password: <b style="font-size:14px;">${result[0].password};</b></span>`;
+                    login = `${log}`;
+                    passsword = `${pass}`;
                 } 
-            }           
-            let mailOptions = {
-                from: '6b616c6369666572@gmail.com',
-                to: `${req.body.email}`,
-                subject: 'Recover data user',
-                html: `<h2>Hello!</h2>
-                        <p>${messSoc}</p>
-                        <p>${login}</p>
-                        <p>${passsword}</p>
-                        <p>Thank you for using our resource!</p>`
-            };
-            transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                    console.log('--Error-email-sent---->> ',error);
-                    res.send({"res":"err"});
-                } else {
-                    console.log('--Email-sent---->> ' + info.response);                  
-                    res.send({"res":info.response});
-                }
-            });
+                let mailOptions = {
+                    from: '6b616c6369666572@gmail.com',
+                    to: `${req.body.email}`,
+                    subject: 'Recover data user',
+                    html: `<h2>Hello!</h2>                            
+                            <p>${login}</p>
+                            <p>${passsword}</p>
+                            <p>${and}</p>
+                            <p>${messSoc}</p>
+                            <p>Thank you for using our resource!</p>`
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        console.log('--Error-email-sent---->> ',error);
+                        res.send({"res":"err"});
+                    } else {
+                        console.log('--Email-sent---->> ' + info.response);                  
+                        res.send({"res":info.response});
+                    }
+                });
+            }        
         }        
     });
 };
@@ -180,20 +197,61 @@ let verifyuser = (req, res) => {
 }
 
 let autorisationSocial = (profile, done) => {
-    con.query(`SELECT * FROM users WHERE userid = '${profile.id}'`, (err, result) => {
+    let id = profile.provider === 'linkedin' ? profile.id.replace(/-/gi, '') : profile.id;
+    con.query(`SELECT * FROM users WHERE userid = '${id}'`, (err, result) => {
+        console.log("0000000000000000",profile);
+        console.log("0000000000000000",profile.provider);
+        let ava, name, surname, emailadd, provider, emailprovider;
+        if (profile.provider === 'instagram'){
+            ava = profile._json.data.profile_picture === undefined ? '' : `${profile._json.data.profile_picture}`;
+            name = profile.displayName === undefined ? '' : `${profile.displayName}`;
+            surname = '';
+            emailadd = '';
+            provider = profile.provider === undefined ? '' : `${profile.provider}`;
+            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
+        } else if (profile.provider === 'github'){
+            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
+            name = profile.displayName === undefined ? '' : `${profile.displayName}`;
+            surname = '';
+            emailadd = '';
+            provider = profile.provider === undefined ? '' : `${profile.provider}`;
+            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
+        } else if (profile.provider === 'linkedin'){
+            ava = profile.photos[2].value === undefined ? '' : `${profile.photos[2].value}`;
+            name = profile.name.givenName === undefined ? '' : `${profile.name.givenName}`;
+            surname = profile.name.familyName === undefined ? '' : `${profile.name.familyName}`;
+            emailadd = '';
+            provider = profile.provider === undefined ? '' : `${profile.provider}`;
+            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
+        } else if (profile.provider === 'github'){
+            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
+            name = profile.displayName === undefined ? '' : `${profile.displayName}`;
+            surname = '';
+            emailadd = '';
+            provider = profile.provider === undefined ? '' : `${profile.provider}`;
+            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
+        } else {
+            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
+            name = profile.name.givenName === undefined ? '' : `${profile.name.givenName}`;
+            surname = profile.name.familyName === undefined ? '' : `${profile.name.familyName}`;
+            emailadd = profile.emails[0].value === undefined ? '' : `${profile.emails[0].value}`;
+            provider = profile.provider === undefined ? '' : `${profile.provider}`;
+            emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
+        }
         if(err) {
             console.log("--err-autoriz---->>",err);    
             return done(null, profile);             
         } else if (result && result.length === 0) {
-            console.log("--register-user---->>");
+            console.log("--register-user-with-social---->>", result);
             let login = token(10);
             let password = token(10);
             let datetime = new Date();
             let updatedatetime = datetime.toISOString().slice(0,10);
-            let sql = `INSERT INTO users (userid, name, surname, login, password, email, active, regtype, registrdata, ava) VALUES ('${profile.id}', '${profile.name.givenName}', '${profile.name.familyName}', '${login}', '${password}', '${profile.emails[0].value}', 'active', 'facebook', '${updatedatetime}',  '${profile.photos[0].value}')`;
-            let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${profile.id}')`;          
+            let sql = `INSERT INTO users (userid, name, surname, login, password, ${emailprovider}email, active, regtype, registrdata, ava) VALUES ('${id}', '${name}', '${surname}', '${login}', '${password}', '${emailadd}', 'active', '${provider}', '${updatedatetime}',  '${ava}')`;
+            let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${id}')`;          
             con.query(sql, function (err, result) {
                 if (err) {
+                    console.log("--err-with-social-registr---->>",err);                    
                     if (err.code === 'ER_DUP_ENTRY'){
                         let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
                         if (parseSQLmess === 'login'){ 
@@ -209,54 +267,41 @@ let autorisationSocial = (profile, done) => {
                 } else {
                     con.query(sqlsett, function (err, result) {
                         if (err){
-                        console.log("--err-create-row-settinds--", err);
-                        let sqldel = `DELETE FROM users WHERE userid = ${profile.id}`;
+                            console.log("--err-create-row-settinds--", err);
+                            let sqldel = `DELETE FROM users WHERE userid = ${id}`;
                             con.query(sqldel, function (err, result) {
                                 if (err){
                                     console.log("--err-clear-user-if-fail--", err);
                                 } else {
                                     console.log("--result-user-clear---->> ", result.affectedRows);
-                                return done('ER_SERVER', null);
+                                    return done('ER_SERVER', null);
                                 }
                             });
                         } else {
                             console.log("--result-add-row-settings---->> ", result.affectedRows);
-                        return done(null, profile);
+                            return done(null, profile);
                         }  
                     });
                 }
             }); 
-        } else if (result[0].userid === profile.id){
-            console.log("--user-is-authorized---->>",profile.id);
-            con.query(`UPDATE users SET name = '${profile.name.givenName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
-            con.query(`UPDATE users SET surname = '${profile.name.familyName}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
-            con.query(`UPDATE users SET ava = '${profile.photos[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
-            con.query(`UPDATE users SET email = '${profile.emails[0].value}' WHERE userid = '${profile.id}'`, function (err, result) {
-                if (err) {
-                    if (err.code === 'ER_DUP_ENTRY'){
-                        let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
-                        if (parseSQLmess === 'login'){ 
-                            return done('ER_DUP_LOGIN', null);
-                        } else if (parseSQLmess === 'email'){
-                            return done('ER_DUP_EMAIL', null);
-                        } else {
-                            return done(`${err}`, null);
-                        }             
-                    } else {
-                        return done(`${err}`, null);
-                    }
-                } else {
-                    console.log("--set-new-email---->>",result.affectedRows);
-                    return done(null, profile);
-                }
-            });
+        } else if (result[0].userid === id){
+            console.log("--user-is-authorized---->>",id);
+            let emailproviderrr = profile.provider === undefined ? 'email' : `${profile.provider}email`;
+            con.query(`UPDATE users SET name = '${name}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
+            con.query(`UPDATE users SET surname = '${surname}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
+            con.query(`UPDATE users SET ava = '${ava}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
+            if ((emailadd !== '') && (emailadd !== undefined)){
+                con.query(`UPDATE users SET ${emailproviderrr} = '${emailadd}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-email---->>",result.affectedRows);});
+            }
+            return done(null, profile);
         }
     }); 
 }
 
 let autorisSocialSetCookie = (req, res, user) => {
+    let id = user.provider === 'linkedin' ? user.id.replace(/-/gi, '') : user.id;
     let tokenId = token(20);
-    let sql = `UPDATE users SET token = '${tokenId}' WHERE userid = '${user.id}'`;
+    let sql = `UPDATE users SET token = '${tokenId}' WHERE userid = '${id}'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -270,13 +315,13 @@ let autorisSocialSetCookie = (req, res, user) => {
                 path: '/', 
                 signed:true}
                 cookies.set('sessionisdd', ``, param); 
-                res.redirect(user.id);
+                res.redirect(id);
             } else {              
-                let sqlsel = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${user.id}'`;
+                let sqlsel = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${id}'`;
                 con.query(sqlsel, function (err, result) {
                     if (err) {
                         console.log("err", err);
-                        res.redirect(user.id);
+                        res.redirect(id);
                     } else {
                         console.log("--result-userSett---->> ", result[0].userid);
                         let clientToken = clienttoken(req, res);
