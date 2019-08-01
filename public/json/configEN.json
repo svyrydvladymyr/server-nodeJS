@@ -35,6 +35,7 @@
         "footer-copyright-link-recover":"Recover password",
         "footer-copyright-link-del":"Delete account",
         "del-title":"Here you can delete your account",
+        "del-title-eps":"You must be logged in to delete your account!",
         "nouser":"Sorry, this page isn't available...",
         "tab-1":"Security",
         "tab-2":"General",

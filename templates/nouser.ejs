@@ -111,6 +111,9 @@
                     <p class="del-mess"  id="login-message" style="display: none;"></p>
                 </div>
             <% } %>
+            <% if(permissAccess === 'false') {%> 
+                <p id="del-title-eps"></p>
+            <% } %>
         </div>
     <% } %>
 
