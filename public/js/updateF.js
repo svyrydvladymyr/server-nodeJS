@@ -23,7 +23,7 @@ window.onload = function(){
         SE.$("reg-tel").addEventListener("input", () => {SE.checkTest("reg-tel", "[0-9]{10}")});                
     //message------------------------------------------------------------------------------------
         SE.$("reg-message").addEventListener("change", () => {SE.checkCut("reg-message", "[^0-9]")});
-        SE.$("reg-message").addEventListener("input", () => {SE.checkTest("reg-message", "[0-9]{10}")});                
+        SE.$("reg-message").addEventListener("input", () => {SE.checkTest("reg-message", "[0-9]{10}")});       
     //age------------------------------------------------------------------------------------
         SE.$("reg-age").addEventListener("change", () => {SE.checkCut("reg-age", "")});
     //country------------------------------------------------------------------------------------

@@ -152,7 +152,7 @@ let showfriends = (req, res) => {
     stepsearch === '' ? step = '' : step = `${stepsearch},`;
     console.log("--userid-for-friends---->> ",userid);
     let sqlkilk = `SELECT S.friendid FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC;`;
-    let sqlsel = `SELECT U.userid, U.name, U.surname, S.friendid, S.friendvisit, S.friendstatus FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC LIMIT ${step} ${limitsearch};`;
+    let sqlsel = `SELECT U.userid, U.name, U.surname, U.surname, U.regtype, S.friendid, S.friendvisit, S.friendstatus FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC LIMIT ${step} ${limitsearch};`;
     con.query(sqlkilk, function (err, result) {
         if (err) {
             console.log("--err-get-friends--", err);
@@ -163,7 +163,7 @@ let showfriends = (req, res) => {
                 if (err) {
                     console.log("--err-get-friends--", err);
                 } else {
-                    console.log("--my-friends-kilk-show---->> ", result.length);
+                    console.log("--my-friends-kilk-show---->> ", result.length);                 
                     let renameres = result;
                     let kilkfriends = result.length;
                     let masfriends = [];        
@@ -171,18 +171,27 @@ let showfriends = (req, res) => {
                         res.send({"res":"", "myid":"", "name":"", "surname":"", "kilk":"", "status":""});
                     }    
                     for(let i = 1; i <= kilkfriends; i++){
-                        let sqlsel = `SELECT userid, name, surname, email, birthday, phone, country, town, profession, education, ava, avasettings FROM users WHERE userid = '${result[i-1].friendid}';`;
-                        con.query(sqlsel, function (err, result) {
+                        let sqlselreg = `SELECT regtype FROM users WHERE userid = '${result[i-1].friendid}';`;
+                        con.query(sqlselreg, function (err, result) {
                             if (err) {
                                 console.log("err", err);
-                                res.send({"error":err});
-                            } else {            
-                                if (result[0] !== undefined){
-                                    masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":result[0].email, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
-                                }       
-                                if (i === kilkfriends) {
-                                    res.send({"res":masfriends, "myid":renameres[0].userid, "name":renameres[0].name, "surname":renameres[0].surname, "kilk":kilk, "status":renameres[0].friendstatus});
-                                }
+                            } else {                                 
+                                let email = ((result[0].regtype === null) || (result[0].regtype === undefined)) ? `` : `${result[0].regtype}`;
+                                let sqlsel = `SELECT userid, name, surname, ${email}email, birthday, phone, country, town, profession, education, ava, avasettings FROM users WHERE userid = '${renameres[i-1].friendid}';`;
+                                con.query(sqlsel, function (err, result) {
+                                    if (err) {
+                                        console.log("err", err);
+                                        res.send({"error":err});
+                                    } else {    
+                                        let emailready = result[0][`${email}email`];       
+                                        if (result[0] !== undefined){
+                                            masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":emailready, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
+                                        }       
+                                        if (i === kilkfriends) {
+                                            res.send({"res":masfriends, "myid":renameres[0].userid, "name":renameres[0].name, "surname":renameres[0].surname, "kilk":kilk, "status":renameres[0].friendstatus});
+                                        }
+                                    }
+                                });
                             }
                         });
                     }

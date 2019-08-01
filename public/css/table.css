@@ -146,10 +146,10 @@
     }
     .social-login-wrap{
         height: 60px;
-        padding: 10px 8px;
+        padding: 10px 13px;
     }
     .social-login-wrap img{
         height: 42px;
-        margin: 0px 15px;
+        margin: 0px 10px;
     }
 }

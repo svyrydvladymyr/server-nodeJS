@@ -11,7 +11,7 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
         regtype: `${userObj[0].regtype}`,
         name: `${userObj[0].name}`,
         surname: `${userObj[0].surname}`,
-        email: `${userObj[0].email}`,
+        email: `${userObj[0].email}`,        
         facebookemail: `${userObj[0].facebookemail}`,
         googleemail: `${userObj[0].googleemail}`,
         instagramemail: `${userObj[0].instagramemail}`,

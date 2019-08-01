@@ -424,6 +424,42 @@ body{
     background: #ffffff;
     border: 2px solid #ffffff;
 }
+
+.del-input{
+    outline: 0!important;
+    border:var(--border);
+    border-radius: 7px;
+    padding: 4px 8px;
+    margin: 5px;
+}
+.del-mess{
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin:30px auto 10px auto;
+}
+.del-button{
+    cursor: pointer;
+    width: 100px;
+    border: var(--border);
+    border-radius: 7px;
+    padding: 6px ;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    margin:20px auto 10px auto;
+    background: var(--second-color);
+    box-shadow: 0px 0px 0px #111111;
+}
+
+.del-button:hover{
+    box-shadow: 0px 0px 3px #111111;
+}
+
+.del-button p{
+    margin: 0px;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

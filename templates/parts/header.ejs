@@ -17,7 +17,7 @@
                         <div class="social-login-wrap">
                             <a href="/github"><img src="./img/github.png"></a>
                             <a href="/google"><img src="./img/google.png"></a>
-                            <a href="/twitter"><img src="./img/twitter.png"></a>
+                            <!-- <a href="/twitter"><img src="./img/twitter.png"></a> -->
                             <a href="/linkedin"><img src="./img/linkedin.png"></a>
                             <a href="/instagram"><img src="./img/instagram.png"></a>
                             <a href="/facebook"><img src="./img/facebook.png"></a>                            
@@ -43,8 +43,8 @@
                         <div class="click">
                             <!--inputs-->
                             <div class="click-login-close" id="send-login-close">
-                                <input type="text" id="login" autofocus>
-                                <input type="password" id="password">
+                                <!-- <input type="text" id="login" autofocus>
+                                <input type="password" id="password"> -->
                             </div>                            
                             <!--button-->
                             <div id="click" onclick="SE.exit()">
@@ -53,9 +53,11 @@
                         </div>
                         <% } %>
                     </div>
-                    <p class="login-message"  id="login-message" style="display: none;"></p>
+                    <% if(permissAccess === 'false') {%>
+                        <p class="login-message"  id="login-message" style="display: none;"></p>
+                    <% } %>
                     <% if(permissAccess === 'false') {%>  
-                    <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
+                        <p id="registration" class="registration" onclick="SE.redirect('/registration')"></p>
                     <% } %>
                     <% if(permissAccess === 'true') {%>
                         <a href="/<%=permissUserid %>" class="login-message-autoris"><%=permissSurname %> <%=permissName %></a>

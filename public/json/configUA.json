@@ -33,6 +33,8 @@
     "footer-copyright-link-registr":"Реєстрація",
     "footer-copyright-link-news":"Новини",
     "footer-copyright-link-recover":"Відновити пароль",
+    "footer-copyright-link-del":"Видалити акаунт",
+    "del-title":"Тут ви можете видалити свій акаунт",
     "nouser":"На жаль, ця сторінка не доступна ...",
     "tab-1":"Безпека",
     "tab-2":"Загальне",
@@ -81,7 +83,9 @@
    
     "placeholder":{
         "search":"пошук...",
-        "autoriz-email-send-input":"Введіть вашу пошту..."
+        "autoriz-email-send-input":"Введіть вашу пошту...",
+        "login":"Введіть ваш логін...",
+        "password":"Введіть ваш пароль..."
     },
 
 "__comment-page-about":"text for page about",

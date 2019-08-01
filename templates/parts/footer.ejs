@@ -7,6 +7,9 @@
         <% if(permissAccess === 'false') {%> 
             <a href="/recover"><p id="footer-copyright-link-recover"></p></a>
         <% } %>
+        <% if(permissAccess === 'true') {%> 
+            <a href="/deleteuser"><p id="footer-copyright-link-del"></p></a>
+        <% } %>
     </div>
     <p id="footer-copyright-person"></p>
     <p>Copyright © 2019 <b>6b 61 6c 63 69 66 65 72</b></p>

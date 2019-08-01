@@ -33,6 +33,8 @@
         "footer-copyright-link-registr":"Registration",
         "footer-copyright-link-news":"News",
         "footer-copyright-link-recover":"Recover password",
+        "footer-copyright-link-del":"Delete account",
+        "del-title":"Here you can delete your account",
         "nouser":"Sorry, this page isn't available...",
         "tab-1":"Security",
         "tab-2":"General",
@@ -80,8 +82,9 @@
 
         "placeholder":{
                 "search":"search...",
-                "autoriz-email-send-input":"Enter your mail ..."
-
+                "autoriz-email-send-input":"Enter your mail ...",
+                "login":"Enter your login ...",
+                "password":"Enter your password ..."
         },
 
 "__comment-page-about":"text for page about",

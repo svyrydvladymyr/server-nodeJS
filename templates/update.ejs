@@ -95,6 +95,9 @@
                             </div>
                             <div class="form_message"><p id="reg-surname-mess" class="reg-message "></p></div>   
                         </div>
+                        <% } %>  
+  
+                        <% if(regtype === 'null') {%>
                         <!--email-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
@@ -103,7 +106,52 @@
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
-                        <% } %>            
+                        <% } %>   
+
+                        <% if(regtype === 'instagram') {%>
+                        <!--email-->
+                        <div class="form_blok required-block">
+                            <div class="form_label"><p id="reg-label-email"></p></div>
+                            <div class="form_input required">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=instagramemail %>">
+                            </div>
+                            <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
+                        </div>    
+                        <% } %>  
+
+                        <% if(regtype === 'github') {%>
+                        <!--email-->
+                        <div class="form_blok required-block">
+                            <div class="form_label"><p id="reg-label-email"></p></div>
+                            <div class="form_input required">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=githubemail %>">
+                            </div>
+                            <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
+                        </div>    
+                        <% } %>   
+
+                        <% if(regtype === 'linkedin') {%>
+                        <!--email-->
+                        <div class="form_blok required-block">
+                            <div class="form_label"><p id="reg-label-email"></p></div>
+                            <div class="form_input required">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=linkedinemail  %>">
+                            </div>
+                            <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
+                        </div>    
+                        <% } %>   
+
+                        <% if(regtype === 'twitter') {%>
+                        <!--email-->
+                        <div class="form_blok required-block">
+                            <div class="form_label"><p id="reg-label-email"></p></div>
+                            <div class="form_input required">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=twitteremail  %>">
+                            </div>
+                            <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
+                        </div>    
+                        <% } %>                      
+    
                         <!--birthday-->
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-age"></p></div>
@@ -326,10 +374,10 @@
         <script src="./js/proto.js"></script>
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
-        <% if(regtype !== 'facebook') {%>
+        <% if((regtype !== 'facebook') || (regtype !== 'google')) {%>
             <script src="./js/update.js"></script>
         <% } %>
-        <% if(regtype === 'facebook') {%>
+        <% if((regtype === 'facebook') || (regtype === 'google')) {%>
             <script src="./js/updateF.js"></script>
         <% } %>
         <script>        

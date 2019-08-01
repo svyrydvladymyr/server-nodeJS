@@ -66,6 +66,12 @@ let updaterender = (req, res) => {
                 name: result[0].name,
                 surname: result[0].surname,
                 email: result[0].email,
+                facebookemail: `${result[0].facebookemail}`,
+                googleemail: `${result[0].googleemail}`,
+                instagramemail: `${result[0].instagramemail}`,
+                githubemail: `${result[0].githubemail}`,
+                linkedinemail: `${result[0].linkedinemail}`,
+                twitteremail: `${result[0].twitteremail}`,
                 birthday: result[0].birthday,
                 phone: phone,
                 phonecod: phonecod,
@@ -154,25 +160,35 @@ let updatemain = (req, res) => {
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
     console.log("--ready-obj---->> ", prUs);
-    prUs.name !== '' ? nameR = ` name = '${prUs.name}',` :  nameR = ``;
-    prUs.surname !== '' ? surnameR = ` surname = '${prUs.surname}',` : surnameR = ``;
-    prUs.email !== '' ? emailR = ` email = '${prUs.email}',` : emailR = ``;
-    prUs.birthday !== '' ? birthdayR = ` birthday = '${prUs.birthday}',` : birthdayR = ``;
-    prUs.phone !== '' ? phoneR = ` phone = '${prUs.phone}',` : phoneR = ``;
-    prUs.message !== '' ? messageR = ` message = '${prUs.message}',` : messageR = ``;
-    sql = `UPDATE users SET ${nameR}${surnameR}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
-    con.query(sql, function (err, result) {
+    prUs.name !== '' ? nameR = `name = '${prUs.name}', ` :  nameR = ``;
+    prUs.surname !== '' ? surnameR = `surname = '${prUs.surname}', ` : surnameR = ``;
+    prUs.email !== '' ? emailR = `email = '${prUs.email}', ` : emailR = ``;
+    prUs.birthday !== '' ? birthdayR = `birthday = '${prUs.birthday}', ` : birthdayR = ``;
+    prUs.phone !== '' ? phoneR = `phone = '${prUs.phone}', ` : phoneR = ``;
+    prUs.message !== '' ? messageR = `message = '${prUs.message}', ` : messageR = ``;
+    sqlsel = `SELECT regtype FROM users WHERE token = '${clientToken}'`;    
+    con.query(sqlsel, function (err, result) {
         if (err) {
             console.log("--err----->> ", err);
-            console.log("--err----->> ", err.code);
-            if (err.code == 'ER_DUP_ENTRY'){
-                res.send({"res":'ER_DUP_ENTRY'});
-            } else {
-                res.send({"err":err});
-            }
         } else {
-            console.log("--settings-updated---->> ",result.changedRows);
-            res.send({"res": result.changedRows});
+            console.log("000000",result[0].regtype);  
+            let preem; 
+            prUs.email !== '' ? preem = `${result[0].regtype}` : preem = ``;         
+            sql = `UPDATE users SET ${nameR}${surnameR}${preem}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
+            con.query(sql, function (err, result) {
+                if (err) {
+                    console.log("--err----->> ", err);
+                    console.log("--err----->> ", err.code);
+                    if (err.code == 'ER_DUP_ENTRY'){
+                        res.send({"res":'ER_DUP_ENTRY'});
+                    } else {
+                        res.send({"err":err});
+                    }
+                } else {
+                    console.log("--settings-updated---->> ",result.changedRows);
+                    res.send({"res": result.changedRows});
+                }
+            });
         }
     });
 };

@@ -115,7 +115,7 @@ let sendemail = (req, res) => {
 };
 
 let recoverdata = (req, res) => {
-    let sql = `SELECT regtype, login, password, email, facebookemail, googleemail, instagramemail FROM users  WHERE email = '${req.body.email}' OR facebookemail = '${req.body.email}' OR googleemail = '${req.body.email}' OR instagramemail = '${req.body.email}'`;    
+    let sql = `SELECT regtype, login, password, email, facebookemail, googleemail, instagramemail, githubemail, linkedinemail, twitteremail FROM users  WHERE email = '${req.body.email}' OR facebookemail = '${req.body.email}' OR googleemail = '${req.body.email}' OR instagramemail = '${req.body.email}' OR githubemail = '${req.body.email}' OR linkedinemail = '${req.body.email}' OR twitteremail = '${req.body.email}'`;    
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
@@ -140,7 +140,7 @@ let recoverdata = (req, res) => {
                 }
             }
             if (result[0].regtype !== undefined){
-                if ((result[0].regtype === 'facebook') || (result[0].regtype === 'googleemail') || (result[0].regtype === 'instagramemail')) {
+                if ((result[0].regtype === 'facebook') || (result[0].regtype === 'googleemail') || (result[0].regtype === 'instagramemail') || (result[0].regtype === 'githubemail') || (result[0].regtype === 'linkedinemail') || (result[0].regtype === 'twitteremail')) {
                     messSoc = `<span>You are registered with <b style="font-size:14px;">${arrprovider}</b> and You can login using this resources.</span>`
                     login = `${log}`;
                     passsword = `${pass}`;

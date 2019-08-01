@@ -17,15 +17,14 @@ window.onload = function(){
     SE.$('fontselect').value = localStorage.kalciferfont;
 
 //autorisation--login-------------------------------------------------------------------------------
-    SE.$("login").addEventListener("change", () => {SE.checkAutorisation("login", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
-    SE.$("login").addEventListener("input", () => {SE.checkTest("login", "^[a-zA-Z0-9]+$")}); 
+    if (SE.$("login")) {
+        SE.$("login").addEventListener("change", () => {SE.checkAutorisation("login", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
+        SE.$("login").addEventListener("input", () => {SE.checkTest("login", "^[a-zA-Z0-9]+$")}); 
+    }
+
 //autorisation--password-------------------------------------------------------------------------------
-    SE.$("password").addEventListener("change", () => {SE.checkAutorisation("password", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
-    SE.$("password").addEventListener("input", () => {SE.checkTest("password", "^[a-zA-Z0-9]+$")}); 
-    
-  
-
-
-
-
+    if (SE.$("password")) {
+        SE.$("password").addEventListener("change", () => {SE.checkAutorisation("password", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
+        SE.$("password").addEventListener("input", () => {SE.checkTest("password", "^[a-zA-Z0-9]+$")}); 
+    } 
 };
