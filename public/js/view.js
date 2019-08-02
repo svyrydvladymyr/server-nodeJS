@@ -465,7 +465,28 @@ let VW = (() => {
         }
     };
 
+// animation before delete user
+    let animationBeforeDel = () => {
+        SE.$('del-blok-wrap').innerHTML = `
+            <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 80px;"></i>
+        `;
+        setTimeout(() => {
+            SE.$('del-blok-wrap').innerHTML = ``;
+        }, 100000);
+        let i = 20;
+        setInterval(() => {            
+            SE.$('del-timer').innerHTML = `${i}`;
+            i--;
+            if (i === 0){
+                SE.send({"login":document.getElementById("login").value, "pass":document.getElementById("password")}, "/deluser", () => {
+                    console.log("pppppppppppppppppppp");                    
+                });
+            }
+        }, 1000);
 
+
+
+    }
 
 
 
@@ -508,6 +529,7 @@ return {
     animationAfterSendSpiner,
     redirectAfterVerify,
     afterRecoverData,
+    animationBeforeDel,
     inwork
     
 };

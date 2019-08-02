@@ -105,11 +105,13 @@
                     <p id="del-title"></p>
                     <input type="text" id="login" class="del-input">
                     <input type="password" id="password" class="del-input">
-                    <div class="del-button" onclick='SE.send({"login":document.getElementById("login").value, "pass":document.getElementById("password")}, "/deluser", VW.animationBeforeDel);'>
+                    <div class="del-button" onclick='VW.animationBeforeDel()'>
                         <p id="del-to-friend"></p>
                     </div>
                     <p class="del-mess"  id="login-message" style="display: none;"></p>
+                    
                 </div>
+                <p id="del-timer" class="del-timer"></p>
             <% } %>
             <% if(permissAccess === 'false') {%> 
                 <p id="del-title-eps"></p>
