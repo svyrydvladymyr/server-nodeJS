@@ -224,6 +224,21 @@
 .friend-full-wrap{
     width: 90%;
 }
+
+.resume-body{
+    width: 89%;
+}
+.resume-show-wrap{
+    width: 95%;
+}
+.resume-prwiew-blok {
+    width: 120px;
+    height: 160px;
+}
+.resume-prwiew-wrap {
+    width: 100%;
+    margin: 10px auto 20px auto;
+}
 @media screen and (min-width:500px) and (max-width:766px){
     .set{width: 98%}
     .set_close{width: 98%}

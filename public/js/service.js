@@ -177,7 +177,13 @@ let SE = (() => {
             let showmore = "Показати ще";
             let recoverdatamess = "Лист з даними надіслано на вашу пошту. Це може зайняти кілька хвилин.";
             let recoverdataerr = "Під час надсилання електронного листа сталася помилка ...";
+            let canseldel = "Ви можете відмінити видалення акаунта допоки таймер не досягне нуля.";
+            let cansel = "Відмінити";
+            let canselmess = "Тут ви можете видалити свій акаунт";
             return {
+                canselmess,
+                cansel,
+                canseldel,
                 recoverdatamess,
                 recoverdataerr,
                 showmore,
@@ -256,7 +262,13 @@ let SE = (() => {
             let showmore = "Show more";
             let recoverdatamess = "A data letter has been sent to your mail. It may take a few minutes to receive.";
             let recoverdataerr = "An error occurred while sending the email...";
+            let canseldel = "You can cancel deleting the account until the timer reaches zero.";
+            let cansel = "Cancel";
+            let canselmess = "Here you can delete your account";
             return {
+                canselmess,                
+                cansel,                
+                canseldel,
                 recoverdatamess,
                 recoverdataerr,
                 showmore,

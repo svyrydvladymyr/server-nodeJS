@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-let {registrationUsers, addAvatoDB, savesett} = require('./modules/registration');
+let {registrationUsers, addAvatoDB, savesett, beforedeluser} = require('./modules/registration');
 let {updatesecurity, updaterender, updatemain, updateother, updateAvatoDB, widgetsett} = require('./modules/updateuser');
 let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, updateallskill} = require('./modules/skills');
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
@@ -124,6 +124,9 @@ app.post('/savesett', (req, res) => {savesett(req, res)});
 app.post('/searchuser', (req, res) => {searchUser(req, res)});
 app.post('/autorisation', (req, res) => {autorisation(req, res)});
 app.post('/exit', (req, res) => {exit(req, res)});
+
+//del
+app.post('/beforedeluser', (req, res) => {beforedeluser(req, res)});
 
 //logs
 app.use((req, res, next) => {accessLog(req, res, next)});
