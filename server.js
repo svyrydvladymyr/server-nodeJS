@@ -34,15 +34,15 @@ app.get('/facebook', passport.authenticate('facebook'));
 app.get('/facebookcallback', function(req, res, next) {passport.authenticate('facebook', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
 
 // Instagram Strategy
-passport.use(new InstagramStrategy({
-    clientID: '4f10a8f9ac6c4519825d4c5014ee231d',
-    clientSecret: 'd636c67db9ee4c1cbdd711dae4639550',
-callbackURL: "https://svyrydvladymyr.herokuapp.com/instagramcallback",
+// passport.use(new InstagramStrategy({
+//     clientID: '4f10a8f9ac6c4519825d4c5014ee231d',
+//     clientSecret: 'd636c67db9ee4c1cbdd711dae4639550',
+//     callbackURL: "https://svyrydvladymyr.herokuapp.com/instagramcallback",
     // callbackURL: "http://localhost:4000/instagramcallback",
-    profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
-}, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
-app.get('/instagram', passport.authenticate('instagram'));
-app.get('/instagramcallback', function(req, res, next) {passport.authenticate('instagram', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
+//     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
+// }, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
+// app.get('/instagram', passport.authenticate('instagram'));
+// app.get('/instagramcallback', function(req, res, next) {passport.authenticate('instagram', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
 
 // Google Strategy
 passport.use(new GoogleStrategy({
