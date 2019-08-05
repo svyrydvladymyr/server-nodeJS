@@ -20,11 +20,14 @@ passport.serializeUser(function(user, done) {done(null, user)});
 passport.deserializeUser(function(obj, done) {done(null, obj)});
 app.use(passport.initialize());
 
+
+// callbackURL: "https://svyrydvladymyr.herokuapp.com
 // Facebook Strategy
 passport.use(new FacebookStrategy({
     clientID: '435548787037664',
     clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
-    callbackURL: "https://svyrydvladymyr.herokuapp.com/facebookcallback",
+callbackURL: "https://svyrydvladymyr.herokuapp.com/facebookcallback",
+    // callbackURL: "http://localhost:4000/facebookcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
 }, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
 app.get('/facebook', passport.authenticate('facebook'));
@@ -34,7 +37,8 @@ app.get('/facebookcallback', function(req, res, next) {passport.authenticate('fa
 passport.use(new InstagramStrategy({
     clientID: '4f10a8f9ac6c4519825d4c5014ee231d',
     clientSecret: 'd636c67db9ee4c1cbdd711dae4639550',
-    callbackURL: "https://svyrydvladymyr.herokuapp.com/instagramcallback",
+callbackURL: "https://svyrydvladymyr.herokuapp.com/instagramcallback",
+    // callbackURL: "http://localhost:4000/instagramcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
 }, function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
 app.get('/instagram', passport.authenticate('instagram'));
@@ -44,7 +48,8 @@ app.get('/instagramcallback', function(req, res, next) {passport.authenticate('i
 passport.use(new GoogleStrategy({
     clientID: '422337007127-73a8ofjsl3a6n7kesl3tnk0c11jo4ou6.apps.googleusercontent.com',
     clientSecret: '1J24VS_1Yrk27ZZCgs5NMk60',
-    callbackURL: "https://svyrydvladymyr.herokuapp.com/googlecallback",
+callbackURL: "https://svyrydvladymyr.herokuapp.com/googlecallback",
+    // callbackURL: "http://localhost:4000/googlecallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
   },  function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
 app.get('/google', passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']}));
@@ -54,7 +59,8 @@ app.get('/googlecallback', function(req, res, next) {passport.authenticate('goog
 passport.use(new GitHubStrategy({
     clientID: '306581483c8927ca31b4',
     clientSecret: '13853ceb1fc550a6027df1efee453a9f941fd683',
-    callbackURL: "https://svyrydvladymyr.herokuapp.com/githubcallback",
+callbackURL: "https://svyrydvladymyr.herokuapp.com/githubcallback",
+    // callbackURL: "http://localhost:4000/githubcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
   },  function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
   app.get('/github', passport.authenticate('github'));
@@ -64,7 +70,8 @@ passport.use(new GitHubStrategy({
 passport.use(new LinkedInStrategy({
     clientID: '77jpxeqvndbl8a',
     clientSecret: 'nG1r67j9cDA4gmU8',
-    callbackURL: "https://svyrydvladymyr.herokuapp.com/linkedincallback"
+callbackURL: "https://svyrydvladymyr.herokuapp.com/linkedincallback"
+    // callbackURL: "http://localhost:4000/linkedincallback"
   },  function(accessToken, refreshToken, profile, done) {process.nextTick(function () {autorisationSocial(profile, done)})}));
 app.get('/linkedin', passport.authenticate('linkedin'));
 app.get('/linkedincallback', function(req, res, next) {passport.authenticate('linkedin', function(err, user, info) {autorisRouts(req, res, err, user)})(req, res, next)});
