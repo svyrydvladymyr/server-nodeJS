@@ -24,8 +24,8 @@ app.use(passport.initialize());
 // callbackURL: "https://svyrydvladymyr.herokuapp.com
 // Facebook Strategy
 passport.use(new FacebookStrategy({
-    clientID: '331727624376852',
-    clientSecret: '7d33361f29a9ceded78ba649dc1e76e9',
+    clientID: '435548787037664',
+    clientSecret: '1a2fde88089878abfa800a93a0fccbd0',
 callbackURL: "https://svyrydvladymyr.herokuapp.com/facebookcallback",
     // callbackURL: "http://localhost:4000/facebookcallback",
     profileFields: ['id', 'displayName', 'name', 'gender', 'profileUrl', 'emails', 'picture.type(large)']
