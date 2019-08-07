@@ -92,6 +92,14 @@
     min-width: 300px;
 }
 
+/*--------------------------resume-----------------------------*/
+.resume-body{
+    width: 92%;
+}
+.resume-show-wrap{
+    width: 81%;
+}
+
 @media screen and (max-width:970px){
     .header_logo, .header_search, .header_button{
         display: flex;
@@ -152,4 +160,11 @@
         height: 42px;
         margin: 0px 10px;
     }
+    .resume-body{
+        width: 89%;
+    }
+    .resume-show-wrap{
+        width: 75%;
+    }
+
 }

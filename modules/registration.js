@@ -212,8 +212,44 @@ let savesett = (req, res) => {
     }); 
 };
 
+let beforedeluser = (req, res) => {
+    let clientToken = clienttoken(req, res);
+    let sql = `SELECT userid FROM users WHERE token = '${clientToken}'`;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log("err", err);
+            res.send({"err":err});
+        } else {
+            if(result == ''){
+                console.log("Error_authorization",result);
+                res.send({"err":"Error_authorization"});
+            } else {
+                let renameuserid = result[0].userid; 
+                let sql = `SELECT friendid FROM friends_${result[0].userid} WHERE userid = '${result[0].userid}'`;
+                con.query(sql, function (err, result) {
+                    if (err) {
+                        console.log("err", err);
+                        res.send({"err":err});
+                    } else {
+                        for(let i = 0; i < result.length; i++){
+                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {console.log("--del-from-friend-table---->>",result.protocol41)});
+                        }    
+                        con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {console.log("--del-table-friends---->>",result.protocol41)});
+                        con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-users-friend---->>",result.protocol41)});
+                        con.query(`DELETE FROM userssettings WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-settings-friend---->>",result.protocol41)});
+                        con.query(`DELETE FROM userskills WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-skills-friend---->>",result.protocol41)});
+                        con.query(`DELETE FROM userprojects WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-projects-friend---->>",result.protocol41)});
+                        res.send({"res":"user_del"});                            
+                    }
+                });
+            }
+        }
+    });
+}
+
 module.exports = {
     registrationUsers,
     addAvatoDB,
-    savesett
+    savesett,
+    beforedeluser
 };

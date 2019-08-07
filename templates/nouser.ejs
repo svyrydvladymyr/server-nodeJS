@@ -8,14 +8,14 @@
     <%- include("./parts/header.ejs") %>
     <%- include("./parts/settings.ejs") %>
     
-    <% if((onindex !== 'deleteuser') && (onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
+    <% if((onindex !== 'resume') && (onindex !== 'deleteuser') && (onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && ((permissEdit === 'false') || (permissEdit === 'true'))  && (userid === '')) {%>
     <p style=" width: 100%; text-align: center; margin: 50px auto; font-size: 30px;" id="nouser"></p>
     <div class="emodgeee">
         <img src="img/smile.png" alt="EMODG">
     </div>
     <% } %>
 
-    <% if((onindex !== 'deleteuser') && (onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
+    <% if((onindex !== 'resume') && (onindex !== 'deleteuser') && (onindex !== 'recover') && (onindex !== 'verifyuser') && (onindex !== 'err_autoriz') && (onindex !== 'friendsreq') && (onindex !== 'friendsproof') && (onindex !== 'friends') && (onindex !== 'verify') && (onindex !== 'index') && (onindex !== 'aboutus') && (onindex !== 'news') && (permissEdit === 'true') && (activee !== 'active') && (userid !== '')) {%>
     <div style="max-width: 700px; margin: 80px auto 0px auto; text-align:center; font-weight: bold; font-size: 14px; padding: 0px 40px;">
         <p id="verify-mess"></p>
         <p id="verify-mess-repeat"></p>
@@ -50,6 +50,22 @@
     <% if(onindex === 'verifyuser') {%>
         <div style="width: 130px; text-align: center; margin:50px auto 50px auto;">
             <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 55px;"></i>
+        </div>
+    <% } %>
+
+    <% if(onindex === 'resume') {%>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+        <div class="resume-body">
+            <div class="resume-prwiew-wrap">
+                <div class="resume-prwiew-blok"></div>
+                <div class="resume-prwiew-blok"></div>
+                <div class="resume-prwiew-blok"></div>
+                <div class="resume-prwiew-blok"></div>
+            </div>
+            <div class="resume-show-wrap">
+            
+            </div>
+            <a onclick="VW.demoFromHTML()" class="del-button" id="footer-copyright-link-resume">Run Code</a>  
         </div>
     <% } %>
 
@@ -99,22 +115,24 @@
     <% } %>
 
     <% if(onindex === 'deleteuser') {%>
-        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:50px auto 70px auto; padding: 5px 30px;" id="recover-data">
+        <div style="max-width: 900px; text-align: center; font-weight: bold; margin:90px auto 70px auto; padding: 5px 30px;" id="recover-data">
             <% if(permissAccess === 'true') {%> 
+                <p id="del-timer" class="del-timer"></p>
                 <div id="del-blok-wrap">               
                     <p id="del-title"></p>
-                    <input type="text" id="login" class="del-input">
-                    <input type="password" id="password" class="del-input">
-                    <div class="del-button" onclick='SE.send({"login":document.getElementById("login").value, "pass":document.getElementById("password")}, "/deluser", VW.animationBeforeDel);'>
+                    <div class="del-button" onclick='VW.animationBeforeDel()'>
                         <p id="del-to-friend"></p>
                     </div>
-                    <p class="del-mess"  id="login-message" style="display: none;"></p>
+                    <p class="del-mess"  id="login-message" style="display: none;"></p>                    
                 </div>
             <% } %>
             <% if(permissAccess === 'false') {%> 
                 <p id="del-title-eps"></p>
             <% } %>
         </div>
+        <script>
+            let timerdel;
+        </script>
     <% } %>
 
     <% if(onindex === 'friends') {%>

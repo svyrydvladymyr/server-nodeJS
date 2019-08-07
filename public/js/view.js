@@ -465,8 +465,65 @@ let VW = (() => {
         }
     };
 
+// animation before delete user
+    let animationBeforeDel = () => {
+        SE.$('del-blok-wrap').innerHTML = `
+            <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 80px;"></i>
+            <p>${SE.errorFormMessage().canseldel}</p>
+            <div class="del-button" onclick='VW.canselDel()'>
+                <p id="del-to-friend">${SE.errorFormMessage().cansel}</p>
+            </div>               
+        `;
+        let i = 15;
+        timerdel = setInterval(() => {            
+            SE.$('del-timer').innerHTML = `${i}`;
+            i--;
+            if (i === 0){
+                clearInterval(timerdel);
+                SE.$('del-timer').innerHTML = ``;
+                SE.send({}, '/beforedeluser', (res) => {
+                    let parseObj = JSON.parse(res); 
+                    if(parseObj.err === 'Error_authorization'){
+                        SE.$('del-blok-wrap').innerHTML = `<p class="del-mess"  id="login-message">${parseObj}</p>`;   
+                    } else if (parseObj.res === 'user_del'){
+                        SE.redirect('/');
+                    }             
+                });
+            }
+        }, 1000);
+    }
+
+// cansel delete user
+    let canselDel = () => {
+        clearInterval(timerdel);
+        SE.$('del-timer').innerHTML = ``;
+        SE.$('del-blok-wrap').innerHTML = `
+        <div id="del-blok-wrap">               
+            <p id="del-title">${SE.errorFormMessage().canselmess}</p>
+            <div class="del-button" onclick='VW.animationBeforeDel()'>
+                <p id="del-to-friend">${SE.errorFormMessage().friendsdel}</p>
+            </div>
+            <p class="del-mess"  id="login-message" style="display: none;"></p>                    
+        </div>
+        <p id="del-timer" class="del-timer"></p>`;
+    }
 
 
+
+//---------------------------------
+    let demoFromHTML = () => {   
+        var doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'pt',
+            format: 'a4',
+        })
+        doc.setFontSize(12);
+        doc.setFontStyle('bold');
+           
+        doc.text('Hello world!', 50, 10);
+        
+        doc.save('two-by-four.pdf')
+    };
 
 
 //---------------------------------
@@ -508,6 +565,9 @@ return {
     animationAfterSendSpiner,
     redirectAfterVerify,
     afterRecoverData,
+    animationBeforeDel,
+    canselDel,
+    demoFromHTML,
     inwork
     
 };

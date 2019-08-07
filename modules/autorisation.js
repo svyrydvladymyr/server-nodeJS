@@ -210,24 +210,24 @@ let autorisationSocial = (profile, done) => {
             provider = profile.provider === undefined ? '' : `${profile.provider}`;
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         } else if (profile.provider === 'github'){
-            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
+            ava = profile.photos === undefined ? '' : `${profile.photos[0].value}`;
             name = profile.displayName === undefined ? '' : `${profile.displayName}`;
             surname = '';
             emailadd = '';
             provider = profile.provider === undefined ? '' : `${profile.provider}`;
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         } else if (profile.provider === 'linkedin'){
-            ava = profile.photos[2].value === undefined ? '' : `${profile.photos[2].value}`;
+            ava = profile.photos === undefined ? '' : `${profile.photos[2].value}`;
             name = profile.name.givenName === undefined ? '' : `${profile.name.givenName}`;
             surname = profile.name.familyName === undefined ? '' : `${profile.name.familyName}`;
             emailadd = '';
             provider = profile.provider === undefined ? '' : `${profile.provider}`;
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         } else {
-            ava = profile.photos[0].value === undefined ? '' : `${profile.photos[0].value}`;
+            ava = profile.photos === undefined ? '' : `${profile.photos[0].value}`;
             name = profile.name.givenName === undefined ? '' : `${profile.name.givenName}`;
             surname = profile.name.familyName === undefined ? '' : `${profile.name.familyName}`;
-            emailadd = profile.emails[0].value === undefined ? '' : `${profile.emails[0].value}`;
+            emailadd = profile.emails === undefined ? '' : `${profile.emails[0].value}`;
             provider = profile.provider === undefined ? '' : `${profile.provider}`;
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         }
