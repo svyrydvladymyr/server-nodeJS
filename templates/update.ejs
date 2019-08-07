@@ -35,12 +35,12 @@
                 <div class="tabs-form-body-wrap">
                 <!----SECURITY AND ENTER----------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-1" style="display: table;">
-                        <% if(regtype === 'null') {%>
+                        <% if((regtype === null) || (regtype === 'null') || (regtype === '')) {%>
                         <!--login-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-login"></p></div>
                             <div class="form_input required">
-                                <input type="text" name="reg-login" id="reg-login-up" maxlength="20">
+                                <input type="text" name="reg-login" id="reg-login-up" maxlength="20" autocomplete="off">
                             </div>
                             <div class="form_message"><span id="reg-login-up-mess" class="reg-message "></span></div>                    
                         </div>
@@ -48,7 +48,7 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-oldpassword"></p></div>
                             <div class="form_input required">
-                                <input type="password" name="reg-oldpassword" id="reg-oldpassword" maxlength="20">
+                                <input type="password" name="reg-oldpassword" id="reg-oldpassword" maxlength="20" autocomplete="off">
                                 <i class='far password_oldpassword' onclick="VW.showPassword()">&#xf06e;</i>
                             </div>
                             <div class="form_message"><span id="reg-oldpassword-mess" class="reg-message "></span></div>                    
@@ -60,9 +60,9 @@
                                 <p id="reg-label-password-two"></p>
                             </div>
                             <div class="form_input password required">
-                                <input type="password" name="reg-password" id="reg-password" maxlength="40">
+                                <input type="password" name="reg-password" id="reg-password" maxlength="40" autocomplete="off">
                                 <i class='far password_eye' onclick="VW.showPassword()">&#xf06e;</i>
-                                <input type="password" name="reg-password-two" id="reg-password-two" maxlength="40">
+                                <input type="password" name="reg-password-two" id="reg-password-two" maxlength="40" autocomplete="off">
                                 <i class="far password_eye2" onclick="VW.showPassword()">&#xf06e;</i>
                             </div>
                             <div class="form_message password"><span id="reg-password-mess" class="reg-message "></span></div>                    
@@ -78,12 +78,12 @@
 
                 <!----MAIN_INFO--------------------------------------------------->
                     <div class="tabs-form-body-one" id="tabs-body-2">
-                        <% if(regtype === 'null') {%>
+                        <% if((regtype === null) || (regtype === 'null') || (regtype === '')) {%>
                         <!--name-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-name"></p></div>
                             <div class="form_input required">
-                                <input type="text" name="reg-name" id="reg-name" maxlength="20" value="<%=name %>">
+                                <input type="text" name="reg-name" id="reg-name" maxlength="20" value="<%=name %>" autocomplete="off">
                             </div>
                             <div class="form_message"><span id="reg-name-mess" class="reg-message "></span></div>                    
                         </div>
@@ -91,18 +91,18 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-surname"></p></div>
                             <div class="form_input required">
-                                <input type="text" name="reg-surname"  id="reg-surname" maxlength="20" value="<%=surname %>">
+                                <input type="text" name="reg-surname"  id="reg-surname" maxlength="20" value="<%=surname %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-surname-mess" class="reg-message "></p></div>   
                         </div>
                         <% } %>  
   
-                        <% if(regtype === 'null') {%>
+                        <% if((regtype === null) || (regtype === 'null') || (regtype === '')) {%>
                         <!--email-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
                             <div class="form_input required">
-                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=email %>">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=email %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
@@ -113,7 +113,7 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
                             <div class="form_input required">
-                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=instagramemail %>">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=instagramemail %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
@@ -124,7 +124,7 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
                             <div class="form_input required">
-                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=githubemail %>">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=githubemail %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
@@ -135,7 +135,7 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
                             <div class="form_input required">
-                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=linkedinemail  %>">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=linkedinemail  %>" autocomplete="off"> 
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
@@ -146,7 +146,7 @@
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
                             <div class="form_input required">
-                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=twitteremail  %>">
+                                <input type="email" name="reg-email"  id="reg-email" maxlength="30"  value="<%=twitteremail  %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-email-mess" class="reg-message "></p></div>   
                         </div>    
@@ -156,7 +156,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-age"></p></div>
                             <div class="form_input">
-                                <input type="date" name="reg-age"  id="reg-age"  value="<%=birthday %>">
+                                <input type="date" name="reg-age"  id="reg-age"  value="<%=birthday %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-age-mess" class="reg-message"></p></div>  
                         </div>
@@ -169,7 +169,7 @@
                                         <option value="+38" >+38</option>
                                         <option value="+44" >+44</option>
                                     </select>
-                                    <input type="tel" name="reg-tel"  id="reg-tel" class="tel_nomer" maxlength="10"  value="<%=phone %>">
+                                    <input type="tel" name="reg-tel"  id="reg-tel" class="tel_nomer" maxlength="10"  value="<%=phone %>" autocomplete="false">
                                 </div>                        
                             </div>
                             <div class="form_message"><p id="reg-tel-mess" class="reg-message"></p></div> 
@@ -186,7 +186,7 @@
                                         <option value="+38">+38</option>
                                         <option value="+44">+44</option>
                                     </select>
-                                    <input type="tel" name="reg-message"  id="reg-message" class="tel_nomer" maxlength="10" value="<%=message %>">
+                                    <input type="tel" name="reg-message"  id="reg-message" class="tel_nomer" maxlength="10" value="<%=message %>" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form_message"><p id="reg-message-mess" class="reg-message"></p></div>   
@@ -205,7 +205,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-country"></p></div>
                             <div class="form_input">
-                                <select name="reg-country" id="reg-country">
+                                <select name="reg-country" id="reg-country" autocomplete="off">
                                     <option value="" id="" disabled></option>
                                     <option value="ukraine" id="ukraine"></option>
                                     <option value="russian" id="russian"></option>
@@ -219,7 +219,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-town"></p></div>
                             <div class="form_input">
-                                <select name="reg-town" id="reg-town">
+                                <select name="reg-town" id="reg-town" autocomplete="off">
                                 </select>
                             </div>
                             <div class="form_message"><p id="reg-town-mess" class="reg-message"></p></div>   
@@ -228,7 +228,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-profession"></p></div>
                             <div class="form_input">
-                                <input type="text" name="reg-profession"  id="reg-profession" maxlength="90" value="<%=profession %>">
+                                <input type="text" name="reg-profession"  id="reg-profession" maxlength="90" value="<%=profession %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-profession-mess" class="reg-message"></p></div>   
                         </div> 
@@ -236,7 +236,7 @@
                         <div class="form_blok">
                             <div class="form_label"><p id="reg-label-education"></p></div>
                             <div class="form_input">
-                                <input type="text" name="reg-education"  id="reg-education" maxlength="90" value="<%=education %>">
+                                <input type="text" name="reg-education"  id="reg-education" maxlength="90" value="<%=education %>" autocomplete="off">
                             </div>
                             <div class="form_message"><p id="reg-education-mess" class="reg-message"></p></div>   
                         </div> 

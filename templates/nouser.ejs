@@ -234,14 +234,14 @@
         <script>
             let x = /\?friends\=/g;
             let clearurl = window.location.search.replace(x, '');
-            SE.send({"type":"reqfrom", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+            SE.send({"type":"reqfrom", "limit":200, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
         </script>
     <% } %>
     <% if(onindex === 'friendsreq') {%>
         <script>
             let x = /\?friends\=/g;
             let clearurl = window.location.search.replace(x, '');
-            SE.send({"type":"reqto", "limit":6, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
+            SE.send({"type":"reqto", "limit":200, "step":'', "userurl":clearurl}, '/showfriends', WFRIENDS.showAllFriendsListFull);
         </script>
     <% } %>
 

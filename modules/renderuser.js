@@ -297,7 +297,7 @@ let renderuser = (req, res) => {
                                     permissName: `${result[0].name}`,
                                     permissSurname: `${result[0].surname}`,
                                     permissUserid: `${result[0].userid}`,
-                                    onindex:`${getuserid}`,
+                                    onindex:`nouser`,
                                     setsettings:`false`,
                                     activee: `${result[0].active}`,
                                     userid: `${result[0].userid}`,

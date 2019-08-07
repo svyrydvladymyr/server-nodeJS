@@ -1020,7 +1020,7 @@ body{
     height: 20px;
 }
 .skills-edit-blok p{
-    margin: 4px 5px 4px 0px;
+    margin: 4px 5px 4px -55px;
     font-size: 10px;
     text-align: right;
     width: 60px;

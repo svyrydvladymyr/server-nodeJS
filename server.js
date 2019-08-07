@@ -81,12 +81,12 @@ app.get('/linkedincallback', function(req, res, next) {passport.authenticate('li
 app.set('views', __dirname + '/templates'); 
 app.set('view engine', 'ejs');
 
-//logs
-app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
-
 //static files
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
+//logs
+app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
 
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});

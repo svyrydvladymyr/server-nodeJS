@@ -59,7 +59,7 @@ let updaterender = (req, res) => {
             } else if ((RC === 'USA') || (RC === 'Сполучені Штати')){
                 country = 'usa';
             } 
-            town = translit(result[0].town);        
+            town = translit(result[0].town);   
             res.render(`update`, {
                 userid: result[0].userid,
                 regtype: result[0].regtype,
@@ -153,8 +153,8 @@ let updatemain = (req, res) => {
     let clientToken = clienttoken(req, res);
     console.log("--client-registr-obj---->> ", parseObjUsers); 
     prUs.updateuser = updatedatetime;
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "name", "Bad name!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "surname", "Bad surname!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "name", "Bad name!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "surname", "Bad surname!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9@-_.]+$", "email", "Bad email!", parseObjUsers, res);
     checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
@@ -165,16 +165,16 @@ let updatemain = (req, res) => {
     prUs.email !== '' ? emailR = `email = '${prUs.email}', ` : emailR = ``;
     prUs.birthday !== '' ? birthdayR = `birthday = '${prUs.birthday}', ` : birthdayR = ``;
     prUs.phone !== '' ? phoneR = `phone = '${prUs.phone}', ` : phoneR = ``;
-    prUs.message !== '' ? messageR = `message = '${prUs.message}', ` : messageR = ``;
+    prUs.message !== '' ? messageR = `message = '${prUs.message}', ` : messageR = ``;   
     sqlsel = `SELECT regtype FROM users WHERE token = '${clientToken}'`;    
     con.query(sqlsel, function (err, result) {
         if (err) {
             console.log("--err----->> ", err);
         } else {
-            console.log("000000",result[0].regtype);  
             let preem; 
             prUs.email !== '' ? preem = `${result[0].regtype}` : preem = ``;         
-            sql = `UPDATE users SET ${nameR}${surnameR}${preem}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
+            preem == 'null' ? rektypeee = `` : rektypeee = `${preem}`;         
+            sql = `UPDATE users SET ${nameR}${surnameR}${rektypeee}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
             con.query(sql, function (err, result) {
                 if (err) {
                     console.log("--err----->> ", err);
@@ -204,8 +204,8 @@ let updateother = (req, res) => {
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "education", "Bad education!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ' ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ' ]+$", "education", "Bad education!", parseObjUsers, res); 
     console.log("--ready-obj--", prUs);
     prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
     prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;

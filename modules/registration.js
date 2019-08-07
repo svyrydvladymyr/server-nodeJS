@@ -1,5 +1,6 @@
 let con = require('../db/connectToDB').con;
 let multer  = require('multer')
+let fs = require('fs');
 let {translit, token, clienttoken} = require('./service');
 let Cookies = require('cookies');
 let nodemailer = require('nodemailer');
@@ -39,16 +40,16 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[0-9-]+$", "registrdata", "Bad registration date!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad password!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "name", "Bad name!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇ]+$", "surname", "Bad surname!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "name", "Bad name!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "surname", "Bad surname!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9@-_.]+$", "email", "Bad email!", parseObjUsers, res);
     checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "country", "Bad country!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ ]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ ]+$", "education", "Bad education!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІєЄїЇ ]+$", "country", "Bad country!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІєЄїЇ ]+$", "town", "Bad town!", parseObjUsers, res);
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ' ]+$", "profession", "Bad profession!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ' ]+$", "education", "Bad education!", parseObjUsers, res);     
     let verifyToken = token(10);    
     let hostname = req.headers.host; 
     let verifyUrl = `${hostname}/verify?userid=${prUs.userid}&verifycod=${verifyToken}`;
@@ -214,12 +215,13 @@ let savesett = (req, res) => {
 
 let beforedeluser = (req, res) => {
     let clientToken = clienttoken(req, res);
-    let sql = `SELECT userid FROM users WHERE token = '${clientToken}'`;
+    let sql = `SELECT userid, ava FROM users WHERE token = '${clientToken}'`;
     con.query(sql, function (err, result) {
         if (err) {
             console.log("err", err);
             res.send({"err":err});
         } else {
+            let renameava = result[0].ava;           
             if(result == ''){
                 console.log("Error_authorization",result);
                 res.send({"err":"Error_authorization"});
@@ -232,13 +234,14 @@ let beforedeluser = (req, res) => {
                         res.send({"err":err});
                     } else {
                         for(let i = 0; i < result.length; i++){
-                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {console.log("--del-from-friend-table---->>",result.protocol41)});
+                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {console.log(`--del-from-friend-table-(${result[i].friendid})---->>`,result.protocol41)});
                         }    
                         con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {console.log("--del-table-friends---->>",result.protocol41)});
                         con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-users-friend---->>",result.protocol41)});
                         con.query(`DELETE FROM userssettings WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-settings-friend---->>",result.protocol41)});
                         con.query(`DELETE FROM userskills WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-skills-friend---->>",result.protocol41)});
                         con.query(`DELETE FROM userprojects WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-projects-friend---->>",result.protocol41)});
+                        fs.unlink(__dirname+`/../public/uploads/${renameava}`, (err) => {if (err) {console.log("--old-ava-not-found---->> ", err.syscall)} console.log('--del-ava---->> deleted')});
                         res.send({"res":"user_del"});                            
                     }
                 });

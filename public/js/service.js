@@ -672,7 +672,7 @@ let SE = (() => {
     
 //function for make prototype for send obgect
     let readyToSend = function(idF, value){
-        // console.log(regProto.prototype);        
+        console.log(regProto.prototype);        
         let idReplace = idF.replace(/[\-]/gi, "");
         regProto.prototype[idReplace] = value;
         //for change button
