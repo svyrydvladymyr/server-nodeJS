@@ -25,7 +25,7 @@ let clienttoken = (req, res) => {
 
 //chack on true values
 let checOnTrueVal = (el) => {
-    let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.:/\,іІїЇ /\n]";
+    let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.'\":/\,іІїЇєЄ /\n]";
     let newReg = new RegExp(reg, "gi");    
     let res = el.replace(newReg, '');
     return res;    

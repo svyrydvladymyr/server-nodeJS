@@ -881,7 +881,7 @@ let registerUserToDB = function(){
 
 //chack widget values    
     let checkWidgetsVal = (el) => {
-        let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.:/\,іІїЇ /\n]";
+        let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.'\":/\,іІїЇєЄ /\n]";
         let newReg = new RegExp(reg, "gi");
         let input = SE.$(el.id).value;
         let res = input.replace(newReg, '');
