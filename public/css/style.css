@@ -611,7 +611,7 @@ body{
     border-radius: 9px 17px 0px 0px;
     margin: 0px;
     padding: 2px 10px;
-    background: #b33535;
+    background: var(--main-color);
     border: 1px solid #2b2b2b;
     text-shadow: 0px 0px 1px #111111;
 }
