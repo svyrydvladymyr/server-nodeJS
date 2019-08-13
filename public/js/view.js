@@ -27,6 +27,8 @@ let VW = (() => {
         let logIn = document.getElementById("send-login-close");
         if (logIn.classList == "click-login-close"){
             logIn.classList = "click-login-open";     
+            SE.$("login").value = '';
+            SE.$("password").value = '';
         } else if(logIn.classList == "click-login-open"){        
             if ((SE.$("login").value !== '') || (SE.$("password").value !== '')) {
                 VW.buttonLogin();
