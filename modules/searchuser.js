@@ -169,11 +169,13 @@ let showfriends = (req, res) => {
                     console.log("--err-get-friends--", err);
                 } else {
                     console.log("--my-friends-kilk-show---->> ", result.length);  
-                    console.log("fffffffffff",result);
-               
+
                     let renameres = result;
                     let kilkfriends = result.length;
-                    let masfriends = [];        
+                    let masfriends = [];       
+                    for(let i = 1; i <= kilkfriends; i++){
+                        console.log("fffffffffff",result[i-1].friendid);
+                    } 
                     if (result.length === 0){
                         res.send({"res":"", "myid":"", "name":"", "surname":"", "kilk":"", "status":""});
                     }    
