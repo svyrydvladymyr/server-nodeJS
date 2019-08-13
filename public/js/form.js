@@ -25,6 +25,7 @@ window.onload = function(){
         SE.$("reg-login").addEventListener("change", () => {SE.checkCut("reg-login", "[^a-zA-Z0-9-_]")});
         SE.$("reg-login").addEventListener("input", () => {SE.checkTest("reg-login", "^[a-zA-Z0-9-_]+$")}); 
         SE.$("reg-login").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-login").value = '';
 
     //password-----------------------------------------------------------------------------------
         SE.$("reg-password").addEventListener("change", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
@@ -36,28 +37,34 @@ window.onload = function(){
         SE.$("reg-password").addEventListener("input", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password").addEventListener("input", () => {SE.checkTest("reg-password", "^[a-zA-Z0-9-_]+$")}); 
         SE.$("reg-password").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-password").value = '';
 
     //password-two-----------------------------------------------------------------------------------
         SE.$("reg-password-two").addEventListener("change", () => {SE.checkCut("reg-password-two", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password-two").addEventListener("input", () => {SE.checkCut("reg-password-two", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password-two").addEventListener("input", () => {SE.checkTest("reg-password-two", "^[a-zA-Z0-9-_]+$")}); 
         SE.$("reg-password-two").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-password-two").value = '';
     //name-----------------------------------------------------------------------------------
         SE.$("reg-name").addEventListener("change", () => {SE.checkCut("reg-name", "[^a-zA-Zа-яА-ЯіІїЇєЄ']")});
         SE.$("reg-name").addEventListener("input", () => {SE.checkTest("reg-name", "^[a-zA-Zа-яА-ЯіІїЇєЄ']+$")}); 
         SE.$("reg-name").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-name").value = '';
     //surname--------------------------------------------------------------------------------
         SE.$("reg-surname").addEventListener("change", () => {SE.checkCut("reg-surname", "[^a-zA-Zа-яА-ЯіІїЇєЄ']")});
         SE.$("reg-surname").addEventListener("input", () => {SE.checkTest("reg-surname", "^[a-zA-Zа-яА-ЯіІїІєЄ']+$")});
         SE.$("reg-surname").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-surname").value = '';
     //tel------------------------------------------------------------------------------------
         SE.$("reg-tel").addEventListener("change", () => {SE.checkCut("reg-tel", "[^0-9]")});
         SE.$("reg-tel").addEventListener("input", () => {SE.checkTest("reg-tel", "[0-9]{10}")});  
-        SE.$("reg-tel").addEventListener("change", SE.messageSendErrorClear);        
+        SE.$("reg-tel").addEventListener("change", SE.messageSendErrorClear);   
+        SE.$("reg-tel").value = '';     
     //message------------------------------------------------------------------------------------
         SE.$("reg-message").addEventListener("change", () => {SE.checkCut("reg-message", "[^0-9]")});
         SE.$("reg-message").addEventListener("input", () => {SE.checkTest("reg-message", "[0-9]{10}")});        
-        SE.$("reg-message").addEventListener("change", SE.messageSendErrorClear);        
+        SE.$("reg-message").addEventListener("change", SE.messageSendErrorClear);  
+        SE.$("reg-message").value = '';      
     //age------------------------------------------------------------------------------------
         SE.$("reg-age").addEventListener("change", () => {SE.checkCut("reg-age", "")});
         SE.$("reg-age").addEventListener("change", SE.messageSendErrorClear);
@@ -65,6 +72,7 @@ window.onload = function(){
         SE.$("reg-email").addEventListener("change", () => {SE.checkCut("reg-email", "[^a-zA-Z0-9@-_.]")});
         SE.$("reg-email").addEventListener("input", () => {SE.checkTest("reg-email", "^[a-zA-Z0-9@-_.]+$")});  
         SE.$("reg-email").addEventListener("change", SE.messageSendErrorClear);
+        SE.$("reg-email").value = '';
     //country------------------------------------------------------------------------------------
         SE.$("reg-country").addEventListener("change", () => {SE.checkCut("reg-country", "")});
         SE.$("reg-country").addEventListener("change", SE.messageSendErrorClear);
