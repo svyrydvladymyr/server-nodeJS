@@ -52,7 +52,9 @@ window.onload = function(){
         SE.$("reg-name").addEventListener("change", () => {SE.checkCut("reg-name", "[^a-zA-Zа-яА-ЯіІїЇєЄ']")});
         SE.$("reg-name").addEventListener("input", () => {SE.checkTest("reg-name", "^[a-zA-Zа-яА-ЯіІїЇєЄ']+$")}); 
         SE.$("reg-name").addEventListener("change", SE.messageSendErrorClear);
-        SE.$("reg-name").value = '';
+        setTimeout(() => {
+            SE.$("reg-name").value = '';
+        }, 500);
     //surname--------------------------------------------------------------------------------
         SE.$("reg-surname").addEventListener("change", () => {SE.checkCut("reg-surname", "[^a-zA-Zа-яА-ЯіІїЇєЄ']")});
         SE.$("reg-surname").addEventListener("input", () => {SE.checkTest("reg-surname", "^[a-zA-Zа-яА-ЯіІїІєЄ']+$")});
