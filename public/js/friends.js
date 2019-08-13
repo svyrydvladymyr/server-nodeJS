@@ -202,7 +202,7 @@ let WFRIENDS = (() => {
             SE.$('show-all-user-friends').innerHTML += `
             <div class="friend-full-wrap">
                 <div class="friend-full-img-wrap">
-                    <div class="friend-full-img  id="${parseObj[i].userid}" onclick="VW.renderPage(this)"" 
+                    <div class="friend-full-img  id="${parseObj[i].userid}" onclick="VW.renderPage(this)" 
                         style="background-image: url('${avafoto}'); 
                         background-position: ${parseObj[i].avasettings};">
                     </div>
