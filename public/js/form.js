@@ -37,7 +37,10 @@ window.onload = function(){
         SE.$("reg-password").addEventListener("input", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
         SE.$("reg-password").addEventListener("input", () => {SE.checkTest("reg-password", "^[a-zA-Z0-9-_]+$")}); 
         SE.$("reg-password").addEventListener("change", SE.messageSendErrorClear);
-        SE.$("reg-password").value = '';
+        setTimeout(() => {
+            SE.$("reg-password").value = '';
+        }, 500);
+
 
     //password-two-----------------------------------------------------------------------------------
         SE.$("reg-password-two").addEventListener("change", () => {SE.checkCut("reg-password-two", "[^a-zA-Z0-9-_]")});
