@@ -22,6 +22,22 @@ let VW = (() => {
         }
     };
 
+//function for close login button
+    let buttonLoginClose = function(){
+        let logIn = document.getElementById("send-login-close");
+        if (logIn.classList == "click-login-close"){
+            logIn.classList = "click-login-open";     
+        } else if(logIn.classList == "click-login-open"){        
+            if ((SE.$("login").value !== '') || (SE.$("password").value !== '')) {
+                VW.buttonLogin();
+            } else {
+                logIn.classList = "click-login-close";   
+                SE.$('login-message').innerHTML = '';
+                SE.$('login-message').style.display = 'none'; 
+            }
+        }
+    }
+
 //view after autorization
     let autorizationSett = (res) => {
         let parseObj = JSON.parse(res);
@@ -536,6 +552,7 @@ let VW = (() => {
 
 return {
     buttonLogin,
+    buttonLoginClose,
     openSetting,
     changLang,
     showClearButton,

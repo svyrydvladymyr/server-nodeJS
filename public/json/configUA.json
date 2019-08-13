@@ -86,8 +86,8 @@
     "placeholder":{
         "search":"пошук...",
         "autoriz-email-send-input":"Введіть вашу пошту...",
-        "login":"Введіть ваш логін...",
-        "password":"Введіть ваш пароль..."
+        "login":"Введіть логін...",
+        "password":"Введіть пароль..."
     },
 
 "__comment-page-about":"text for page about",
