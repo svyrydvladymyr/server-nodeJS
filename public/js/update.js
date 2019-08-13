@@ -17,14 +17,14 @@ window.onload = function(){
             SE.$("reg-login-up").addEventListener("change", () => {SE.checkCut("reg-login-up", "[^a-zA-Z0-9-_]")});
             SE.$("reg-login-up").addEventListener("input", () => {SE.$('main-form-messageone').innerHTML = '';});
             SE.$("reg-login-up").addEventListener("input", () => {SE.checkTest("reg-login-up", "^[a-zA-Z0-9-_]+$")}); 
-            SE.$("reg-login-up").value = '';
+            setTimeout(() => { SE.$("reg-login-up").value = ''}, 200);  
         }
     //old-password-----------------------------------------------------------------------------------
         if (SE.$("reg-oldpassword")){
             SE.$("reg-oldpassword").addEventListener("change", () => {SE.checkCut("reg-oldpassword", "[^a-zA-Z0-9-_]")});
             SE.$("reg-oldpassword").addEventListener("input", () => {SE.$('main-form-messageone').innerHTML = '';});
             SE.$("reg-oldpassword").addEventListener("input", () => {SE.checkTest("reg-oldpassword", "^[a-zA-Z0-9-_]+$")}); 
-            SE.$("reg-oldpassword").value = '';
+            setTimeout(() => { SE.$("reg-oldpassword").value = ''}, 200); 
         }
     //password-----------------------------------------------------------------------------------
         if (SE.$("reg-password")){
@@ -37,7 +37,7 @@ window.onload = function(){
             SE.$("reg-password").addEventListener("input", () => {SE.$('main-form-messageone').innerHTML = '';});
             SE.$("reg-password").addEventListener("input", () => {SE.checkCut("reg-password", "[^a-zA-Z0-9-_]")});
             SE.$("reg-password").addEventListener("input", () => {SE.checkTest("reg-password", "^[a-zA-Z0-9-_]+$")}); 
-            SE.$("reg-password").value = '';
+            setTimeout(() => { SE.$("reg-password").value = ''}, 200);   
         }
     //password-two-----------------------------------------------------------------------------------
         if (SE.$("reg-password-two")){
@@ -45,7 +45,7 @@ window.onload = function(){
             SE.$("reg-password-two").addEventListener("input", () => {SE.$('main-form-messageone').innerHTML = '';});
             SE.$("reg-password-two").addEventListener("input", () => {SE.checkCut("reg-password-two", "[^a-zA-Z0-9-_]")});
             SE.$("reg-password-two").addEventListener("input", () => {SE.checkTest("reg-password-two", "^[a-zA-Z0-9-_]+$")}); 
-            SE.$("reg-password-two").value = '';
+            setTimeout(() => { SE.$("reg-password-two").value = ''}, 200);
         }
     //name-----------------------------------------------------------------------------------
         if (SE.$("reg-name")){
