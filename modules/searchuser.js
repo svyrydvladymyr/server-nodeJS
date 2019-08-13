@@ -153,8 +153,8 @@ let showfriends = (req, res) => {
     userurlsearch === undefined ? userid = url.parse(getuserid, true).pathname.replace('/', '') : userid = userurlsearch;
     stepsearch === '' ? step = '' : step = `${stepsearch},`;
     console.log("--userid-for-friends---->> ",userid);
-    let sqlkilk = `SELECT S.friendid FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC, S.friendvisit + 0 ASC;`;
-    let sqlsel = `SELECT U.userid, U.name, U.surname, U.surname, U.regtype, S.friendid, S.friendvisit, S.friendstatus FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC, S.friendvisit + 0 ASC LIMIT ${step} ${limitsearch};`;
+    let sqlkilk = `SELECT S.friendid FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC, S.friendid;`;
+    let sqlsel = `SELECT U.userid, U.name, U.surname, U.surname, U.regtype, S.friendid, S.friendvisit, S.friendstatus FROM friends_${userid} S INNER JOIN users U ON U.userid=S.userid WHERE S.userid = '${userid}' AND S.friendstatus = '${typesearch}' ORDER BY S.friendvisit + 0 DESC, S.friendid LIMIT ${step} ${limitsearch};`;
     con.query(sqlkilk, function (err, result) {
         if (err) {
             console.log("--err-get-friends--", err);
