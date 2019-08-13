@@ -166,7 +166,9 @@ let showfriends = (req, res) => {
                 if (err) {
                     console.log("--err-get-friends--", err);
                 } else {
-                    console.log("--my-friends-kilk-show---->> ", result.length);                 
+                    console.log("--my-friends-kilk-show---->> ", result.length);  
+                    console.log("fffffffffff",result);
+               
                     let renameres = result;
                     let kilkfriends = result.length;
                     let masfriends = [];        
@@ -181,7 +183,7 @@ let showfriends = (req, res) => {
                             } else {    
                                 let type = (result == '') ? undefined : result[0].regtype;
                                 let email = ((type === null) || (type === undefined)) ? `` : `${type}`;
-                                let sqlsel = `SELECT userid, name, surname, ${email}email, phone, country, town ava, avasettings FROM users WHERE userid = '${renameres[i-1].friendid}';`;
+                                let sqlsel = `SELECT userid, name, surname, ${email}email, phone, country, town, ava, avasettings FROM users WHERE userid = '${renameres[i-1].friendid}';`;
                                 con.query(sqlsel, function (err, result) {
                                     if (err) {
                                         console.log("err", err);
