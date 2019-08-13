@@ -85,8 +85,8 @@
         "placeholder":{
                 "search":"search...",
                 "autoriz-email-send-input":"Enter your mail ...",
-                "login":"Enter your login ...",
-                "password":"Enter your password ..."
+                "login":"Enter login ...",
+                "password":"Enter password ..."
         },
 
 "__comment-page-about":"text for page about",

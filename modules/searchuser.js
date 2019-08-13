@@ -157,6 +157,9 @@ let showfriends = (req, res) => {
         if (err) {
             console.log("--err-get-friends--", err);
         } else {
+            console.log("iiiiiiiiiiii",result);
+            
+
             console.log("--my-friends-kilk--->> ", result.length);
             let kilk = result.length;
             con.query(sqlsel, function (err, result) {
@@ -178,17 +181,21 @@ let showfriends = (req, res) => {
                             } else {    
                                 let type = (result == '') ? undefined : result[0].regtype;
                                 let email = ((type === null) || (type === undefined)) ? `` : `${type}`;
-                                let sqlsel = `SELECT userid, name, surname, ${email}email, birthday, phone, country, town, profession, education, ava, avasettings FROM users WHERE userid = '${renameres[i-1].friendid}';`;
+                                let sqlsel = `SELECT userid, name, surname, ${email}email, phone, country, town ava, avasettings FROM users WHERE userid = '${renameres[i-1].friendid}';`;
                                 con.query(sqlsel, function (err, result) {
                                     if (err) {
                                         console.log("err", err);
                                         res.send({"error":err});
                                     } else {    
+                                        console.log("rrrrrrrrrrrr",result);
+                                        
                                         let emailready = (result == '') ? '' : result[0][`${email}email`];
                                         if (result[0] !== undefined){
                                             masfriends.push({"friendvisit":renameres[i-1].friendvisit, "userid":result[0].userid, "name":result[0].name, "surname":result[0].surname, "ava":result[0].ava, "avasettings":result[0].avasettings, "email":emailready, "birthday":result[0].birthday, "phone":result[0].phone, "country":result[0].country, "town":result[0].town, "profession":result[0].profession, "education":result[0].education})
                                         }       
                                         if (i === kilkfriends) {
+                                            console.log("massssssssssssss",masfriends);
+                                            
                                             res.send({"res":masfriends, "myid":renameres[0].userid, "name":renameres[0].name, "surname":renameres[0].surname, "kilk":kilk, "status":renameres[0].friendstatus});
                                         }
                                     }
