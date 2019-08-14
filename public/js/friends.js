@@ -198,15 +198,14 @@ let WFRIENDS = (() => {
             country = ((parseObj[i].country === null) || (parseObj[i].country === undefined)) ? `` : `${parseObj[i].country}`;
             town = ((parseObj[i].town === null) || (parseObj[i].town === undefined)) ? `` : `${parseObj[i].town}`;
             phone = ((parseObj[i].phone === null) || (parseObj[i].phone === undefined)) ? `` : `${parseObj[i].phone}`;
-
             SE.$('show-all-user-friends').innerHTML += `
             <div class="friend-full-wrap">
                 <div class="friend-full-img-wrap">
+                    <div style="width:90px; margin-top: 103px; margin-bottom: 5px;" id="${parseObj[i].userid}">${status}</div>
                     <div class="friend-full-img"  id="${parseObj[i].userid}" onclick="VW.renderPage(this)" 
                         style="background-image: url('${avafoto}'); 
                         background-position: ${parseObj[i].avasettings};">
-                    </div>
-                    <div style="width:90px;" id="${parseObj[i].userid}">${status}</div>
+                    </div>                    
                 </div>
                 <div class="friend-full-info">
                     <p id="${parseObj[i].userid}" onclick="VW.renderPage(this)">${parseObj[i].surname} ${parseObj[i].name}</p>

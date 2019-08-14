@@ -1433,6 +1433,7 @@ body{
     background-clip: content-box;
     padding: 4px;
     border: 1px solid #5c8ab9;
+    margin-top: -157px;
 }
 
 .friend-full-info{
@@ -1483,7 +1484,7 @@ body{
     border-radius: 5px;
     background: var(--button-background);
     height: 23px;
-    margin-bottom: 7px;
+    margin-bottom: 1px;
     font-size: 13px;
     color: #ffffff;
     width: 90%;
