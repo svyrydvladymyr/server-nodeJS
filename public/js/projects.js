@@ -116,10 +116,10 @@ let WPROJ = (() => {
     //for show add form to projects list
         let showAddProjectsform = () => {
             let getidconteiner = SE.$('projects-add-form');
-            let projectdescription = SE.errorFormMessage().projectdescription;
-            let projectname = SE.errorFormMessage().projectname;
-            let projecturl = SE.errorFormMessage().projecturl;
-            let projectchack = SE.errorFormMessage().skillschack;
+            let projectdescription = MESS.errorFormMessage().projectdescription;
+            let projectname = MESS.errorFormMessage().projectname;
+            let projecturl = MESS.errorFormMessage().projecturl;
+            let projectchack = MESS.errorFormMessage().skillschack;
             let kilkprojects = document.getElementsByClassName('projects-name').length; 
             SE.$('save-projects-savelist').innerHTML = ``;
             WPROJ.sortEnable();
@@ -132,11 +132,11 @@ let WPROJ = (() => {
                         <p>${projectchack}</p>
                         <input type="checkbox" name="projectchack" id="projectchack">
                         <p style="width:100%;">${projectname}</p>
-                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80" oninput="SE.checkWidgetsVal(this)">
+                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80" oninput="CHECK.checkWidgetsVal(this)">
                         <p style="width:100%;">${projecturl}</p>
-                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100" oninput="SE.checkWidgetsVal(this)">
+                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100" oninput="CHECK.checkWidgetsVal(this)">
                         <p>${projectdescription}</p>
-                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;" oninput="SE.checkWidgetsVal(this)"></textarea>
+                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;" oninput="CHECK.checkWidgetsVal(this)"></textarea>
                         <div class="skills-button">
                             <i class='fas fa-times' id="close-skills" onclick="WPROJ.closeProjectsAddForm()"></i>
                             <i class='far fa-save' id="save-skills" onclick="WPROJ.addProjectstoList()"></i>          
@@ -160,7 +160,7 @@ let WPROJ = (() => {
                 chack = SE.$('projectchack').checked ? 'on' : 'off';            
                 descript = SE.$('projectdescription').value;
                 if (name === ''){
-                    SE.$('mess-addproj').innerHTML = SE.errorFormMessage().projectname;
+                    SE.$('mess-addproj').innerHTML = MESS.errorFormMessage().projectname;
                     SE.$("projectname").addEventListener("input", () => {SE.$('mess-addproj').innerHTML = '';}); 
                 } else {
                     SE.$("projectname").removeEventListener("input", () => {SE.$('mess-addproj').innerHTML = '';}); 
@@ -200,9 +200,9 @@ let WPROJ = (() => {
             SE.$(`projects-box${numberproj}`).innerHTML = `
             <div class="edit-proj-form" id="edit-proj-form${numberproj}">
                 <div class="edit-proj-body">
-                    <input type="text" name="edit-proj-name" class="edit-proj-name" id="edit-proj-name${numberproj}" value="${nameproj}"  maxlength="80" oninput="SE.checkWidgetsVal(this)">
-                    <input type="text" name="edit-proj-url" class="edit-proj-name" id="edit-proj-url${numberproj}" value="${projurl}"  maxlength="100" oninput="SE.checkWidgetsVal(this)">
-                    <textarea name="edit-projdescript" class="edit-proj-name" id="edit-proj-descript${numberproj}" style="resize: none; min-height: 120px;" maxlength="200" oninput="SE.checkWidgetsVal(this)">${descriptproj}</textarea>
+                    <input type="text" name="edit-proj-name" class="edit-proj-name" id="edit-proj-name${numberproj}" value="${nameproj}"  maxlength="80" oninput="CHECK.checkWidgetsVal(this)">
+                    <input type="text" name="edit-proj-url" class="edit-proj-name" id="edit-proj-url${numberproj}" value="${projurl}"  maxlength="100" oninput="CHECK.checkWidgetsVal(this)">
+                    <textarea name="edit-projdescript" class="edit-proj-name" id="edit-proj-descript${numberproj}" style="resize: none; min-height: 120px;" maxlength="200" oninput="CHECK.checkWidgetsVal(this)">${descriptproj}</textarea>
                 </div>
                 <div class="edit-skill-edit" style="width:20px;">
                     <i class='far fa-save' onclick="WPROJ.editProjects(${numberproj})"></i>
@@ -346,7 +346,7 @@ let WPROJ = (() => {
         let saveAfterMove = () => {
             let allnames;
             allnames = document.getElementsByClassName('projects-wrap');
-            SE.$('save-sortlist-proj').innerHTML = SE.errorFormMessage().saved;         
+            SE.$('save-sortlist-proj').innerHTML = MESS.errorFormMessage().saved;         
             setTimeout(() => {
                 for (let i = 0; i < allnames.length; i++){
                     let boxid = allnames[i].id.slice(12)-1;

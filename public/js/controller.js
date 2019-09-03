@@ -19,14 +19,14 @@ window.onload = function(){
 //autorisation--login-------------------------------------------------------------------------------
     if (SE.$("login")) {
         SE.$("login").addEventListener("change", () => {SE.checkAutorisation("login", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
-        SE.$("login").addEventListener("input", () => {SE.checkTest("login", "^[a-zA-Z0-9]+$")}); 
+        SE.$("login").addEventListener("input", () => {CHECK.checkTest("login", "^[a-zA-Z0-9]+$")}); 
         SE.$("login").addEventListener("keydown", (event) => {if (event.key === 'Enter'){VW.buttonLogin()}}); 
     }
 
 //autorisation--password-------------------------------------------------------------------------------
     if (SE.$("password")) {
         SE.$("password").addEventListener("change", () => {SE.checkAutorisation("password", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
-        SE.$("password").addEventListener("input", () => {SE.checkTest("password", "^[a-zA-Z0-9]+$")}); 
+        SE.$("password").addEventListener("input", () => {CHECK.checkTest("password", "^[a-zA-Z0-9]+$")}); 
         SE.$("password").addEventListener("keydown", (event) => {if (event.key === 'Enter'){VW.buttonLogin()}}); 
     } 
 };

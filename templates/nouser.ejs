@@ -182,6 +182,8 @@
 
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/checkinputs.js"></script>
+    <script src="./js/message.js"></script>
     <script src="./js/friends.js"></script>
     <script src="./js/service.js"></script>
     <script src="./js/view.js"></script>
@@ -190,8 +192,8 @@
     <% if(onindex === 'err_autoriz') {%>
         <% if(errautoriz === 'err_autoriz_email') {%>
             <script>
-                SE.$("autoriz-email-send-input").addEventListener("change", () => {SE.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
-                SE.$("autoriz-email-send-input").addEventListener("input", () => {SE.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
+                SE.$("autoriz-email-send-input").addEventListener("change", () => {CHECK.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
+                SE.$("autoriz-email-send-input").addEventListener("input", () => {CHECK.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
             </script>
         <% } %>
     <% } %>
@@ -199,8 +201,8 @@
     <% if(onindex === 'recover') {%>
         <% if(permissAccess === 'false') {%>                
             <script>
-                SE.$("autoriz-email-send-input").addEventListener("change", () => {SE.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
-                SE.$("autoriz-email-send-input").addEventListener("input", () => {SE.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
+                SE.$("autoriz-email-send-input").addEventListener("change", () => {CHECK.checkCut("autoriz-email-send-input", "[^a-zA-Z0-9@-_.]")});
+                SE.$("autoriz-email-send-input").addEventListener("input", () => {CHECK.checkTest("autoriz-email-send-input", "^[a-zA-Z0-9@-_.]+$")}); 
             </script>
         <% } %>
     <% } %>

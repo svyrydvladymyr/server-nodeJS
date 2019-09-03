@@ -1,6 +1,0 @@
-IP: ::1  TIME: 2019-8-8 14:07:32  URL: /
-IP: ::1  TIME: 2019-8-8 14:07:33  URL: /index
-IP: ::1  TIME: 2019-8-8 14:15:11  URL: /
-IP: ::1  TIME: 2019-8-8 14:15:11  URL: /index
-IP: ::1  TIME: 2019-8-8 14:17:22  URL: /index
-IP: ::1  TIME: 2019-8-8 14:17:29  URL: /xxxxxxxxxxxx_b22HW0ljqh

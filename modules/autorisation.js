@@ -121,6 +121,9 @@ let recoverdata = (req, res) => {
             console.log("err", err);
             res.redirect(user.id);
         } else {
+
+            console.log("jjjjjjjjjjjjjjj",result);
+            
             let messSoc, login, passsword, arrprovider = ``, log, pass, and, koma;
             if (result.length > 1){
                 and = `<span><b>You also have other registrations, but these are different accounts!</b></span>`;
@@ -139,7 +142,7 @@ let recoverdata = (req, res) => {
                     arrprovider += `${result[i].regtype}${koma} `;
                 }
             }
-            if (result[0].regtype !== undefined){
+            if (result != ''){
                 if ((result[0].regtype === 'facebook') || (result[0].regtype === 'googleemail') || (result[0].regtype === 'instagramemail') || (result[0].regtype === 'githubemail') || (result[0].regtype === 'linkedinemail') || (result[0].regtype === 'twitteremail')) {
                     messSoc = `<span>You are registered with <b style="font-size:14px;">${arrprovider}</b> and You can login using this resources.</span>`
                     login = `${log}`;
@@ -169,7 +172,9 @@ let recoverdata = (req, res) => {
                         res.send({"res":info.response});
                     }
                 });
-            }        
+            } else {
+                res.send({"res":"notfind"});
+            }       
         }        
     });
 };

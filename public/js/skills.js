@@ -95,9 +95,9 @@ let WSKILLS = (() => {
         let showAddSkillsform = () => {
             let getidconteiner = SE.$('skills-add-form');
             SE.$('save-skills-savelist').innerHTML = ``;
-            let skillslevel = SE.errorFormMessage().skillslevel;
-            let skillsname = SE.errorFormMessage().skillsname;
-            let skillchack = SE.errorFormMessage().skillschack;
+            let skillslevel = MESS.errorFormMessage().skillslevel;
+            let skillsname = MESS.errorFormMessage().skillsname;
+            let skillchack = MESS.errorFormMessage().skillschack;
             let kilkskills = document.getElementsByClassName('skills-name').length; 
             WSKILLS.sortEnable();
             WSKILLS.sortDisable();
@@ -109,7 +109,7 @@ let WSKILLS = (() => {
                         <p>${skillchack}</p>
                         <input type="checkbox" name="skillchack" id="skillchack">
                         <p style="width:100%;">${skillsname}</p>
-                        <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70" oninput="SE.checkWidgetsVal(this)">
+                        <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70" oninput="CHECK.checkWidgetsVal(this)">
                         <p>${skillslevel}</p>
                         <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
                         <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
@@ -135,7 +135,7 @@ let WSKILLS = (() => {
                 chack = SE.$('skillchack').checked ? 'on' : 'off';            
                 level = SE.$('skillsregname').value;
                 if (name === ''){
-                    SE.$('mess-addskills').innerHTML = SE.errorFormMessage().skillsemptyname;
+                    SE.$('mess-addskills').innerHTML = MESS.errorFormMessage().skillsemptyname;
                     SE.$("skillsname").addEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
                 } else {
                     SE.$("skillsname").removeEventListener("input", () => {SE.$('mess-addskills').innerHTML = '';}); 
@@ -174,7 +174,7 @@ let WSKILLS = (() => {
             SE.$(`skills-box${numberskill}`).innerHTML = `
             <div class="edit-skill-form" id="edit-skill-form${numberskill}">
                 <div class="edit-skill-body">
-                    <input type="text" name="edit-skill-name" class="edit-skill-name" id="edit-skill-name${numberskill}" value="${nameskill}"  maxlength="70" oninput="SE.checkWidgetsVal(this)">
+                    <input type="text" name="edit-skill-name" class="edit-skill-name" id="edit-skill-name${numberskill}" value="${nameskill}"  maxlength="70" oninput="CHECK.checkWidgetsVal(this)">
                     <div class="skills-line edit-skill-level2"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
                     <input type="range" name="edit-skill-level" class="edit-skill-level" id="edit-skill-level${numberskill}" min="0" max="100" step="10" value="${levelskill}">
                 </div>
@@ -313,7 +313,7 @@ let WSKILLS = (() => {
         let saveAfterMove = () => {
             let allnames;
             allnames = document.getElementsByClassName('skills-wrap');
-            SE.$('save-sortlist').innerHTML = SE.errorFormMessage().saved;         
+            SE.$('save-sortlist').innerHTML = MESS.errorFormMessage().saved;         
             setTimeout(() => {
                 for (let i = 0; i < allnames.length; i++){
                     let boxid = allnames[i].id.slice(10)-1;

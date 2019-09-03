@@ -4,13 +4,13 @@ let WFRIENDS = (() => {
     let addToFriends = (res) => {   
         let parseObj = JSON.parse(res); 
         if (parseObj.error === 'ER_DUP_ENTRY'){
-            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
+            SE.$('mess-about-add-friend').innerHTML = `${MESS.errorFormMessage().yourarefriends}`;
             setTimeout(() => {
                 SE.$('mess-about-add-friend').innerHTML = '';
             }, 2000);
         } else if (parseObj.res === 1){
             SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" >
-                <i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+                <i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
         } 
     };
 
@@ -64,24 +64,24 @@ let WFRIENDS = (() => {
 
 //close confirm button for delete
     let closeConfirmDelFriend = () => {   
-        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+        SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
     };
 
 //close confirm button for delete
     let closeConfirmDelFriendFull = (el) => {   
-        SE.$(el).innerHTML = `<div class="add-to-friends-wrap friend-req-plus"  onclick="WFRIENDS.confirmDelFriendFull('${el}')" ><i class='far fa-minus-square'><b style="font-size: 10px; padding: 0px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+        SE.$(el).innerHTML = `<div class="add-to-friends-wrap friend-req-plus"  onclick="WFRIENDS.confirmDelFriendFull('${el}')" ><i class='far fa-minus-square'><b style="font-size: 10px; padding: 0px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
     };
 
 //change button after del from friends
     let delFromFriends = (res) => {   
         let parseObj = JSON.parse(res); 
         if (parseObj.res === 0){
-            SE.$('mess-about-add-friend').innerHTML = `${SE.errorFormMessage().yourarefriends}`;
+            SE.$('mess-about-add-friend').innerHTML = `${MESS.errorFormMessage().yourarefriends}`;
             setTimeout(() => {
                 SE.$('mess-about-add-friend').innerHTML = '';
             }, 2000);
         } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', WFRIENDS.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${SE.errorFormMessage().friendsadd}</b></i></div>`;
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', WFRIENDS.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${MESS.errorFormMessage().friendsadd}</b></i></div>`;
             if(SE.$('mess-friend-wrap')){ SE.$('mess-friend-wrap').innerHTML = ``;}
         } else if (parseObj.err){
             console.log(parseObj.err);            
@@ -93,10 +93,10 @@ let WFRIENDS = (() => {
         let parseObj = JSON.parse(res); 
         console.log(parseObj);
         if (parseObj.res === 0){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req">${SE.errorFormMessage().prooffriends}</b></i></div>`;
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req">${MESS.errorFormMessage().prooffriends}</b></i></div>`;
         } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${SE.errorFormMessage().friendsdel}</b></i></div>`;
-            SE.$('mess-friend-wrap').innerHTML = `<div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess">${SE.errorFormMessage().friendsmess}</b></i></div>`;
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
+            SE.$('mess-friend-wrap').innerHTML = `<div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess">${MESS.errorFormMessage().friendsmess}</b></i></div>`;
         } else if (parseObj.err){
             console.log(parseObj.err);            
         }
@@ -186,11 +186,11 @@ let WFRIENDS = (() => {
             if (parseStatus === 'reqto'){
                 status = `<div class="add-to-friends-wrap friend-req-plus"  
                     onclick="WFRIENDS.confirmDelFriendFull('${parseObj[i].userid}')" >
-                    <i class='far fa-minus-square'><b style="font-size: 10px; padding: 0px 5px; position: absolute;">${SE.errorFormMessage().friendsdel}</b></i></div>`;
+                    <i class='far fa-minus-square'><b style="font-size: 10px; padding: 0px 5px; position: absolute;">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
             } else if (parseStatus === 'reqfrom'){
                 status = `<div class="add-to-friends-wrap friend-req-plus"  
                     onclick="WFRIENDS.confirmProofFull('${parseObj[i].userid}')">
-                    <i class='far fa-plus-square'><b style="font-size: 9px; padding: 1px 5px; position: absolute;">${SE.errorFormMessage().prooffriends}</b></i></div>`;
+                    <i class='far fa-plus-square'><b style="font-size: 9px; padding: 1px 5px; position: absolute;">${MESS.errorFormMessage().prooffriends}</b></i></div>`;
             } else {
                 status = ``;
             }
@@ -218,7 +218,7 @@ let WFRIENDS = (() => {
             if(i === parseObj.length-1){
                 let el = document.getElementsByClassName('friend-full-wrap').length;
                 if (el !== parseKilk){
-                    SE.$('friends-show-more-wrap').innerHTML = `<p class="friends-show-more-button" onclick="WFRIENDS.showMoreFriends()">${SE.errorFormMessage().showmore}</p>`;
+                    SE.$('friends-show-more-wrap').innerHTML = `<p class="friends-show-more-button" onclick="WFRIENDS.showMoreFriends()">${MESS.errorFormMessage().showmore}</p>`;
                 } else if (el === parseKilk){
                     SE.$('friends-show-more-wrap').innerHTML = ``;
                 }

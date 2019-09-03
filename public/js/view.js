@@ -10,7 +10,7 @@ let VW = (() => {
             let inputPassword = SE.$("password").value;
             if ((inputLogin === "") && (inputPassword === "")){
                 SE.$('login-message').style.display = 'table';
-                SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotEmpty;
+                SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisNotEmpty;
             } else{
                 SE.$('login-message').innerHTML = '';
                 SE.$('login-message').style.display = 'none'; 
@@ -45,7 +45,7 @@ let VW = (() => {
         let parseObj = JSON.parse(res);
         if (parseObj.err === 'false'){
             SE.$('login-message').style.display = 'table';
-            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisNotAvtoris;
+            SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisNotAvtoris;
         } else if (parseObj.res !== undefined){
             localStorage.kalcifermaincolor = parseObj.res.maincolor;
             localStorage.kalcifersecondcolor = parseObj.res.secondcolor;
@@ -116,11 +116,11 @@ let VW = (() => {
         if (( SE.$("reg-password").type === 'password') || ( SE.$("reg-password").type === "password")){
             SE.$("reg-password").type = 'text';
             SE.$("reg-password-two").type = 'text'
-            SE.$("reg-oldpassword").type = 'text'
+            if(SE.$("reg-oldpassword")){SE.$("reg-oldpassword").type = 'text'}
         } else {
             SE.$("reg-password").type = 'password';
             SE.$("reg-password-two").type = 'password'
-            SE.$("reg-oldpassword").type = 'password'
+            if(SE.$("reg-oldpassword")){SE.$("reg-oldpassword").type = 'password'}
         }
     };
 
@@ -295,11 +295,11 @@ let VW = (() => {
                 SE.redirect('/');
             },1000);
         } else if (parseObj.error === 'duplicate_entry_login'){
-            SE.$("main-form-message").innerHTML = SE.errorFormMessage().dupllogin;
-            SE.$('reg-login').addEventListener('change', showErrorMainMess);
+            SE.$("main-form-message").innerHTML = MESS.errorFormMessage().dupllogin;
+            SE.$('reg-login').addEventListener('change', SE.showErrorMainMess);
         } else if (parseObj.error === 'duplicate_entry_email'){
-            SE.$("main-form-message").innerHTML = SE.errorFormMessage().duplemail;  
-            SE.$('reg-email').addEventListener('change', showErrorMainMess);
+            SE.$("main-form-message").innerHTML = MESS.errorFormMessage().duplemail;  
+            SE.$('reg-email').addEventListener('change', SE.showErrorMainMess);
         } else if ((parseObj.affectedRows === 1) && (parseObj.protocol41 === true)){
             SE.addAvaToDB();
         } else {
@@ -311,14 +311,14 @@ let VW = (() => {
     let updateSecurity = (res) => {
         let parseObj = JSON.parse(res);
         if (parseObj.res === 'BAD_PASS') {
-            SE.iconON("reg-oldpassword", "false", SE.errorFormMessage().checkPass);
+            SE.iconON("reg-oldpassword", "false", MESS.errorFormMessage().checkPass);
         } else if (parseObj.res === 'ER_DUP_ENTRY') {
-            SE.$('main-form-messageone').innerHTML = SE.errorFormMessage().dupllogin;            
+            SE.$('main-form-messageone').innerHTML = MESS.errorFormMessage().dupllogin;            
         } else if (parseObj.res === 0){
-            SE.$('main-form-messageone').innerHTML = SE.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messageone').innerHTML = MESS.errorFormMessage().notCorectVar; 
         } else if (parseObj.res === 1){
-            SE.$('main-form-messageone').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            SE.$('main-form-messageone').innerHTML = `${MESS.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
             setTimeout(() => {SE.$('main-form-messageone').innerHTML = '';},2000);
             SE.$('reg-login-up').value = '';
             SE.$('reg-oldpassword').value = '';
@@ -337,12 +337,12 @@ let VW = (() => {
     let updateMain = (res) => {
         let parseObj = JSON.parse(res);
         if (parseObj.res === 'ER_DUP_ENTRY') {
-            SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().duplemail;            
+            SE.$('main-form-messagetwo').innerHTML = MESS.errorFormMessage().duplemail;            
         } else if (parseObj.res === 0){
-            SE.$('main-form-messagetwo').innerHTML = SE.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messagetwo').innerHTML = MESS.errorFormMessage().notCorectVar; 
         } else if (parseObj.res === 1){
-            SE.$('main-form-messagetwo').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            SE.$('main-form-messagetwo').innerHTML = `${MESS.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
             setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},2000);
             if (SE.$('reg-name-mess')){
                 if (SE.$('reg-name-mess').classList.contains('reg-message-true')){SE.$('reg-name-mess').classList.remove('reg-message-true');}}
@@ -363,10 +363,10 @@ let VW = (() => {
     let updateOther = (res) => {
         let parseObj = JSON.parse(res);
         if (parseObj.res === 0){
-            SE.$('main-form-messagethree').innerHTML = SE.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messagethree').innerHTML = MESS.errorFormMessage().notCorectVar; 
         } else if (parseObj.res === 1){
-            SE.$('main-form-messagethree').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},1000);
+            SE.$('main-form-messagethree').innerHTML = `${MESS.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
             setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},2000);
             if (SE.$('reg-country-mess').classList.contains('reg-message-true')){
                 SE.$('reg-country-mess').classList.remove('reg-message-true');}
@@ -377,14 +377,13 @@ let VW = (() => {
             if (SE.$('reg-education-mess').classList.contains('reg-message-true')){
                 SE.$('reg-education-mess').classList.remove('reg-message-true');}
         }
-    };  
-    
+    }; 
     
 //update ava date in user date
     let updateAva = () => {
         if (SE.$('reg-file').files.length === 1){
             if (SE.$('reg-file').files[0].size > 1024000) {
-                SE.$('ava-mess-main').innerHTML = SE.errorFormMessage().toLBigFile;  
+                SE.$('ava-mess-main').innerHTML = MESS.errorFormMessage().toLBigFile;  
                 setTimeout(() => {SE.$('ava-mess-main').innerHTML = ''}, 3000);
             } else {
                 //show preview
@@ -422,10 +421,10 @@ let VW = (() => {
     let saveWidgetsMess = (res) => {
         let parseObj = JSON.parse(res);
         if (parseObj.res.changedRows === 0){
-            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().nedautoriz}`;            
+            SE.$('main-form-messagefour').innerHTML = `${MESS.errorFormMessage().nedautoriz}`;            
         } else {
-            SE.$('main-form-messagefour').innerHTML = `${SE.errorFormMessage().save}`;            
-            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = `<b style="color:green;">${SE.errorFormMessage().saved}</b>`;},500);
+            SE.$('main-form-messagefour').innerHTML = `${MESS.errorFormMessage().save}`;            
+            setTimeout(() => {SE.$('main-form-messagefour').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},500);
             setTimeout(() => {SE.$('main-form-messagefour').innerHTML = '';},1000);
         }
     };  
@@ -455,7 +454,7 @@ let VW = (() => {
             SE.$('send-email').style.width = "0px";
             setTimeout(() => {                
                 SE.$('mess-after-send').style.fontSize = '18px';
-                SE.$('mess-after-send').innerHTML = `${SE.errorFormMessage().aftersendemail}`;
+                SE.$('mess-after-send').innerHTML = `${MESS.errorFormMessage().aftersendemail}`;
             }, 500);
         }
     };
@@ -477,9 +476,11 @@ let VW = (() => {
     let afterRecoverData = (res) => {   
         let parseObj = JSON.parse(res); 
         if (parseObj.res.slice(0, 12) == '250 2.0.0 OK'){
-            SE.$('recover-data').innerHTML = `<p style="color:var(--main-color);">${SE.errorFormMessage().recoverdatamess}</p>`;
+            SE.$('recover-data').innerHTML = `<p style="color:var(--main-color);">${MESS.errorFormMessage().recoverdatamess}</p>`;
         } else if (parseObj.res  === 'err'){
-            SE.$('recover-data').innerHTML = `<p style="color:red;">${SE.errorFormMessage().recoverdataerr}</p>`;
+            SE.$('recover-data').innerHTML = `<p style="color:red;">${MESS.errorFormMessage().recoverdataerr}</p>`;
+        } else if (parseObj.res  === 'notfind'){
+            SE.$('autoriz-email-send').innerHTML = `<p style="color:red;">${MESS.errorFormMessage().recovernotfind}</p>`;
         }
     };
 
@@ -487,9 +488,9 @@ let VW = (() => {
     let animationBeforeDel = () => {
         SE.$('del-blok-wrap').innerHTML = `
             <i class='fas fa-spinner fa-spin' style="color: #5a5a5a; font-size: 80px;"></i>
-            <p>${SE.errorFormMessage().canseldel}</p>
+            <p>${MESS.errorFormMessage().canseldel}</p>
             <div class="del-button" onclick='VW.canselDel()'>
-                <p id="del-to-friend">${SE.errorFormMessage().cansel}</p>
+                <p id="del-to-friend">${MESS.errorFormMessage().cansel}</p>
             </div>               
         `;
         let i = 15;
@@ -517,9 +518,9 @@ let VW = (() => {
         SE.$('del-timer').innerHTML = ``;
         SE.$('del-blok-wrap').innerHTML = `
         <div id="del-blok-wrap">               
-            <p id="del-title">${SE.errorFormMessage().canselmess}</p>
+            <p id="del-title">${MESS.errorFormMessage().canselmess}</p>
             <div class="del-button" onclick='VW.animationBeforeDel()'>
-                <p id="del-to-friend">${SE.errorFormMessage().friendsdel}</p>
+                <p id="del-to-friend">${MESS.errorFormMessage().friendsdel}</p>
             </div>
             <p class="del-mess"  id="login-message" style="display: none;"></p>                    
         </div>

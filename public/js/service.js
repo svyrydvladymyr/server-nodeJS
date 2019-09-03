@@ -1,9 +1,7 @@
 let SE = (() => {
 
 // function for get id node
-    let $ = function(val) {
-        return getid = document.getElementById(val);
-    };
+    let $ = val => getid = document.getElementById(val);
 
 // function for get id node
     let redirect = route => window.location.href = route;
@@ -32,7 +30,6 @@ let SE = (() => {
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 fun(this.responseText);
-                // location.reload()}};
             }};
         xmlhttp.open("POST", url, true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
@@ -59,11 +56,7 @@ let SE = (() => {
     let readyDay = function(fullDate){
         let finDay, createDate;
         createDate = new Date(fullDate);
-        if ((createDate.getDate() >= 1) && (createDate.getDate() <= 9)) {            
-            return finDay = "0" + createDate.getDate();
-        } else {
-            return finDay = createDate.getDate();
-        }
+        return finDay = ((createDate.getDate() >= 1) && (createDate.getDate() <= 9)) ? "0" + createDate.getDate() : createDate.getDate();
     };  
 
 //date format month
@@ -118,11 +111,8 @@ let SE = (() => {
            );
         }        
         return n_str.join('');
-    }    
-//-----------------------------------------------------------------------------------------------------
-//-------------------------function for form-----------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-
+    } 
+    
 //change icon
     let iconON = function(idF, on, message){
         if (on == "true"){
@@ -134,286 +124,8 @@ let SE = (() => {
             SE.$(`${idF}-mess`).classList.add('reg-message-false');
             SE.$(`${idF}-mess`).innerHTML = message;
         }
-    };   
-    
-//error form message    
-    let errorFormMessage = () => {
-        if (localStorage.kalciferLang === "ua"){
-            let allInputs = "Заповніть всі обов'язкові поля!";
-            let notCunEmpty = 'Не може бути пустим!';
-            let notCorectNum = 'Некоректний номер!';
-            let notCorectVar = 'Некоректне значення!';
-            let checkPass = 'Перевірте пароль!';
-            let repeatPass = 'Повторіть пароль!';
-            let onlyNum = "Тільки цифри!";
-            let onlyLetterslat = "Тільки лат. букви!";
-            let onlyLetters = "Тільки букви!";
-            let toLBigFile = "Занадто великий файл! Макс. розмір 1мб";
-            let dupllogin = "Користувач з таким логіном вже існує!";
-            let duplemail = "Користувач з такою поштою вже існує!";
-            let toshort = "Мінімум 7 символів!";
-            let registrationGood = "Реєстрація успішна!";
-            let autorisNotEmpty = "Заповніть всі поля!";
-            let autorisOnlyletters = "Тільки лат. букви та цифри!";
-            let autorisNotAvtoris = "Логін або пароль не вірні!";
-            let enterPassword = "Введіть пароль!";
-            let notSame = "Старий і новий паролі не можуть співпадати!";
-            let save = "зберігається...";
-            let saved = "Збережено!";
-            let nedautoriz = "Потрібно авторизуватися!";
-            let skillslevel = "Встановіть рівень, який на вашу думку ва маєте. Від 1 до 10.";
-            let skillsname = "Введіть назву вашого навику. *";
-            let skillschack = "Показувати чи ні.";
-            let skillsemptyname = "Вкажіть назву навику!";
-            let projectdescription = "Вкажіть опис проекту!";
-            let projectname = "Вкажіть назву проекту! *";
-            let projecturl = "Вкажіть посилання на проект!";
-            let aftersendemail = "Лист для підтвердження надіслано на вашу пошту!";
-            let yourarefriends = "Ви вже друзі!";
-            let friendsdel = "Видалити";
-            let friendsadd = "Додати";
-            let friendsmess = "Повідомлення";
-            let prooffriends = "Підтвердити";
-            let showmore = "Показати ще";
-            let recoverdatamess = "Лист з даними надіслано на вашу пошту. Це може зайняти кілька хвилин.";
-            let recoverdataerr = "Під час надсилання електронного листа сталася помилка ...";
-            let canseldel = "Ви можете відмінити видалення акаунта допоки таймер не досягне нуля.";
-            let cansel = "Відмінити";
-            let canselmess = "Тут ви можете видалити свій акаунт";
-            return {
-                canselmess,
-                cansel,
-                canseldel,
-                recoverdatamess,
-                recoverdataerr,
-                showmore,
-                prooffriends,
-                friendsmess,
-                friendsdel,
-                friendsadd,
-                notCunEmpty,
-                notCorectNum,
-                notCorectVar,
-                checkPass,
-                repeatPass,
-                onlyNum,
-                onlyLetters,
-                allInputs,
-                toLBigFile,
-                dupllogin,
-                duplemail,
-                toshort,
-                registrationGood,
-                autorisNotEmpty,
-                autorisOnlyletters,
-                autorisNotAvtoris,
-                onlyLetterslat,
-                enterPassword,
-                notSame,
-                save,
-                saved,
-                nedautoriz,
-                skillslevel,
-                skillsname,
-                skillschack,
-                skillsemptyname,
-                projectname,
-                projectdescription,
-                projecturl,
-                aftersendemail,
-                yourarefriends
-            };
-        } else if (localStorage.kalciferLang === "en"){
-            let allInputs = "Fill in all required fields!";
-            let notCunEmpty = 'It can not be empty!';
-            let notCorectNum = 'Not a valid number!';
-            let notCorectVar = 'Invalid value!';
-            let checkPass = 'Check your password!';
-            let repeatPass = 'Repeat password!';
-            let onlyNum = "Only numbers!";
-            let onlyLetterslat = "Only letters!";
-            let onlyLetters = "Only letters!";
-            let toLBigFile = "Too large file! Max. size 1MB";
-            let dupllogin = "A user with this login already exists!";
-            let duplemail = "A user with such mail already exists!";
-            let toshort = "Minimum of 7 characters!";
-            let registrationGood = "Registration is successful!";
-            let autorisNotEmpty = "Fill in all fields!";
-            let autorisOnlyletters = "Only letters and numbers!";
-            let autorisNotAvtoris = "Login or pass. is incorrect!";
-            let enterPassword = "Enter the password!";
-            let notSame = "Old and new passwords can not match!";
-            let save = "save...";
-            let saved = "Saved!";
-            let nedautoriz = "You must be logged in!";
-            let skillslevel = "Set the level that you think you have. From 1 to 10.";
-            let skillsname = "Enter the name of your skill. *";
-            let skillschack = "Show or not.";
-            let skillsemptyname = "Вкажіть назву навику!";
-            let projectdescription = "Specify the description of the project!";
-            let projectname = "Specify the name of the project! *";
-            let projecturl = "Specify a reference to the project!";
-            let aftersendemail = "A confirmation letter has been sent to your mail!";
-            let yourarefriends = "You are friends!";
-            let friendsdel = "Remove";
-            let friendsadd = "Add";
-            let friendsmess = "Message";
-            let prooffriends = "Confirm";
-            let showmore = "Show more";
-            let recoverdatamess = "A data letter has been sent to your mail. It may take a few minutes to receive.";
-            let recoverdataerr = "An error occurred while sending the email...";
-            let canseldel = "You can cancel deleting the account until the timer reaches zero.";
-            let cansel = "Cancel";
-            let canselmess = "Here you can delete your account";
-            return {
-                canselmess,                
-                cansel,                
-                canseldel,
-                recoverdatamess,
-                recoverdataerr,
-                showmore,
-                prooffriends,
-                friendsmess,
-                friendsdel,
-                friendsadd,
-                notCunEmpty,
-                notCorectNum,
-                notCorectVar,
-                checkPass,
-                repeatPass,
-                onlyNum,
-                onlyLetters,
-                allInputs,
-                toLBigFile,
-                dupllogin,
-                duplemail,
-                toshort,
-                registrationGood,
-                autorisNotEmpty,
-                autorisOnlyletters,
-                autorisNotAvtoris,
-                onlyLetterslat,
-                enterPassword,
-                notSame,
-                save,
-                saved,
-                nedautoriz,
-                skillslevel,
-                skillsname,
-                skillschack,
-                skillsemptyname,
-                projectname,
-                projectdescription,
-                projecturl,
-                aftersendemail,
-                yourarefriends
-            };
-        }
-    };    
-    
-//clone phone number
-    let clonePhoneNumber = () => {
-        let phoneNum = SE.$('reg-tel').value;
-        if ((phoneNum !== '') && (phoneNum.length === 10) && (/^[0-9]+$/g.test(phoneNum))){
-            SE.$('reg-message_cod').value = SE.$('reg-tel_cod').value;
-            SE.$('reg-message').value = SE.$('reg-tel').value;
-            SE.iconON('reg-message', "true", '');
-            SE.readyToSend('reg-message', SE.$(`reg-message_cod`).options[SE.$(`reg-message_cod`).selectedIndex].text + SE.$('reg-message').value); 
-        }        
-    }; 
+    };  
 
-//phone and message exclusion
-    let checkPhoneAndMessInput = (idF) => {
-        if (SE.$(idF).value.length != 10) {
-            SE.iconON(idF, "false", SE.errorFormMessage().notCorectNum);
-            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-            SE.readyToSend(idF, "");
-        } else {
-            // let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
-            SE.readyToSend(idF, SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value);
-            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
-        }
-    }
-
-//country or town exclusion
-    let checkCountryInput = (idF) => {
-        let b = SE.$(idF);
-        let gгest = b.options[b.selectedIndex].text;
-        if (gгest != ""){
-            SE.iconON(idF, "true", '');    
-            SE.readyToSend(idF, b.options[b.selectedIndex].text);
-            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError);
-            if (idF === 'reg-country'){
-                SE.readyToSend('reg-town', '');
-                let getTownId = SE.$('reg-town');
-                let getSelectedCountry = SE.$(idF).value;
-                getTownId.innerHTML = `<option disabled selected></option>`;
-                if (localStorage.kalciferLang === "ua"){
-                    for (let i = 0; i < towns_ua[getSelectedCountry].length; i++){
-                        let translitID = SE.rus_to_latin(towns_ua[getSelectedCountry][i])
-                        getTownId.innerHTML += `<option value="${translitID}" id="${translitID}">${towns_ua[getSelectedCountry][i]}</option>`;
-                    }
-                } else if (localStorage.kalciferLang === "en"){
-                    for (let i = 0; i < towns_en[getSelectedCountry].length; i++){
-                        let translitID = SE.rus_to_latin(towns_en[getSelectedCountry][i])
-                        getTownId.innerHTML += `<option value="${translitID}" id="${translitID}">${towns_en[getSelectedCountry][i]}</option>`;
-                    }
-                }
-            } 
-        } else {
-            SE.iconON(idF, "false", '');
-            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-            SE.readyToSend(idF, "");
-        }
-    }
-
-//password exclusion
-    let checkPasswordInput = (idF) => {
-        if (idF === "reg-oldpassword"){
-            SE.iconON('reg-oldpassword', "true", '');
-            SE.readyToSend('reg-oldpassword', SE.$('reg-oldpassword').value);
-            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
-        } else {
-            if ((SE.$("reg-password").value !== '') && (SE.$("reg-password-two").value !== '')){
-                if (SE.$('reg-password').value.length > 6){
-                    if (SE.$('reg-password').value === SE.$('reg-password-two').value){
-                        SE.iconON('reg-password', "true", '');
-                        SE.readyToSend('reg-password', SE.$('reg-password').value);
-                        SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
-                    } else {
-                        SE.iconON("reg-password", "false", SE.errorFormMessage().checkPass);
-                        SE.readyToSend('reg-password', '');
-                        SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-                    } 
-                }else {
-                    SE.iconON("reg-password", "false", SE.errorFormMessage().toshort);
-                    SE.readyToSend('reg-password', '');
-                    SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-                }         
-            } else {
-                SE.iconON("reg-password", "false", SE.errorFormMessage().repeatPass);
-                SE.readyToSend('reg-password', '');
-                SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-            }
-        }
-    }
-    
-//age and email exclusion  
-    let checkAgeEmailInput = (idF) => {
-        if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
-            SE.iconON(idF, "false", SE.errorFormMessage().notCorectVar);
-            SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
-            SE.readyToSend(idF, "");
-        } else {
-            SE.iconON(idF, "true", '');
-            SE.readyToSend(idF, SE.$(idF).value);  
-            SE.$("reg-form-send").addEventListener("click", SE.messgeSendError);                            
-        }
-    }
-
-//-----------------------------------------------------------------------------------------------------
-//--------------------------function for autorisation--------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
 //login and passsword autorisation exclusion  
     let checkAutorisation = (idf, reg, reg2) => {
         let newReg = new RegExp(reg, "gi");
@@ -425,13 +137,10 @@ let SE = (() => {
             SE.$('login-message').style.display = 'none'; 
         } else {
             SE.$('login-message').style.display = 'table';
-            SE.$('login-message').innerHTML = SE.errorFormMessage().autorisOnlyletters;
+            SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;
         }
     }
 
-//-----------------------------------------------------------------------------------------------------
-//-------------------------function for work with ava--------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
 //show preview foto     
     let readURL = (type) => {
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
@@ -466,9 +175,7 @@ let SE = (() => {
         SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
         if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
             let reader = new FileReader();
-            reader.onload = function(e) {
-                SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}")`)
-            }          
+            reader.onload = function(e) { SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}")`)};          
             reader.readAsDataURL(SE.$('reg-file').files[0]);
         }
     }
@@ -493,13 +200,9 @@ let SE = (() => {
         if (type === 'm'){
             SE.$('ava-preview-wrap-main').style.display = 'none'; 
             SE.$('reg-file').type = "text";
-            setTimeout(() => {
-                SE.$('reg-file').type = "file";
-            },100);
+            setTimeout(() => { SE.$('reg-file').type = "file" },100);
         } else if (type === 'r'){
-            if (SE.$('reg-ava').style.backgroundImage === ''){
-                SE.$('reg-file-mess').style.display = 'table';
-            }
+            if (SE.$('reg-ava').style.backgroundImage === ''){ SE.$('reg-file-mess').style.display = 'table' };
             SE.$('ava-preview-wrap').style.display = 'none'; 
             SE.$('reg-ava').setAttribute("style", `background-image: url("")`);
             SE.clearFileInput();
@@ -523,153 +226,6 @@ let SE = (() => {
         },100);
     }    
 
-//-----------------------------------------------------------------------------------------------------
-//-----------------------check on true or error in input on change-------------------------------------
-//-----------------------------------------------------------------------------------------------------    
-//check on true or error in input on change, cut all incorrect, show message
-    let checkCut = (idF, reg, t) => {
-        if (SE.$(idF).value === ""){
-            if ((SE.$(idF).id === 'reg-login') || 
-                (SE.$(idF).id === 'reg-password') || 
-                (SE.$(idF).id === 'reg-name') ||
-                (SE.$(idF).id === 'reg-surname') ||
-                (SE.$(idF).id === 'reg-email')){
-                    SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                    SE.$("reg-form-send").classList.remove('reg_send_active');
-                    SE.readyToSend(idF, "");
-            } else if ((SE.$(idF).id === 'autoriz-email-send-input')){
-                SE.$('farrrrr').style.fontSize = "0px";
-            } else {
-                let idFF;
-                if (idF === 'reg-password-two'){
-                    idFF = 'reg-password';
-                } else {
-                    idFF = idF;
-                }
-                SE.iconON(idFF, "true", '');
-                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                SE.$("reg-form-send").classList.remove('reg_send_active');
-                SE.readyToSend(idF, "");
-            }
-        } else {
-            SE.incorrectCheck(idF, reg, function(){
-                if(SE.$(idF).value === ""){
-                    if ((SE.$(idF).id === 'reg-login') || 
-                        (SE.$(idF).id === 'reg-password') || 
-                        (SE.$(idF).id === 'reg-name') ||
-                        (SE.$(idF).id === 'reg-surname') ||
-                        (SE.$(idF).id === 'reg-email')){
-                            SE.iconON(idF, "false", SE.errorFormMessage().notCunEmpty);
-                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                            SE.$("reg-form-send").classList.remove('reg_send_active');
-                            SE.readyToSend(idF, "");
-                   } else {
-                        SE.readyToSend(idF, "");
-                        SE.$(`${idF}-mess`).innerHTML = '';
-                        SE.$(`${idF}-mess`).classList.remove('reg-message-false');
-                   }
-                } else {    
-                    if((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
-                        SE.checkPhoneAndMessInput(idF);
-                    } else if ((SE.$(idF).id === "reg-password") || (SE.$(idF).id === "reg-password-two") || (SE.$(idF).id === "reg-oldpassword")){
-                        SE.checkPasswordInput(idF);
-                    } else if((SE.$(idF).id === "reg-age") || (SE.$(idF).id === "reg-email")) {
-                        SE.checkAgeEmailInput(idF);
-                    } else if(SE.$(idF).id === "autoriz-email-send-input") {
-                        if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
-                            SE.$('farrrrr').style.fontSize = "0px";
-                        } else {
-                            SE.$('farrrrr').style.fontSize = "18px";                         
-                        }
-                    } else if ((SE.$(idF).id === "reg-country") || (SE.$(idF).id === "reg-town")){
-                        SE.checkCountryInput(idF);
-                    } else if (SE.$(idF).id === "reg-file"){         
-                        if (SE.$(idF).files.length === 1){
-                            if (SE.$(idF).files[0].size > 1024000) {
-                                SE.iconON(idF, "false", SE.errorFormMessage().toLBigFile);  
-                                SE.$('reg-file-mess').style.display = 'table';
-                                SE.$('reg-file-mess').style.marginTop = '3px';
-                                SE.$('reg-ava').style.display = 'none';
-                                SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
-                                SE.$('form_input').style.height = '40px';
-                            } else {
-                                SE.$('reg-file-mess').style.display = 'none';
-                                //show preview
-                                SE.$('ava-preview-wrap').style.display = 'flex';
-                                SE.readURLPreview();                             
-                            }
-                        }
-                    }else{
-                        SE.iconON(idF, "true", '');         
-                        SE.readyToSend(idF, SE.$(idF).value);
-                        SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
-                    }
-                    if (SE.$("reg-form-send")){
-                        SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
-                    }
-                }
-            }); 
-        }
-    };    
-
-//check on true or error in input on input and show message
-    let checkTest = (idF, reg, t) => {
-        if ((idF === 'login') || (idF === 'password')){
-            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
-                SE.$('login-message').innerHTML = '';
-                SE.$('login-message').style.display = 'none';
-            } else {
-                SE.$('login-message').style.display = 'table';
-                SE.$('login-message').innerHTML = SE.errorFormMessage().autorisOnlyletters;         
-            }
-        } else {
-            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
-                if (idF === 'reg-password-two'){
-                    SE.iconON('reg-password', "true", '');
-                } else if (idF === 'autoriz-email-send-input'){
-                    if ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)){
-                        SE.$('farrrrr').style.fontSize = "0px";
-                    } else {
-                        SE.$('farrrrr').style.fontSize = "18px";                         
-                    }
-                } else {
-                    SE.iconON(idF, "true", '');
-                }
-            } else {
-                if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
-                    SE.iconON(idF, "false", SE.errorFormMessage().onlyNum);
-                    SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                    SE.$("reg-form-send").classList.remove('reg_send_active');
-                } else if (SE.$(idF).id == "autoriz-email-send-input"){
-                    SE.$('farrrrr').style.fontSize = "0px";
-                } else {
-                    if (SE.$(idF).value === ''){
-                        let idFF;
-                        if (idF === 'reg-password-two'){
-                            idFF = 'reg-password';
-                        } else {
-                            idFF = idF;
-                        }
-                        SE.iconON(idFF, "true", '');
-                        SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                        SE.$("reg-form-send").classList.remove('reg_send_active');
-                    } else {
-                        if ((idF === 'reg-login-up') || (idF === 'reg-login') || (idF === 'reg-oldpassword')){
-                            SE.iconON(idF, "false", SE.errorFormMessage().autorisOnlyletters);
-                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                            SE.$("reg-form-send").classList.remove('reg_send_active');
-                        } else {
-                            SE.iconON(idF, "false", SE.errorFormMessage().onlyLetters);
-                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                            SE.$("reg-form-send").classList.remove('reg_send_active');
-                        }
-                    }
-                }
-            }
-        }
-    };
-    
 //function for make prototype for send obgect
     let readyToSend = function(idF, value){
         console.log(regProto.prototype);        
@@ -700,7 +256,6 @@ let SE = (() => {
         }
     }
 
-
 //message if empty name surname or E-mail input
     let messageSendError = () => {
         if (SE.$('reg-form-send').getAttribute('param') === 'add'){
@@ -708,10 +263,10 @@ let SE = (() => {
                 let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
                 for(let i = 0; i < 5; i++){
                     if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){
-                        SE.iconON(masIdRequired[i], "false", SE.errorFormMessage().notCunEmpty);
+                        SE.iconON(masIdRequired[i], "false", MESS.errorFormMessage().notCunEmpty);
                     }
                 }       
-                SE.$("main-form-message").innerHTML = SE.errorFormMessage().allInputs;
+                SE.$("main-form-message").innerHTML = MESS.errorFormMessage().allInputs;
             } 
             if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
                 SE.$("main-form-message").innerHTML = "";
@@ -726,18 +281,14 @@ let SE = (() => {
 //show main message    
     let showErrorMainMess = () => {
         SE.$("main-form-message").innerHTML = '';
-        SE.$('reg-login').removeEventListener('change', showErrorMainMess);
-        SE.$('reg-email').removeEventListener('change', showErrorMainMess);
+        SE.$('reg-login').removeEventListener('change', SE.showErrorMainMess);
+        SE.$('reg-email').removeEventListener('change', SE.showErrorMainMess);
     };
     
 // function for add user ava to DB
     let addAvaToDB = function(){
         let obj, fileAva, formData;
-        if (regPrototype.avasettings === ''){
-            obj = { "avasettings":"50% 50%"};
-        } else {
-            obj = { "avasettings":regPrototype.avasettings};
-        }
+        obj = (regPrototype.avasettings === '') ? { "avasettings":"50% 50%"} : { "avasettings":regPrototype.avasettings};
         fileAva = document.getElementById('reg-file').files;      
         formData = new FormData();
         formData.append("objreg",JSON.stringify(obj));
@@ -748,7 +299,7 @@ let SE = (() => {
         axios.post('/addavatodb', formData, contenttype)
         .then(function (response) {              
             if (response.request.readyState == 4 && response.request.status == "200") {  
-                SE.$("main-form-message").innerHTML = SE.errorFormMessage().registrationGood;
+                SE.$("main-form-message").innerHTML = MESS.errorFormMessage().registrationGood;
                 setTimeout(() => {
                     SE.$("main-form-message").innerHTML = '';
                     // CLEAR.clearRegProto();
@@ -756,9 +307,7 @@ let SE = (() => {
                 }, 1000);
             }
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        .catch(function (error) { console.log(error) });
     };
 
 // function for add user ava to DB
@@ -780,14 +329,9 @@ let SE = (() => {
                 SE.$('ava').style.backgroundPosition = sett;
             }
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        .catch(function (error) { console.log(error) });
     };   
 
-//-----------------------------------------------------------------------------------------------------
-//---------------------function for make date and object before send-----------------------------------
-//-----------------------------------------------------------------------------------------------------   
 // function for add user to DB
 let registerUserToDB = function(){
     let obj;
@@ -836,10 +380,7 @@ let registerUserToDB = function(){
     };    
 
 //for exit from session    
-    let exit = () => {
-        let obj = {};
-        SE.send(obj, "/exit", VW.exit);
-   };
+    let exit = () => { SE.send({}, "/exit", VW.exit) };
 
 //update security and enter
     let updateUser = (val) => {
@@ -848,11 +389,11 @@ let registerUserToDB = function(){
                         "oldpassword":regPrototype.regoldpassword, 
                         "password":regPrototype.regpassword};            
             if ((regPrototype.regpassword !== '') && (regPrototype.regoldpassword === '')){
-                SE.iconON('reg-oldpassword', "false", SE.errorFormMessage().enterPassword);
+                SE.iconON('reg-oldpassword', "false", MESS.errorFormMessage().enterPassword);
             }else if ((regPrototype.regloginup !== '') && (regPrototype.regoldpassword === '')){
-                SE.iconON('reg-oldpassword', "false", SE.errorFormMessage().enterPassword);
+                SE.iconON('reg-oldpassword', "false", MESS.errorFormMessage().enterPassword);
             } else if ((regPrototype.regpassword === regPrototype.regoldpassword) && (regPrototype.regoldpassword !== '')){
-                SE.$('main-form-message1').innerHTML = SE.errorFormMessage().notSame;
+                SE.$('main-form-message1').innerHTML = MESS.errorFormMessage().notSame;
             } else if (((regPrototype.regloginup !== '') && (regPrototype.regoldpassword !== '')) || 
             ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '')) || 
             ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '') && (regPrototype.regloginup !== ''))){
@@ -877,38 +418,21 @@ let registerUserToDB = function(){
                 SE.send(obj, '/updateother', VW.updateOther);                
             }
         }
-    };    
-
-//chack widget values    
-    let checkWidgetsVal = (el) => {
-        let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.'\":/\,іІїЇєЄ /\n]";
-        let newReg = new RegExp(reg, "gi");
-        let input = SE.$(el.id).value;
-        let res = input.replace(newReg, '');
-        SE.$(el.id).value = res;    
-    }
+    };  
 
     return {
         $, 
         getLanguage,
         redirect,
-        clonePhoneNumber,
         send,
         incorrectCheck,
-        iconON,
         readyToSend,
         registerUserToDB,
+        iconON,
         readyDay,
         readyMonth,
-        checkCut,
-        checkTest,
         messageSendError,
         messageSendErrorClear,
-        checkPhoneAndMessInput,
-        checkCountryInput,
-        checkPasswordInput,
-        checkAgeEmailInput,
-        errorFormMessage,
         rus_to_latin,
         readURL,
         readyFullDate,
@@ -924,7 +448,6 @@ let registerUserToDB = function(){
         send,
         showUsersList,
         saveSett,
-        updateAvaToDB,
-        checkWidgetsVal
+        updateAvaToDB
     };
 })();    
