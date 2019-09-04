@@ -449,6 +449,8 @@ let VW = (() => {
 // animation after send email
     let animationAfterSend = (res) => {   
         let parseObj = JSON.parse(res); 
+        console.log("jjjjjjjjjjj",parseObj);
+        
         if (parseObj.res.slice(0, 12) == '250 2.0.0 OK'){
             SE.$('email-spinet').innerHTML = ``;
             SE.$('send-email').style.width = "0px";
