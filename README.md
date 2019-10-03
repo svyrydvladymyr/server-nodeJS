@@ -29,3 +29,10 @@ http.createServer((req, res) => {
             } else {errorData(`ERROR CONNECTION..! --> ${res.statusCode} -- ${res.statusMessage}`, res)}             
         break;   
     }}).listen(process.env.PORT || 4000, function(){console.log('Server is running...')});
+
+
+
+// callbackURL: "http://localhost:4000/linkedincallback"
+// callbackURL: "http://localhost:4000/facebookcallback",
+// callbackURL: "http://localhost:4000/googlecallback",
+// callbackURL: "http://localhost:4000/githubcallback",

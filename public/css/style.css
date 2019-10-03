@@ -516,6 +516,7 @@ body{
     right: 0px;
     top: 100px;
     width: 250px;
+    padding-bottom: 10px;
     background: #ffffff;
     border-left: var(--border);
     border-top: var(--border);
@@ -532,6 +533,7 @@ body{
     right: -2px;
     top: 100px;
     width: 0px;
+    padding-bottom: 10px;
     background: #ffffff;
     border-left: var(--border);
     border-top: var(--border);
@@ -674,9 +676,10 @@ body{
     position: relative;
     width: 48%;
     height: 20px;
-    border: 1px solid #6f6f6f;
-    border-radius: 5px 19px;
-    background: #ededed;
+    border: 2px solid #2b2b2b;
+    border-radius: 8px;
+    background: var(--main-color);
+    color: #ffffff;
     float: right;
     margin: 1%;
     overflow: hidden;
@@ -687,7 +690,7 @@ body{
     height: 100%;
     margin: 0px;
     float: left;
-    border-radius: 2px 12px;
+    border-radius: 5px;
 }
 
 .lang_en > p {
@@ -702,9 +705,10 @@ body{
     position: relative;
     width: 48%;
     height: 20px;
-    border: 1px solid #6f6f6f;
-    border-radius: 19px 5px;
-    background: #ededed;
+    border: 2px solid #2b2b2b;
+    border-radius: 8px;
+    background: var(--main-color);
+    color: #ffffff;
     float: right;
     margin: 1%;
     overflow: hidden;
@@ -715,7 +719,7 @@ body{
     height: 100%;
     margin: 0px;
     float: right;
-    border-radius: 12px 2px; 
+    border-radius: 5px; 
 }
 
 .lang_ua > p {

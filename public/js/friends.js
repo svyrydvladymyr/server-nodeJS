@@ -175,7 +175,7 @@ let WFRIENDS = (() => {
         SE.$('friends-name-title').innerHTML = `${parseSurname} ${parseName}`;
         SE.$('friends-name-title-href').setAttribute("href", `${parseMyId}`);
         for (let i = 0; i < parseObj.length; i++){
-            let avafoto, status, email, town, country, phone;
+            let avafoto, status, email, town, country, phone, marginTop;
             let reg = /^http:/i;
             let reg2 = /^https:/i;
             if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
@@ -187,12 +187,15 @@ let WFRIENDS = (() => {
                 status = `<div class="add-to-friends-wrap friend-req-plus"  
                     onclick="WFRIENDS.confirmDelFriendFull('${parseObj[i].userid}')" >
                     <i class='far fa-minus-square'><b style="font-size: 10px; padding: 0px 5px; position: absolute;">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
+                marginTop = `-157px`;
             } else if (parseStatus === 'reqfrom'){
                 status = `<div class="add-to-friends-wrap friend-req-plus"  
                     onclick="WFRIENDS.confirmProofFull('${parseObj[i].userid}')">
                     <i class='far fa-plus-square'><b style="font-size: 9px; padding: 1px 5px; position: absolute;">${MESS.errorFormMessage().prooffriends}</b></i></div>`;
+                marginTop = `-157px`;    
             } else {
                 status = ``;
+                marginTop = `-103px`;
             }
             email = ((parseObj[i].email === null) || (parseObj[i].email === undefined)) ? `` : `${parseObj[i].email}`;
             country = ((parseObj[i].country === null) || (parseObj[i].country === undefined)) ? `` : `${parseObj[i].country}`;
@@ -204,7 +207,8 @@ let WFRIENDS = (() => {
                     <div style="width:90px; margin-top: 103px; margin-bottom: 5px;" id="${parseObj[i].userid}">${status}</div>
                     <div class="friend-full-img"  id="${parseObj[i].userid}" onclick="VW.renderPage(this)" 
                         style="background-image: url('${avafoto}'); 
-                        background-position: ${parseObj[i].avasettings};">
+                            background-position: ${parseObj[i].avasettings};
+                            margin-top: ${marginTop};">
                     </div>                    
                 </div>
                 <div class="friend-full-info">
