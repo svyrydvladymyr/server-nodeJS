@@ -33,8 +33,8 @@ let SE = (() => {
             }};
         xmlhttp.open("POST", url, true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send(JSON.stringify(obj));
-    };   
+        xmlhttp.send(JSON.stringify(obj));     
+    };        
     
 //cut incorrect symbol 
     let incorrectCheck = function(val, reg, fun){
@@ -54,24 +54,18 @@ let SE = (() => {
 
 //date format day
     let readyDay = function(fullDate){
-        let finDay, createDate;
-        createDate = new Date(fullDate);
+        let createDate = new Date(fullDate);
         return finDay = ((createDate.getDate() >= 1) && (createDate.getDate() <= 9)) ? "0" + createDate.getDate() : createDate.getDate();
     };  
 
 //date format month
     let readyMonth = function(fullDate){    
-        let createDate;
-        createDate = new Date(fullDate);
-        if ((createDate.getMonth() >= 0) && (createDate.getMonth() <= 8)) {
-            return finMonth = "0" + (createDate.getMonth()+1);
-        } else if (createDate.getMonth() == 9){            
-            return finMonth = 10;
-        } else if (createDate.getMonth() == 10){            
-            return finMonth = 11;
-        } else if (createDate.getMonth() == 11){            
-            return finMonth = 12;
-        }            
+        let createDate = new Date(fullDate);
+        return finMonth = ((createDate.getMonth() >= 0) && (createDate.getMonth() <= 8)) 
+            ? "0" + (createDate.getMonth()+1) 
+            : (createDate.getMonth() == 9) ? 10 
+            : (createDate.getMonth() == 10) ? 11
+            : (createDate.getMonth() == 11) ? 12 : null;          
     }; 
     
 //ready full date
@@ -79,23 +73,19 @@ let SE = (() => {
         let dateRegFull = new Date(fullDate);
         let dateRegFullEmpty = new Date();
         if (reverse === 'r'){
-            if ((fullDate === '') || (fullDate === undefined)){
-                return dateReg = SE.readyDay(dateRegFullEmpty) + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + dateRegFullEmpty.getFullYear();
-            } else {
-                return dateReg = SE.readyDay(dateRegFull) + "-" + SE.readyMonth(dateRegFull) + "-" + dateRegFull.getFullYear();
-            }
+            return dateReg = ((fullDate === '') || (fullDate === undefined)) 
+                ? SE.readyDay(dateRegFullEmpty) + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + dateRegFullEmpty.getFullYear() 
+                : SE.readyDay(dateRegFull) + "-" + SE.readyMonth(dateRegFull) + "-" + dateRegFull.getFullYear();
         } else {
-            if ((fullDate === '') || (fullDate === undefined)){
-                return dateReg = dateRegFullEmpty.getFullYear() + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + SE.readyDay(dateRegFullEmpty);
-            } else {
-                return dateReg = dateRegFull.getFullYear() + "-" + SE.readyMonth(dateRegFull) + "-" + SE.readyDay(dateRegFull);
-            }
+            return dateReg = ((fullDate === '') || (fullDate === undefined))
+                ? dateRegFullEmpty.getFullYear() + "-" + SE.readyMonth(dateRegFullEmpty) + "-" + SE.readyDay(dateRegFullEmpty) 
+                :dateRegFull.getFullYear() + "-" + SE.readyMonth(dateRegFull) + "-" + SE.readyDay(dateRegFull);
         }
     };     
 
 //transliteration    
     let rus_to_latin = ( str ) => {    
-        var ru = {
+        let ru = {
             'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 
             'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i', 
             'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 
@@ -395,9 +385,9 @@ let registerUserToDB = function(){
             } else if ((regPrototype.regpassword === regPrototype.regoldpassword) && (regPrototype.regoldpassword !== '')){
                 SE.$('main-form-message1').innerHTML = MESS.errorFormMessage().notSame;
             } else if (((regPrototype.regloginup !== '') && (regPrototype.regoldpassword !== '')) || 
-            ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '')) || 
-            ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '') && (regPrototype.regloginup !== ''))){
-            SE.send(obj, '/updatesecurity', VW.updateSecurity);   
+                      ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '')) || 
+                      ((regPrototype.regpassword !== regPrototype.regoldpassword) && (regPrototype.regpassword !== '') && (regPrototype.regoldpassword !== '') && (regPrototype.regloginup !== ''))){
+                SE.send(obj, '/updatesecurity', VW.updateSecurity);   
             }
         } else if (val === 'm'){
             let obj = {"name":regPrototype.regname, 

@@ -324,12 +324,9 @@ let VW = (() => {
             SE.$('reg-oldpassword').value = '';
             SE.$('reg-password').value = '';
             SE.$('reg-password-two').value = '';
-            if (SE.$('reg-login-up-mess').classList.contains('reg-message-true')){
-                SE.$('reg-login-up-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-oldpassword-mess').classList.contains('reg-message-true')){
-                SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-password-mess').classList.contains('reg-message-true')){
-                SE.$('reg-password-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-login-up-mess').classList.contains('reg-message-true')){SE.$('reg-login-up-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-oldpassword-mess').classList.contains('reg-message-true')){SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-password-mess').classList.contains('reg-message-true')){SE.$('reg-password-mess').classList.remove('reg-message-true');}
         }
     };    
 
@@ -350,12 +347,9 @@ let VW = (() => {
                 if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){SE.$('reg-surname-mess').classList.remove('reg-message-true');}}    
             if (SE.$('reg-email-mess')){
                 if (SE.$('reg-email-mess').classList.contains('reg-message-true')){SE.$('reg-email-mess').classList.remove('reg-message-true');}}
-            if (SE.$('reg-age-mess').classList.contains('reg-message-true')){
-                SE.$('reg-age-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){
-                SE.$('reg-tel-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-message-mess').classList.contains('reg-message-true')){
-                SE.$('reg-message-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-age-mess').classList.contains('reg-message-true')){SE.$('reg-age-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){SE.$('reg-tel-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-message-mess').classList.contains('reg-message-true')){SE.$('reg-message-mess').classList.remove('reg-message-true');}
         }
     };  
 
@@ -368,14 +362,10 @@ let VW = (() => {
             SE.$('main-form-messagethree').innerHTML = `${MESS.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
             setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},2000);
-            if (SE.$('reg-country-mess').classList.contains('reg-message-true')){
-                SE.$('reg-country-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-town-mess').classList.contains('reg-message-true')){
-                SE.$('reg-town-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-profession-mess').classList.contains('reg-message-true')){
-                SE.$('reg-profession-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-education-mess').classList.contains('reg-message-true')){
-                SE.$('reg-education-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-country-mess').classList.contains('reg-message-true')){SE.$('reg-country-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-town-mess').classList.contains('reg-message-true')){SE.$('reg-town-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-profession-mess').classList.contains('reg-message-true')){SE.$('reg-profession-mess').classList.remove('reg-message-true');}
+            if (SE.$('reg-education-mess').classList.contains('reg-message-true')){SE.$('reg-education-mess').classList.remove('reg-message-true');}
         }
     }; 
     
@@ -400,20 +390,19 @@ let VW = (() => {
 //save settings widgets
     let saveWidgets = (val, val2) => {
         setTimeout(() => {
-        let obj, blogme, blogall;
-        if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
-        if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
-        if ((val === 'vblogall') || (val === 'vblogme') || (val === 'vblogall') || (val === 'vblogme')){
-            SE.$(val).checked ? blogme = 'on' : blogme = 'off';
-            SE.$(val2).checked ? blogall = 'on' : blogall = 'off';
-            obj = {"el":"vblogme", "value":blogme, "el2":"vblogall", "value2":blogall};  
-        }
-        if ((val === 'vfriendme') || (val === 'vfriendall') || (val2 === 'vfriendme') || (val2 === 'vfriendall')){
-            SE.$(val).checked ? friendme = 'on' : friendme = 'off';
-            SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
-            obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
-        }
-
+            let obj, blogme, blogall;
+            if (SE.$(val).checked){obj = {"el":SE.$(val).id, "value":"on", "el2":SE.$(val2).id, "value2":"off"}}  
+            if (SE.$(val2).checked){obj = {"el":SE.$(val).id, "value":"off", "el2":SE.$(val2).id, "value2":"on"}}  
+            if ((val === 'vblogall') || (val === 'vblogme') || (val === 'vblogall') || (val === 'vblogme')){
+                SE.$(val).checked ? blogme = 'on' : blogme = 'off';
+                SE.$(val2).checked ? blogall = 'on' : blogall = 'off';
+                obj = {"el":"vblogme", "value":blogme, "el2":"vblogall", "value2":blogall};  
+            }
+            if ((val === 'vfriendme') || (val === 'vfriendall') || (val2 === 'vfriendme') || (val2 === 'vfriendall')){
+                SE.$(val).checked ? friendme = 'on' : friendme = 'off';
+                SE.$(val2).checked ? friendall = 'on' : friendall = 'off';
+                obj = {"el":"vfriendme", "value":friendme, "el2":"vfriendall", "value2":friendall};  
+            }
             SE.send(obj, '/widgetsett', VW.saveWidgetsMess);     
         }, 200);
     };  

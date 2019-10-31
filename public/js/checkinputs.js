@@ -133,11 +133,11 @@ let CHECK = (() => {
                             SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                             SE.$("reg-form-send").classList.remove('reg_send_active');
                             SE.readyToSend(idF, "");
-                   } else {
+                    } else {
                         SE.readyToSend(idF, "");
                         SE.$(`${idF}-mess`).innerHTML = '';
                         SE.$(`${idF}-mess`).classList.remove('reg-message-false');
-                   }
+                    }
                 } else {    
                     if((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
                         CHECK.checkPhoneAndMessInput(idF);
