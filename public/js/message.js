@@ -45,7 +45,9 @@ let MESS = (() => {
             let cansel = "Відмінити";
             let canselmess = "Тут ви можете видалити свій акаунт";
             let recovernotfind = "Користувача з такою поштою не знайдено!"
+            let nochange = "Немає змін!"
             return {
+                nochange,
                 recovernotfind,
                 canselmess,
                 cansel,
@@ -132,7 +134,9 @@ let MESS = (() => {
             let cansel = "Cancel";
             let canselmess = "Here you can delete your account";
             let recovernotfind = "No user with this mail was found!"
+            let nochange = "No changes!"
             return {
+                nochange,
                 recovernotfind,
                 canselmess,                
                 cansel,                

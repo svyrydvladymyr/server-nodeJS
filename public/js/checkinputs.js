@@ -100,6 +100,33 @@ let CHECK = (() => {
         }
     };
 
+
+//login and passsword autorisation exclusion  
+    let checkAutorisation = (idf, reg, reg2) => {
+        let newReg = new RegExp(reg, "gi");
+        let input = SE.$(idf).value;
+        let res = input.replace(newReg, '');
+        SE.$(idf).value = res;        
+        if ((new RegExp(reg2, "gi").test(SE.$(idf).value) == true) || (SE.$(idf).value == '')) {
+            SE.$('login-message').innerHTML = '';
+            SE.$('login-message').style.display = 'none'; 
+        } else {
+            SE.$('login-message').style.display = 'table';
+            SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;
+        }
+    } 
+
+//login and passsword autorisation exclusion test 
+    let testAutorisation = (idf, reg) => {
+        if ((new RegExp(reg, "gi").test(SE.$(idf).value) == true) || (SE.$(idf).value == '')) {
+            SE.$('login-message').innerHTML = '';
+            SE.$('login-message').style.display = 'none';
+        } else {
+            SE.$('login-message').style.display = 'table';
+            SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;         
+        }
+    }    
+
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg, t) => {
         if (SE.$(idF).value === ""){
@@ -177,15 +204,7 @@ let CHECK = (() => {
 
 //check on true or error in input on input and show message
     let checkTest = (idF, reg, t) => {
-        if ((idF === 'login') || (idF === 'password')){
-            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
-                SE.$('login-message').innerHTML = '';
-                SE.$('login-message').style.display = 'none';
-            } else {
-                SE.$('login-message').style.display = 'table';
-                SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;         
-            }
-        } else {
+
             if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
                 if (idF === 'reg-password-two'){
                     SE.iconON('reg-password', "true", '');
@@ -220,7 +239,7 @@ let CHECK = (() => {
                     }
                 }
             }
-        }
+
     };
 
 //chack widget values    
@@ -240,6 +259,8 @@ let CHECK = (() => {
         checkPasswordInput,
         checkAgeEmailInput,
         clonePhoneNumber,
-        checkWidgetsVal
+        checkWidgetsVal,
+        checkAutorisation,
+        testAutorisation
     }
 })();

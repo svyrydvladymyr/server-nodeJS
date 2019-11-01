@@ -307,6 +307,18 @@ let VW = (() => {
         }      
     };
 
+//-----------------------------------------------------------------------------------------------------
+//--------------------------------function for work with update----------------------------------------
+//-----------------------------------------------------------------------------------------------------   
+
+//clear icon on update page
+    let claerIconUpdPage = (val) => {
+        for (let i = 0; i < val.length; i++) {
+            if (SE.$(`reg-${val[i]}-mess`)){
+                if (SE.$(`reg-${val[i]}-mess`).classList.contains('reg-message-true')){SE.$(`reg-${val[i]}-mess`).classList.remove('reg-message-true')}};
+        }
+    };
+
 //update security date in user date
     let updateSecurity = (res) => {
         let parseObj = JSON.parse(res);
@@ -315,18 +327,19 @@ let VW = (() => {
         } else if (parseObj.res === 'ER_DUP_ENTRY') {
             SE.$('main-form-messageone').innerHTML = MESS.errorFormMessage().dupllogin;            
         } else if (parseObj.res === 0){
-            SE.$('main-form-messageone').innerHTML = MESS.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messageone').innerHTML = MESS.errorFormMessage().nochange; 
+            VW.claerIconUpdPage(['login-up', 'oldpassword', 'password']);
         } else if (parseObj.res === 1){
             SE.$('main-form-messageone').innerHTML = `${MESS.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messageone').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messageone').innerHTML = '';},2000);
-            SE.$('reg-login-up').value = '';
-            SE.$('reg-oldpassword').value = '';
-            SE.$('reg-password').value = '';
-            SE.$('reg-password-two').value = '';
-            if (SE.$('reg-login-up-mess').classList.contains('reg-message-true')){SE.$('reg-login-up-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-oldpassword-mess').classList.contains('reg-message-true')){SE.$('reg-oldpassword-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-password-mess').classList.contains('reg-message-true')){SE.$('reg-password-mess').classList.remove('reg-message-true');}
+            setTimeout(() => {
+                SE.$('main-form-messageone').innerHTML = '';
+                SE.$('reg-login-up').value = '';
+                SE.$('reg-oldpassword').value = '';
+                SE.$('reg-password').value = '';
+                SE.$('reg-password-two').value = '';
+                VW.claerIconUpdPage(['login-up', 'oldpassword', 'password']);
+            },2000);
         }
     };    
 
@@ -336,20 +349,15 @@ let VW = (() => {
         if (parseObj.res === 'ER_DUP_ENTRY') {
             SE.$('main-form-messagetwo').innerHTML = MESS.errorFormMessage().duplemail;            
         } else if (parseObj.res === 0){
-            SE.$('main-form-messagetwo').innerHTML = MESS.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messagetwo').innerHTML = MESS.errorFormMessage().nochange; 
+            VW.claerIconUpdPage(['name', 'surname', 'email', 'age', 'tel', 'message']);
         } else if (parseObj.res === 1){
             SE.$('main-form-messagetwo').innerHTML = `${MESS.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messagetwo').innerHTML = '';},2000);
-            if (SE.$('reg-name-mess')){
-                if (SE.$('reg-name-mess').classList.contains('reg-message-true')){SE.$('reg-name-mess').classList.remove('reg-message-true');}}
-            if (SE.$('reg-surname-mess')){
-                if (SE.$('reg-surname-mess').classList.contains('reg-message-true')){SE.$('reg-surname-mess').classList.remove('reg-message-true');}}    
-            if (SE.$('reg-email-mess')){
-                if (SE.$('reg-email-mess').classList.contains('reg-message-true')){SE.$('reg-email-mess').classList.remove('reg-message-true');}}
-            if (SE.$('reg-age-mess').classList.contains('reg-message-true')){SE.$('reg-age-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-tel-mess').classList.contains('reg-message-true')){SE.$('reg-tel-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-message-mess').classList.contains('reg-message-true')){SE.$('reg-message-mess').classList.remove('reg-message-true');}
+            setTimeout(() => {
+                SE.$('main-form-messagetwo').innerHTML = '';
+                VW.claerIconUpdPage(['name', 'surname', 'email', 'age', 'tel', 'message']);
+            },2000);
         }
     };  
 
@@ -357,15 +365,15 @@ let VW = (() => {
     let updateOther = (res) => {
         let parseObj = JSON.parse(res);
         if (parseObj.res === 0){
-            SE.$('main-form-messagethree').innerHTML = MESS.errorFormMessage().notCorectVar; 
+            SE.$('main-form-messagethree').innerHTML = MESS.errorFormMessage().nochange; 
+            VW.claerIconUpdPage(['country', 'town', 'profession', 'education']);
         } else if (parseObj.res === 1){
             SE.$('main-form-messagethree').innerHTML = `${MESS.errorFormMessage().save}`;            
             setTimeout(() => {SE.$('main-form-messagethree').innerHTML = `<b style="color:green;">${MESS.errorFormMessage().saved}</b>`;},1000);
-            setTimeout(() => {SE.$('main-form-messagethree').innerHTML = '';},2000);
-            if (SE.$('reg-country-mess').classList.contains('reg-message-true')){SE.$('reg-country-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-town-mess').classList.contains('reg-message-true')){SE.$('reg-town-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-profession-mess').classList.contains('reg-message-true')){SE.$('reg-profession-mess').classList.remove('reg-message-true');}
-            if (SE.$('reg-education-mess').classList.contains('reg-message-true')){SE.$('reg-education-mess').classList.remove('reg-message-true');}
+            setTimeout(() => {
+                SE.$('main-form-messagethree').innerHTML = '';
+                VW.claerIconUpdPage(['country', 'town', 'profession', 'education']);
+            },2000);
         }
     }; 
     
@@ -384,7 +392,7 @@ let VW = (() => {
     };  
 
 //-----------------------------------------------------------------------------------------------------
-//--------------------------------function work with widgets-------------------------------------------
+//--------------------------------function for work with widgets---------------------------------------
 //-----------------------------------------------------------------------------------------------------   
 
 //save settings widgets
@@ -578,6 +586,7 @@ return {
     afterRecoverData,
     animationBeforeDel,
     canselDel,
+    claerIconUpdPage,
     demoFromHTML,
     inwork
     

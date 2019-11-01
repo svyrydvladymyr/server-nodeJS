@@ -1,3 +1,7 @@
+//registration prototipe
+    class regProto{constructor(){}}
+    let regPrototype = new regProto();
+
 window.onload = function(){
 
 //clear update object 
@@ -66,8 +70,10 @@ window.onload = function(){
     //age------------------------------------------------------------------------------------
         SE.$("reg-age").addEventListener("change", () => {CHECK.checkCut("reg-age", "")});
     //email------------------------------------------------------------------------------------
-        SE.$("reg-email").addEventListener("change", () => {CHECK.checkCut("reg-email", "[^a-zA-Z0-9@-_.]")});
-        SE.$("reg-email").addEventListener("input", () => {CHECK.checkTest("reg-email", "^[a-zA-Z0-9@-_.]+$")});  
+        if (SE.$("reg-email")){
+            SE.$("reg-email").addEventListener("change", () => {CHECK.checkCut("reg-email", "[^a-zA-Z0-9@-_.]")});
+            SE.$("reg-email").addEventListener("input", () => {CHECK.checkTest("reg-email", "^[a-zA-Z0-9@-_.]+$")});  
+        }
     //country------------------------------------------------------------------------------------
         SE.$("reg-country").addEventListener("change", () => {CHECK.checkCut("reg-country", "")});
     //town------------------------------------------------------------------------------------

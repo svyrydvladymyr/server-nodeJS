@@ -116,20 +116,6 @@ let SE = (() => {
         }
     };  
 
-//login and passsword autorisation exclusion  
-    let checkAutorisation = (idf, reg, reg2) => {
-        let newReg = new RegExp(reg, "gi");
-        let input = SE.$(idf).value;
-        let res = input.replace(newReg, '');
-        SE.$(idf).value = res;        
-        if (new RegExp(reg2, "gi").test(SE.$(idf).value) == true) {
-            SE.$('login-message').innerHTML = '';
-            SE.$('login-message').style.display = 'none'; 
-        } else {
-            SE.$('login-message').style.display = 'table';
-            SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;
-        }
-    }
 
 //show preview foto     
     let readURL = (type) => {
@@ -432,7 +418,6 @@ let registerUserToDB = function(){
         clearFileInput,
         addAvaToDB,
         showErrorMainMess,
-        checkAutorisation,
         exit,
         updateUser,
         send,
