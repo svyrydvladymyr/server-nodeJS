@@ -676,7 +676,7 @@ body{
     position: relative;
     width: 48%;
     height: 20px;
-    border: 2px solid #2b2b2b;
+    border: 1px solid #2b2b2b;
     border-radius: 8px;
     background: var(--main-color);
     color: #ffffff;
@@ -690,7 +690,7 @@ body{
     height: 100%;
     margin: 0px;
     float: left;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 .lang_en > p {
@@ -705,7 +705,7 @@ body{
     position: relative;
     width: 48%;
     height: 20px;
-    border: 2px solid #2b2b2b;
+    border: 1px solid #2b2b2b;
     border-radius: 8px;
     background: var(--main-color);
     color: #ffffff;
@@ -719,7 +719,7 @@ body{
     height: 100%;
     margin: 0px;
     float: right;
-    border-radius: 5px; 
+    border-radius: 6px; 
 }
 
 .lang_ua > p {

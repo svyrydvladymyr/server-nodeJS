@@ -1,5 +1,9 @@
-window.onload = function(){
+//registration prototipe
+    class regProto{constructor(){}}
+    let regPrototype = new regProto();
 
+window.onload = function(){
+//clear update object 
     CLEAR.clearRegProto();
     
 //set language settings

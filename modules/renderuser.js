@@ -222,8 +222,23 @@ let renderuser = (req, res) => {
                     } else {
                         //if the user is found but is not authorized                       
                         if (result == ''){
-                            createTableFriends(getuserid);
-                            renderIfFoundAndNotAutoris(req, res, userObj, avaurl);
+                   
+                                permissionAccess = false;
+                                permissionEdit = false;
+                                permissionFriend = false;
+                                console.log('--render-user---->> ', result[0]);                            
+                                res.render(`nouser`, {
+                                    permissAccess: `${permissionAccess}`,
+                                    permissEdit: `${permissionEdit}`,
+                                    permissName: ``,
+                                    permissSurname: ``,
+                                    permissUserid: ``,
+                                    onindex:`${getuserid}`,
+                                    setsettings:`false`,
+                                    userid: ``,
+                                    activee: `active`,
+                                    title:``
+                                })
                         } else {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {

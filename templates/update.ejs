@@ -220,6 +220,7 @@
                             <div class="form_label"><p id="reg-label-town"></p></div>
                             <div class="form_input">
                                 <select name="reg-town" id="reg-town" autocomplete="off">
+                                    <option disabled selected><%=town %></option>
                                 </select>
                             </div>
                             <div class="form_message"><p id="reg-town-mess" class="reg-message"></p></div>   
@@ -373,22 +374,20 @@
         <script src="./js/checkinputs.js"></script>
         <script src="./js/towns.js"></script>
         <script src="./js/clear.js"></script>
-        <script src="./js/proto.js"></script>
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
-        <% if((regtype !== 'facebook') || (regtype !== 'google')) {%>
-            <script src="./js/update.js"></script>
-        <% } %>
+        <!-- <% if((regtype !== 'facebook') || (regtype !== 'google')) {%> -->
+            <script src="./js/controller-update.js"></script>
+        <!-- <% } %>
         <% if((regtype === 'facebook') || (regtype === 'google')) {%>
             <script src="./js/updateF.js"></script>
-        <% } %>
+        <% } %> -->
         <script>        
-            SE.$('reg-country').value = "<%=country %>"
+            SE.$('reg-country').value = "<%=country %>" 
             SE.$('reg-tel_cod').value = "<%=phonecod %>"
             SE.$('reg-message_cod').value = "<%=messagecod %>"
             let getTownId = SE.$('reg-town');
             let getSelectedCountry = SE.$('reg-country').value;
-            getTownId.innerHTML = `<option disabled selected></option>`;
             if (localStorage.kalciferLang === "ua"){
                 for (let i = 0; i < towns_ua[getSelectedCountry].length; i++){
                     let translitID = SE.rus_to_latin(towns_ua[getSelectedCountry][i])
@@ -400,7 +399,6 @@
                     getTownId.innerHTML += `<option value="${translitID}" id="${translitID}">${towns_en[getSelectedCountry][i]}</option>`;
                 }
             }        
-            SE.$('reg-town').value = "<%=town %>"  
         </script>
     </body>
     </html>

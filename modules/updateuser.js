@@ -41,7 +41,7 @@ let updaterender = (req, res) => {
                 res.send({"err":err});
             }
             console.log("--user-for-update---->> ", result[0]);  
-            let phone, phonecod, message, messagecod, country, RC = result[0].country, town;
+            let phone, phonecod, message, messagecod, country, RC = result[0].country;
             if (result[0].phone !== null){
                 phone = result[0].phone.slice(3 ,13);
                 phonecod = result[0].phone.slice(result[0].phone.length - result[0].phone.length ,result[0].phone.length - 10);
@@ -78,7 +78,7 @@ let updaterender = (req, res) => {
                 message: message,
                 messagecod: messagecod,
                 country: country,
-                town: town,
+                town: result[0].town,
                 profession: result[0].profession,
                 education: result[0].education,
                 vskillsall: result[0].vskillsall,
