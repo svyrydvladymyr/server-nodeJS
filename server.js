@@ -121,7 +121,10 @@ app.post('/beforedeluser', (req, res) => {beforedeluser(req, res)});
 app.use((req, res, next) => {accessLog(req, res, next)});
 
 //user pages
-app.use('/:userid', (req, res) => {renderuser(req, res)});
-app.use('/', (req, res, next) => {res.redirect('index'); next()});
+app.use('/:userid$', (req, res) => {renderuser(req, res)});
+app.use('/$', (req, res, next) => {res.redirect('index'); next()});
+app.get('*', function(req, res){
+  res.send('fuck you!!!', 404);
+});
 
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});
