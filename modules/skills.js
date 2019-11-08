@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, checOnTrueVal} = require('./service');
+let {clienttoken, checOnTrueVal, $_log} = require('./service');
 let url = require('url');
 
 let showskills = (req, res) => {
@@ -8,8 +8,7 @@ let showskills = (req, res) => {
     let sql = `SELECT S.* FROM users U INNER JOIN userskills S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             if (result != ''){
                 let num, chack, name, level, masskills = [], objSkills; 
@@ -20,7 +19,7 @@ let showskills = (req, res) => {
                     level = result[0][`skilllevel${i}`];
                     if (((chack !== 'null') && (name !== 'null') && (level !== 'null')) && ((chack !== null) && (name !== null) && (level !== null))){
                         objSkills = `[${num}, ${chack}, ${name}, ${level}]`;
-                        console.log("--skill---->> ",objSkills);
+                        $_log('skill', objSkills);
                         masskills.push(objSkills);    
                     }
                 }
@@ -42,30 +41,27 @@ let addskills = (req, res) => {
     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${number} = '${number}', skillchack${number} = '${chack}', skill${number} = '${name}',  skilllevel${number} = '${level}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             if (result.affectedRows === 0){                 
                 let sqlskills = `INSERT INTO userskills (userid) SELECT userid FROM users WHERE token = '${clientToken}'`;
                 con.query(sqlskills, function (err, result) {
                     if (err) {
-                        console.log("--err--", err);
-                        res.send({"error":err});   
+                        $_log('err', err, 'error', res);
                     } else {
-                        console.log("--result-registr-skills---->> ", result.affectedRows);
+                        $_log('result-registr-skills', result.affectedRows);
                         con.query(sql, function (err, result) {
                             if (err) {
-                                console.log("err", err);
-                                res.send({"err": err});
+                                $_log('err', err, 'err', res);
                             } else {
-                                console.log("--skill-added---->> ", result.affectedRows);
+                                $_log('skill-added', result.affectedRows);
                                 res.send(result);
                             }
                         });
                     }            
                 });
             } else {
-                console.log("--skill-added---->> ", result.affectedRows);
+                $_log('skill-added', result.affectedRows);
                 res.send(result);
             }
         }        
@@ -79,13 +75,7 @@ let showorhiddenskills = (req, res) => {
     number = req.body.number;
     let sql = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
-        if (err) {
-            console.log("err", err);
-            res.send({"err": err});
-        } else {
-            console.log("--skill-updates---->> ", result.affectedRows);
-            res.send({"res":result.affectedRows});
-        }        
+        (err) ? $_log('err', err, 'err', res) : $_log('skill-updates', result.affectedRows, 'res', res)        
     });
 }
 
@@ -96,10 +86,9 @@ let showskillsingle = (req, res) => {
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
-            console.log("--skill-get---->> ", result);
+            $_log('skill-get', result);
             res.send({"res":result, "number":number});
         }        
     });
@@ -116,16 +105,14 @@ let editskill = (req, res) => {
     let sql = `SELECT S.skillnumber${number}, S.skillchack${number}, S.skill${number},  S.skilllevel${number} FROM users U INNER JOIN userskills S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sqlup, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
-            console.log("--skill-updates---->> ", result.affectedRows);
+            $_log('skill-updates', result.affectedRows);
             con.query(sql, function (err, result) {
                 if (err) {
-                    console.log("err", err);
-                    res.send({"err": err});
+                    $_log('err', err, 'err', res);
                 } else {
-                    console.log("--skill-get---->> ", result);
+                    $_log('skill-get', result);
                     res.send({"res":result, "number":number});
                 }        
             });
@@ -143,10 +130,9 @@ let updateallskill = (req, res) => {
         let sqlup = `UPDATE userskills S INNER JOIN users U ON S.userid = U.userid SET skillnumber${i} = '${i}', skill${i} = '${name[i-1]}',  skillchack${i} = '${chack[i-1]}',  skilllevel${i} = '${level[i-1]}'  WHERE U.token = '${clientToken}' `;
         con.query(sqlup, function (err, result) {
             if (err) {
-                console.log("err", err);
-                res.send({"err": err});
+                $_log('err', err, 'err', res);
             } else {
-                console.log("--up-skill---->> ", result.affectedRows);
+                $_log('up-skill', result.affectedRows);
                 if (i ===10){
                     res.send({"res":"skill-del"});
                 }

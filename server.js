@@ -8,7 +8,7 @@ let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, u
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
 let renderuser = require('./modules/renderuser');
-let {accessLog} = require('./modules/service');
+let {accessLog, $_log} = require('./modules/service');
 let passport = require('passport'); 
 let FacebookStrategy = require('passport-facebook').Strategy;
 let GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -68,7 +68,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 //logs
-app.use((req, res, next) => {console.log(`--${req.method}---->> ${req.url}`); next();});
+app.use((req, res, next) => {$_log(`${req.method}`, req.url); next();});
 
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
@@ -122,9 +122,7 @@ app.use((req, res, next) => {accessLog(req, res, next)});
 
 //user pages
 app.use('/:userid$', (req, res) => {renderuser(req, res)});
-app.use('/$', (req, res, next) => {res.redirect('index'); next()});
-app.get('*', function(req, res){
-  res.send('fuck you!!!', 404);
-});
+app.get('/$', (req, res, next) => {res.redirect('index')});
+app.get('*', (req, res) => {res.status(404).send(`<p style="text-align: center; color: red; margin: 200px auto; font: bold 30px Arial;">PAGE NOT FOUND!!!</p>`);});
 
 app.listen(process.env.PORT || 4000, () => {console.log('Server is running...')});

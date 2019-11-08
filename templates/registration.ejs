@@ -168,7 +168,7 @@
                     <div class="form_message">
                         <p id="reg-file-mess" class="reg-message file-ava"></p>
                         <div id="reg-ava" class="reg-ava">
-                            <i class='fas clear-input-foto' onclick="SE.clearFileInput()" >&#xf00d;</i>
+                            <i class='fas clear-input-foto' onclick="AVA.clearFileInput()" >&#xf00d;</i>
                         </div>
                     </div>                      
                 </div>  
@@ -183,15 +183,15 @@
                     <div class="ava-preview-body">
                         <div class="ava-preview-foto-wrap">
                             <div class="ava-preview-foto" id="ava-preview-foto">
-                                <input type="range" name="horizontally" id="horizontally" min="0" max="100" step="5" class="rande-hor" onchange="VW.rangeAvaFoto('h')">
-                                <input type="range" name="vertical" id="vertical" min="0" max="100" step="5" class="rande-vert" onchange="VW.rangeAvaFoto('v')">
+                                <input type="range" name="horizontally" id="horizontally" min="0" max="100" step="5" class="rande-hor" onchange="AVA.rangeAvaFoto('h')">
+                                <input type="range" name="vertical" id="vertical" min="0" max="100" step="5" class="rande-vert" onchange="AVA.rangeAvaFoto('v')">
                             </div>
                         </div>
                     </div>
                     <div class="ava-preview-button-wrap">
                         <div class="ava-preview-button">
-                            <div id="button-preview-form" class="button-preview-form" onclick="SE.confirmPreview('r')"></div>
-                            <div id="button-preview-form-close" class="button-preview-form-close" onclick="SE.confirmPreviewClose('r')">
+                            <div id="button-preview-form" class="button-preview-form" onclick="AVA.confirmPreview('r')"></div>
+                            <div id="button-preview-form-close" class="button-preview-form-close" onclick="AVA.confirmPreviewClose('r')">
                                 <i class='fas'>&#xf00d;</i>
                             </div>
                         </div>
@@ -209,11 +209,11 @@
                 <div class="set_blok_lang" style="border:0px solid" >
                     <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
                         <img src="img/en.png" alt="EN">
-                        <p>ENGLISH</p>
+                        <p style="color:black;">ENGLISH</p>
                     </div>
                     <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
                         <img src="img/ua.png" alt="UA">
-                        <p>УКРАЇНСЬКА</p>
+                        <p style="color:black;">УКРАЇНСЬКА</p>
                     </div>
                 </div>                    
             </div>                   
@@ -232,5 +232,6 @@
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
         <script src="./js/controller-form.js"></script>
+        <script src="./js/ava.js"></script>
     </body>
     </html>

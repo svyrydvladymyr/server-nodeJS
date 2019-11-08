@@ -1,6 +1,7 @@
 let transliteration = require('transliteration.cyr');
 let Cookies = require('cookies');
 let con = require('../db/connectToDB').con;
+let dbName = require('../db/connectToDB').dbName;
 let fs = require('fs');
 
 //transliteration
@@ -14,12 +15,22 @@ let token = length => {
     return result;
 };
 
+//consoleLog message
+let $_log = (mess, val, errsend, res, cod = 200) => {
+    let iter = 25 - mess.length, arrow = '', obj = {[`${errsend}`]:val};
+    for (let i = 0; i < iter; i++){
+        arrow += '-';
+    }
+    console.log(`--${mess}${arrow}>> `, val);   
+    errsend !== undefined ? res.status(cod).send(obj) : null; 
+};
+
 //client token
 let clienttoken = (req, res) => {
     let cookies, clientToken;
     cookies = new Cookies(req, res, {"keys":['volodymyr']});
     clientToken = cookies.get('sessionisdd', {signed:true});
-    console.log("--client-token---->> ", clientToken);
+    $_log('client-token', clientToken);                    
     return clientToken;
 };
 
@@ -47,10 +58,10 @@ let createTableFriends = (getuserid) => {
         friendstatus VARCHAR(10),
         friendvisit VARCHAR(10),
         friendadd DATE                           
-        )`;
+        )`;       
     con.query(sqlfriends, function (err, result) {
-        err ? console.log("--err-create-table-friends--", err.code) : console.log("--Table-friends-created---->> ", result.protocol41);
-    });  
+        err ? $_log('err-create-table-friends', err.code) : $_log('table-friends-created', result.protocol41);
+    }); 
 }
 
 //render page if bad autorization 
@@ -80,5 +91,6 @@ module.exports = {
     checOnTrueVal,
     accessLog,
     createTableFriends,
-    renderIfErrAutoriz
+    renderIfErrAutoriz,
+    $_log
 };

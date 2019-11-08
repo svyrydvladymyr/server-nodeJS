@@ -174,7 +174,7 @@
                             </div>
                             <div class="form_message"><p id="reg-tel-mess" class="reg-message"></p></div> 
                             <div class="icon_share">
-                                <i class='fas' onclick="SE.clonePhoneNumber()">&#xf24d;</i>
+                                <i class='fas' onclick="CHECK.clonePhoneNumber()">&#xf24d;</i>
                             </div>
                         </div>
                         <!--message-->
@@ -353,11 +353,11 @@
             <div class="set_blok_lang" style="border:0px solid" >
                 <div class="lang_en" id="lang_en" onclick='VW.changLang("en");'>
                     <img src="img/en.png" alt="EN">
-                    <p>ENGLISH</p>
+                    <p style="color:black;">ENGLISH</p>
                 </div>
                 <div  class="lang_ua" id="lang_ua" onclick='VW.changLang("ua");'>
                     <img src="img/ua.png" alt="UA">
-                    <p>УКРАЇНСЬКА</p>
+                    <p style="color:black;">УКРАЇНСЬКА</p>
                 </div>
             </div>                    
         </div>                   
@@ -376,12 +376,8 @@
         <script src="./js/clear.js"></script>
         <script src="./js/service.js"></script>
         <script src="./js/view.js"></script>
-        <!-- <% if((regtype !== 'facebook') || (regtype !== 'google')) {%> -->
-            <script src="./js/controller-update.js"></script>
-        <!-- <% } %>
-        <% if((regtype === 'facebook') || (regtype === 'google')) {%>
-            <script src="./js/updateF.js"></script>
-        <% } %> -->
+        <script src="./js/controller-update.js"></script>
+
         <script>        
             SE.$('reg-country').value = "<%=country %>" 
             SE.$('reg-tel_cod').value = "<%=phonecod %>"

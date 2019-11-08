@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, checOnTrueVal} = require('./service');
+let {clienttoken, checOnTrueVal, $_log} = require('./service');
 let url = require('url');
 
 let showprojects = (req, res) => {
@@ -8,8 +8,7 @@ let showprojects = (req, res) => {
     let sql = `SELECT S.* FROM users U INNER JOIN userprojects S on U.userid=S.userid WHERE S.userid = '${sliceurl}' AND U.userid = '${sliceurl}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             if (result != ''){
                 let num, descript, name, prurl, chack, masskills = [], objProj; 
@@ -21,7 +20,7 @@ let showprojects = (req, res) => {
                     prurl = result[0][`projurl${i}`];
                     if (((name !== 'null') && (descript !== 'null') && (prurl !== 'null')) && ((name !== null) && (descript !== null) && (prurl !== null))){
                         objProj = `[${num}, ${chack}, ${name}, ${descript}, ${prurl}]`;
-                        console.log("--projects---->> ",objProj);
+                        $_log('projects', objProj);
                         masskills.push(objProj);    
                     }
                 }
@@ -45,30 +44,27 @@ let addprojects = (req, res) => {
     let sql = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${number} = '${number}', projchack${number} = '${chack}', projname${number} = '${name}',  projdescript${number} = '${descript}',  projurl${number} = '${projurl}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             if (result.affectedRows === 0){                 
                 let sqlproj = `INSERT INTO userprojects (userid) SELECT userid FROM users WHERE token = '${clientToken}'`;
                 con.query(sqlproj, function (err, result) {
                     if (err) {
-                        console.log("--err--", err);
-                        res.send({"error":err});   
+                        $_log('err', err, 'error', res);
                     } else {
-                        console.log("--result-registr-project---->> ", result.affectedRows);
+                        $_log('result-registr-project', result.affectedRows);
                         con.query(sql, function (err, result) {
                             if (err) {
-                                console.log("err", err);
-                                res.send({"err": err});
+                                $_log('err', err, 'err', res);
                             } else {
-                                console.log("--project-added---->> ", result.affectedRows);
+                                $_log('project-added', result.affectedRows);
                                 res.send(result);
                             }
                         });
                     }            
                 });
             } else {
-                console.log("--project-add---->> ", result.affectedRows);
+                $_log('project-add', result.affectedRows);
                 res.send(result);
             }
         }        
@@ -82,13 +78,7 @@ let showorhiddenproj = (req, res) => {
     number = req.body.number;
     let sql = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projchack${number} = '${chack}' WHERE U.token = '${clientToken}' `;
     con.query(sql, function (err, result) {
-        if (err) {
-            console.log("err", err);
-            res.send({"err": err});
-        } else {
-            console.log("--project-updates---->> ", result.affectedRows);
-            res.send({"res":result.affectedRows});
-        }        
+        (err) ? $_log('err', err, 'err', res) : $_log('project-updates', result.affectedRows, "res", res);        
     });
 }
 
@@ -99,10 +89,9 @@ let showprojsingle = (req, res) => {
     let sql = `SELECT S.projnumber${number}, S.projchack${number}, S.projname${number}, S.projdescript${number}, S.projurl${number} FROM users U INNER JOIN userprojects S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
-            console.log("--projects-get---->> ", result);
+            $_log('projects-get', result);
             res.send({"res":result, "number":number});
         }        
     });
@@ -122,16 +111,14 @@ let editproject = (req, res) => {
     let sql = `SELECT S.projnumber${number}, S.projchack${number}, S.projname${number},  S.projdescript${number},  S.projurl${number} FROM users U INNER JOIN userprojects S ON U.userid=S.userid WHERE U.token = '${clientToken}'`;    
     con.query(sqlup, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
-            console.log("--project-updates---->> ", result.affectedRows);
+            $_log('project-updates', result.affectedRows);
             con.query(sql, function (err, result) {
                 if (err) {
-                    console.log("err", err);
-                    res.send({"err": err});
+                    $_log('err', err, 'err', res);
                 } else {
-                    console.log("--project-get---->> ", result);
+                    $_log('project-get', result);
                     res.send({"res":result, "number":number});
                 }        
             });
@@ -150,10 +137,9 @@ let updateallprojects = (req, res) => {
         let sqlup = `UPDATE userprojects S INNER JOIN users U ON S.userid = U.userid SET projnumber${i} = '${i}', projname${i} = '${name[i-1]}',  projchack${i} = '${chack[i-1]}',  projdescript${i} = '${descript[i-1]}',  projurl${i} = '${urlproj[i-1]}'  WHERE U.token = '${clientToken}' `;
         con.query(sqlup, function (err, result) {
             if (err) {
-                console.log("err", err);
-                res.send({"err": err});
+                $_log('err', err, 'err', res);
             } else {
-                console.log("--up-projects---->> ", result.affectedRows);
+                $_log('up-projects', result.affectedRows);
                 if (i === 10){
                     res.send({"res":"project-del"});
                 }

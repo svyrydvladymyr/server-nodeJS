@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {token, clienttoken, renderIfErrAutoriz} = require('./service');
+let {token, clienttoken, renderIfErrAutoriz, $_log} = require('./service');
 let Cookies = require('cookies');
 let url = require('url');
 let nodemailer = require('nodemailer');
@@ -19,14 +19,13 @@ let transporter = nodemailer.createTransport({
 
 let autorisation = (req, res) => {
     let tokenId = token(20);
-    console.log("--token--", tokenId);
+    $_log("token", tokenId);
     let sql = `UPDATE users SET token = '${tokenId}' WHERE login = '${req.body.login}' AND password = '${req.body.password}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"error":err});
+            $_log("err", err, "error", res);
         } else {
-            console.log("--result-autoriz---->> ",result.changedRows);
+            $_log("result-autoriz", result.changedRows);
             if (result.changedRows === 0){
                 let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                 let param = {
@@ -39,10 +38,9 @@ let autorisation = (req, res) => {
                 let sqlsel = `SELECT U.userid, S.maincolor, S.secondcolor, S.bgcolor, S.bordertl, S.bordertr, S.borderbl, S.borderbr, S.fonts, S.language FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.login = '${req.body.login}' AND U.password = '${req.body.password}'`;
                 con.query(sqlsel, function (err, result) {
                     if (err) {
-                        console.log("err", err);
-                        res.send({"error":err});
+                        $_log("err", err, "error", res);
                     } else {
-                        console.log("--result-userSett---->> ", result);
+                        $_log("result-userSett", result);
                         let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                         let param = {
                             maxAge: '', 
@@ -72,13 +70,11 @@ let sendemail = (req, res) => {
     let sql = `SELECT email, userid, active FROM users  WHERE token = '${clientToken}'`;    
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log("err", err, "err", res);
         } else {
-            console.log("--get-info-for-email---->> ", result);
-            let hostname = req.headers.host; 
-            let verifyUrl = `${hostname}/verify?userid=${result[0].userid}&verifycod=${result[0].active}`;
-            console.log("--verify-url---->> ", verifyUrl);            
+            $_log("get-info-for-email", result);
+            let verifyUrl = `${req.headers.host}/verify?userid=${result[0].userid}&verifycod=${result[0].active}`;
+            $_log("verify-url", verifyUrl);      
             let mailOptions = {
                 from: '6b616c6369666572@gmail.com',
                 to: `${result[0].email}`,
@@ -102,13 +98,7 @@ let sendemail = (req, res) => {
                         <p>If you did not create an account, no further action is required.</p>`
             };
             transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                    console.log(error);
-                    res.send({"error":error});
-                } else {
-                    console.log('--Email-sent---->> ' + info.response);                  
-                    res.send({"res":info.response});
-                }
+                (error) ? $_log("error", error, "error", res) : $_log("Email-sent", info.response, "res", res);
             });
         }        
     });
@@ -118,12 +108,9 @@ let recoverdata = (req, res) => {
     let sql = `SELECT regtype, login, password, email, facebookemail, googleemail, instagramemail, githubemail, linkedinemail, twitteremail FROM users  WHERE email = '${req.body.email}' OR facebookemail = '${req.body.email}' OR googleemail = '${req.body.email}' OR instagramemail = '${req.body.email}' OR githubemail = '${req.body.email}' OR linkedinemail = '${req.body.email}' OR twitteremail = '${req.body.email}'`;    
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
+            $_log("err", err);
             res.redirect(user.id);
-        } else {
-
-            console.log("jjjjjjjjjjjjjjj",result);
-            
+        } else {            
             let messSoc, login, passsword, arrprovider = ``, log, pass, and, koma;
             if (result.length > 1){
                 and = `<span><b>You also have other registrations, but these are different accounts!</b></span>`;
@@ -165,11 +152,10 @@ let recoverdata = (req, res) => {
                 };
                 transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
-                        console.log('--Error-email-sent---->> ',error);
+                        $_log("Error-email-sent", error);
                         res.send({"res":"err"});
                     } else {
-                        console.log('--Email-sent---->> ' + info.response);                  
-                        res.send({"res":info.response});
+                        $_log("Email-sent", info.response, 'res', res);           
                     }
                 });
             } else {
@@ -187,13 +173,12 @@ let verifyuser = (req, res) => {
     cod = verifyobj.verifycod;
     userid = verifyobj.userid;
     clientToken = clienttoken(req, res);
-    console.log("--verify-cod---->> ",cod);
-    console.log("--verify-user---->> ",userid);
+    $_log("verify-cod", cod);
+    $_log("verify-user", userid);
     let sql = `UPDATE users SET active = 'active' WHERE token = '${clientToken}' AND userid = '${userid}' AND active = '${cod}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"error":err});
+            $_log("Error-email-sent", error, "error", res);
         } else {
             console.log(result);
             res.send({"res":userid});
@@ -204,8 +189,6 @@ let verifyuser = (req, res) => {
 let autorisationSocial = (profile, done) => {
     let id = profile.provider === 'linkedin' ? profile.id.replace(/-/gi, '') : profile.id;
     con.query(`SELECT * FROM users WHERE userid = '${id}'`, (err, result) => {
-        console.log("0000000000000000",profile);
-        console.log("0000000000000000",profile.provider);
         let ava, name, surname, emailadd, provider, emailprovider;
         if (profile.provider === 'instagram'){
             ava = profile._json.data.profile_picture === undefined ? '' : `${profile._json.data.profile_picture}`;
@@ -237,59 +220,61 @@ let autorisationSocial = (profile, done) => {
             emailprovider = profile.provider === undefined ? '' : `${profile.provider}`;
         }
         if(err) {
-            console.log("--err-autoriz---->>",err);    
+            $_log("err-autoriz", err);  
             return done(null, profile);             
         } else if (result && result.length === 0) {
-            console.log("--register-user-with-social---->>", result);
-            let login = token(10);
-            let password = token(10);
-            let datetime = new Date();
-            let updatedatetime = datetime.toISOString().slice(0,10);
-            let sql = `INSERT INTO users (userid, name, surname, login, password, ${emailprovider}email, active, regtype, registrdata, ava) VALUES ('${id}', '${name}', '${surname}', '${login}', '${password}', '${emailadd}', 'active', '${provider}', '${updatedatetime}',  '${ava}')`;
+            $_log("register-user-with-social", result);
+            // let login = token(10);
+            // let password = token(10);
+            // let datetime = new Date();
+            // let updatedatetime = datetime.toISOString().slice(0,10);
+            let sql = `INSERT INTO users (userid, name, surname, login, password, ${emailprovider}email, active, regtype, registrdata, ava) 
+                       VALUES ('${id}', '${name}', '${surname}', '${token(10)}', '${token(10)}', '${emailadd}', 'active', '${provider}', '${new Date().toISOString().slice(0,10)}', '${ava}')`;
             let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${id}')`;          
             con.query(sql, function (err, result) {
                 if (err) {
-                    console.log("--err-with-social-registr---->>",err);                    
+                    $_log("err-with-social-registr", err);                 
                     if (err.code === 'ER_DUP_ENTRY'){
                         let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
-                        if (parseSQLmess === 'login'){ 
-                            return done('ER_DUP_LOGIN', null);
-                        } else if (parseSQLmess === 'email'){
-                            return done('ER_DUP_EMAIL', null);
-                        } else {
-                            return done(`${err}`, null);
-                        }             
+                        return (parseSQLmess === 'login') ? done('ER_DUP_LOGIN', null) : (parseSQLmess === 'email') ? done('ER_DUP_EMAIL', null) : done(`${err}`, null);
+                        // if (parseSQLmess === 'login'){ 
+                        //     return done('ER_DUP_LOGIN', null);
+                        // } else if (parseSQLmess === 'email'){
+                        //     return done('ER_DUP_EMAIL', null);
+                        // } else {
+                        //     return done(`${err}`, null);
+                        // }             
                     } else {
                         return done(`${err}`, null);
                     }
                 } else {
                     con.query(sqlsett, function (err, result) {
                         if (err){
-                            console.log("--err-create-row-settinds--", err);
+                            $_log("err-create-row-settinds", err);
                             let sqldel = `DELETE FROM users WHERE userid = ${id}`;
                             con.query(sqldel, function (err, result) {
                                 if (err){
-                                    console.log("--err-clear-user-if-fail--", err);
+                                    $_log("err-clear-user-if-fail", err);
                                 } else {
-                                    console.log("--result-user-clear---->> ", result.affectedRows);
+                                    $_log("result-user-clear", result.affectedRows);
                                     return done('ER_SERVER', null);
                                 }
                             });
                         } else {
-                            console.log("--result-add-row-settings---->> ", result.affectedRows);
+                            $_log("result-add-row-settings", result.affectedRows);
                             return done(null, profile);
                         }  
                     });
                 }
             }); 
         } else if (result[0].userid === id){
-            console.log("--user-is-authorized---->>",id);
+            $_log("user-is-authorized", id);
             let emailproviderrr = profile.provider === undefined ? 'email' : `${profile.provider}email`;
-            con.query(`UPDATE users SET name = '${name}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-name---->>",result.affectedRows);});
-            con.query(`UPDATE users SET surname = '${surname}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-surname---->>",result.affectedRows);});
-            con.query(`UPDATE users SET ava = '${ava}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-ava---->>",result.affectedRows);});
+            con.query(`UPDATE users SET name = '${name}' WHERE userid = '${id}'`, function (err, result) {$_log("set-new-name", result.affectedRows)});
+            con.query(`UPDATE users SET surname = '${surname}' WHERE userid = '${id}'`, function (err, result) {$_log("set-new-surname", result.affectedRows)});
+            con.query(`UPDATE users SET ava = '${ava}' WHERE userid = '${id}'`, function (err, result) {$_log("set-new-ava", result.affectedRows)});
             if ((emailadd !== '') && (emailadd !== undefined)){
-                con.query(`UPDATE users SET ${emailproviderrr} = '${emailadd}' WHERE userid = '${id}'`, function (err, result) {console.log("--set-new-email---->>",result.affectedRows);});
+                con.query(`UPDATE users SET ${emailproviderrr} = '${emailadd}' WHERE userid = '${id}'`, function (err, result) {$_log("set-new-email", result.affectedRows)});
             }
             return done(null, profile);
         }
@@ -302,39 +287,34 @@ let autorisSocialSetCookie = (req, res, user) => {
     let sql = `UPDATE users SET token = '${tokenId}' WHERE userid = '${id}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
+            $_log("err", err);
             res.redirect('/');
         } else {
-            console.log("--result-autoriz---->> ",result.changedRows);
+            $_log("result-autoriz", result.changedRows);
             if (result.changedRows === 0){
                 let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-                let param = {
-                maxAge: '-1', 
-                path: '/', 
-                signed:true}
-                cookies.set('sessionisdd', ``, param); 
+                // let param = {maxAge: '-1', 
+                //              path: '/', 
+                //              signed:true}
+                cookies.set('sessionisdd', ``, {maxAge: '-1', path: '/', signed:true}); 
                 res.redirect(id);
             } else {              
                 let sqlsel = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${id}'`;
                 con.query(sqlsel, function (err, result) {
                     if (err) {
-                        console.log("err", err);
+                        $_log("err", err);
                         res.redirect(id);
                     } else {
-                        console.log("--result-userSett---->> ", result[0].userid);
-                        let clientToken = clienttoken(req, res);
+                        $_log("result-userSett", result[0].userid);
+                        // let clientToken = clienttoken(req, res);
                         let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-                        let param = {
-                        maxAge: '', 
-                        path: '/', 
-                        signed:true}
-                        cookies.set('sessionisdd', `${tokenId}`, param);
-                        let permissionEdit, permissionAccess;
-                        (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
-                        (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
+                        // let param = {maxAge: '', 
+                        //              path: '/', 
+                        //              signed:true}
+                        cookies.set('sessionisdd', `${tokenId}`, {maxAge: '', path: '/', signed:true});
                         res.render(`nouser`, {
-                            permissAccess: `${permissionAccess}`,
-                            permissEdit: `${permissionEdit}`,
+                            permissAccess: `${(result[0].token === clienttoken(req, res)) ? true : false}`,
+                            permissEdit: `${(result[0].token === clienttoken(req, res)) ? true : false}`,
                             permissName: `${result[0].name}`,
                             permissSurname: `${result[0].surname}`,
                             permissUserid: `${result[0].userid}`,
@@ -362,15 +342,10 @@ let autorisSocialSetCookie = (req, res, user) => {
 
 let autorisRouts = (req, res, err, user) => {
     if(err){
-        if (err === 'ER_DUP_EMAIL'){
-            renderIfErrAutoriz(req, res, 'err_autoriz_email');
-        } else if (err === 'ER_DUP_LOGIN'){
-            renderIfErrAutoriz(req, res, 'err_autoriz_login');
-        } else if (err === 'ER_SERVER'){
-            renderIfErrAutoriz(req, res, 'err_autoriz_server');
-        } else {
-            res.redirect('/');
-        }    
+        (err === 'ER_DUP_EMAIL') ? renderIfErrAutoriz(req, res, 'err_autoriz_email') 
+        : (err === 'ER_DUP_LOGIN') ? renderIfErrAutoriz(req, res, 'err_autoriz_login')
+        : (err === 'ER_SERVER') ? renderIfErrAutoriz(req, res, 'err_autoriz_server') 
+        : res.redirect('/');  
     } else {
         autorisSocialSetCookie(req, res, user); 
     }     

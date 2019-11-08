@@ -18,7 +18,6 @@ let CHECK = (() => {
             SE.$("reg-form-send").removeEventListener("click", SE.messgeSendError);
             SE.readyToSend(idF, "");
         } else {
-            // let phoneReady = SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value;
             SE.readyToSend(idF, SE.$(`${idF}_cod`).options[SE.$(`${idF}_cod`).selectedIndex].text + SE.$(idF).value);
             SE.$("reg-form-send").addEventListener("click", SE.messgeSendError); 
         }
@@ -100,6 +99,28 @@ let CHECK = (() => {
         }
     };
 
+//uploud file exclusion  
+    let checkUploudFile = (idF) => {
+        if (SE.$(idF).files.length === 1){
+            if (SE.$(idF).files[0].size > 1024000) {
+                SE.iconON(idF, "false", MESS.errorFormMessage().toLBigFile);  
+                SE.$('reg-file-mess').style.display = 'table';
+                SE.$('reg-file-mess').style.marginTop = '3px';
+                SE.$('reg-ava').style.display = 'none';
+                SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
+                SE.$('form_input').style.height = '40px';
+            } else {
+                SE.$('reg-file-mess').style.display = 'none';
+                SE.$('ava-preview-wrap').style.display = 'flex';
+                AVA.readURLPreview();                             
+            }
+        }
+    };
+
+
+//login and passsword autorisation exclusion  
+    let checkSearch = (idf) => {SE.$(idf).value = SE.$(idf).value.replace(/[^0-9a-zA-Zа-яА-Я_.іІїЇєЄ ]/gi, '')};
+
 
 //login and passsword autorisation exclusion  
     let checkAutorisation = (idf, reg, reg2) => {
@@ -125,8 +146,8 @@ let CHECK = (() => {
             SE.$('login-message').style.display = 'table';
             SE.$('login-message').innerHTML = MESS.errorFormMessage().autorisOnlyletters;         
         }
-    }    
-
+    }   
+    
 //check on true or error in input on change, cut all incorrect, show message
     let checkCut = (idF, reg, t) => {
         if (SE.$(idF).value === ""){
@@ -167,30 +188,17 @@ let CHECK = (() => {
                     }
                 } else {    
                     if((SE.$(idF).id === "reg-tel") || (SE.$(idF).id === "reg-message")){ 
-                        CHECK.checkPhoneAndMessInput(idF);
+                        checkPhoneAndMessInput(idF);
                     } else if ((SE.$(idF).id === "reg-password") || (SE.$(idF).id === "reg-password-two") || (SE.$(idF).id === "reg-oldpassword")){
-                        CHECK.checkPasswordInput(idF);
+                        checkPasswordInput(idF);
                     } else if((SE.$(idF).id === "reg-age") || (SE.$(idF).id === "reg-email")) {
-                        CHECK.checkAgeEmailInput(idF);
+                        checkAgeEmailInput(idF);
+                    } else if ((SE.$(idF).id === "reg-country") || (SE.$(idF).id === "reg-town")){
+                        checkCountryInput(idF);
+                    } else if (SE.$(idF).id === "reg-file"){  
+                        checkUploudFile(idF);  
                     } else if(SE.$(idF).id === "autoriz-email-send-input") {
                         SE.$('farrrrr').style.fontSize = ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)) ? "0px" : "18px";
-                    } else if ((SE.$(idF).id === "reg-country") || (SE.$(idF).id === "reg-town")){
-                        CHECK.checkCountryInput(idF);
-                    } else if (SE.$(idF).id === "reg-file"){         
-                        if (SE.$(idF).files.length === 1){
-                            if (SE.$(idF).files[0].size > 1024000) {
-                                SE.iconON(idF, "false", MESS.errorFormMessage().toLBigFile);  
-                                SE.$('reg-file-mess').style.display = 'table';
-                                SE.$('reg-file-mess').style.marginTop = '3px';
-                                SE.$('reg-ava').style.display = 'none';
-                                SE.$('reg-ava').style.border = '0px solid #e0e0e0'; 
-                                SE.$('form_input').style.height = '40px';
-                            } else {
-                                SE.$('reg-file-mess').style.display = 'none';
-                                SE.$('ava-preview-wrap').style.display = 'flex';
-                                SE.readURLPreview();                             
-                            }
-                        }
                     }else{
                         SE.iconON(idF, "true", '');         
                         SE.readyToSend(idF, SE.$(idF).value);
@@ -204,42 +212,40 @@ let CHECK = (() => {
 
 //check on true or error in input on input and show message
     let checkTest = (idF, reg, t) => {
-
-            if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
-                if (idF === 'reg-password-two'){
-                    SE.iconON('reg-password', "true", '');
-                } else if (idF === 'autoriz-email-send-input'){
-                    SE.$('farrrrr').style.fontSize = ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)) ? "0px" : "18px";                         
-                } else {
-                    SE.iconON(idF, "true", '');
-                }
+        if (new RegExp(reg, "gi").test(SE.$(idF).value) == true){
+            if (idF === 'reg-password-two'){
+                SE.iconON('reg-password', "true", '');
+            } else if (idF === 'autoriz-email-send-input'){
+                SE.$('farrrrr').style.fontSize = ((SE.$(idF).validity) && (!SE.$(idF).validity.valid)) ? "0px" : "18px";                         
             } else {
-                if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
-                    SE.iconON(idF, "false", MESS.errorFormMessage().onlyNum);
+                SE.iconON(idF, "true", '');
+            }
+        } else {
+            if ((SE.$(idF).id == "reg-tel") || (SE.$(idF).id == "reg-message")){
+                SE.iconON(idF, "false", MESS.errorFormMessage().onlyNum);
+                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                SE.$("reg-form-send").classList.remove('reg_send_active');
+            } else if (SE.$(idF).id == "autoriz-email-send-input"){
+                SE.$('farrrrr').style.fontSize = "0px";
+            } else {
+                if (SE.$(idF).value === ''){
+                    let idFF = (idF === 'reg-password-two') ? 'reg-password' : idF;                        
+                    SE.iconON(idFF, "true", '');
                     SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                     SE.$("reg-form-send").classList.remove('reg_send_active');
-                } else if (SE.$(idF).id == "autoriz-email-send-input"){
-                    SE.$('farrrrr').style.fontSize = "0px";
                 } else {
-                    if (SE.$(idF).value === ''){
-                        let idFF = (idF === 'reg-password-two') ? 'reg-password' : idF;                        
-                        SE.iconON(idFF, "true", '');
+                    if ((idF === 'reg-login-up') || (idF === 'reg-login') || (idF === 'reg-oldpassword')){
+                        SE.iconON(idF, "false", MESS.errorFormMessage().autorisOnlyletters);
                         SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
                         SE.$("reg-form-send").classList.remove('reg_send_active');
                     } else {
-                        if ((idF === 'reg-login-up') || (idF === 'reg-login') || (idF === 'reg-oldpassword')){
-                            SE.iconON(idF, "false", MESS.errorFormMessage().autorisOnlyletters);
-                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                            SE.$("reg-form-send").classList.remove('reg_send_active');
-                        } else {
-                            SE.iconON(idF, "false", MESS.errorFormMessage().onlyLetters);
-                            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                            SE.$("reg-form-send").classList.remove('reg_send_active');
-                        }
+                        SE.iconON(idF, "false", MESS.errorFormMessage().onlyLetters);
+                        SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+                        SE.$("reg-form-send").classList.remove('reg_send_active');
                     }
                 }
             }
-
+        }
     };
 
 //chack widget values    
@@ -254,13 +260,10 @@ let CHECK = (() => {
     return {
         checkTest,
         checkCut,
-        checkPhoneAndMessInput,
-        checkCountryInput,
-        checkPasswordInput,
-        checkAgeEmailInput,
         clonePhoneNumber,
         checkWidgetsVal,
         checkAutorisation,
-        testAutorisation
+        testAutorisation,
+        checkSearch
     }
 })();

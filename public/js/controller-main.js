@@ -16,7 +16,7 @@ window.onload = function(){
     SE.$('bottomright').value = localStorage.kalciferbottomright;
     SE.$('fontselect').value = localStorage.kalciferfont;
 
-//autorisation--login-------------------------------------------------------------------------------
+//autorisation--login---------------------------------------------------------------------------------
     if (SE.$("login")) {
         SE.$("login").addEventListener("change", () => {CHECK.checkAutorisation("login", "[^a-zA-Z0-9-_]", "^[a-zA-Z0-9-_]+$")});
         SE.$("login").addEventListener("input", () => {CHECK.testAutorisation("login", "^[a-zA-Z0-9]+$")}); 
@@ -30,3 +30,6 @@ window.onload = function(){
         SE.$("password").addEventListener("keydown", (event) => {if (event.key === 'Enter'){VW.buttonLogin()}}); 
     } 
 };
+
+//search-----------------------------------------------------------------------------------------------
+    SE.$("search").addEventListener("input", () => {CHECK.checkSearch("search")}); 

@@ -124,15 +124,6 @@ let VW = (() => {
         }
     };
 
-//range ava foto
-    let rangeAvaFoto = (el) => {
-        if (el === 'h') {
-            SE.$('ava-preview-foto').style.backgroundPosition = `${SE.$('horizontally').value}% 50%`;
-        } else if (el === 'v') {
-            SE.$('ava-preview-foto').style.backgroundPosition = `50% ${SE.$('vertical').value}%`;
-        }      
-    };   
-
 //change main style
     let changeSettings = (mainarg, secondarg, bgarg) => {
         let main, second, bg;
@@ -164,15 +155,9 @@ let VW = (() => {
         let tl, tr, bl, br;
         if ((tla === '') ||  (tra === '') ||  (bla === '') ||  (bra === '') || 
             (tla === undefined) ||  (tra === undefined) ||  (bla === undefined) ||  (bra === undefined)){
-            tl = 9;
-            tr = 9;
-            bl = 9;
-            br = 9;
-        } else {
-            tl = tla;
-            tr = tra;
-            bl = bla;
-            br = bra;
+            tl = 9; tr = 9; bl = 9; br = 9;
+        } else { 
+            tl = tla; tr = tra; bl = bla; br = bra;
         }  
         localStorage.kalcifertopleft = tl;
         localStorage.kalcifertopright = tr;
@@ -240,19 +225,17 @@ let VW = (() => {
             SE.$('userlist').innerHTML = '';
             for(let i = 0; i < parseObj.length; i++){
                 let avafoto;
-                let reg = /^http:/i;
-                let reg2 = /^https:/i;
-                if ((reg.test(parseObj[i].ava)) || (reg2.test(parseObj[i].ava))){
+                if ((/^http:/i.test(parseObj[i].ava)) || (/^https:/i.test(parseObj[i].ava))){
                     avafoto = `${parseObj[i].ava}`;
                 } else {
                     avafoto = ((parseObj[i].ava === null) || (parseObj[i].ava === '') || (parseObj[i].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${parseObj[i].ava}`;
                 }
                 SE.$('userlist').innerHTML += `<div class="listusers-boks" id="${parseObj[i].userid}" onclick="VW.renderPage(this)">
-                                                <div class="listusers-img" 
-                                                    style="background-image: url('${avafoto}'); 
-                                                    background-position: ${parseObj[i].avasettings};">
-                                                </div>    
-                                                <p>${parseObj[i].name} ${parseObj[i].surname}</p>
+                                                    <div class="listusers-img" 
+                                                        style="background-image: url('${avafoto}'); 
+                                                        background-position: ${parseObj[i].avasettings};">
+                                                    </div>    
+                                                    <p>${parseObj[i].name} ${parseObj[i].surname}</p>
                                                 </div>`;
             }
         } 
@@ -294,10 +277,10 @@ let VW = (() => {
             setTimeout(() => {
                 SE.redirect('/');
             },1000);
-        } else if (parseObj.error === 'duplicate_entry_login'){
+        } else if (parseObj.error == 'duplicate_entry_login'){
             SE.$("main-form-message").innerHTML = MESS.errorFormMessage().dupllogin;
             SE.$('reg-login').addEventListener('change', SE.showErrorMainMess);
-        } else if (parseObj.error === 'duplicate_entry_email'){
+        } else if (parseObj.error == 'duplicate_entry_email'){
             SE.$("main-form-message").innerHTML = MESS.errorFormMessage().duplemail;  
             SE.$('reg-email').addEventListener('change', SE.showErrorMainMess);
         } else if ((parseObj.affectedRows === 1) && (parseObj.protocol41 === true)){
@@ -377,20 +360,6 @@ let VW = (() => {
         }
     }; 
     
-//update ava date in user date
-    let updateAva = () => {
-        if (SE.$('reg-file').files.length === 1){
-            if (SE.$('reg-file').files[0].size > 1024000) {
-                SE.$('ava-mess-main').innerHTML = MESS.errorFormMessage().toLBigFile;  
-                setTimeout(() => {SE.$('ava-mess-main').innerHTML = ''}, 3000);
-            } else {
-                //show preview
-                SE.$('ava-preview-wrap-main').style.display = 'flex';
-                SE.readURLPreview();                             
-            }
-        }
-    };  
-
 //-----------------------------------------------------------------------------------------------------
 //--------------------------------function for work with widgets---------------------------------------
 //-----------------------------------------------------------------------------------------------------   
@@ -430,24 +399,18 @@ let VW = (() => {
     let adColorToLists = (el) => {
         if (SE.$(`side-sub-${el}`) === null) {
             for (let i = 1; i <= 10; i++){
-                if (SE.$(`${el}-box${i}`)){
-                    SE.$(`${el}-box${i}`).style.backgroundColor = "#ffffff";
-                }
+                if (SE.$(`${el}-box${i}`)){SE.$(`${el}-box${i}`).style.backgroundColor = "#ffffff";}
             }
         } else {
             for (let i = 1; i <= 10; i++){
-                if (SE.$(`${el}-box${i}`)){
-                    SE.$(`${el}-box${i}`).style.backgroundColor = "#f1f1f1";
-                }
+                if (SE.$(`${el}-box${i}`)){SE.$(`${el}-box${i}`).style.backgroundColor = "#f1f1f1";}
             }
         } 
     }    
  
 // animation after send email
     let animationAfterSend = (res) => {   
-        let parseObj = JSON.parse(res); 
-        console.log("jjjjjjjjjjj",parseObj);
-        
+        let parseObj = JSON.parse(res);    
         if (parseObj.res.slice(0, 12) == '250 2.0.0 OK'){
             SE.$('email-spinet').innerHTML = ``;
             SE.$('send-email').style.width = "0px";
@@ -526,9 +489,7 @@ let VW = (() => {
         <p id="del-timer" class="del-timer"></p>`;
     }
 
-
-
-//---------------------------------
+//----PDF-----------------------------
     let demoFromHTML = () => {   
         var doc = new jsPDF({
             orientation: 'portrait',
@@ -536,15 +497,12 @@ let VW = (() => {
             format: 'a4',
         })
         doc.setFontSize(12);
-        doc.setFontStyle('bold');
-           
-        doc.text('Hello world!', 50, 10);
-        
+        doc.setFontStyle('bold');           
+        doc.text('Hello world!', 50, 10);        
         doc.save('two-by-four.pdf')
     };
 
-
-//---------------------------------
+//----in work-----------------------------
     let inwork = () => {   
         SE.$('mess-about-add-friend').innerHTML = `В розробці (Under development)`;
         setTimeout(() => {
@@ -560,7 +518,6 @@ return {
     showClearButton,
     clearSearch,
     showPassword,
-    rangeAvaFoto,
     changeSettings,
     customMainStyle,
     setCustomSettings,
@@ -576,7 +533,6 @@ return {
     updateSecurity,
     updateMain,
     updateOther,
-    updateAva,
     saveWidgets,
     saveWidgetsMess,
     adColorToLists,

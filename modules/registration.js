@@ -1,7 +1,7 @@
 let con = require('../db/connectToDB').con;
 let multer  = require('multer')
 let fs = require('fs');
-let {translit, token, clienttoken} = require('./service');
+let {translit, token, clienttoken, $_log} = require('./service');
 let Cookies = require('cookies');
 let nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
@@ -26,16 +26,15 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
         if (new RegExp(reg, "gi").test(parseObjUsers[val]) == true){
             prUs[val] = parseObjUsers[val];
         } else {
-            console.log("--bad-input--", mess);    
+            $_log('bad-input', mess);
             prUs[val] = '';        
         }
     } else { prUs[val] = '';}
 };
 
 let registrationUsers = (req, res) => {
-    let settproof, skilsproof, projectproof;     
     let parseObjUsers = req.body;
-    console.log("--client-registr-obj--", parseObjUsers);    
+    $_log('client-registr-obj', parseObjUsers);   
     prUs.userid = translit(`${parseObjUsers.surname}${parseObjUsers.name}`).toLowerCase() + '_' + token(10);
     checkObjValues("^[0-9-]+$", "registrdata", "Bad registration date!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
@@ -50,15 +49,11 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[a-zA-Zа-яА-Я-іІєЄїЇ ]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "education", "Bad education!", parseObjUsers, res);     
-    let verifyToken = token(10);    
-    let hostname = req.headers.host; 
-    let verifyUrl = `${hostname}/verify?userid=${prUs.userid}&verifycod=${verifyToken}`;
+    let verifyUrl = `${req.headers.host}/verify?userid=${prUs.userid}&verifycod=${token(10)}`;
     let tokenId = token(20);
-    console.log("--verifyToken---->> ", verifyToken); 
-    console.log("--verifyUrl---->>", verifyUrl);
-    console.log("--clientToken---->>", tokenId); 
+    $_log('verifyUrl', verifyUrl);
     let sql = `INSERT INTO users (userid, login, password, name, surname, email, birthday, phone, message, country, town, profession, education, registrdata, active, token) 
-               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}', '${verifyToken}', '${tokenId}')`;
+               VALUES ('${prUs.userid}', '${prUs.login}', '${prUs.password}', '${prUs.name}', '${prUs.surname}', '${prUs.email}', '${prUs.birthday}', '${prUs.phone}', '${prUs.message}', '${prUs.country}', '${prUs.town}', '${prUs.profession}', '${prUs.education}', '${prUs.registrdata}', '${token(10)}', '${tokenId}')`;
     let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${prUs.userid}')`;
     let sqlskills = `INSERT INTO userskills (userid) VALUES ('${prUs.userid}')`;
     let sqlproj = `INSERT INTO userprojects (userid) VALUES ('${prUs.userid}')`;
@@ -93,48 +88,26 @@ let registrationUsers = (req, res) => {
     };
     if ((prUs.login !== '') && (prUs.password !== '') && (prUs.email !== '') && (prUs.name !== '') && (prUs.surname !== '')){
         con.query(sql, function (err, result) {
-            if (err) {
-                if (err.code === 'ER_DUP_ENTRY'){
-                    let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
-                    if (parseSQLmess === 'login'){
-                        console.log("--err-dup-login--", err.sqlMessage);
-                        res.send({"error":'duplicate_entry_login'});
-                    } else if (parseSQLmess === 'email'){
-                        console.log("--err-dup-email--", err.sqlMessage);
-                        res.send({"error":'duplicate_entry_email'});
-                    } else {
-                        console.log("--err--", err);
-                        res.send({"error":err});
-                    }             
-                } else {
-                    console.log("--err--", err);
-                    res.send({"error":err});
-                }
+            if ((err) && (err.code === 'ER_DUP_ENTRY')) {
+                let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
+                (parseSQLmess === 'login') ? $_log('duplicate entry', 'duplicate_entry_login', 'error', res): (parseSQLmess === 'email') ? $_log('duplicate entry', 'duplicate_entry_email', 'error', res) : $_log('err', err);             
             } else {
                 let renameres = result;
                 con.query(sqlsett, function (err, result) {
                     if (err){
-                        console.log("--err-create-row-settinds--", err);
+                        $_log('err-create-row-settinds', err);
                         let sqldel = `DELETE FROM users WHERE userid = ${prUs.userid}`;
                         con.query(sqldel, function (err, result) {
-                            err ? console.log("--err-clear-user-if-fail--", err) : console.log("--result-user-clear---->> ", result.affectedRows);
+                            err ? $_log('err-clear-user-if-fail', err) : $_log('result-user-clear', result.affectedRows);
                             res.send({"error":"server_error"});
                         });
                     } else {
-                        console.log("--result-add-row-settings---->> ", result.affectedRows);
-                        con.query(sqlskills, function (err, result) {
-                            err ? console.log("--err--", err) : console.log("--result-add-row-skills---->> ", result.affectedRows);
-                        });
-                        con.query(sqlproj, function (err, result) {
-                            err ? console.log("--err--", err) : console.log("--result-add-row-projects---->> ", result.affectedRows);
-                        });  
-                        con.query(sqlfriends, function (err, result) {
-                            err ? console.log("--err--", err) : console.log("--result-cteated-table-friends---->> ", result.protocol41);
-                        });
-                        transporter.sendMail(mailOptions, function(err, info){
-                            err ? console.log("--err--", err) : console.log('--result-sent-Email---->> ' + info.response);
-                        });
-                        console.log("--result-registr-user---->> ", renameres.affectedRows);            
+                        $_log('result-add-row-settings', result.affectedRows);
+                        con.query(sqlskills, function (err, result) {err ? $_log('err-add-skill-row', err) : $_log('result-add-row-skills', result.affectedRows)});
+                        con.query(sqlproj, function (err, result) {err ? $_log('err-add-project-row', err) : $_log('result-add-row-projects', result.affectedRows)});  
+                        con.query(sqlfriends, function (err, result) {err ? $_log('err-create-table-friends', err) : $_log('result-cteated-table-friends', result.protocol41)});
+                        transporter.sendMail(mailOptions, function(err, info){err ? $_log('err-send-email', err) : $_log('result-sent-Email', info.response)});
+                        $_log('result-registr-user', renameres.affectedRows);
                         let cookies = new Cookies(req, res, {"keys":['volodymyr']});
                         let param = {
                             maxAge: '', 
@@ -147,7 +120,8 @@ let registrationUsers = (req, res) => {
             }
         }); 
     } else {
-        res.send({"error":"bad_data"});
+        $_log('bad-input', 'bad_data','error', res);
+
     }
 };
 
@@ -164,7 +138,7 @@ let addAvatoDB = (req, res) => {
     upload = multer({ storage: storage }).single('file');
     upload(req, res, (err) => {
         if (err) {
-            console.log("err", err);
+            $_log('err', err);            
             res.send(err);
         } else {   
             let parseAvasettings = JSON.parse(req.body.objreg);    
@@ -174,10 +148,9 @@ let addAvatoDB = (req, res) => {
                 let sql = `UPDATE users SET ava = '${prUs.ava}', avasettings = '${prUs.avasettings}' WHERE userid = '${prUs.userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
-                        console.log("err", err);
+                        $_log('err', err);                        
                         res.send(err);
                     }
-                    console.log("--foto-updated---->> ",result.affectedRows);
                     res.send({"result":result, "userid":prUs.userid});
                 }); 
             } else {
@@ -192,22 +165,22 @@ let addAvatoDB = (req, res) => {
 //save settings to DB
 let savesett = (req, res) => {
     let clientObg = req.body;
-    console.log("--client-obj--", clientObg);
+    $_log('client-obj', clientObg);
     let clientToken = clienttoken(req, res);
     let sqlsel = `SELECT userid FROM users WHERE token = '${clientToken}'`;
     con.query(sqlsel, function (err, result) {
         if (err) {
-            console.log("err", err);
+            $_log('err', err);            
             res.send(err);
         }
-        console.log("--upd-sett-userid---->> ", result[0].userid);  
+        $_log('upd-sett-userid', result[0].userid);
         let sqlupt = `UPDATE userssettings SET maincolor = '${clientObg.main}', secondcolor = '${clientObg.second}', bgcolor = '${clientObg.bg}', bordertl = '${clientObg.tl}', bordertr = '${clientObg.tr}', borderbl = '${clientObg.bl}', borderbr = '${clientObg.br}', fonts = '${clientObg.font}', language = '${clientObg.lang}' WHERE userid = '${result[0].userid}'`;
         con.query(sqlupt, function (err, result) {
             if (err) {
-                console.log("err", err);
+                $_log('err', err);
                 res.send(err);
             }
-            console.log("--settings-updated---->> ",result.changedRows);
+            $_log('settings-updated', result.changedRows);
             res.send({});
         }); 
     }); 
@@ -218,30 +191,28 @@ let beforedeluser = (req, res) => {
     let sql = `SELECT userid, ava FROM users WHERE token = '${clientToken}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err":err});
+            $_log('err', err, 'err', res);
         } else {
             let renameava = result[0].ava;           
             if(result == ''){
-                console.log("Error_authorization",result);
+                console.log("Error_authorization", result);
                 res.send({"err":"Error_authorization"});
             } else {
                 let renameuserid = result[0].userid; 
                 let sql = `SELECT friendid FROM friends_${result[0].userid} WHERE userid = '${result[0].userid}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
-                        console.log("err", err);
-                        res.send({"err":err});
+                        $_log('err', err, 'err', res);
                     } else {
                         for(let i = 0; i < result.length; i++){
-                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {console.log(`--del-from-friend-table-(${result[i].friendid})---->>`,result.protocol41)});
+                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {$_log(`del-from-friend-table-(${result[i].friendid})`, result.protocol41)});
                         }    
-                        con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {console.log("--del-table-friends---->>",result.protocol41)});
-                        con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-users-friend---->>",result.protocol41)});
-                        con.query(`DELETE FROM userssettings WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-settings-friend---->>",result.protocol41)});
-                        con.query(`DELETE FROM userskills WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-skills-friend---->>",result.protocol41)});
-                        con.query(`DELETE FROM userprojects WHERE userid = '${renameuserid}'`, function (err, result) {console.log("--del-projects-friend---->>",result.protocol41)});
-                        fs.unlink(__dirname+`/../public/uploads/${renameava}`, (err) => {if (err) {console.log("--old-ava-not-found---->> ", err.syscall)} console.log('--del-ava---->> deleted')});
+                        con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {$_log("del-table-friends", result.protocol41)});
+                        con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-users-friend", result.protocol41)});
+                        con.query(`DELETE FROM userssettings WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-settings-friend", result.protocol41)});
+                        con.query(`DELETE FROM userskills WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-skills-friend", result.protocol41)});
+                        con.query(`DELETE FROM userprojects WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-projects-friend", result.protocol41)});
+                        fs.unlink(__dirname+`/../public/uploads/${renameava}`, (err) => {if (err) {$_log("old-ava-not-found", err.syscall)} $_log("del-ava", 'deleted')});
                         res.send({"res":"user_del"});                            
                     }
                 });

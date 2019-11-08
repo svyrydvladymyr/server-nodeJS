@@ -1,11 +1,8 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, createTableFriends} = require('./service');
+let {clienttoken, createTableFriends, $_log} = require('./service');
 
 let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
-    let permissionEdit, permissionFriend;
-    permissionEdit = false;  
-    permissionFriend = false;
-    console.log('--render-user---->> ', result[0]);                     
+    $_log('render-user', result[0]);                  
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,
@@ -28,8 +25,8 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
         ava: `${avaurl}`,
         avasettings: `${userObj[0].avasettings}`,
         permissAccess: `${permissionAccess}`,
-        permissEdit: `${permissionEdit}`,
-        permissionFriend: `${permissionFriend}`,
+        permissEdit: `false`,
+        permissionFriend: `false`,
         permissionidreq: `null`,
         permissName: `${result[0].name}`,
         permissSurname: `${result[0].surname}`,
@@ -50,7 +47,7 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
 };
 
 let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq) => {
-    console.log('--render-user---->> ', result[0]);  
+    $_log('render-user', result[0]); 
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,
@@ -96,9 +93,6 @@ let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionA
 };
 
 let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
-    permissionEdit = false;         
-    permissionAccess = false;
-    permissionFriend = false;
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,
@@ -120,9 +114,9 @@ let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
         education: `${userObj[0].education}`,
         ava: `${avaurl}`,
         avasettings: `${userObj[0].avasettings}`,
-        permissAccess: `${permissionAccess}`,
-        permissEdit: `${permissionEdit}`,
-        permissionFriend: `${permissionFriend}`,
+        permissAccess: `false`,
+        permissEdit: `false`,
+        permissionFriend: `false`,
         permissionidreq: `null`,
         permissName: ``,
         permissSurname: ``,
@@ -143,34 +137,27 @@ let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
 };
 
 let renderuser = (req, res) => {
-    let permissionAccess, permissionEdit, permissionisFriend, permissionFriend, getuserid;
-    //get variables
-    getuserid = req.params['userid'];
+    let permissionAccess, permissionEdit, permissionisFriend, permissionFriend, getuserid = req.params['userid'];
     let clientToken = clienttoken(req, res);
     // get user information using usrid
     let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.userid = '${getuserid}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"error":err});
+            $_log('err-db-req', err, 'error', res);                     
         } else {
             //if user not find, renderer not find user page 
             if (result == ''){
                 let sql = `SELECT token, name, surname, userid, active FROM users WHERE token = '${clientToken}'`;
                 con.query(sql, function (err, result) {
-                    if (err) {
-                        console.log("err", err);
-                        res.send({"error":err});
+                    if (err) {                        
+                        $_log('err-db-req', err, err, res);                      
                     } else {
                         //if the user is not found and is not authorized 
                         if (result == ''){
-                            permissionAccess = false;
-                            permissionEdit = false;
-                            permissionFriend = false;
-                            console.log('--render-user---->> ', result[0]);                            
+                            $_log('render-user', result[0]);                          
                             res.render(`nouser`, {
-                                permissAccess: `${permissionAccess}`,
-                                permissEdit: `${permissionEdit}`,
+                                permissAccess: `false`,
+                                permissEdit: `false`,
                                 permissName: ``,
                                 permissSurname: ``,
                                 permissUserid: ``,
@@ -182,13 +169,10 @@ let renderuser = (req, res) => {
                             });
                         } else {
                         //if the user is not found but is authorized    
-                            (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
-                            (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
-                            permissionFriend = false;
-                            console.log('--render-user---->> ', result[0]);                     
+                            $_log('render-user', result[0]);                          
                             res.render(`nouser`, {
-                                permissAccess: `${permissionAccess}`,
-                                permissEdit: `${permissionEdit}`,
+                                permissAccess: `${(result[0].token === clientToken) ? true : false}`,
+                                permissEdit: `${(result[0].token === clientToken) ? true : false}`,
                                 permissName: `${result[0].name}`,
                                 permissSurname: `${result[0].surname}`,
                                 permissUserid: `${result[0].userid}`,
@@ -203,33 +187,28 @@ let renderuser = (req, res) => {
                 })            
             } else {
             //if a user is found, rendering the user's page    
-                let userObj = result;
+                let userObj = result, activeStatus = result[0].active, avaurl;
                 //get and set ava url    
-                let avaurl;
-                let reg = /^http:/i;
-                let reg2 = /^https:/i;
-                if ((reg.test(result[0].ava)) || (reg2.test(result[0].ava))){
+                if ((/^http:/i.test(result[0].ava)) || (/^https:/i.test(result[0].ava))){
                     avaurl = `${result[0].ava}`;
                 } else {
                     avaurl = ((result[0].ava === null) || (result[0].ava === '') || (result[0].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${result[0].ava}`;
-                }
+                }              
                 //select user information from DB
                 let sql = `SELECT token, name, surname, userid, active FROM users WHERE token = '${clientToken}'`;
                 con.query(sql, function (err, result) {
                     if (err) {
-                        console.log("err", err);
-                        res.send({"error":err});
+                        $_log('err-db-req', err, 'error', res);                     
                     } else {
                         //if the user is found but is not authorized                       
                         if (result == ''){
-                   
-                                permissionAccess = false;
-                                permissionEdit = false;
-                                permissionFriend = false;
-                                console.log('--render-user---->> ', result[0]);                            
+                            if (activeStatus === 'active') {
+                                renderIfFoundAndNotAutoris(req, res, userObj, avaurl);
+                            } else {
+                                $_log('render-user', result[0]);                    
                                 res.render(`nouser`, {
-                                    permissAccess: `${permissionAccess}`,
-                                    permissEdit: `${permissionEdit}`,
+                                    permissAccess: `false`,
+                                    permissEdit: `false`,
                                     permissName: ``,
                                     permissSurname: ``,
                                     permissUserid: ``,
@@ -239,38 +218,30 @@ let renderuser = (req, res) => {
                                     activee: `active`,
                                     title:``
                                 })
+                            }
                         } else {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
                                 createTableFriends(getuserid);
                                 userObjAutoris = result;
                                 //permission for edit
-                                ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? 
-                                permissionEdit = true : 
-                                permissionEdit = false;
+                                permissionEdit = ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? true : false;
                                 //permission for access
-                                (result[0].token === clientToken) ? 
-                                permissionAccess = true : 
-                                permissionAccess = false;
+                                permissionAccess = (result[0].token === clientToken) ? true : false;
                                 //add to friends
-                                ((result[0].token === clientToken) && (result[0].userid !== req.params['userid'])) ?
-                                permissionFriend = true :
-                                permissionFriend = false;                                
+                                permissionFriend = ((result[0].token === clientToken) && (result[0].userid !== req.params['userid'])) ? true : false;                              
                                 //add visits to friend
                                 if ((result[0].token === clientToken) && (result[0].userid !== req.params['userid'])) {
                                     let sqlgetvis = `SELECT friendvisit FROM friends_${result[0].userid} WHERE friendid = '${req.params['userid']}'`;
                                     let userid = result[0].userid;
-                                    let paramuserid = req.params['userid'];
                                     con.query(sqlgetvis, function (err, result) {
                                         if (err) {
-                                            console.log("err", err);
-                                            res.send({"error":err});
+                                            $_log('err-db-req', err, 'error', res);                    
                                         } else {
                                             if (result != ''){
-                                                let newvisit = (+result[0].friendvisit) + 1;
-                                                let sqlsetvis = `UPDATE friends_${userid} SET friendvisit = '${newvisit}' WHERE userid = '${userid}' AND friendid = '${paramuserid}'`;
+                                                let sqlsetvis = `UPDATE friends_${userid} SET friendvisit = '${(+result[0].friendvisit) + 1}' WHERE userid = '${userid}' AND friendid = '${req.params["userid"]}'`;
                                                 con.query(sqlsetvis, function (err, result) {
-                                                    if (err) {console.log("err", err)}
+                                                    if (err) {$_log('err-db-req', err)}
                                                 }); 
                                             }
                                         }
@@ -279,36 +250,27 @@ let renderuser = (req, res) => {
                                 let sqlsel = `SELECT U.userid, S.userid, S.friendid, S.friendstatus FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
                                 con.query(sqlsel, function (err, result) {
                                     if (err) {
-                                        console.log("err", err);
-                                        res.send({"error":err});
+                                        $_log('err-db-req', err, 'error', res);                     
                                     } else {
-                                        console.log("--result-friends----->> ", result);
+                                        $_log('result-friends', result)
                                         if (result  == ''){
-                                            permissionisFriend = false;
-                                            permissionidreq = 'null';
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, false, permissionisFriend, 'null');
                                         } else {
-                                            permissionisFriend = true;
-                                            result[0].friendstatus !== undefined ? permissionidreq = result[0].friendstatus : permissionidreq = 'null';
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq);
+                                            permissionidreq = (result[0].friendstatus !== undefined) ? result[0].friendstatus : 'null';
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, true, permissionisFriend, permissionidreq);
                                         }
                                     }
                                 }); 
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
                                 //if the user is found and is autorized but not verify and not my page
-                                (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
-                                createTableFriends(getuserid);
-                                renderIfNotVerify(req, res, result, userObj, avaurl, permissionAccess);
+                                renderIfNotVerify(req, res, result, userObj, avaurl, (result[0].token === clientToken) ? true : false);
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
-                                //if the user is found and is autorized and its my page but not verify 
-                                (result[0].token === clientToken) ? permissionAccess = true : permissionAccess = false;
-                                (result[0].token === clientToken) ? permissionEdit = true : permissionEdit = false;
-                                permissionFriend = false;
-                                console.log('--render-user---->> ', result[0]);                     
+                                //if the user is found and is autorized and it's my page but not verify 
+                                $_log('render-user', result[0]);                  
                                 res.render(`nouser`, {
-                                    permissAccess: `${permissionAccess}`,
-                                    permissEdit: `${permissionEdit}`,
-                                    permissionFriend: `${permissionFriend}`,
+                                    permissAccess: `${(result[0].token === clientToken) ? true : false}`,
+                                    permissEdit: `${(result[0].token === clientToken) ? true :  false}`,
+                                    permissionFriend: `false`,
                                     permissName: `${result[0].name}`,
                                     permissSurname: `${result[0].surname}`,
                                     permissUserid: `${result[0].userid}`,

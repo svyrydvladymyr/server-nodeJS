@@ -104,7 +104,7 @@ let WFRIENDS = (() => {
 
 //for show all friends
     let showFriends = (res) => {
-        let parseObj = JSON.parse(res).res;
+        let parseObj = JSON.parse(res).res;       
         SE.$('friends-conteiner').innerHTML = ``;
         for (let i = 0; i < parseObj.length; i++){
             let avafoto;

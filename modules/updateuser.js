@@ -1,7 +1,7 @@
 let con = require('../db/connectToDB').con;
 let fs = require('fs');
 let multer  = require('multer')
-let {translit, token, clienttoken} = require('./service');
+let {translit, token, clienttoken, $_log} = require('./service');
 
 class protoUsers{constructor(){ }}
 let prUs = new protoUsers();
@@ -11,7 +11,7 @@ let checkObjValues = (reg, val, mess, parseObjUsers, res) => {
         if (new RegExp(reg, "gi").test(parseObjUsers[val]) == true){
             prUs[val] = parseObjUsers[val];
         } else {
-            console.log("--bad-input---->> ", mess);            
+            $_log('bad-input', mess);
             prUs[val] = '';
         }
     } else {
@@ -37,10 +37,9 @@ let updaterender = (req, res) => {
         let sql = `SELECT U.*, S.* FROM users U INNER JOIN userssettings S on U.userid=S.userid WHERE U.token = '${clientToken}'`;
         con.query(sql, function (err, result) {
             if (err) {
-                console.log("err", err);
-                res.send({"err":err});
+                $_log('err', err, 'err', res);
             }
-            console.log("--user-for-update---->> ", result[0]);  
+            $_log('user-for-update', result[0]);
             let phone, phonecod, message, messagecod, country, RC = result[0].country;
             if (result[0].phone !== null){
                 phone = result[0].phone.slice(3 ,13);
@@ -50,15 +49,10 @@ let updaterender = (req, res) => {
                 message = result[0].message.slice(3 ,13);
                 messagecod = result[0].message.slice(result[0].message.length - result[0].message.length ,result[0].message.length - 10);
             }
-            if ((RC === 'Ukraine') || (RC === 'Україна')){
-                country = 'ukraine';
-            } else if ((RC === 'Russian') || (RC === 'Росія')){
-                country = 'russian';
-            } else if ((RC === 'Great Britain') || (RC === 'Великобританія')){
-                country = 'greatbritain';
-            } else if ((RC === 'USA') || (RC === 'Сполучені Штати')){
-                country = 'usa';
-            } 
+            country = ((RC === 'Ukraine') || (RC === 'Україна')) ?'ukraine'
+            : ((RC === 'Russian') || (RC === 'Росія')) ? 'russian'
+            : ((RC === 'Great Britain') || (RC === 'Великобританія')) ? 'greatbritain'
+            : ((RC === 'USA') || (RC === 'Сполучені Штати')) ? 'usa' : null;        
             town = translit(result[0].town);   
             res.render(`update`, {
                 userid: result[0].userid,
@@ -104,40 +98,27 @@ let updatesecurity = (req, res) => {
     let parseObjUsers, sql, sqlchack;
     let clientToken = clienttoken(req, res);
     parseObjUsers = req.body;
-    console.log("--client-registr-obj---->> ", parseObjUsers); 
+    $_log('client-registr-obj', parseObjUsers);
     checkObjValues("^[a-zA-Z0-9-_]+$", "login", "Bad login!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "password", "Bad new password!", parseObjUsers, res);
     checkObjValues("^[a-zA-Z0-9-_]+$", "oldpassword", "Bad old password!", parseObjUsers, res);
-    console.log("--ready-obj---->> ", prUs);
-    if (prUs.login === ''){
-        sql = `UPDATE users SET password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
-    } else if (prUs.password === '') {
-        sql = `UPDATE users SET login = '${prUs.login}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
-    } else if ((prUs.login !== '') && (prUs.password !== '')){
-        sql = `UPDATE users SET login = '${prUs.login}', password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
-    }  
+    $_log('ready-obj', prUs);
+    sql = (prUs.login === '') ? `UPDATE users SET password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`
+    : (prUs.password === '') ? `UPDATE users SET login = '${prUs.login}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`
+    : ((prUs.login !== '') && (prUs.password !== '')) ? `UPDATE users SET login = '${prUs.login}', password = '${prUs.password}' WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'` : null;
     sqlchack = `SELECT password FROM users WHERE token = '${clientToken}' AND password = '${prUs.oldpassword}'`;
     con.query(sqlchack, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             if (result == ''){
-                console.log("--res---->> ", "BAD_PASS");
-                res.send({"res": "BAD_PASS"});
+                $_log('res', "BAD_PASS", 'res', res);
             } else {
                 con.query(sql, function (err, result) {
                     if (err) {
-                        console.log("--err---->> ", err);
-                        console.log("--err---->> ", err.code);
-                        if (err.code == 'ER_DUP_ENTRY'){
-                            res.send({"res":'ER_DUP_ENTRY'});
-                        } else {
-                            res.send({"err":err});
-                        }
+                        (err.code == 'ER_DUP_ENTRY') ? res.send({"res":'ER_DUP_ENTRY'}) : res.send({"err":err});
                     } else {
-                        console.log("--settings-updated---->> ",result.changedRows);
-                        res.send({"res": result.changedRows});
+                        $_log('settings-updated', result.changedRows, 'res', res);
                     }
                 }); 
             }
@@ -151,7 +132,7 @@ let updatemain = (req, res) => {
     datetime = new Date();
     updatedatetime = datetime.toISOString().slice(0,10);
     let clientToken = clienttoken(req, res);
-    console.log("--client-registr-obj---->> ", parseObjUsers); 
+    $_log('client-registr-obj', parseObjUsers);
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "name", "Bad name!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-ЯіІїЇєЄ']+$", "surname", "Bad surname!", parseObjUsers, res);
@@ -159,34 +140,26 @@ let updatemain = (req, res) => {
     checkObjValues("^[0-9-]+$", "birthday", "Bad birthday!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "phone", "Bad phone!", parseObjUsers, res);
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
-    console.log("--ready-obj---->> ", prUs);
-    prUs.name !== '' ? nameR = `name = '${prUs.name}', ` :  nameR = ``;
-    prUs.surname !== '' ? surnameR = `surname = '${prUs.surname}', ` : surnameR = ``;
-    prUs.email !== '' ? emailR = `email = '${prUs.email}', ` : emailR = ``;
-    prUs.birthday !== '' ? birthdayR = `birthday = '${prUs.birthday}', ` : birthdayR = ``;
-    prUs.phone !== '' ? phoneR = `phone = '${prUs.phone}', ` : phoneR = ``;
-    prUs.message !== '' ? messageR = `message = '${prUs.message}', ` : messageR = ``;   
+    $_log('ready-obj', prUs);
+    nameR = prUs.name !== '' ? `name = '${prUs.name}', ` : ``;
+    surnameR = prUs.surname !== '' ? `surname = '${prUs.surname}', ` : ``;
+    emailR = prUs.email !== '' ? `email = '${prUs.email}', ` : ``;
+    birthdayR = prUs.birthday !== '' ? `birthday = '${prUs.birthday}', ` : ``;
+    phoneR = prUs.phone !== '' ? `phone = '${prUs.phone}', ` : ``;
+    messageR = prUs.message !== '' ? `message = '${prUs.message}', ` : ``;   
     sqlsel = `SELECT regtype FROM users WHERE token = '${clientToken}'`;    
     con.query(sqlsel, function (err, result) {
         if (err) {
-            console.log("--err----->> ", err);
+            $_log('err', err);
         } else {
-            let preem; 
-            prUs.email !== '' ? preem = `${result[0].regtype}` : preem = ``;         
+            let preem = prUs.email !== '' ? `${result[0].regtype}` : ``;         
             preem == 'null' ? rektypeee = `` : rektypeee = `${preem}`;         
             sql = `UPDATE users SET ${nameR}${surnameR}${rektypeee}${emailR}${birthdayR}${phoneR}${messageR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
             con.query(sql, function (err, result) {
                 if (err) {
-                    console.log("--err----->> ", err);
-                    console.log("--err----->> ", err.code);
-                    if (err.code == 'ER_DUP_ENTRY'){
-                        res.send({"res":'ER_DUP_ENTRY'});
-                    } else {
-                        res.send({"err":err});
-                    }
+                    (err.code == 'ER_DUP_ENTRY') ? res.send({"res":'ER_DUP_ENTRY'}) : res.send({"err":err});
                 } else {
-                    console.log("--settings-updated---->> ",result.changedRows);
-                    res.send({"res": result.changedRows});
+                    $_log('settings-updated', result.changedRows, 'res', res);
                 }
             });
         }
@@ -200,26 +173,20 @@ let updateother = (req, res) => {
     datetime = new Date();
     updatedatetime = datetime.toISOString().slice(0,10);
     let clientToken = clienttoken(req, res);
-    console.log("--client-registr-obj---->> ", parseObjUsers); 
+    $_log('client-registr-obj', parseObjUsers);
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "education", "Bad education!", parseObjUsers, res); 
-    console.log("--ready-obj--", prUs);
-    prUs.country !== '' ? countryR = ` country = '${prUs.country}',` :  countryR = ``;
-    prUs.town !== '' ? townR = ` town = '${prUs.town}',` : townR = ``;
-    prUs.profession !== '' ? professionR = ` profession = '${prUs.profession}',` : professionR = ``;
-    prUs.education !== '' ? educationR = ` education = '${prUs.education}',` : educationR = ``;
+    $_log('ready-obj', prUs);
+    countryR = prUs.country !== '' ? ` country = '${prUs.country}',` : ``;
+    townR = prUs.town !== '' ? ` town = '${prUs.town}',` : ``;
+    professionR = prUs.profession !== '' ? ` profession = '${prUs.profession}',` : ``;
+    educationR = prUs.education !== '' ? ` education = '${prUs.education}',` : ``;
     sql = `UPDATE users SET ${countryR}${townR}${professionR}${educationR} updateuser = '${prUs.updateuser}' WHERE token = '${clientToken}'`;
     con.query(sql, function (err, result) {
-        if (err) {
-            console.log("err", err);
-            res.send({"err":err});
-        } else {
-            console.log("--settings-updated---->> ",result.changedRows);
-            res.send({"res": result.changedRows});
-        }
+        (err) ? $_log('err', err, 'err', res) : $_log('settings-updated', result.changedRows, 'res', res);
     });
 };
 
@@ -230,44 +197,35 @@ let updateAvatoDB = (req, res) => {
     sqlsel = `SELECT ava, userid FROM users WHERE token = '${clientToken}'`;
     con.query(sqlsel, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err": err});
+            $_log('err', err, 'err', res);
         } else {
             oldava = result[0].ava;
             user = result[0].userid;
-            console.log("--old-ava---->> ",oldava);
-            console.log("--userid---->> ",user);
+            $_log('old-ava', oldava);
+            $_log('userid', user);
             storage = multer.diskStorage({
                 destination: (req, file, cb) => {cb(null, +__dirname+"/../public/uploads")},
                 filename: (req, file, cb) => {
-                  if (req.file === undefined){
-                    cb(null, token(10) +'_'+  file.originalname);
-                  }
+                  if (req.file === undefined){ cb(null, token(10) +'_'+  file.originalname) };
                 }});     
             upload = multer({ storage: storage }).single('file');
             upload(req, res, (err) => {
                 if (err) {
-                    console.log("err", err);
-                    res.send({"err":err});
+                    $_log('err', err, 'err', res);
                 } else {   
                     let parseAvasettings = JSON.parse(req.body.objreg);    
                     if (req.file !== undefined){
                         ava = req.file.filename;
                         avasettings = parseAvasettings.avasettings;
-                        console.log("--new-ava---->> ",ava);
-                        console.log("--new-ava-sett---->> ",avasettings);                   
+                        $_log('new-ava', ava);
+                        $_log('new-ava-sett', avasettings);
                         let sql = `UPDATE users SET ava = '${ava}', avasettings = '${avasettings}' WHERE token = '${clientToken}'`;
                         con.query(sql, function (err, result) {
-                            if (err) {
-                                console.log("err", err);
-                                res.send({"err":err});
-                            }            
-                            console.log("--ava-updated---->> ",result.affectedRows);
+                            if (err) { $_log('err', err, 'err', res) };            
+                            $_log('ava-updated', result.affectedRows);
                             fs.unlink(__dirname+`/../public/uploads/${oldava}`, (err) => {
-                                if (err) {
-                                    console.log("err", err);
-                                }
-                                console.log('--old-ava-delete---->> ',oldava);
+                                if (err) { $_log('err', err) };
+                                $_log('old-ava-delete', oldava);
                                 res.send({"result":result});
                             });
                         }); 
@@ -283,21 +241,12 @@ let updateAvatoDB = (req, res) => {
 };
 
 let widgetsett = (req, res) => {
-    let widget, values;
-    let clientToken = clienttoken(req, res);
-    widget = req.body.el;
-    values = req.body.value;
-    console.log("--widget---->> ", widget, "--value--",values);
-    widget2 = req.body.el2;
-    values2 = req.body.value2;
-    console.log("--widget---->> ", widget2, "--value--", values2);
-    let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clientToken}' SET ${widget} = '${values}', ${widget2} = '${values2}'`;
+    let sql = `UPDATE userssettings S INNER JOIN users U ON S.userid = U.userid AND U.token = '${clienttoken(req, res)}' SET ${req.body.el} = '${req.body.value}', ${req.body.el2} = '${req.body.value2}'`;
     con.query(sql, function (err, result) {
         if (err) {
-            console.log("err", err);
-            res.send({"err":err});
+            $_log('err', err, 'err', res);
         } else {
-            console.log("--widget-sett-updated---->> ",result.affectedRows);
+            $_log('widget-sett-updated', result.affectedRows);
             res.send({"res":result});
         }
     });    

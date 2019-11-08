@@ -34,8 +34,8 @@ let SE = (() => {
         xmlhttp.open("POST", url, true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send(JSON.stringify(obj));     
-    };        
-    
+    };  
+          
 //cut incorrect symbol 
     let incorrectCheck = function(val, reg, fun){
         let newReg = new RegExp(reg, "gi");
@@ -114,145 +114,65 @@ let SE = (() => {
             SE.$(`${idF}-mess`).classList.add('reg-message-false');
             SE.$(`${idF}-mess`).innerHTML = message;
         }
-    };  
-
-
-//show preview foto     
-    let readURL = (type) => {
-        if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                if (type === 'm'){
-                    let url = e.target.result;
-                    let sett = SE.$('ava-preview-foto').style.backgroundPosition;
-                    SE.$('ava').style.backgroundPosition = sett;
-                    SE.updateAvaToDB(url, sett);
-                } else if (type === 'r'){
-                    SE.$('reg-ava').setAttribute("style", `background-image: url("${e.target.result}")`)
-                }
-            }          
-            reader.readAsDataURL(SE.$('reg-file').files[0]);
-            setTimeout(() => {
-                if (type === 'r'){
-                    SE.$("reg-form-send").addEventListener("click", SE.messageSendError);
-                    SE.$("reg-form-send").classList.add('reg_send_active');
-                    SE.$("reg-form-send").style.cursor = 'pointer'; 
-                    SE.$('reg-ava').style.display = 'table';
-                    SE.$('reg-ava').style.backgroundPosition = SE.$('ava-preview-foto').style.backgroundPosition;
-                    regProto.prototype.avasettings = SE.$('ava-preview-foto').style.backgroundPosition;
-                    SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)                  
-                }
-            },500);
-        }
-    }
-
-//show preview foto     
-    let readURLPreview = () => {
-        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
-        if (SE.$('reg-file').files && SE.$('reg-file').files[0]) {
-            let reader = new FileReader();
-            reader.onload = function(e) { SE.$('ava-preview-foto').setAttribute("style", `background-image: url("${e.target.result}")`)};          
-            reader.readAsDataURL(SE.$('reg-file').files[0]);
-        }
-    }
-
-//confirm preview ava
-    let confirmPreview = (type) => {
-        if (type === 'm'){
-            SE.$('ava-preview-wrap-main').style.display = 'none';
-        } else if (type === 'r'){
-            SE.$('ava-preview-wrap').style.display = 'none';
-        }
-        SE.$('horizontally').value = '50%';
-        SE.$('vertical').value = '50%';
-        SE.readURL(type); 
-    }
-
-//confirm preview ava close
-    let confirmPreviewClose = (type) => {
-        SE.$('horizontally').value = '50%';
-        SE.$('vertical').value = '50%';
-        SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
-        if (type === 'm'){
-            SE.$('ava-preview-wrap-main').style.display = 'none'; 
-            SE.$('reg-file').type = "text";
-            setTimeout(() => { SE.$('reg-file').type = "file" },100);
-        } else if (type === 'r'){
-            if (SE.$('reg-ava').style.backgroundImage === ''){ SE.$('reg-file-mess').style.display = 'table' };
-            SE.$('ava-preview-wrap').style.display = 'none'; 
-            SE.$('reg-ava').setAttribute("style", `background-image: url("")`);
-            SE.clearFileInput();
-        }
-    };
-
-//clear file input
-    let clearFileInput = () => {
-        SE.$('reg-file').type = "text";
-        setTimeout(() => {
-            SE.$('ava-preview-foto').setAttribute("style", `background-image: url("")`)
-            SE.$('reg-ava').setAttribute("style", `background-image: url("")`)
-            SE.$('reg-ava').style.display = 'none';
-            SE.$('horizontally').value = '50%';
-            SE.$('vertical').value = '50%';
-            SE.$('reg-file-mess').style.display = 'table';
-            SE.$('reg-file-mess').innerHTML = '';
-            SE.iconON('reg-file', "true", '');         
-            SE.$('reg-file').type = "file";
-            regProto.prototype.avasettings = '';
-        },100);
-    }    
+    };   
 
 //function for make prototype for send obgect
     let readyToSend = function(idF, value){
         console.log(regProto.prototype);        
-        let idReplace = idF.replace(/[\-]/gi, "");
-        regProto.prototype[idReplace] = value;
-        //for change button
-        if (SE.$('reg-form-send').getAttribute('param') === 'add'){
-            if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
-            ((regPrototype.regpassword !== "") && (regPrototype.regpassword !== undefined)) &&
-            ((regPrototype.regname !== "") && (regPrototype.regname !== undefined)) && 
-            ((regPrototype.regsurname !== "") && (regPrototype.regsurname !== undefined)) && 
-            ((regPrototype.regemail !== "") && (regPrototype.regemail !== undefined))        
-            ){
-                SE.$("reg-form-send").classList.add('reg_send_active');
-                SE.$("reg-form-send").style.cursor = 'pointer';
-                SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
-            } else {
-                SE.$("reg-form-send").classList.remove('reg_send_active');
-                SE.$("reg-form-send").style.cursor = 'no-drop';            
-            }
+        regProto.prototype[idF.replace(/[\-]/gi, "")] = value;
+        if (((regPrototype.reglogin !== "") && (regPrototype.reglogin !== undefined)) &&
+        ((regPrototype.regpassword !== "") && (regPrototype.regpassword !== undefined)) &&
+        ((regPrototype.regname !== "") && (regPrototype.regname !== undefined)) && 
+        ((regPrototype.regsurname !== "") && (regPrototype.regsurname !== undefined)) && 
+        ((regPrototype.regemail !== "") && (regPrototype.regemail !== undefined))        
+        ){
+            SE.$("reg-form-send").classList.add('reg_send_active');
+            SE.$("reg-form-send").style.cursor = 'pointer';
+            SE.$("reg-form-send").addEventListener("click", SE.messageSendError); 
+        } else {
+            SE.$("reg-form-send").classList.remove('reg_send_active');
+            SE.$("reg-form-send").style.cursor = 'no-drop';            
         }
     }; 
- 
+
+//message if empty name surname or E-mail input
+    let messageSendError = () => {
+        if ((SE.$('reg-login').value === "") || (SE.$('reg-password').value === "") ||(SE.$('reg-name').value === "") || (SE.$('reg-surname').value === "") || (SE.$('reg-email').value === "")){
+            let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
+            for(let i = 0; i < 5; i++){
+                if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){ SE.iconON(masIdRequired[i], "false", MESS.errorFormMessage().notCunEmpty) };
+            }       
+            SE.$("main-form-message").innerHTML = MESS.errorFormMessage().allInputs;
+        } 
+        if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
+            SE.$("main-form-message").innerHTML = "";
+            SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
+            SE.$("reg-form-send").classList.remove('reg_send_active');
+            SE.$("reg-form-send").style.cursor = 'no-drop'; 
+            let obj = { "login":regPrototype.reglogin, 
+                    "password":regPrototype.regpassword, 
+                    "name":regPrototype.regname, 
+                    "surname":regPrototype.regsurname, 
+                    "email":regPrototype.regemail, 
+                    "birthday":regPrototype.regage, 
+                    "phone":regPrototype.regtel, 
+                    "message":regPrototype.regmessage, 
+                    "country":regPrototype.regcountry, 
+                    "town":regPrototype.regtown, 
+                    "profession":regPrototype.regprofession, 
+                    "education":regPrototype.regeducation, 
+                    "registrdata":regPrototype.registr,
+                    "avasettings":regPrototype.avasettings};
+            SE.send(obj, "/registrationUser", VW.registerUserToDB);
+        }
+    };    
+
 //clear message if not empty name surname or E-mail input
     let messageSendErrorClear = () => {
         if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
             SE.$("main-form-message").innerHTML = "";
         }
-    }
-
-//message if empty name surname or E-mail input
-    let messageSendError = () => {
-        if (SE.$('reg-form-send').getAttribute('param') === 'add'){
-            if ((SE.$('reg-login').value === "") || (SE.$('reg-password').value === "") ||(SE.$('reg-name').value === "") || (SE.$('reg-surname').value === "") || (SE.$('reg-email').value === "")){
-                let masIdRequired = ['reg-login', 'reg-password', 'reg-name', 'reg-surname', 'reg-email',];
-                for(let i = 0; i < 5; i++){
-                    if ((regPrototype.reglogin === "") || (SE.$(masIdRequired[i]).value === '')){
-                        SE.iconON(masIdRequired[i], "false", MESS.errorFormMessage().notCunEmpty);
-                    }
-                }       
-                SE.$("main-form-message").innerHTML = MESS.errorFormMessage().allInputs;
-            } 
-            if ((SE.$('reg-login').value !== "") && (SE.$('reg-password').value !== "") && (SE.$('reg-name').value !== "") && (SE.$('reg-surname').value !== "") && (SE.$('reg-email').value !== "")){
-                SE.$("main-form-message").innerHTML = "";
-                SE.$("reg-form-send").removeEventListener("click", SE.messageSendError);
-                SE.$("reg-form-send").classList.remove('reg_send_active');
-                SE.$("reg-form-send").style.cursor = 'no-drop'; 
-                SE.registerUserToDB();
-            }
-        } 
-    };    
+    };
 
 //show main message    
     let showErrorMainMess = () => {
@@ -308,26 +228,6 @@ let SE = (() => {
         .catch(function (error) { console.log(error) });
     };   
 
-// function for add user to DB
-let registerUserToDB = function(){
-    let obj;
-    obj = { "login":regPrototype.reglogin, 
-            "password":regPrototype.regpassword, 
-            "name":regPrototype.regname, 
-            "surname":regPrototype.regsurname, 
-            "email":regPrototype.regemail, 
-            "birthday":regPrototype.regage, 
-            "phone":regPrototype.regtel, 
-            "message":regPrototype.regmessage, 
-            "country":regPrototype.regcountry, 
-            "town":regPrototype.regtown, 
-            "profession":regPrototype.regprofession, 
-            "education":regPrototype.regeducation, 
-            "registrdata":regPrototype.registr,
-            "avasettings":regPrototype.avasettings};
-        SE.send(obj, "/registrationUser", VW.registerUserToDB);
-    };
-
 //show users list
     let showUsersList = (el) => {
         if (el.value.length > 1){
@@ -377,19 +277,19 @@ let registerUserToDB = function(){
             }
         } else if (val === 'm'){
             let obj = {"name":regPrototype.regname, 
-                        "surname":regPrototype.regsurname, 
-                        "email":regPrototype.regemail, 
-                        "birthday":regPrototype.regage, 
-                        "phone":regPrototype.regtel, 
-                        "message":regPrototype.regmessage};
+                       "surname":regPrototype.regsurname, 
+                       "email":regPrototype.regemail, 
+                       "birthday":regPrototype.regage, 
+                       "phone":regPrototype.regtel, 
+                       "message":regPrototype.regmessage};
             if ((regPrototype.regname !== '') || (regPrototype.regsurname !== '') || (regPrototype.regemail !== '') || (regPrototype.regage !== '') || (regPrototype.regtel !== '') || (regPrototype.regmessage !== '')){
                 SE.send(obj, '/updatemain', VW.updateMain);                
             }
         } else if (val === 'o'){
             let obj = {"country":regPrototype.regcountry, 
-                        "town":regPrototype.regtown, 
-                        "profession":regPrototype.regprofession,
-                        "education":regPrototype.regeducation};
+                       "town":regPrototype.regtown, 
+                       "profession":regPrototype.regprofession,
+                       "education":regPrototype.regeducation};
             if ((regPrototype.regcountry !== '') || (regPrototype.regtown !== '') || (regPrototype.regprofession !== '') || (regPrototype.regeducation !== '')){
                 SE.send(obj, '/updateother', VW.updateOther);                
             }
@@ -403,19 +303,13 @@ let registerUserToDB = function(){
         send,
         incorrectCheck,
         readyToSend,
-        registerUserToDB,
         iconON,
         readyDay,
         readyMonth,
+        readyFullDate,
         messageSendError,
         messageSendErrorClear,
         rus_to_latin,
-        readURL,
-        readyFullDate,
-        readURLPreview,
-        confirmPreview,
-        confirmPreviewClose,
-        clearFileInput,
         addAvaToDB,
         showErrorMainMess,
         exit,
