@@ -205,7 +205,8 @@ let beforedeluser = (req, res) => {
                         $_log('err', err, 'err', res);
                     } else {
                         for(let i = 0; i < result.length; i++){
-                            con.query(`DELETE FROM friends_${result[i].friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {$_log(`del-from-friend-table-(${result[i].friendid})`, result.protocol41)});
+                            let friendid = result[i].friendid;
+                            con.query(`DELETE FROM friends_${friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {$_log(`del-from-friend-table-(${friendid})`, result.protocol41)});
                         }    
                         con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {$_log("del-table-friends", result.protocol41)});
                         con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-users-friend", result.protocol41)});
