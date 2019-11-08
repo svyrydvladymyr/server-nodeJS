@@ -177,8 +177,8 @@ let updateother = (req, res) => {
     prUs.updateuser = updatedatetime;
     checkObjValues("^[a-zA-Zа-яА-Я-іІїЇ-]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІєїЇ-]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "profession", "Bad profession!", parseObjUsers, res); 
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "education", "Bad education!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$", "profession", "Bad profession!", parseObjUsers, res); 
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$", "education", "Bad education!", parseObjUsers, res); 
     $_log('ready-obj', prUs);
     countryR = prUs.country !== '' ? ` country = '${prUs.country}',` : ``;
     townR = prUs.town !== '' ? ` town = '${prUs.town}',` : ``;

@@ -48,6 +48,8 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
 
 let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq) => {
     $_log('render-user', result[0]); 
+    console.log("ghggggg", permissionidreq);
+
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,
@@ -254,10 +256,10 @@ let renderuser = (req, res) => {
                                     } else {
                                         $_log('result-friends', result)
                                         if (result  == ''){
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, false, permissionisFriend, 'null');
-                                        } else {
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, false, null);
+                                        } else {                                          
                                             permissionidreq = (result[0].friendstatus !== undefined) ? result[0].friendstatus : 'null';
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, true, permissionisFriend, permissionidreq);
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, true, permissionidreq);
                                         }
                                     }
                                 }); 

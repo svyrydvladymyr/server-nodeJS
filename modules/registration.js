@@ -47,8 +47,8 @@ let registrationUsers = (req, res) => {
     checkObjValues("^[0-9+]+$", "message", "Bad message!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІєЄїЇ ]+$", "country", "Bad country!", parseObjUsers, res);
     checkObjValues("^[a-zA-Zа-яА-Я-іІєЄїЇ ]+$", "town", "Bad town!", parseObjUsers, res);
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "profession", "Bad profession!", parseObjUsers, res);     
-    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$", "education", "Bad education!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$", "profession", "Bad profession!", parseObjUsers, res);     
+    checkObjValues("^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$", "education", "Bad education!", parseObjUsers, res);     
     let verifyUrl = `${req.headers.host}/verify?userid=${prUs.userid}&verifycod=${token(10)}`;
     let tokenId = token(20);
     $_log('verifyUrl', verifyUrl);

@@ -82,12 +82,12 @@ window.onload = function(){
         SE.$("reg-town").addEventListener("change", () => {CHECK.checkCut("reg-town", "")});
         SE.$("reg-town").addEventListener("change", SE.messageSendErrorClear);
     //profession-----------------------------------------------------------------------------------
-        SE.$("reg-profession").addEventListener("change", () => {CHECK.checkCut("reg-profession", "[^a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]")});
-        SE.$("reg-profession").addEventListener("input", () => {CHECK.checkTest("reg-profession", "^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$")}); 
+        SE.$("reg-profession").addEventListener("change", () => {CHECK.checkCut("reg-profession", "[^a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]")});
+        SE.$("reg-profession").addEventListener("input", () => {CHECK.checkTest("reg-profession", "^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$")}); 
         SE.$("reg-profession").addEventListener("change", SE.messageSendErrorClear);
     //education-----------------------------------------------------------------------------------
-        SE.$("reg-education").addEventListener("change", () => {CHECK.checkCut("reg-education", "[^a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]")});
-        SE.$("reg-education").addEventListener("input", () => {CHECK.checkTest("reg-education", "^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._ ]+$")}); 
+        SE.$("reg-education").addEventListener("change", () => {CHECK.checkCut("reg-education", "[^a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]")});
+        SE.$("reg-education").addEventListener("input", () => {CHECK.checkTest("reg-education", "^[a-zA-Zа-яА-Я-іІїЇєЄ'\",._() ]+$")}); 
         SE.$("reg-education").addEventListener("change", SE.messageSendErrorClear);
     //file------------------------------------------------------------------------------------
         SE.$("reg-file").addEventListener("change", () => {CHECK.checkCut("reg-file", "")});
