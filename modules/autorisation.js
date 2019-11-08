@@ -224,10 +224,6 @@ let autorisationSocial = (profile, done) => {
             return done(null, profile);             
         } else if (result && result.length === 0) {
             $_log("register-user-with-social", result);
-            // let login = token(10);
-            // let password = token(10);
-            // let datetime = new Date();
-            // let updatedatetime = datetime.toISOString().slice(0,10);
             let sql = `INSERT INTO users (userid, name, surname, login, password, ${emailprovider}email, active, regtype, registrdata, ava) 
                        VALUES ('${id}', '${name}', '${surname}', '${token(10)}', '${token(10)}', '${emailadd}', 'active', '${provider}', '${new Date().toISOString().slice(0,10)}', '${ava}')`;
             let sqlsett = `INSERT INTO userssettings (userid) VALUES ('${id}')`;          
@@ -237,13 +233,6 @@ let autorisationSocial = (profile, done) => {
                     if (err.code === 'ER_DUP_ENTRY'){
                         let parseSQLmess = err.sqlMessage.slice(err.sqlMessage.length - 6,  err.sqlMessage.length - 1);
                         return (parseSQLmess === 'login') ? done('ER_DUP_LOGIN', null) : (parseSQLmess === 'email') ? done('ER_DUP_EMAIL', null) : done(`${err}`, null);
-                        // if (parseSQLmess === 'login'){ 
-                        //     return done('ER_DUP_LOGIN', null);
-                        // } else if (parseSQLmess === 'email'){
-                        //     return done('ER_DUP_EMAIL', null);
-                        // } else {
-                        //     return done(`${err}`, null);
-                        // }             
                     } else {
                         return done(`${err}`, null);
                     }
@@ -293,9 +282,6 @@ let autorisSocialSetCookie = (req, res, user) => {
             $_log("result-autoriz", result.changedRows);
             if (result.changedRows === 0){
                 let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-                // let param = {maxAge: '-1', 
-                //              path: '/', 
-                //              signed:true}
                 cookies.set('sessionisdd', ``, {maxAge: '-1', path: '/', signed:true}); 
                 res.redirect(id);
             } else {              
@@ -306,11 +292,7 @@ let autorisSocialSetCookie = (req, res, user) => {
                         res.redirect(id);
                     } else {
                         $_log("result-userSett", result[0].userid);
-                        // let clientToken = clienttoken(req, res);
                         let cookies = new Cookies(req, res, {"keys":['volodymyr']});
-                        // let param = {maxAge: '', 
-                        //              path: '/', 
-                        //              signed:true}
                         cookies.set('sessionisdd', `${tokenId}`, {maxAge: '', path: '/', signed:true});
                         res.render(`nouser`, {
                             permissAccess: `${(result[0].token === clienttoken(req, res)) ? true : false}`,

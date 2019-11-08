@@ -97,7 +97,7 @@
                         </div>
                         <% } %>  
   
-                        <% if((regtype === null) || (regtype === 'null') || (regtype === '')) {%>
+                        <% if((regtype === null) || (regtype === 'null') || (regtype === '') || (email === 'undefined')) {%>
                         <!--email-->
                         <div class="form_blok required-block">
                             <div class="form_label"><p id="reg-label-email"></p></div>
