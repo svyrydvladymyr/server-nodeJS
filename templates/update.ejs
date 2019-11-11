@@ -252,12 +252,12 @@
                 <!----WIDGET------------------------------------------------------>
                     <div class="tabs-form-body-one" id="tabs-body-4">
                         <div class="set_blok set_blok_update" style="text-align: center;">
-                            <p id="settings_v_side"></p>
+                            <p id="settings_v_skill"></p>
                             <div class="height-blok-set" style="padding: 8px;">
                                 <div class="widget-head">
                                     <div class="widget-head-wrap">
-                                        <span class="widget-head-text widget-head-text-one" id="widget-all"></span>
-                                        <span class="widget-head-text2" id="widget-me"></span>
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all-skill"></span>
+                                        <span class="widget-head-text2" id="widget-me-skill"></span>
                                     </div>
                                 </div>
                                 <div class="widget-body">
@@ -272,39 +272,6 @@
                                         <span class="widget-chack widget-chack-last" id="widget-skills"></span>
                                     </div>
                                     <div class="widget-blok">
-                                        <span class="widget-chack widget-chack-last2" id="widget-project2"></span>
-                                        <span class="widget-chack widget-head-text-one">
-                                            <input type="radio" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall', 'vprojectsalltop')" <% if(vprojectsall === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack">
-                                            <input type="radio" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme', 'vprojectsmetop')" <% if(vprojectsme === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack widget-chack-last" id="widget-project"></span>
-                                    </div>
-                                    <div class="widget-blok">
-                                        <span class="widget-chack widget-chack-last2" id="widget-friend-t2"></span>
-                                        <span class="widget-chack widget-head-text-one">
-                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendall === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack">
-                                            <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
-                                        </span>
-                                        <span class="widget-chack widget-chack-last" id="widget-friend-t"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                     
-                        <div class="set_blok set_blok_update">
-                            <p id="settings_t_side"></p>
-                            <div class="height-blok-set" style="padding: 8px;">
-                                <div class="widget-head">
-                                    <div class="widget-head-wrap">
-                                        <span class="widget-head-text widget-head-text-one" id="widget-all-t"></span>
-                                        <span class="widget-head-text2" id="widget-me-t"></span>
-                                    </div>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget-blok">
                                         <span class="widget-chack widget-chack-last2" id="widget-skills-t2"></span>
                                         <span class="widget-chack widget-head-text-one">
                                             <input type="radio" name="vskillsall" id="vskillsalltop" onchange="VW.saveWidgets('vskillsalltop', 'vskillsall')" <% if(vskillsalltop === 'on') {%> checked <% } %>>
@@ -313,6 +280,30 @@
                                             <input type="radio" name="vskillsme" id="vskillsmetop" onchange="VW.saveWidgets('vskillsmetop', 'vskillsme')" <% if(vskillsmetop === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-skills-t"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>                                     
+                        <div class="set_blok set_blok_update">
+                            <p id="settings_v_project"></p>
+                            <div class="height-blok-set" style="padding: 8px;">
+                                <div class="widget-head">
+                                    <div class="widget-head-wrap">
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all-project"></span>
+                                        <span class="widget-head-text2" id="widget-me-project"></span>
+                                    </div>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-chack-last2" id="widget-project2"></span>
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="radio" name="vprojectsall" id="vprojectsall" onchange="VW.saveWidgets('vprojectsall', 'vprojectsalltop')" <% if(vprojectsall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="radio" name="vprojectsme" id="vprojectsme" onchange="VW.saveWidgets('vprojectsme', 'vprojectsmetop')" <% if(vprojectsme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-project"></span>
                                     </div>
                                     <div class="widget-blok">
                                         <span class="widget-chack widget-chack-last2" id="widget-project-t2"></span>
@@ -324,19 +315,58 @@
                                         </span>
                                         <span class="widget-chack widget-chack-last" id="widget-project-t"></span>
                                     </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="set_blok set_blok_update">
+                            <p id="settings_v_friend"></p>
+                            <div class="height-blok-set" style="padding: 8px;">
+                                <!-- <div class="widget-head">
+                                    <div class="widget-head-wrap">
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all-friend"></span>
+                                        <span class="widget-head-text2" id="widget-me-friend"></span>
+                                    </div>
+                                </div> -->
+                                <div class="widget-body">
                                     <div class="widget-blok">
-                                        <span class="widget-chack widget-chack-last2" id="widget-blog-t2"></span>
+                                        <span class="widget-chack widget-chack-last2" id="widget-all-friend"></span>
+                                        <span class="widget-chack widget-head-text-one">
+                                            <input type="checkbox" name="vfriendall" id="vfriendall" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendall === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack">
+                                            <input type="checkbox" name="vfriendme" id="vfriendme" onchange="VW.saveWidgets('vfriendme', 'vfriendall')" <% if(vfriendme === 'on') {%> checked <% } %>>
+                                        </span>
+                                        <span class="widget-chack widget-chack-last" id="widget-me-friend"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="set_blok set_blok_update">
+                            <p id="settings_v_blog"></p>
+                            <div class="height-blok-set" style="padding: 8px;">
+                                <!-- <div class="widget-head">
+                                    <div class="widget-head-wrap">
+                                        <span class="widget-head-text widget-head-text-one" id="widget-all-blog"></span>
+                                        <span class="widget-head-text2" id="widget-me-blog"></span>
+                                    </div>
+                                </div> -->
+                                <div class="widget-body">
+                                    <div class="widget-blok">
+                                        <span class="widget-chack widget-chack-last2" id="widget-all-blog"></span>
                                         <span class="widget-chack widget-head-text-one">
                                             <input type="checkbox" name="vblogall" id="vblogall" onchange="VW.saveWidgets('vblogme', 'vblogall')" <% if(vblogall === 'on') {%> checked <% } %>>
                                         </span>
                                         <span class="widget-chack">
                                             <input type="checkbox" name="vblogme" id="vblogme" onchange="VW.saveWidgets('vblogme', 'vblogall')" <% if(vblogme === 'on') {%> checked <% } %>>
                                         </span>
-                                        <span class="widget-chack widget-chack-last" id="widget-blog-t"></span>
+                                        <span class="widget-chack widget-chack-last" id="widget-me-blog"></span>
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
+
                         <!--main message form-->
                         <p class="main-form-message" id="main-form-messagefour"></p>                       
                     </div>
