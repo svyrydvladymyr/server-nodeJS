@@ -4,41 +4,26 @@
         "settings_style":"MAIN STYLES",  
         "settings_border":"BORDER RADIUS",  
         "settings_font":"FONT FAMILY",  
-
-
-        
         "settings_v_skill":"SKILLS",  
         "settings_v_project":"PROJECTS",  
         "settings_v_friend":"FRIENDS",  
         "settings_v_blog":"BLOG",
-
         "widget-all-skill":"SHOW FOR ALL",  
         "widget-all-project":"SHOW FOR ALL", 
         "widget-all-friend":"SHOW FOR ALL", 
         "widget-all-blog":"SHOW FOR ALL", 
-
-        
         "widget-me-skill":"SHOW FOR ME",  
         "widget-me-project":"SHOW FOR ME", 
         "widget-me-friend":"SHOW FOR ME", 
         "widget-me-blog":"SHOW FOR ME", 
-
-
-
         "widget-skills":"FROM THE SIDE",  
         "widget-skills2":"FROM THE SIDE", 
-
         "widget-project":"FROM THE SIDE",  
         "widget-project2":"FROM THE SIDE",  
-        
-        
         "widget-skills-t":"IN THE TOP",  
         "widget-skills-t2":"IN THE TOP",  
-
         "widget-project-t":"IN THE TOP",  
         "widget-project-t2":"IN THE TOP",  
-
-
         "widget-blog-t":"BLOG",  
         "widget-blog-t2":"BLOG", 
         "widget-friend-t":"FRIENDS",
