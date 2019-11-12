@@ -48,8 +48,6 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
 
 let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq) => {
     $_log('render-user', result[0]); 
-    console.log("ghggggg", permissionidreq);
-
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,

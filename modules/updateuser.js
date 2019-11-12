@@ -53,9 +53,7 @@ let updaterender = (req, res) => {
             : ((RC === 'Russian') || (RC === 'Росія')) ? 'russian'
             : ((RC === 'Great Britain') || (RC === 'Великобританія')) ? 'greatbritain'
             : ((RC === 'USA') || (RC === 'Сполучені Штати')) ? 'usa' : null;        
-            town = translit(result[0].town);   
-            console.log("fghfghfgh", result[0].regtype);
-            
+            town = translit(result[0].town);           
             res.render(`update`, {
                 userid: result[0].userid,
                 regtype: result[0].regtype,
