@@ -742,6 +742,11 @@ input[type=range] {
     margin: 0px;
 }
 
+.tabs-form-head-tab:hover{
+    border-top: 1px solid #c0c0c0;
+    border-radius: 12px 12px 0px 0px;
+}
+
 .tab-active{
     background: #efefef;
     border-bottom: 3px solid #ffa74c;

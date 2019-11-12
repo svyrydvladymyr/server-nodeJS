@@ -2,9 +2,15 @@ let mysql = require('mysql');
 
 // let con, db_config = {
 //     driver: "mysql",
+<<<<<<< HEAD
 //     host: "eu-cdbr-west-02.cleardb.net",
 //     user: "bb3b6857c7c94b",
 //     password: "abe128b6",
+=======
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+>>>>>>> ee9bed99b53d7b50b32f5b4b95da960d463e3ebf
 //     charset: 'utf8',
 //     collation: 'utf8_unicode_ci',
 //     prefix: '',
