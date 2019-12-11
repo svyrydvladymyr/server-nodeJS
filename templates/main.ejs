@@ -5,6 +5,11 @@
 </head>
 <body>
     <%- include("./parts/header.ejs") %>
+
+    <% if((permissAccess === 'true') && (activee === 'active')) {%>
+        <%- include("./parts/messeger.ejs") %> 
+    <% } %>
+
     <%- include("./parts/settings.ejs") %> 
     <div class="wrap">  
         <div class="out1"></div>

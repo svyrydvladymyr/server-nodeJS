@@ -128,17 +128,25 @@ let WPROJ = (() => {
         WPROJ.sortDisable();
         if (kilkprojects <= 10){
             getidconteiner.innerHTML = `
-            <div class="skills-wrap-form" style="max-width:100%; width:100%; background:#ffffff; padding: 35px 0px 15px 0px; border: 1px solid #9e9e9e;">   
+            <div class="skills-wrap-form" style="max-width:100%; width:100%; background:#f1f1f1; padding: 15px 0px 0px 0px; border: 1px solid #9e9e9e;">   
                 <div class="skills-boks">
                     <div class="skills-text">
-                    <p>${projectchack}</p>
-                    <input type="checkbox" name="projectchack" id="projectchack">
-                    <p style="width:100%;">${projectname}</p>
-                    <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80" oninput="CHECK.checkWidgetsVal(this)">
-                    <p style="width:100%;">${projecturl}</p>
-                    <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100" oninput="CHECK.checkWidgetsVal(this)">
-                    <p>${projectdescription}</p>
-                    <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;" oninput="CHECK.checkWidgetsVal(this)"></textarea>
+                    <div class="wrap-add-punct">
+                        <p style="float:left;">${projectchack}</p>
+                        <input type="checkbox" name="projectchack" id="projectchack">
+                    </div>
+                    <div class="wrap-add-punct">
+                        <p style="width:100%;">${projectname}</p>
+                        <input type="text" name="projectname" id="projectname" class="skills-input" maxlength="80" oninput="CHECK.checkWidgetsVal(this)">
+                    </div>
+                    <div class="wrap-add-punct">
+                        <p style="width:100%;">${projecturl}</p>
+                        <input type="text" name="projecturl" id="projecturl" class="skills-input" maxlength="100" oninput="CHECK.checkWidgetsVal(this)">
+                    </div>
+                    <div class="wrap-add-punct">
+                        <p>${projectdescription}</p>
+                        <textarea rows="4" cols="50" name="projectdescription" id="projectdescription" class="skills-input" maxlength="200" style="resize: none;" oninput="CHECK.checkWidgetsVal(this)"></textarea>
+                    </div>
                     <div class="skills-button">
                         <i class='fas fa-times' id="close-skills" onclick="WPROJ.closeProjectsAddForm()"></i>
                         <i class='far fa-save' id="save-skills" onclick="WPROJ.addProjectstoList()"></i>          

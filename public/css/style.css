@@ -508,6 +508,135 @@ body{
 }
 
 
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------MESSENGER------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.messenger{
+    grid-area: set;
+    position: fixed;
+    right: 0px;
+    top:150px;
+    width: 250px;
+    min-height: 300px;
+    padding-bottom: 10px;
+    background: #ffffff;
+    border-left: var(--border);
+    border-top: var(--border);
+    border-bottom: var(--border-5px);
+    border-radius: 0px 0px 0px 12px;
+    box-shadow: 0px 0px 2px #697583;
+    transition: 1s;
+    z-index: 1;
+}
+
+.messenger_close{
+    grid-area: set;
+    position: fixed;
+    right: -2px;
+    top:150px;
+    width: 0px;
+    min-height: 300px;
+    padding-bottom: 10px;
+    background: #ffffff;
+    border-left: var(--border);
+    border-top: var(--border);
+    border-bottom: var(--border-5px);
+    border-radius: 0px 0px 0px 12px;
+    box-shadow: 0px 0px 0px #697583;
+    transition: 1s;
+    z-index: 1;
+}
+
+.messenger_wrap{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.messenger .messenger_wrap{
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.messenger_top_150{
+    top:150px!important;
+}
+
+.messenger_top_400{
+    top:400px!important;
+}
+
+.messenger_set1, .messenger_set2, .messenger_set3, .messenger_set4, .messenger_set5{
+    cursor: pointer;
+    position: absolute;
+    right: 249px;
+    top: -1px;
+    height: 40px;
+    width: 50px;
+    color: #000000;
+    padding: 6px 14px;
+    background: var(--main-color);
+    border: var(--main-color);
+    border-radius: 9px 0px 0px 29px;
+    box-shadow: -2px 0px 2px #000000;
+    text-shadow: 0px 0px 10px #ffffff;
+    z-index: 5;
+    transition: 1s;
+}
+.messenger_set_close1, .messenger_set_close2, .messenger_set_close3, .messenger_set_close4, .messenger_set_close5{
+    cursor: pointer;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    height: 40px;
+    width: 50px;
+    color: #111111;
+    padding: 6px 14px;
+    background: var(--main-color);
+    border: var(--main-color);
+    border-radius: 9px 0px 0px 29px;
+    box-shadow: -2px 0px 2px #697583;
+    text-shadow: 0px 0px 10px #ffffff;
+    z-index: 5;
+    transition: 1s;
+}
+
+.messenger_set2, .messenger_set_close2{
+    opacity: 0.8;
+}
+.messenger_set3, .messenger_set_close3{
+    opacity: 0.6;
+}
+.messenger_set4, .messenger_set_close4{
+    opacity: 0.4;
+}
+.messenger_set5, .messenger_set_close5{
+    opacity: 0.2;
+}
+
+
+.messenger_set1 i{
+    font-size:24px;
+}
+.messenger_set_close1 i{
+    font-size:24px;
+}
+
+.mesenger_all_mess{
+    cursor: pointer;
+    width: 100%;
+    min-width: 240px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration-line: underline;
+}
+
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -643,7 +772,7 @@ body{
     border: var(--main-color);
     border-radius: 9px 0px 0px 29px;
     box-shadow: -2px 0px 2px #000000;
-    text-shadow: 0px 0px 10px #ff2727;
+    text-shadow: 0px 0px 10px #ffffff;
     z-index: 5;
     transition: 1s;
 }
@@ -660,7 +789,7 @@ body{
     border: var(--main-color);
     border-radius: 9px 0px 0px 29px;
     box-shadow: -2px 0px 2px #697583;
-    text-shadow: 0px 0px 10px #0bff00;
+    text-shadow: 0px 0px 10px #ffffff;
     z-index: 5;
     transition: 1s;
 }
@@ -1209,6 +1338,15 @@ body{
     border-radius: 5px;
     margin-bottom: 3px!important;
     width: 100%;
+}
+
+.wrap-add-punct{
+    border: 1px solid grey;
+    width: 100%;
+    margin: 5px 0px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background: #ffffff;
 }
 
 .autoriz-email-send-input-wrap{

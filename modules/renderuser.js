@@ -1,7 +1,7 @@
 let con = require('../db/connectToDB').con;
 let {clienttoken, createTableFriends, $_log} = require('./service');
 
-let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) => {
+let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess, active) => {
     $_log('render-user', result[0]);                  
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
@@ -42,11 +42,12 @@ let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess) =>
         vblogall: `${userObj[0].vblogall}`,
         vblogme: `${userObj[0].vblogme}`, 
         vfriendme: `${userObj[0].vfriendme}`,
-        vfriendall: `${userObj[0].vfriendall}`
+        vfriendall: `${userObj[0].vfriendall}`,
+        activee: `${active}`,
     });
 };
 
-let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq) => {
+let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, permissionisFriend, permissionidreq, active) => {
     $_log('render-user', result[0]); 
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
@@ -88,11 +89,12 @@ let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionA
         vblogall: `${userObj[0].vblogall}`,
         vblogme: `${userObj[0].vblogme}`,   
         vfriendme: `${userObj[0].vfriendme}`,
-        vfriendall: `${userObj[0].vfriendall}`,                                 
+        vfriendall: `${userObj[0].vfriendall}`,
+        activee: `${active}`,                                 
     });
 };
 
-let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
+let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl, active) => {
     res.render(`main`, {
         title: `${userObj[0].surname} ${userObj[0].name}`,
         regtype: `${userObj[0].regtype}`,
@@ -133,6 +135,7 @@ let renderIfFoundAndNotAutoris = (req, res, userObj, avaurl) => {
         vblogme: `${userObj[0].vblogme}`,
         vfriendme: `${userObj[0].vfriendme}`,
         vfriendall: `${userObj[0].vfriendall}`,
+        activee: `${active}`,
     });
 };
 
@@ -164,7 +167,7 @@ let renderuser = (req, res) => {
                                 onindex:`${getuserid}`,
                                 setsettings:`false`,
                                 userid: ``,
-                                activee: `active`,
+                                activee: `${result[0].active}`,
                                 title:``
                             });
                         } else {
@@ -179,7 +182,7 @@ let renderuser = (req, res) => {
                                 onindex:`${getuserid}`,
                                 setsettings:`false`,
                                 userid: ``,
-                                activee: `active`,
+                                activee: `${result[0].active}`,
                                 title:``
                             });
                         }
@@ -203,7 +206,7 @@ let renderuser = (req, res) => {
                         //if the user is found but is not authorized                       
                         if (result == ''){
                             if (activeStatus === 'active') {
-                                renderIfFoundAndNotAutoris(req, res, userObj, avaurl);
+                                renderIfFoundAndNotAutoris(req, res, userObj, avaurl, result[0].active);
                             } else {
                                 $_log('render-user', result[0]);                    
                                 res.render(`nouser`, {
@@ -215,11 +218,12 @@ let renderuser = (req, res) => {
                                     onindex:`${getuserid}`,
                                     setsettings:`false`,
                                     userid: ``,
-                                    activee: `active`,
+                                    activee: `${result[0].active}`,
                                     title:``
                                 })
                             }
                         } else {
+                            let active = result[0].active;
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
                                 createTableFriends(getuserid);
@@ -247,23 +251,23 @@ let renderuser = (req, res) => {
                                         }
                                     }); 
                                 }                               
-                                let sqlsel = `SELECT U.userid, S.userid, S.friendid, S.friendstatus FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
+                                let sqlsel = `SELECT U.userid, U.active, S.userid, S.friendid, S.friendstatus FROM users U INNER JOIN friends_${result[0].userid} S on U.userid=S.userid WHERE S.friendid = '${req.params['userid']}'`;
                                 con.query(sqlsel, function (err, result) {
                                     if (err) {
                                         $_log('err-db-req', err, 'error', res);                     
                                     } else {
                                         $_log('result-friends', result)
                                         if (result  == ''){
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, false, null);
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, false, null, active);
                                         } else {                                          
                                             permissionidreq = (result[0].friendstatus !== undefined) ? result[0].friendstatus : 'null';
-                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, true, permissionidreq);
+                                            renderIfFoundAutorisFriend(req, res, userObjAutoris, userObj, avaurl, permissionAccess, permissionEdit, permissionFriend, true, permissionidreq, active);
                                         }
                                     }
                                 }); 
                             } else if ((result[0].active !== 'active') && (result[0].userid !== req.params['userid'])){ 
                                 //if the user is found and is autorized but not verify and not my page
-                                renderIfNotVerify(req, res, result, userObj, avaurl, (result[0].token === clientToken) ? true : false);
+                                renderIfNotVerify(req, res, result, userObj, avaurl, (result[0].token === clientToken) ? true : false, active);
                             } else if ((result[0].active !== 'active') && (result[0].userid === req.params['userid'])) {
                                 //if the user is found and is autorized and it's my page but not verify 
                                 $_log('render-user', result[0]);                  
@@ -276,7 +280,7 @@ let renderuser = (req, res) => {
                                     permissUserid: `${result[0].userid}`,
                                     onindex:`nouser`,
                                     setsettings:`false`,
-                                    activee: `${result[0].active}`,
+                                    activee: `${active}`,
                                     userid: `${result[0].userid}`,
                                     title:``
                                 });

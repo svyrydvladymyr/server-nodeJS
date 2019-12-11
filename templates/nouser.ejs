@@ -6,6 +6,11 @@
 <body>
         
     <%- include("./parts/header.ejs") %>
+
+    <% if((permissAccess === 'true') && (activee === 'active')) {%>
+        <%- include("./parts/messeger.ejs") %> 
+    <% } %>
+    
     <%- include("./parts/settings.ejs") %>
     
     <% if((onindex !== 'resume') 
