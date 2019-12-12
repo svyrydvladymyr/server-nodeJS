@@ -64,6 +64,26 @@ let createTableFriends = (getuserid) => {
     }); 
 }
 
+//create table for user message
+let createTableMessage = (getuserid) => {
+    let sqlmessage = `CREATE TABLE message_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+        userid VARCHAR(100),
+        talkwith VARCHAR(100),
+        messagefrom VARCHAR(10),
+        message VARCHAR(255),
+        datesend DATE,
+        readed VARCHAR(6),
+        dateread DATE, 
+        edited VARCHAR(6),
+        dateedit DATE,
+        deleted VARCHAR(6),
+        datedel DATE
+        )`;       
+    con.query(sqlmessage, function (err, result) {
+        err ? $_log('err-create-table-message', err.code) : $_log('table-message-created', result.protocol41);
+    }); 
+}
+
 //render page if bad autorization 
 let renderIfErrAutoriz = (req, res, err) => {
     permissionAccess = false;
@@ -91,6 +111,7 @@ module.exports = {
     checOnTrueVal,
     accessLog,
     createTableFriends,
+    createTableMessage,
     renderIfErrAutoriz,
     $_log
 };

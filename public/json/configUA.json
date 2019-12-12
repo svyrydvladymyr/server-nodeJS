@@ -94,7 +94,8 @@
         "search":"пошук...",
         "autoriz-email-send-input":"Введіть вашу пошту...",
         "login":"Введіть логін...",
-        "password":"Введіть пароль..."
+        "password":"Введіть пароль...",
+        "messenger_write_input":"Введіть повідомлення..."
     },
 
 "__comment-page-about":"text for page about",

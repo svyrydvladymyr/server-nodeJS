@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, createTableFriends, $_log} = require('./service');
+let {clienttoken, createTableFriends, createTableMessage, $_log} = require('./service');
 
 let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess, active) => {
     $_log('render-user', result[0]);                  
@@ -227,6 +227,7 @@ let renderuser = (req, res) => {
                             //if the user is found and is autorized
                             if (result[0].active === 'active') {
                                 createTableFriends(getuserid);
+                                createTableMessage(getuserid);
                                 userObjAutoris = result;
                                 //permission for edit
                                 permissionEdit = ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? true : false;
