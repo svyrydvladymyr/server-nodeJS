@@ -78,9 +78,45 @@ let VW = (() => {
     let openSetting = () => {
         var openGASet = SE.$("set");
         var openGASetting = SE.$("setting");
+        var openGAMess = SE.$("messenger");
         openGASet.className === "set" ? openGASet.className = "set_close" : openGASet.className = "set";
-        openGASetting.className === "setting" ? openGASetting.className = "setting_close" : openGASetting.className = "setting";
+        openGASetting.className === "setting" ? openGASetting.className = "setting_close" : openGASetting.className = "setting"; 
+        if ((SE.$("messenger")) || (SE.$("messenger_close"))){
+            if (openGASet.className === "set") {
+                openGAMess.classList.contains("messenger_top_150") ? openGAMess.classList.remove("messenger_top_150") : null;
+                openGAMess.classList.add("messenger_top_400");
+            } else if (openGASet.className === "set_close"){
+                openGAMess.classList.contains("messenger_top_400") ? openGAMess.classList.remove("messenger_top_400") : null;
+                openGAMess.classList.add("messenger_top_150"); 
+            }
+        }
     };
+
+// function for open and close blok messenger
+    let openMessenger = () => {
+        if ((SE.$("messenger")) || (SE.$("messenger_close"))){
+            var openGAMess = SE.$("messenger");
+            var openGASet = SE.$("set");
+            if (openGAMess.classList.contains("messenger")){
+                openGAMess.classList.remove("messenger");  
+                openGAMess.classList.add("messenger_close");  
+            } else if (openGAMess.classList.contains("messenger_close")){
+                openGAMess.classList.remove("messenger_close");
+                openGAMess.classList.add("messenger");
+            };
+            for (let i = 1; i <= 5; i++){
+                var openGASettingMess = SE.$(`messenger_set${i}`);
+                openGASettingMess.className = openGASettingMess.className === `messenger_set${i}` ? `messenger_set_close${i}` : `messenger_set${i}`;
+            }
+            if (openGASet.className === "set") {
+                openGAMess.classList.contains("messenger_top_150") ? openGAMess.classList.remove("messenger_top_150") : null; 
+                openGAMess.classList.add("messenger_top_400");
+            } else if (openGASet.className === "set_close"){
+                openGAMess.classList.contains("messenger_top_400") ? openGAMess.classList.remove("messenger_top_400") : null;
+                openGAMess.classList.add("messenger_top_150"); 
+            };
+        };
+    };    
 
 // function for change language
     var changLang = function(val){
@@ -514,6 +550,7 @@ return {
     buttonLogin,
     buttonLoginClose,
     openSetting,
+    openMessenger,
     changLang,
     showClearButton,
     clearSearch,

@@ -108,13 +108,19 @@ let WSKILLS = (() => {
             <div class="skills-wrap-form" id="">   
                 <div class="skills-boks">
                     <div class="skills-text">
-                    <p>${skillchack}</p>
-                    <input type="checkbox" name="skillchack" id="skillchack">
-                    <p style="width:100%;">${skillsname}</p>
-                    <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70" oninput="CHECK.checkWidgetsVal(this)">
-                    <p>${skillslevel}</p>
-                    <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
-                    <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
+                    <div class="wrap-add-punct">
+                        <p style="float:left;">${skillchack}</p>
+                        <input type="checkbox" name="skillchack" id="skillchack">
+                    </div>
+                    <div class="wrap-add-punct">
+                        <p style="width:100%;">${skillsname}</p>
+                        <input type="text" name="skillsname" id="skillsname" class="skills-input" maxlength="70" oninput="CHECK.checkWidgetsVal(this)">
+                    </div>
+                    <div class="wrap-add-punct">
+                        <p>${skillslevel}</p>
+                        <div class="skills-line"><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p></div>
+                        <input type="range" step="10" min="0" max="100" id="skillsregname" style="width:100%;">
+                    </div>
                     <div class="skills-button">
                         <i class='fas fa-times' id="close-skills" onclick="WSKILLS.closeSkillsAddForm()"></i>
                         <i class='far fa-save' id="save-skills" onclick="WSKILLS.addSkillstoList()"></i>          

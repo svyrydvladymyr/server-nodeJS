@@ -79,7 +79,7 @@ let renderIfErrAutoriz = (req, res, err) => {
         setsettings:`false`,
         errautoriz:`${err}`,
         userid: ``,
-        activee: `active`,
+        activee: `noactive`,
         title:``
     });
 }
