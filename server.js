@@ -7,6 +7,7 @@ let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, upda
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
+let {sendmessage, messangerlist, showmessage, showmess, delmess, delallmess, updatemessnew} = require('./modules/messager');
 let renderuser = require('./modules/renderuser');
 let {accessLog, $_log} = require('./modules/service');
 let passport = require('passport'); 
@@ -73,6 +74,15 @@ app.use((req, res, next) => {$_log(`${req.method}`, req.url); next();});
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
 app.use('/registration', (req, res) => {res.render(`registration`, {permissAccess: `true`})});
+
+//messager
+app.post('/sendmessage', (req, res) => {sendmessage(req, res)});
+app.post('/messangerlist', (req, res) => {messangerlist(req, res)});
+app.post('/showmessage', (req, res) => {showmessage(req, res)});
+app.post('/showmess', (req, res) => {showmess(req, res)});
+app.post('/delmess', (req, res) => {delmess(req, res)});
+app.post('/delallmess', (req, res) => {delallmess(req, res)});
+app.post('/updatemessnew', (req, res) => {updatemessnew(req, res)});
 
 //skills
 app.post('/showskills', (req, res) => {showskills(req, res)});

@@ -34,6 +34,44 @@ let clienttoken = (req, res) => {
     return clientToken;
 };
 
+//date format minures
+let readyMin = function(fullDate){
+    let createDate = new Date(fullDate);
+    return finDay = ((createDate.getMinutes() >= 1) && (createDate.getMinutes() <= 9)) ? "0" + createDate.getMinutes() : createDate.getMinutes();
+};  
+
+//date format day
+let readyDay = function(fullDate){
+    let createDate = new Date(fullDate);
+    return finDay = ((createDate.getDate() >= 1) && (createDate.getDate() <= 9)) ? "0" + createDate.getDate() : createDate.getDate();
+};  
+
+//date format month
+let readyMonth = function(fullDate){    
+    let createDate = new Date(fullDate);
+    return finMonth = ((createDate.getMonth() >= 0) && (createDate.getMonth() <= 8)) 
+        ? "0" + (createDate.getMonth()+1) 
+        : (createDate.getMonth() == 9) ? 10 
+        : (createDate.getMonth() == 10) ? 11
+        : (createDate.getMonth() == 11) ? 12 : null;          
+}; 
+
+//ready full date
+let readyFullDate = (fullDate, reverse) => {
+    let dateRegFull = new Date(fullDate);
+    let dateRegFullEmpty = new Date();
+    if (reverse === 'r'){
+        return dateReg = ((fullDate === '') || (fullDate === undefined)) 
+            ? dateRegFullEmpty.getHours() + ":" + readyMin(dateRegFullEmpty) + " " + readyDay(dateRegFullEmpty) + "-" + readyMonth(dateRegFullEmpty) + "-" + dateRegFullEmpty.getFullYear() 
+            : dateRegFull.getHours() + ":" + readyMin(dateRegFull) + " " + readyDay(dateRegFull) + "-" + readyMonth(dateRegFull) + "-" + dateRegFull.getFullYear();
+    } else {
+        return dateReg = ((fullDate === '') || (fullDate === undefined))
+            ? dateRegFullEmpty.getHours() + ":" + readyMin(dateRegFullEmpty) + " " + dateRegFullEmpty.getFullYear() + "-" + readyMonth(dateRegFullEmpty) + "-" + readyDay(dateRegFullEmpty)
+            : dateRegFull.getHours() + ":" + readyMin(dateRegFull) + " " + dateRegFull.getFullYear() + "-" + readyMonth(dateRegFull) + "-" + readyDay(dateRegFull);
+    }
+};
+
+
 //chack on true values
 let checOnTrueVal = (el) => {
     let reg = "[^a-zA-Zа-яА-Я0-9-()_+=.'\":/\,іІїЇєЄ /\n]";
@@ -49,6 +87,26 @@ let accessLog = (req, res, next) => {
     fs.appendFile(`./log/${namefile}.txt`, logs, (err) => {console.log(err)});
     next();
 }
+
+//check proof token
+let checkProof = (req, res, fun) => {
+    con.query(`SELECT userid FROM users WHERE token = '${clienttoken(req, res)}'`, (err, result) => {
+        if (err) {
+            $_log('err', err, 'err', res); 
+        } else {            
+            result == '' ? $_log('err', err, 'err', res) : fun(req, res, result[0].userid);
+        };
+    });            
+};
+
+//check proof token
+let readyAva = (ava) => {
+    if ((/^http:/i.test(ava)) || (/^https:/i.test(ava))){
+        return avaurl = `${ava}`;
+    } else {
+        return avaurl = ((ava === null) || (ava === '') || (ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${ava}`;
+    }            
+};
 
 //create table for user friends
 let createTableFriends = (getuserid) => {
@@ -70,14 +128,14 @@ let createTableMessage = (getuserid) => {
         userid VARCHAR(100),
         talkwith VARCHAR(100),
         messagefrom VARCHAR(10),
-        message VARCHAR(255),
-        datesend DATE,
+        message VARCHAR(900),
+        datesend VARCHAR(20),
         readed VARCHAR(6),
-        dateread DATE, 
+        dateread VARCHAR(20), 
         edited VARCHAR(6),
-        dateedit DATE,
+        dateedit VARCHAR(20),
         deleted VARCHAR(6),
-        datedel DATE
+        datedel VARCHAR(20)
         )`;       
     con.query(sqlmessage, function (err, result) {
         err ? $_log('err-create-table-message', err.code) : $_log('table-message-created', result.protocol41);
@@ -113,5 +171,8 @@ module.exports = {
     createTableFriends,
     createTableMessage,
     renderIfErrAutoriz,
-    $_log
+    $_log,
+    readyFullDate,
+    checkProof,
+    readyAva
 };

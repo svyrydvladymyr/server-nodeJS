@@ -83,6 +83,7 @@ let WFRIENDS = (() => {
         } else if (parseObj.res === 1){
             SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', WFRIENDS.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${MESS.errorFormMessage().friendsadd}</b></i></div>`;
             if(SE.$('mess-friend-wrap')){ SE.$('mess-friend-wrap').innerHTML = ``;}
+            localStorage.kalciferMess = ''; 
         } else if (parseObj.err){
             console.log(parseObj.err);            
         }

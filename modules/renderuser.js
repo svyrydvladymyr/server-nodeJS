@@ -1,5 +1,5 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, createTableFriends, createTableMessage, $_log} = require('./service');
+let {clienttoken, createTableFriends, createTableMessage, $_log, readyAva} = require('./service');
 
 let renderIfNotVerify = (req, res, result, userObj, avaurl, permissionAccess, active) => {
     $_log('render-user', result[0]);                  
@@ -78,6 +78,7 @@ let renderIfFoundAutorisFriend = (req, res, result, userObj, avaurl, permissionA
         permissName: `${result[0].name}`,
         permissSurname: `${result[0].surname}`,
         permissUserid: `${result[0].userid}`,
+        messUserid: `${userObj[0].userid}`,
         vskillsall: `${userObj[0].vskillsall}`,
         vskillsme:`${ userObj[0].vskillsme}`,
         vprojectsall: `${userObj[0].vprojectsall}`,
@@ -192,11 +193,7 @@ let renderuser = (req, res) => {
             //if a user is found, rendering the user's page    
                 let userObj = result, activeStatus = result[0].active, avaurl;
                 //get and set ava url    
-                if ((/^http:/i.test(result[0].ava)) || (/^https:/i.test(result[0].ava))){
-                    avaurl = `${result[0].ava}`;
-                } else {
-                    avaurl = ((result[0].ava === null) || (result[0].ava === '') || (result[0].ava === undefined)) ? `./img/ava_empty.jpg` : `./uploads/${result[0].ava}`;
-                }              
+                avaurl = readyAva(result[0].ava);            
                 //select user information from DB
                 let sql = `SELECT token, name, surname, userid, active FROM users WHERE token = '${clientToken}'`;
                 con.query(sql, function (err, result) {

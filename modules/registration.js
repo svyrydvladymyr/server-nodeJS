@@ -209,6 +209,7 @@ let beforedeluser = (req, res) => {
                             con.query(`DELETE FROM friends_${friendid} WHERE friendid = '${renameuserid}'`, function (err, result) {$_log(`del-from-friend-table-(${friendid})`, result.protocol41)});
                         }    
                         con.query(`DROP TABLE friends_${renameuserid}`, function (err, result) {$_log("del-table-friends", result.protocol41)});
+                        con.query(`DROP TABLE message_${renameuserid}`, function (err, result) {$_log("del-table-message", result.protocol41)});
                         con.query(`DELETE FROM users WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-users-friend", result.protocol41)});
                         con.query(`DELETE FROM userssettings WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-settings-friend", result.protocol41)});
                         con.query(`DELETE FROM userskills WHERE userid = '${renameuserid}'`, function (err, result) { $_log("del-skills-friend", result.protocol41)});

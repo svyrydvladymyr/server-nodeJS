@@ -116,8 +116,8 @@ let showfriends = (req, res) => {
     let getuserid, userid, typesearch, limitsearch, stepsearch, step;
     typesearch = req.body.type;
     limitsearch = req.body.limit;
-    stepsearch = req .body.step;
-    userurlsearch = req .body.userurl;
+    stepsearch = req.body.step;
+    userurlsearch = req.body.userurl;
     getuserid = req.headers.referer;
     userurlsearch === undefined ? userid = url.parse(getuserid, true).pathname.replace('/', '') : userid = userurlsearch;
     stepsearch === '' ? step = '' : step = `${stepsearch},`;

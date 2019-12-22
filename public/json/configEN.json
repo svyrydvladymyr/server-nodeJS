@@ -60,7 +60,7 @@
         "autoriz-server":"Error while creating a record in the database, try again!",
         "autoriz-email-send":"You can make a request and receive the data for recovery on your mail ...",
         "autoriz-email-send-true":"You are authorized!",
-        "mesenger_all_mess":"ALL MESSAGES",
+        "mesenger_all_mess":"MESSAGES",
 
 "__comment-country":"select country...",
         "ukraine":"Ukraine",  

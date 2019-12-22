@@ -60,7 +60,7 @@
     "autoriz-server":"Помилка при створенні запису в базі, спробуйте ще раз!",
     "autoriz-email-send":"Ви можете зробити запит і отримати дані для відновлення на вашу пошту...",
     "autoriz-email-send-true":"Ви авторизовані!",
-    "mesenger_all_mess":"ВСІ ПОВІДОМЛЕННЯ",
+    "mesenger_all_mess":"ПОВІДОМЛЕННЯ",
 
 "__comment-country":"select country...",
     "ukraine":"Україна",  

@@ -46,7 +46,23 @@ let MESS = (() => {
             let canselmess = "Тут ви можете видалити свій акаунт";
             let recovernotfind = "Користувача з такою поштою не знайдено!"
             let nochange = "Немає змін!"
+            let prochitano = "Прочитано!"
+            let neprochitano = "Не прочитано!"
+            let forme = "ДЛЯ МЕНЕ"
+            let forboth = "ДЛЯ ОБОХ"
+            let messforme = "Повідомлення буде видалено тільки у вас. У співрозмовника повідомлення залишиться."
+            let messforboth = "Повідомлення буде видалено для обох. У співрозмовника залишиться відмітка про видалене повідомлення."
+            let messdeleted = "Видалено!"
+            let messdeletedall = "Ви можете видалити весь діалог. Повідомлення будуть видалені також і у вашого друга але залишаться помітки що вони були видалені."
             return {
+                messdeletedall,
+                messdeleted,
+                messforme,
+                messforboth,
+                forme,
+                forboth,
+                prochitano,
+                neprochitano,
                 nochange,
                 recovernotfind,
                 canselmess,
@@ -135,7 +151,23 @@ let MESS = (() => {
             let canselmess = "Here you can delete your account";
             let recovernotfind = "No user with this mail was found!"
             let nochange = "No changes!"
+            let prochitano = "Readed!"
+            let neprochitano = "Not readed!"
+            let forme = "FOR ME"
+            let forboth = "FOR BOTH"
+            let messforme = "The message will be deleted from you. The interlocutor will have a message."
+            let messforboth = "The message will be deleted for both. The caller will keep a note about the deleted message."
+            let messdeleted = "Deleted!"
+            let messdeletedall = "You can delete the entire dialog. Messages will also be deleted from your friend, but will remain marked that they have been deleted."
             return {
+                messdeletedall,
+                messdeleted,                
+                messforme,
+                messforboth,
+                forme,
+                forboth,
+                prochitano,
+                neprochitano,
                 nochange,
                 recovernotfind,
                 canselmess,                

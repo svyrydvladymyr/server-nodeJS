@@ -121,6 +121,9 @@ let CHECK = (() => {
 //login and passsword autorisation exclusion  
     let checkSearch = (idf) => {SE.$(idf).value = SE.$(idf).value.replace(/[^0-9a-zA-Zа-яА-Я_.іІїЇєЄ ]/gi, '')};
 
+//send message exclusion  
+    let checkSendMess = (idf) => {SE.$(idf).value = SE.$(idf).value.replace(/[^0-9a-zA-Zа-яА-Я-іІїЇєЄ'\"',.;:_\$-\+\/\\\?\#\&\!\=\%\*(😃😄😆😇😈😋😍😎😘😛😥😱🤣😡🤢🤡🎅😸👌🖕👍👎🖐🤘👊👏👆👇👈👉💪🖖🙏🤙🤞🤝🧡🖤💓💔💕💖💗💘💙💚💛💜💝💞💟💏💋🎈🌽🍄🍅🍆🍇🍉🍊🍋🍌🍎🍏🍒🍓🥑🥒🥕🥝🥥) \\n]/gi, '')};
+
 
 //login and passsword autorisation exclusion  
     let checkAutorisation = (idf, reg, reg2) => {
@@ -264,6 +267,7 @@ let CHECK = (() => {
         checkWidgetsVal,
         checkAutorisation,
         testAutorisation,
-        checkSearch
+        checkSearch,
+        checkSendMess
     }
 })();

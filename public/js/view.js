@@ -62,6 +62,7 @@ let VW = (() => {
 
 //for exit from session    
     let exit = (res) => {
+        localStorage.kalciferMess = '';       
         localStorage.kalcifermaincolor = '#2d5e8e';
         localStorage.kalcifersecondcolor = '#5c8ab9';
         localStorage.kalciferbgcolor = '#f1f1f1';
@@ -93,16 +94,20 @@ let VW = (() => {
     };
 
 // function for open and close blok messenger
+    let ticUpdate;
     let openMessenger = () => {
         if ((SE.$("messenger")) || (SE.$("messenger_close"))){
             var openGAMess = SE.$("messenger");
             var openGASet = SE.$("set");
             if (openGAMess.classList.contains("messenger")){
                 openGAMess.classList.remove("messenger");  
-                openGAMess.classList.add("messenger_close");  
-            } else if (openGAMess.classList.contains("messenger_close")){
+                openGAMess.classList.add("messenger_close"); 
+                clearInterval(ticUpdate);
+            } else if (openGAMess.classList.contains("messenger_close")){ 
                 openGAMess.classList.remove("messenger_close");
                 openGAMess.classList.add("messenger");
+                SE.$("messenger").addEventListener("click", MESSAGER.messangerList);
+                ticUpdate = setInterval(MESSAGER.messangerList, 60000);
             };
             for (let i = 1; i <= 5; i++){
                 var openGASettingMess = SE.$(`messenger_set${i}`);
