@@ -363,15 +363,7 @@ let MESSAGER = (() => {
         let maxid = Math.max.apply(null, masid);
         SE.send({"messid": `${id}`, "maxid": `${maxid}`}, "/updatemessnew", (res) => {
             if (JSON.parse(res).result) {
-
                 let parsres = JSON.parse(res).result;
-                console.log("fhfghfghfghfgh", parsres);
-                console.log("fhfghfghfghfghleng", parsres.length);
-
-
-
-
-
                 for (let i = 0; i < parsres.length; i++) { 
                     let readed = '', delboxto = '', delboxfrom = '', styledel = '', styledelfr = '', delmess = '';
                     if ((i === 0) && (parsres[0].readed === 'yes') && (parsres[0].messagefrom === 'to')) {
@@ -410,13 +402,9 @@ let MESSAGER = (() => {
                                 <div class="messenger_write_mess_del">${delboxfrom}</div>
                             </div>
                             <p class="messenger_write_mess_readed">${readed}</p>
-                        </div>
-    
-    
-                    </div>          
-                    `;
+                        </div>  
+                    </div>`;
                 }
-
                 let oldstep = +SE.$('messenger_write_write').getAttribute('step') + parsres.length;
                 SE.$('messenger_write_write').setAttribute('step', +oldstep);
             }

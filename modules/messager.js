@@ -185,22 +185,14 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
         checkProof(req, res, (req, res, userid) => {
             let myid = userid; 
             let mesusersid = req.body.messid; 
-            let maxid = req.body.maxid; 
-            console.log("messid", mesusersid);
-            console.log("maxid", maxid);       
+            let maxid = req.body.maxid;     
             con.query(`SELECT * FROM message_${myid} WHERE talkwith = '${mesusersid}' AND messagefrom = 'from' AND ID > '${maxid}'`, (err, result) => {
                 if (err) { 
                     $_log('err-find-group', err, 'err', res); 
                 } else {
-                    if (result == ''){ 
-                        $_log('no-new-mess', 'nomessage', 'nomessage', res); 
-                    } else {                  
-                        $_log('nem-messager-list', result, 'result', res);
-                    };
+                    result == '' ? $_log('no-new-mess', 'nomessage', 'nomessage', res) : $_log('nem-messager-list', result, 'result', res);
                 };
             });
-
-
         });  
     };
 

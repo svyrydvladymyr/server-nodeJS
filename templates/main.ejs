@@ -7,9 +7,8 @@
     <%- include("./parts/header.ejs") %>
 
     <% if((permissAccess === 'true') && (activee === 'active')) {%>
-        <%- include("./parts/messeger-write.ejs") %> 
-
         <%- include("./parts/messeger.ejs") %> 
+        <%- include("./parts/messeger-write.ejs") %> 
     <% } %>
 
     <%- include("./parts/settings.ejs") %> 

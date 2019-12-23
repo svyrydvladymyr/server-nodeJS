@@ -122,9 +122,8 @@
         "news-seven":"Completion of project block development. It can add a list of projects and a description of them. If it's internet projects then you can add links to them.",  
         "news-eight":"The ability to add users to your friends list is developed.",  
         "news-nine":"Added the ability to register and log in with third-party resources.",
-        "news-ten":"Work on the messenger has begun. Made the visual part of the message list." 
-  
-
+        "news-ten":"Work on the messenger has begun. Made the visual part of the message list.", 
+        "news-eleven":"Work on the messenger is complete. Functionality tested." 
       
 }
 
