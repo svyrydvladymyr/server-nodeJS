@@ -94,7 +94,7 @@ let VW = (() => {
     };
 
 // function for open and close blok messenger
-    let ticUpdate;
+    let ticUpdate, ticUpdatekilk;
     let openMessenger = () => {
         if ((SE.$("messenger")) || (SE.$("messenger_close"))){
             var openGAMess = SE.$("messenger");
@@ -107,7 +107,7 @@ let VW = (() => {
                 openGAMess.classList.remove("messenger_close");
                 openGAMess.classList.add("messenger");
                 SE.$("messenger").addEventListener("click", MESSAGER.messangerList);
-                ticUpdate = setInterval(MESSAGER.messangerList, 60000);
+                ticUpdate = setInterval(MESSAGER.messangerList, 20000);
             };
             for (let i = 1; i <= 5; i++){
                 var openGASettingMess = SE.$(`messenger_set${i}`);

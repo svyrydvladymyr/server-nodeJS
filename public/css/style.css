@@ -1206,6 +1206,24 @@ div > .messenger_write_mess_body:last-child .messenger_write_mess_readed{
     margin: 0px 1px 5px 1px;
 }
 
+.messenger_set_close1 > p{
+    margin: 0px;
+    position: absolute;
+    top: 6px;
+    left: 20px;
+    font-size: 13px;
+    color: white;
+}
+
+.messenger_set1 > p{
+    margin: 0px;
+    position: absolute;
+    top: 6px;
+    left: 20px;
+    font-size: 13px;
+    color: white;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

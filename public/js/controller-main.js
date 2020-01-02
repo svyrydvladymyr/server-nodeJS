@@ -38,9 +38,7 @@ window.onload = function(){
 //write-message----------------------------------------------------------------------------------------
     if (SE.$("messenger_write_input")) {      
         SE.$("messenger_send_mess").addEventListener("click", MESSAGER.sendMessage);
-
-        SE.$("messenger_write_input").addEventListener("input", () => {CHECK.checkSendMess("messenger_write_input")}); 
-       
+        SE.$("messenger_write_input").addEventListener("input", () => {CHECK.checkSendMess("messenger_write_input")});        
         SE.$("messenger_write_input").addEventListener("keydown", (event) => {if (event.key === 'Enter'){
             if (SE.$("messenger_write_input").value !== ''){ MESSAGER.sendMessage() }
         }}); 
@@ -50,7 +48,8 @@ window.onload = function(){
             SE.$("messenger").addEventListener("click", MESSAGER.messangerList);
         }
     }
-
+    MESSAGER.messangerNewKilk();
+    ticUpdatekilk = setInterval(MESSAGER.messangerNewKilk, 20000);
 
 //search-----------------------------------------------------------------------------------------------
     SE.$("search").addEventListener("input", () => {CHECK.checkSearch("search")}); 

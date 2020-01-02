@@ -196,6 +196,56 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
         });  
     };
 
+    let messangernewkilk = (req, res) => {
+        checkProof(req, res, (req, res, userid) => {
+            let myid = userid; 
+            con.query(`SELECT MAX(M.id), M.talkwith, F.friendid, F.friendstatus
+                        FROM message_${myid} M INNER JOIN friends_${myid} F ON M.talkwith=F.friendid
+                        WHERE F.friendstatus = 'friend'
+                        GROUP BY M.talkwith ORDER BY MAX(M.id) DESC`, (err, result) => {
+                if (err) { 
+                    $_log('err-find-group', err, 'err', res); 
+                } else {
+                    if (result != ''){ 
+                        $_log('messager-list', result); 
+                        let ress = result;
+                        let iter = result.length, kilk = 0, dzin = 0;
+                        for (let i = 0; i < iter; i++) {
+                            let sellist = `SELECT readed FROM message_${myid} WHERE talkwith = '${ress[i].talkwith}' AND id = '${ress[i]["MAX(M.id)"]}' AND readed = 'no' AND messagefrom = 'from'`;
+                            con.query(sellist, (err, result) => {
+                                if (!err) {
+                                    console.log("kilk", result); 
+                                    if (result != ''){ kilk++ }
+                                    console.log("kilk", kilk); 
+                                    let sellistdzin = `SELECT readed FROM message_${myid} WHERE talkwith = '${ress[i].talkwith}' AND id = '${ress[i]["MAX(M.id)"]}' AND readed = 'no' AND messagefrom = 'from' AND dzin != 'yes'`;
+                                    con.query(sellistdzin, (err, result) => {
+                                        if (!err) {
+                                            console.log("dzin", result);
+                                            if (result != ''){ dzin++ }
+                                            console.log("dzin", dzin);                         
+                                            if (i == iter-1) { 
+                                                let updzin = `UPDATE message_${myid} SET dzin = 'yes' WHERE talkwith = '${ress[i].talkwith}' AND readed = 'no' AND messagefrom = 'from'`;
+                                                con.query(updzin, (err, result) => {
+                                                    if (!err) {
+                                                        console.log("upppppdzin", result);
+                                                    } else {
+                                                        console.log(err);
+                                                        
+                                                    };
+                                                }); 
+                                                res.send({"noreadedkilk": `${kilk}`, "noreadeddzin": `${dzin}`});
+                                            } 
+                                        };
+                                    }); 
+                                };
+                            });       
+                        }
+                    };
+                };
+            });
+        });  
+    };
+
 
 module.exports = {
     sendmessage,
@@ -204,5 +254,6 @@ module.exports = {
     showmess,
     delmess,
     delallmess,
-    updatemessnew
+    updatemessnew,
+    messangernewkilk
 }

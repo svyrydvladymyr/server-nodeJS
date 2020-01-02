@@ -106,8 +106,7 @@ let MESSAGER = (() => {
                     };
                 };
             }); 
-        }
- 
+        } 
     };
 
     //open message box 
@@ -338,6 +337,7 @@ let MESSAGER = (() => {
                         </div>`;
                     SE.$("messenger_write_write").insertBefore(newItem, SE.$("messenger_write_write").childNodes[0]);
                 };
+                MESSAGER.messangerNewKilk();
                 if (send === 'send') {
                     SE.$("messenger_write_write").scrollTo(0, SE.$("messenger_write_write").scrollHeight - 0);
                 } else {
@@ -349,7 +349,7 @@ let MESSAGER = (() => {
             if (SE.$("messenger").classList.contains("messenger")){ MESSAGER.messangerList(); }
             clearInterval(ticUpdateMess);
             if (SE.$("messenger_write_write").classList.contains("messenger_write_write")){ 
-                ticUpdateMess = setInterval(MESSAGER.updateMessNew, 30000);
+                ticUpdateMess = setInterval(MESSAGER.updateMessNew, 20000);
             }            
         });        
     };
@@ -407,8 +407,24 @@ let MESSAGER = (() => {
                 }
                 let oldstep = +SE.$('messenger_write_write').getAttribute('step') + parsres.length;
                 SE.$('messenger_write_write').setAttribute('step', +oldstep);
+                SE.$("play-dzin").play();
             }
         });
+    }
+
+    let messangerNewKilk = () => {
+        SE.send({}, "/messangernewkilk", (res) => {   
+            if ((JSON.parse(res).noreadedkilk) && (JSON.parse(res).noreadedkilk !== '0')) {
+               
+                SE.$("mesenger-kilk-new-mess").innerHTML = `${JSON.parse(res).noreadedkilk}`;
+                if (JSON.parse(res).noreadeddzin !== '0'){
+                    SE.$("play-dzin").play();
+                }
+
+            } else {
+                SE.$("mesenger-kilk-new-mess").innerHTML = ``;
+            };
+        }); 
     }
 
 return {
@@ -428,7 +444,8 @@ return {
     smilesList,
     addSmile,
     changeSmile,
-    updateMessNew
+    updateMessNew,
+    messangerNewKilk
 };
 
 })();

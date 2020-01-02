@@ -135,7 +135,8 @@ let createTableMessage = (getuserid) => {
         edited VARCHAR(6),
         dateedit VARCHAR(20),
         deleted VARCHAR(6),
-        datedel VARCHAR(20)
+        datedel VARCHAR(20),
+        dzin VARCHAR(5)
         )`;       
     con.query(sqlmessage, function (err, result) {
         err ? $_log('err-create-table-message', err.code) : $_log('table-message-created', result.protocol41);
