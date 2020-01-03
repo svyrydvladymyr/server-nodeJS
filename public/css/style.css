@@ -1206,6 +1206,40 @@ div > .messenger_write_mess_body:last-child .messenger_write_mess_readed{
     margin: 0px 1px 5px 1px;
 }
 
+.messenger_set_close1 > p, .messenger_set1 > p{
+    margin: 0px;
+    position: absolute;
+    width: 20px;
+    text-align: center;
+    top: 7px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+}
+
+.messenger-notreaded-mess{
+    width: 32px;
+    height: 100%;
+    position: relative;
+}
+
+.messenger-notreaded-mess p{
+    margin: 0px;
+    position: absolute;
+    top: 4px;
+    left: 3px;
+    font-size: 19px;
+    animation-name: example;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes example {
+    from {top: 4px;}
+    to {top: 7px;}
+  }
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------SETTING-------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/

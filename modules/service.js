@@ -30,7 +30,7 @@ let clienttoken = (req, res) => {
     let cookies, clientToken;
     cookies = new Cookies(req, res, {"keys":['volodymyr']});
     clientToken = cookies.get('sessionisdd', {signed:true});
-    $_log('client-token', clientToken);                    
+    $_log('//-CLIENT-TOKEN-//', clientToken);                    
     return clientToken;
 };
 
@@ -99,6 +99,30 @@ let checkProof = (req, res, fun) => {
     });            
 };
 
+//SQL query
+let sqlquery = (req, res, sql, errmess, emptyres, fun, noerr) => {
+    // console.log("000000000000000", noerr);
+    
+    con.query(sql, (err, result) => {
+        if (noerr === 'noerr') {
+            if (!err) { 
+                fun(req, res, result);
+            }
+        } else {
+            if (err) { 
+                $_log(errmess, err, emptyres, res); 
+            } else {
+
+                if (result == ''){ 
+                    $_log(errmess, emptyres, emptyres, res); 
+                } else {  
+                    fun(req, res, result);
+                };
+            };
+        };
+    });            
+};
+
 //check proof token
 let readyAva = (ava) => {
     if ((/^http:/i.test(ava)) || (/^https:/i.test(ava))){
@@ -135,7 +159,8 @@ let createTableMessage = (getuserid) => {
         edited VARCHAR(6),
         dateedit VARCHAR(20),
         deleted VARCHAR(6),
-        datedel VARCHAR(20)
+        datedel VARCHAR(20),
+        dzin VARCHAR(5)
         )`;       
     con.query(sqlmessage, function (err, result) {
         err ? $_log('err-create-table-message', err.code) : $_log('table-message-created', result.protocol41);
@@ -174,5 +199,6 @@ module.exports = {
     $_log,
     readyFullDate,
     checkProof,
-    readyAva
+    readyAva,
+    sqlquery
 };

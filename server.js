@@ -7,7 +7,7 @@ let {showskills, addskills, showorhiddenskills, showskillsingle, editskill, upda
 let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, updateallprojects} = require('./modules/projects');
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
-let {sendmessage, messangerlist, showmessage, showmess, delmess, delallmess, updatemessnew} = require('./modules/messager');
+let {sendmessage, messangerlist, showmessage, showmess, delmess, delallmess, updatemessnew, messangernewkilk} = require('./modules/messager');
 let renderuser = require('./modules/renderuser');
 let {accessLog, $_log} = require('./modules/service');
 let passport = require('passport'); 
@@ -69,7 +69,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 //logs
-app.use((req, res, next) => {$_log(`${req.method}`, req.url); next();});
+app.use((req, res, next) => {$_log(`//-${req.method}-//`, req.url); next();});
 
 //render page
 app.use('/updateuser', (req, res) => {updaterender(req, res)});
@@ -83,6 +83,7 @@ app.post('/showmess', (req, res) => {showmess(req, res)});
 app.post('/delmess', (req, res) => {delmess(req, res)});
 app.post('/delallmess', (req, res) => {delallmess(req, res)});
 app.post('/updatemessnew', (req, res) => {updatemessnew(req, res)});
+app.post('/messangernewkilk', (req, res) => {messangernewkilk(req, res)});
 
 //skills
 app.post('/showskills', (req, res) => {showskills(req, res)});

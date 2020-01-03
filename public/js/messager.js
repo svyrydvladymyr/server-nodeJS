@@ -7,7 +7,8 @@ let MESSAGER = (() => {
         clearInterval(ticUpdateMess);
         SE.$('messenger_write_send_body').innerHTML = ``;
         SE.$('messenger_write_delblok_wrap').innerHTML = '';
-        SE.$('messenger_write_header_icon').innerHTML = `<i class='fas fa-times' onclick="SE.$('messenger_write').innerHTML = ''"></i>`;
+        SE.$('messenger_write_header_icon').innerHTML = `<div class="messenger-notreaded-mess" id="messenger-notreaded-mess"></div>
+                                                         <i class='fas fa-times' onclick="SE.$('messenger_write').innerHTML = ''"></i>`;
     };
 
     //for close messanger write box
@@ -106,8 +107,7 @@ let MESSAGER = (() => {
                     };
                 };
             }); 
-        }
- 
+        } 
     };
 
     //open message box 
@@ -129,6 +129,7 @@ let MESSAGER = (() => {
                                 <p>${parsres.surname}</p><p>${parsres.name}</p>
                             </div>
                             <div class="messenger_write_header_icon" id="messenger_write_header_icon">
+                                <div class="messenger-notreaded-mess" id="messenger-notreaded-mess"></div>
                                 <i class='fas fa-times' onclick="MESSAGER.closeWriteBox()"></i>
                             </div>
                         </div>
@@ -255,8 +256,7 @@ let MESSAGER = (() => {
     //event for delete message
     let messDel = (id, who) => {
         SE.send({"messid": `${id}`, "who": `${who}`}, "/delmess", (res) => {
-            let parsres = JSON.parse(res);
-            if ((parsres.result) && (parsres.result === 1)) {
+            if ((JSON.parse(res).result) && (JSON.parse(res).result === 1)) {
                 SE.$(`del-wrap-${id}`).innerHTML = `<p class="message-deleted-mess">${MESS.errorFormMessage().messdeleted}</p>`;
             }
         });
@@ -295,8 +295,8 @@ let MESSAGER = (() => {
     let ticUpdateMess;
     let showMess = (id, limit, step, send) => {
         SE.send({"user": `${id}`, "limit": `${limit}`, "step": `${step}`}, "/showmess", (res) => {
-            let parsres = JSON.parse(res).result;            
-            if ((parsres !== null) && (parsres !== 'no-mess')) {
+            if ((JSON.parse(res).result) && (JSON.parse(res).result !== null) && (JSON.parse(res).result !== undefined)) {
+                let parsres = JSON.parse(res).result;     
                 for (let i = 0; i < parsres.length; i++) {    
                     let newItem = document.createElement("div"), readed = '', delboxto = '', delboxfrom = '', styledel = '', styledelfr = '', delmess = '';
                     newItem.setAttribute("id", `del-wrap-${parsres[i].id}`);
@@ -338,6 +338,7 @@ let MESSAGER = (() => {
                         </div>`;
                     SE.$("messenger_write_write").insertBefore(newItem, SE.$("messenger_write_write").childNodes[0]);
                 };
+                MESSAGER.messangerNewKilk();
                 if (send === 'send') {
                     SE.$("messenger_write_write").scrollTo(0, SE.$("messenger_write_write").scrollHeight - 0);
                 } else {
@@ -349,7 +350,7 @@ let MESSAGER = (() => {
             if (SE.$("messenger").classList.contains("messenger")){ MESSAGER.messangerList(); }
             clearInterval(ticUpdateMess);
             if (SE.$("messenger_write_write").classList.contains("messenger_write_write")){ 
-                ticUpdateMess = setInterval(MESSAGER.updateMessNew, 30000);
+                ticUpdateMess = setInterval(MESSAGER.updateMessNew, 20000);
             }            
         });        
     };
@@ -407,8 +408,26 @@ let MESSAGER = (() => {
                 }
                 let oldstep = +SE.$('messenger_write_write').getAttribute('step') + parsres.length;
                 SE.$('messenger_write_write').setAttribute('step', +oldstep);
+                SE.$("play-dzin").play();
             }
         });
+    }
+
+    let messangerNewKilk = () => {
+        SE.send({}, "/messangernewkilk", (res) => {   
+            if ((JSON.parse(res).noreadedkilk) && (JSON.parse(res).noreadedkilk !== '0')) {
+                let id = SE.$('messenger_write_header_name').getAttribute('friend');
+                let masid = JSON.parse(res).masid.split(",");                
+                for (let i = 0; i < masid.length; i++){                   
+                    if (masid[i] == id) { if (SE.$("messenger-notreaded-mess")) { SE.$("messenger-notreaded-mess").innerHTML = `<p>💬</p>` }}
+                }
+                SE.$("mesenger-kilk-new-mess").innerHTML = `${JSON.parse(res).noreadedkilk}`;
+                if (JSON.parse(res).noreadeddzin !== '0'){ SE.$("play-dzin").play() }
+            } else {
+                if (SE.$("messenger-notreaded-mess")) { SE.$("messenger-notreaded-mess").innerHTML = `` }
+                SE.$("mesenger-kilk-new-mess").innerHTML = ``;
+            };
+        }); 
     }
 
 return {
@@ -428,7 +447,8 @@ return {
     smilesList,
     addSmile,
     changeSmile,
-    updateMessNew
+    updateMessNew,
+    messangerNewKilk
 };
 
 })();
