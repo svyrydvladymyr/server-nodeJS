@@ -136,7 +136,7 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
             let myid = userid, masmessid = [];
             let sql = `SELECT MAX(M.id), M.talkwith, F.friendid, F.friendstatus FROM message_${myid} M INNER JOIN friends_${myid} F ON M.talkwith=F.friendid
                        WHERE F.friendstatus = 'friend' GROUP BY M.talkwith ORDER BY MAX(M.id) DESC`;
-            sqlquery(req, res, sql, 'err-find-groupnew', undefined, (req, res, result) => { 
+            sqlquery(req, res, sql, 'err-find-groupnew', 'nomess', (req, res, result) => { 
                 $_log('messager-list-new-kilk', result.length); 
                 let ress = result, iter = result.length, kilk = 0, dzin = 0;
                 for (let i = 0; i < iter; i++) {                    
@@ -156,7 +156,7 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
                         }, 'noerr');                            
                     }, 'noerr');                        
                 };
-            }, 'noerr');
+            });
         });  
     };
 

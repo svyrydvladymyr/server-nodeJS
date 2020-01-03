@@ -100,9 +100,7 @@ let checkProof = (req, res, fun) => {
 };
 
 //SQL query
-let sqlquery = (req, res, sql, errmess, emptyres, fun, noerr) => {
-    // console.log("000000000000000", noerr);
-    
+let sqlquery = (req, res, sql, errmess, emptyres, fun, noerr) => {  
     con.query(sql, (err, result) => {
         if (noerr === 'noerr') {
             if (!err) { 
@@ -112,7 +110,6 @@ let sqlquery = (req, res, sql, errmess, emptyres, fun, noerr) => {
             if (err) { 
                 $_log(errmess, err, emptyres, res); 
             } else {
-
                 if (result == ''){ 
                     $_log(errmess, emptyres, emptyres, res); 
                 } else {  
