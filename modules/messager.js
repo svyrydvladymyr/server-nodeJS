@@ -123,6 +123,7 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
     };
 
     let updatemessnew = (req, res) => {
+        let user = req.body.messid;
         checkProof(req, res, (req, res, userid) => { 
             let myid = userid; 
             let dateread = readyFullDate('', 'r');
