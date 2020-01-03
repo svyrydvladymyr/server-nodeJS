@@ -406,6 +406,7 @@ let MESSAGER = (() => {
                         </div>  
                     </div>`;
                 }
+                MESSAGER.messangerNewKilk();
                 let oldstep = +SE.$('messenger_write_write').getAttribute('step') + parsres.length;
                 SE.$('messenger_write_write').setAttribute('step', +oldstep);
                 SE.$("play-dzin").play();
@@ -416,10 +417,12 @@ let MESSAGER = (() => {
     let messangerNewKilk = () => {
         SE.send({}, "/messangernewkilk", (res) => {   
             if ((JSON.parse(res).noreadedkilk) && (JSON.parse(res).noreadedkilk !== '0')) {
-                let id = SE.$('messenger_write_header_name').getAttribute('friend');
-                let masid = JSON.parse(res).masid.split(",");                
-                for (let i = 0; i < masid.length; i++){                   
-                    if (masid[i] == id) { if (SE.$("messenger-notreaded-mess")) { SE.$("messenger-notreaded-mess").innerHTML = `<p>💬</p>` }}
+                if (SE.$('messenger_write_header_name')) {
+                    let id = SE.$('messenger_write_header_name').getAttribute('friend');
+                    let masid = JSON.parse(res).masid.split(",");                
+                    for (let i = 0; i < masid.length; i++){                   
+                        if (masid[i] == id) { if (SE.$("messenger-notreaded-mess")) { SE.$("messenger-notreaded-mess").innerHTML = `<p>💬</p>` }}
+                    }
                 }
                 SE.$("mesenger-kilk-new-mess").innerHTML = `${JSON.parse(res).noreadedkilk}`;
                 if (JSON.parse(res).noreadeddzin !== '0'){ SE.$("play-dzin").play() }

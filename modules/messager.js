@@ -124,6 +124,14 @@ let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva
 
     let updatemessnew = (req, res) => {
         checkProof(req, res, (req, res, userid) => { 
+            let myid = userid; 
+            let dateread = readyFullDate('', 'r');
+            con.query(`UPDATE message_${myid} SET readed = 'yes', dateread = '${dateread}' WHERE talkwith = '${user}' AND messagefrom = 'from' AND readed = 'no'`, (err, result) => {
+                if (!err) { $_log('status-readed-chenge-me', result.affectedRows);} 
+            });
+            con.query(`UPDATE message_${user} SET readed = 'yes', dateread = '${dateread}' WHERE talkwith = '${myid}' AND messagefrom = 'to' AND readed = 'no'`, (err, result) => {
+                if (!err) { $_log('status-readed-chenge-fr', result.affectedRows);} 
+            });
             let sql = `SELECT * FROM message_${userid} WHERE talkwith = '${req.body.messid}' AND messagefrom = 'from' AND ID > '${req.body.maxid}'`;
             sqlquery(req, res, sql, 'err-find-messnew', 'nomessagenew', (req, res, result) => { 
                 $_log('nem-messager-list', result, 'result', res);        
