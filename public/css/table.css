@@ -2,10 +2,11 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns:35px  300px auto auto 35px;
-    grid-template-rows: auto auto;   
+    grid-template-rows: auto auto auto;   
     grid-gap: 1px; 
-    grid-template-areas: 'out1 side article article out2'
-                         'blok blok blok blok blok';
+    grid-template-areas: 'out1 side content content out2'
+                         'blok blok blok blok blok'
+                         'footer footer footer footer footer';
 }
 
 /*--------------------------HEADER-----------------------------*/
@@ -26,15 +27,16 @@
     width: 33.3%;
     min-width: 280px;
     min-height: 90px;
-
 }
 
 .header-login {
     padding: 0px 0px;
 }
+
 .header_logo img {
     margin: 10px 15%;
 }
+
 /*logo*/
 .header_logo{
     order: 1;
@@ -44,34 +46,40 @@
 .header_search{
     order: 2;
 } 
+
 .header_search i{
     right: 15.5%;
     top: 32px;
 }
+
 .header_search .user_list{
     top: 75px;
 }
-
 
 /*button*/
 .header_button{
     order: 3;
 }
+
 .registration{
     bottom: 10%;
     right: 7%;
 }
+
 .login-message {
     right: 29%;
 }
+
 .login-message-autoris{
     right: 6.5%;
 }
+
 .social-login-wrap {
     height: 40px;
     margin-top: 5px;
     padding: 7px 17px;
 }
+
 /*--------------------------EMPTY BLOKS-----------------------------*/
 .out2{
     grid-area: out2;
@@ -96,11 +104,20 @@
 .resume-body{
     width: 92%;
 }
+
 .resume-show-wrap{
     width: 81%;
 }
 
-@media screen and (max-width:970px){
+.main-footer-full{
+    display: none;
+}
+
+.main-footer-small{
+    display: table;
+}
+
+@media screen and (max-width:977px){
     .header_logo, .header_search, .header_button{
         display: flex;
         justify-content: flex-end;
@@ -108,7 +125,8 @@
         min-width: 280px;
         min-height: 35px;
         max-width: 430px;
-    }
+    }    
+
     .header_button{
         padding-right: 6%;
         margin-top: -20px;
@@ -117,54 +135,65 @@
 
     .header-login {
         padding: 10px 0px;
-    }
-    
+    }  
+
     .header_search{
         margin-bottom: 10px;
     }
+
     /*logo*/
     .header_logo{
         order: 1;
     }
+
     /*search*/
     .header_search{
         order: 3;
     } 
+
     /*button*/
     .header_button{
         order: 2;
     }
+
     .header_search i{
         right: 15.5%;
         top: 5px;
     }
+
     .header_search .user_list{
         top: 48px;
     }
+
     .registration {
         bottom: -2%;
         right: 16%;
     }
+
     .login-message {
         right: 32%;
         bottom: -3%;
     }
+
     .login-message-autoris{
         right: 14%;
     }
+
     .social-login-wrap{
         height: 60px;
         padding: 10px 13px;
     }
+
     .social-login-wrap img{
         height: 42px;
         margin: 0px 10px;
     }
+
     .resume-body{
         width: 89%;
     }
+
     .resume-show-wrap{
         width: 75%;
     }
-
 }

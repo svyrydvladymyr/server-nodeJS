@@ -84,22 +84,25 @@ let WFRIENDS = (() => {
             SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="SE.send({}, '/addtofriends', WFRIENDS.addToFriends)"><i class='far fa-plus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="add-to-friend">${MESS.errorFormMessage().friendsadd}</b></i></div>`;
             if(SE.$('mess-friend-wrap')){ SE.$('mess-friend-wrap').innerHTML = ``;}
             localStorage.kalciferMess = ''; 
+            location.reload();
         } else if (parseObj.err){
-            console.log(parseObj.err);            
+            console.log(parseObj.err);  
+            location.reload();          
         }
     };
 
 //change button after proof friend  
     let proofToFriends = (res) => {   
         let parseObj = JSON.parse(res); 
-        console.log(parseObj);
         if (parseObj.res === 0){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req">${MESS.errorFormMessage().prooffriends}</b></i></div>`;
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="WFRIENDS.confirmProof()" ><i class='far fa-plus-square' style="color:#ffa4a4;"><b style="font-size: 13px; padding: 2px 5px; position: absolute; color:#ffffff;" id="add-to-req">${MESS.errorFormMessage().prooffriends}</b></i></div>`;
         } else if (parseObj.res === 1){
-            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap"  onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
+            SE.$('add-friend-wrap').innerHTML = `<div class="add-to-friends-wrap" onclick="WFRIENDS.confirmDelFriend()" ><i class='far fa-minus-square'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="del-to-friend">${MESS.errorFormMessage().friendsdel}</b></i></div>`;
             SE.$('mess-friend-wrap').innerHTML = `<div class="add-to-friends-wrap-mess" onclick="VW.inwork()"><i class='far fa-comments'><b style="font-size: 13px; padding: 2px 5px; position: absolute;" id="friend-mess">${MESS.errorFormMessage().friendsmess}</b></i></div>`;
+            location.reload();
         } else if (parseObj.err){
-            console.log(parseObj.err);            
+            console.log(parseObj.err);  
+            location.reload();          
         }
     };
 

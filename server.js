@@ -8,6 +8,7 @@ let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, u
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
 let {sendmessage, messangerlist, showmessage, showmess, delmess, delallmess, updatemessnew, messangernewkilk} = require('./modules/messager');
+let {sendpost, postlist, postshare} = require('./modules/blog');
 let renderuser = require('./modules/renderuser');
 let {accessLog, $_log} = require('./modules/service');
 let passport = require('passport'); 
@@ -84,6 +85,11 @@ app.post('/delmess', (req, res) => {delmess(req, res)});
 app.post('/delallmess', (req, res) => {delallmess(req, res)});
 app.post('/updatemessnew', (req, res) => {updatemessnew(req, res)});
 app.post('/messangernewkilk', (req, res) => {messangernewkilk(req, res)});
+
+//blog
+app.post('/sendpost', (req, res) => {sendpost(req, res)});
+app.post('/postlist', (req, res) => {postlist(req, res)});
+app.post('/postshare', (req, res) => {postshare(req, res)});
 
 //skills
 app.post('/showskills', (req, res) => {showskills(req, res)});

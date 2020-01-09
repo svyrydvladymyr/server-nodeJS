@@ -1,0 +1,291 @@
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------SKILLS-PROJECTS--------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.skills-conteiner{
+    width: 100%;
+    margin: 0px;
+    position: relative;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.skills-title{
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px 0px 12px 10px;
+}
+.skills-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 3px 5px;
+    margin: 5px auto;
+    width: 48%;
+    min-height: 58px;
+    min-width: 250px;
+    background: #f1f1f1;
+}
+.projects-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 3px 5px;
+    margin: 5px auto;
+    width: 48%;
+    min-width: 250px;
+    background: #f1f1f1;
+}
+.skills-wrap-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #9e9e9e;
+    border-radius: 7px;
+    padding: 20px 5px 5px 5px;
+    margin: 5px auto;
+    max-width: 395px;
+    min-width: 250px;
+    background: #f1f1f1;
+}
+.skills-boks{
+    width: 90%;
+    margin: 0px auto;
+}
+.skills-edit{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 30px;
+    width: 10%;
+    height: 50px;
+}
+.skills-edit i{
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0px 7px;
+}
+
+.skills-text{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:flex-start;
+    width: 100%;
+}
+.skills-text p{
+    margin: 0px;
+    padding: 2px; 
+    font-size: 12px;
+    font-weight: bold;
+}
+.skills-range-wrap{
+    width: 100%;
+    height: 8px;
+    border: 1px solid #9e9e9e;
+    background: #ffffff;
+    border-radius: 5px;
+    margin: 5px auto;
+}
+.skills-range{
+    width: 60%;
+    height: 6px;
+    background: var(--second-color);
+}
+.skills-add{
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+    margin: 10px 47% 0px 47%;
+}
+.skills-title-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.skills-edit-blok{
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    padding: 4px 0px;
+    background: #ffffff;
+    margin-bottom: 9px;
+    margin-right: 4px;
+    color: #000000;
+}
+.skills-edit-blok:hover{
+    box-shadow:0px 0px 2px #767676;
+}
+.skills-edit-blok p{
+    margin: 4px 5px 4px -65px;
+    font-size: 10px;
+    text-align: right;
+    width: 60px;
+    color: green;
+}
+.skills-edit-blok i{
+    cursor: pointer;
+    font-size: 16px;
+    margin: 1px 11px;
+}
+.skills-input{
+    width: 100%;
+    border-radius: 5px;
+    outline: 0!important;
+    border: 1px solid #9a9a9a;
+    padding: 3px 5px;
+    margin: 5px 0px;
+}
+.skills-line{
+    width: 100%;
+    height: 7px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    margin-bottom: -9px;
+}
+.skills-line p{
+    width: 9%;
+    height: 7px;
+    border-right: 1px solid #111111;
+    margin: 0px;
+}
+.skills-button{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 40px;
+    margin: 5px auto;
+}
+.skills-button i{
+    cursor:pointer;
+}
+.edit-skill-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 37px;
+}
+.edit-proj-form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+.edit-skill-body{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 37px;
+}
+.edit-proj-body{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 5px 0px;
+}
+.edit-skill-edit{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 20px;
+    height: 37px;
+}
+.edit-skill-edit i{
+    cursor: pointer;
+    font-size: 16px;
+}
+.edit-skill-name{
+    width: 94%;
+    margin: 0px 3%;
+    padding: 1px 5px;
+    border-radius: 4px;
+    border: 1px solid #a7a7a7;
+    outline: 0!important;
+}
+.edit-proj-name{
+    width: 94%;
+    margin: 3px 3%;
+    padding: 5px 10px;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 2px solid #adadad;
+    outline: 0!important;
+}
+.edit-skill-level{
+    width: 94%!important;
+    margin: 0px 3% 0px 3%!important;
+}
+.edit-skill-level2{
+    width: 94%!important;
+    margin: 3px 3% 0px 3%!important;
+}
+.skills-confirm-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 37px;
+}
+.skills-confirm-icon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 37px;
+}
+.skills-confirm-icon i{
+    cursor: pointer;
+    font-size: 18px;
+}
+.proj-confirm-icon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 49px;
+}
+.proj-confirm-icon i{
+    cursor: pointer;
+    font-size: 18px;
+}
+.fa-trash-alt{
+    transform: rotateY(180deg);
+}
+.project-header{
+    font-weight: bold;
+    font-size: 12px;
+    margin: 5px 0px;
+    text-align: justify;
+}
+.project-body{
+    margin: 5px 0px;
+    font-size: 12px;
+    text-align: justify;
+}
+.projects-boks{
+    width:100%; 
+    background:#ffffff; 
+    padding: 5px 10px;
+}
+
+.projects-description{
+    width: 100%;
+    font-size: 12px;
+    padding: 2px!important;
+    border-radius: 5px;
+    margin-bottom: 3px!important;
+    width: 100%;
+}

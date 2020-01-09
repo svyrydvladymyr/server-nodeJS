@@ -1,0 +1,246 @@
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------friends------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.add-to-friends{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 18px;
+    width: 48%;
+    height: 30px;
+    float: right;
+    color: #ffffff;
+    cursor: pointer;
+    margin: -5px 1% 5px 1%;
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--second-color);
+    box-shadow: 0px 0px 1px #111111;
+}
+
+.add-to-friends-mess{
+    width: 48%;
+    height: 30px;
+}
+
+.add-to-friends-wrap-mess{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 18px;
+    width: 100%;
+    height: 30px;
+    padding: 5px 6px;
+    float: right;
+    color: #ffffff;
+    cursor: pointer;
+    margin: -5px 1% 13px 1%;
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--second-color);
+    box-shadow: 0px 0px 1px #111111;
+}
+
+.add-to-friends-wrap{
+    width: 100%;
+    height: 30px;
+    padding: 3px 6px;
+}
+
+.add-to-friends-wrap2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    padding: 6px 6px;
+}
+
+.add-to-friends:hover{
+    box-shadow: 0px 0px 3px #111111;
+}
+
+.friends-reqto{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100px;
+    height: 20px;
+}
+
+.friends-reqto i{
+    font-size: 12px;
+    height: 20px;
+    width: 20px;
+    font-size: 16px;
+    color: var(--main-color);
+}
+
+.friends-reqto-text{
+    color: red;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+}
+
+.friends-reqto-wrap{
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 50%;
+    height: 20px;
+}
+
+.wrap-all-friends {
+    max-width: 1180px;
+    min-height: 100px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #9a9a9a;
+    border-radius: var(--border-radius-main);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    box-shadow: 0px 0px 3px #919191;
+}
+
+.friends-all-title{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 19px 10px 0px;
+    justify-content: flex-end;
+}
+
+.friends-name-title{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px 0px 10px 0px;
+    padding: 10px 20px;
+    min-height: 38px;
+    color: #ffffff;
+    font-size: 16px;
+    background: var(--second-color);
+    border-radius: 7px 0px 0px 7px;
+}
+
+.friends-name-title:hover{
+    text-shadow: 0px 0px 3px #ffffff;
+}
+
+.friends-text-title{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px 0px 10px 0px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    background: var(--main-color);
+    border-radius: 0px 7px 7px 0px;
+}
+
+.friends-all-body{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.friend-full-wrap{
+    cursor: pointer;
+    width: 31%;
+    min-width: 360px;
+    min-height: 100px;
+    margin: 7px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: var(--border);
+    border-radius: var(--border-radius-main);
+}
+
+.friend-full-wrap:hover{
+    box-shadow: 0px 0px 3px #9a9a9a;
+}
+
+.friend-full-img-wrap{
+    width: 30%;
+    min-width: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;    
+}
+
+.friend-full-img{
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+    background-color: #ffffff;
+    border-radius: var(--border-radius-main);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: content-box;
+    padding: 4px;
+    border: 1px solid #5c8ab9;
+    margin-top: -157px;
+}
+
+.friend-full-info{
+    width: 65%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px;
+}
+
+.friend-full-info p{
+    width: 100%;
+    margin: 0px;
+    font-size: 13px;
+}
+
+.friend-full-info p:first-child{
+    width: 100%;
+    margin: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.friends-show-more-wrap{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    justify-content: space-around;
+}
+
+.friends-show-more-button{
+    cursor: pointer;
+    width: 100px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--main-color)
+}
+
+.friend-req-plus{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border: var(--border);
+    border-radius: 5px;
+    background: var(--button-background);
+    height: 23px;
+    margin-bottom: 1px;
+    font-size: 13px;
+    color: #ffffff;
+    width: 90%;
+}

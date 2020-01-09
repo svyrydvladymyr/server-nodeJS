@@ -130,37 +130,51 @@ let readyAva = (ava) => {
 };
 
 //create table for user friends
-let createTableFriends = (getuserid) => {
-    let sqlfriends = `CREATE TABLE friends_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
-        userid VARCHAR(100),
-        friendid VARCHAR(100),
-        friendstatus VARCHAR(10),
-        friendvisit VARCHAR(10),
-        friendadd DATE                           
-        )`;       
-    con.query(sqlfriends, function (err, result) {
-        err ? $_log('err-create-table-friends', err.code) : $_log('table-friends-created', result.protocol41);
-    }); 
-}
-
-//create table for user message
-let createTableMessage = (getuserid) => {
-    let sqlmessage = `CREATE TABLE message_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
-        userid VARCHAR(100),
-        talkwith VARCHAR(100),
-        messagefrom VARCHAR(10),
-        message VARCHAR(900),
-        datesend VARCHAR(20),
-        readed VARCHAR(6),
-        dateread VARCHAR(20), 
-        edited VARCHAR(6),
-        dateedit VARCHAR(20),
-        deleted VARCHAR(6),
-        datedel VARCHAR(20),
-        dzin VARCHAR(5)
-        )`;       
-    con.query(sqlmessage, function (err, result) {
-        err ? $_log('err-create-table-message', err.code) : $_log('table-message-created', result.protocol41);
+let createTable = (getuserid, type) => {
+    let sql;
+    if (type === 'friend') {
+        sql = `CREATE TABLE friends_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+            userid VARCHAR(100),
+            friendid VARCHAR(100),
+            friendstatus VARCHAR(10),
+            friendvisit VARCHAR(10),
+            friendadd DATE                           
+            )`; 
+    } else if (type === 'message') {
+        sql = `CREATE TABLE message_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+            userid VARCHAR(100),
+            talkwith VARCHAR(100),
+            messagefrom VARCHAR(10),
+            message VARCHAR(900),
+            datesend VARCHAR(20),
+            readed VARCHAR(6),
+            dateread VARCHAR(20), 
+            edited VARCHAR(6),
+            dateedit VARCHAR(20),
+            deleted VARCHAR(6),
+            datedel VARCHAR(20),
+            dzin VARCHAR(5)
+            )`;  
+    } else if (type === 'blog') {
+        sql = `CREATE TABLE blog_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+            userid VARCHAR(100),
+            postfromid VARCHAR(100),
+            post VARCHAR(4000),
+            postimg1 VARCHAR(200),
+            postimg2 VARCHAR(200),
+            postimg3 VARCHAR(200),
+            postimg4 VARCHAR(200),
+            postimg5 VARCHAR(200),
+            postimg6 VARCHAR(200),
+            postid VARCHAR(30) UNIQUE,
+            postdate VARCHAR(20),
+            perepostfromid VARCHAR(100),
+            perepostdate VARCHAR(20),
+            perepostid VARCHAR(30)
+            )`; 
+    }      
+    con.query(sql, function (err, result) {
+        err ? $_log(`err-create-table-${type}`, err.code) : $_log(`table-${type}-created`, result.protocol41);
     }); 
 }
 
@@ -190,8 +204,7 @@ module.exports = {
     clienttoken,
     checOnTrueVal,
     accessLog,
-    createTableFriends,
-    createTableMessage,
+    createTable,
     renderIfErrAutoriz,
     $_log,
     readyFullDate,

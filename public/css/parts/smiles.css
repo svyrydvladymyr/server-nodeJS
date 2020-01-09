@@ -1,0 +1,67 @@
+.smiles-list-box{
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 10%;
+    height: 22px;
+    border: 1px solid #3b3b3b;
+    border-radius: 5px;
+    background: #f1f1f1;
+    box-shadow: 0px 0px 0px #ffffff;
+}
+
+.smiles-list-box:hover{
+    box-shadow: 0px 0px 3px #ffffff;
+    border: 1px solid #ffffff;
+}
+
+.smile-gtoup-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 50px;
+    height: 53px;
+    padding: 0px;
+    color: #232323;
+    border: 3px solid #ffffff;
+    border-radius: 5px;
+    margin-right: 5px;
+    background: #e6e6e6;
+    margin-bottom: 5px;
+}
+
+.smile-gtoup-box > i{
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.smile-gtoup-box > i:first-child{
+    width: 100%;
+    text-align: center;
+    background: var(--second-color);
+    border-radius: 4px;
+    margin-bottom: 2px;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.smile-gtoup-smile{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 13px;
+    width: 230px;
+    height: 50px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.smile-gtoup-smile > p{
+    margin: 0px 1px 5px 1px;
+}

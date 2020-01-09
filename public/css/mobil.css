@@ -3,10 +3,11 @@
     min-width: 302px;
     display: grid;
     grid-template-columns:100%;
-    grid-template-rows: auto auto auto;   
+    grid-template-rows: auto auto auto 120px;   
     grid-template-areas: 'side'
-                         'article'
-                         'blok';
+                         'content'
+                         'blok'
+                         'footer';
 }
 
 /*--------------------------HEADER-----------------------------*/
@@ -85,17 +86,6 @@
     right: 6%;
     position: relative;
 }
-.naw-wrap {
-    margin: 10px 0px;
-}
-
-.naw-body{
-    padding: 15px 4px;
-}
-
-.article-wrap {
-    margin: 10px 0px 0px 0px;
-}
 
 .social-login-wrap{
     height: 50px;
@@ -120,6 +110,18 @@
 
 .side_sub{
     margin: 5px;
+}
+
+.naw-wrap {
+    margin: 10px 0px;
+}
+
+.naw-body{
+    padding: 15px 4px;
+}
+
+.article-wrap {
+    margin: 10px 0px 0px 0px;
 }
 
 .header, .nav, .article{
@@ -210,12 +212,12 @@
     margin: -2px 0px 0px -10px;
 }
 
+/*---------------------------skills---------------------------------*/
+
 .skills-wrap{
     max-width: 395px;
     width: 100%;
 }
-
-
 
 /*--------------------------MESSENGER-------------------------------*/
 .messenger{
@@ -375,6 +377,8 @@
     left: 4px;
 }
 
+/*--------------------------smole-------------------------------*/
+
 .smile-gtoup-box {
     width: 100%;
     height: 36px;
@@ -414,6 +418,8 @@
     width: 90%;
 }
 
+/*--------------------------resume-------------------------------*/
+
 .resume-body{
     width: 89%;
 }
@@ -428,6 +434,19 @@
     width: 100%;
     margin: 10px auto 20px auto;
 }
+
+.footer{
+    max-width: 100%;
+}
+
+.main-footer-full{
+    display: table;
+}
+
+.main-footer-small{
+    display: none;
+}
+
 @media screen and (min-width:500px) and (max-width:766px){
     .messenger{width: 98%}
     .messenger_close{width: 98%}
@@ -456,6 +475,7 @@
     .messenger_write_wrap {width: 97.5%}
     .messenger_write_header_name {width: 45%}
 }
+
 @media screen and (max-width:400px){
     .login-message-autoris {
         bottom: -5%;
@@ -492,8 +512,6 @@
         font-size: 14px;
         margin: 0px 9px;
     }
-
-
 }
 
 

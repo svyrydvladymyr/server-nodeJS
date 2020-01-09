@@ -1,11 +1,11 @@
 let con = require('../db/connectToDB').con;
-let {clienttoken, $_log, readyFullDate, createTableMessage, checkProof, readyAva, sqlquery} = require('./service');
+let {clienttoken, $_log, readyFullDate, createTable, checkProof, readyAva, sqlquery} = require('./service');
 
     let sendmessage = (req, res) => {
         let tofriend = req.body.tofriend;
         let messready = req.body.mess.replace(/[^0-9a-zA-Zа-яА-Я-іІїЇєЄ'\"',.;:_\$-\+\/\\\?\#\&\!\=\%\*() \\n]/gi, '');
         checkProof(req, res, (req, res, userid) => {
-            createTableMessage(tofriend); 
+            createTable(tofriend, 'message'); 
             let myid = userid;
             let sql = `SELECT friendid, friendstatus FROM friends_${myid} WHERE friendid = '${tofriend}' AND friendstatus = 'friend'`;
             sqlquery(req, res, sql, 'err-req-check-on-fr', 'nofriend', (req, res, result) => {

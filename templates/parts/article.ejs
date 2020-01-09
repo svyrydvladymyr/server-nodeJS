@@ -1,22 +1,22 @@
-<% if((permissEdit === 'true') && ((vblogme === 'on') || (vblogall === 'on'))) {%>
+<% if((vblogme === 'on') && (permissEdit === 'true')) {%>
     <div class="article-wrap">
         <% if(permissEdit === 'true') {%>
             <%- include("./articleeditbox.ejs") %>  
         <% } %>
-        <!-- <object width="100%" height="500px" data="./cssproj/volodymyrsvyryd-kQnOheDxIc/index.html"></object> -->
-        <!-- <embed  width="100%" height="500px" src="./cssproj/volodymyrsvyryd-kQnOheDxIc/"> -->
-        <!-- <embed  width="100%" height="500px" src=""> -->
+        <div class="article-blog-wrap" id="article-blog-wrap" step="0">
+        </div>
     </div> 
 <% } %>
 
-<% if((permissEdit === 'false') && ((vblogme === 'on') || (vblogall === 'on'))) {%>
+
+<% if((vblogall === 'on') && (permissEdit === 'false') && (permissAccess === 'true')) {%>
     <div class="article-wrap">
-        <% if(permissEdit === 'true') {%>
+        <% if((permissionFriend === 'true') && (permissionisFriend === 'true'))  {%>
             <%- include("./articleeditbox.ejs") %>  
         <% } %>
-        <!-- <object width="100%" height="500px" data="./cssproj/volodymyrsvyryd-kQnOheDxIc/index.html"></object> -->
-        <!-- <embed  width="100%" height="500px" src="./cssproj/volodymyrsvyryd-kQnOheDxIc/"> -->
-        <!-- <embed  width="100%" height="500px" src=""> -->
+        <div class="article-blog-wrap" id="article-blog-wrap"  step="0">
+            <p>alalalalal</p>
+        </div>
     </div> 
 <% } %>
   

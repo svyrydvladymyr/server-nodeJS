@@ -54,7 +54,15 @@ let MESS = (() => {
             let messforboth = "Повідомлення буде видалено для обох. У співрозмовника залишиться відмітка про видалене повідомлення."
             let messdeleted = "Видалено!"
             let messdeletedall = "Ви можете видалити весь діалог. Повідомлення будуть видалені також і у вашого друга але залишаться помітки що вони були видалені."
+            let postsharemess = "Поширити на свою сторінку"
+            let postisonmypage = "Цей пост вже є на вашій сторінці!"
+            let mypost = "Мій пост"
+            let postfrom = "Репост від"
             return {
+                mypost,
+                postfrom,
+                postisonmypage,
+                postsharemess,
                 messdeletedall,
                 messdeleted,
                 messforme,
@@ -159,7 +167,15 @@ let MESS = (() => {
             let messforboth = "The message will be deleted for both. The caller will keep a note about the deleted message."
             let messdeleted = "Deleted!"
             let messdeletedall = "You can delete the entire dialog. Messages will also be deleted from your friend, but will remain marked that they have been deleted."
+            let postsharemess = "Share to your page"
+            let postisonmypage = "This post is already on your page!"
+            let mypost = "My post"
+            let postfrom = "Repost from"
             return {
+                mypost,
+                postfrom,
+                postisonmypage,
+                postsharemess,
                 messdeletedall,
                 messdeleted,                
                 messforme,

@@ -696,13 +696,14 @@ input[type=range] {
     border-radius: 100px;
     box-shadow: 1px 1px 1px #50555C;
   }
-  .height-blok-set input[type=range]::-ms-fill-upper {
+.height-blok-set input[type=range]::-ms-fill-upper {
     background: #50555C;
     border: 0px solid #000000;
     border-radius: 100px;
     box-shadow: 1px 1px 1px #50555C;
-  }
-  .height-blok-set input[type=range]::-ms-thumb {
+}
+
+.height-blok-set input[type=range]::-ms-thumb {
     margin-top: 0px;
     box-shadow: 0px 0px 0px #000000;
     border: 0px solid #000000;
@@ -711,13 +712,14 @@ input[type=range] {
     border-radius: 18px;
     background: #529DE1;
     cursor: pointer;
-  }
-  .height-blok-set input[type=range]:focus::-ms-fill-lower {
+}
+
+.height-blok-set input[type=range]:focus::-ms-fill-lower {
     background: #50555C;
-  }
-  .height-blok-set input[type=range]:focus::-ms-fill-upper {
+}
+.height-blok-set input[type=range]:focus::-ms-fill-upper {
     background: #50555C;
-  }
+}
 
 .tabs-form-head-wrap{
     display: flex;
@@ -763,6 +765,75 @@ input[type=range] {
     padding-top: 30px;
 }
 
+/*widgets*/  
+.widget-head{
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.widget-body{
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: column; 
+}
+.widget-blok{
+    width: 220px;
+    height: 20px;
+    margin: 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.widget-head-wrap{
+    width: 100%;
+    height: 20px;
+    max-width: 200px;
+    margin: 5px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.widget-chack{
+    width: 30px;
+    height: 20px;
+    text-align: center;
+}
+.widget-chack-last{
+    padding: 2px 4px; 
+    width: 80px;
+    text-align: left;
+}
+.widget-chack-last2{
+    padding: 2px 4px; 
+    width: 80px;
+    text-align: right;
+}
+.widget-head-text{
+    width: 50%;
+    text-align: right;
+    padding: 2px 10px;
+    border: 1px solid;
+    border-radius: 7px 1px 1px 7px;
+    background: #efefef;
+}
+.widget-head-text2{
+    width: 50%;
+    text-align: left;
+    padding: 2px 10px;
+    border: 1px solid;
+    border-radius: 1px 7px 7px 1px;
+    background: #efefef;
+}
+.widget-head-text-one{
+    border-right: 1px solid #111111;
+}
 
 @media screen and (max-width:850px){
     .form_body_wrap {

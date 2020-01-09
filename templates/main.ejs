@@ -40,17 +40,21 @@
             <% if((permissEdit === 'false') && (vprojectsall === 'on') && (vprojectsalltop === 'off')) {%>
                 <%- include("./parts/projectsside.ejs") %> 
             <% } %>
+
+            <div class="footer footer-main-info main-footer-small">
+                <%- include("./parts/footer2.ejs") %>
+            </div>
         </div>
-        <div class="article">   
+        <div class="content">   
             <%- include("./parts/nav.ejs") %>  
             <%- include("./parts/article.ejs") %> 
         </div>
         <div class="blok">
             <%- include("./parts/ontopfooter.ejs") %>
         </div>       
-    </div>
-    <div class="footer-main-info reg-footer" style="color:#ffffff; background:#3e3e3e">
-        <%- include("./parts/footer.ejs") %>
+        <div class="footer footer-main-info main-footer-full">
+            <%- include("./parts/footer.ejs") %>
+        </div>
     </div>
     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -64,12 +68,20 @@
     <script src="./js/friends.js"></script>
     <script src="./js/ava.js"></script>
     <script src="./js/messager.js"></script>
+    <script src="./js/blog.js"></script>
 
     <% if(permissEdit === 'true') {%>
         <script>
             // SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
             SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsList);
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
+            BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
+        </script>
+    <% } %>
+
+    <% if((permissAccess === 'true') && (permissEdit === 'false')) {%>
+        <script>
+            BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
         </script>
     <% } %>
 

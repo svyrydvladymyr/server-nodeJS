@@ -1,0 +1,24 @@
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------BLOK ON TOP FOOTER------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.blok{
+    grid-area: blok;
+    display: none;
+    /* display: flex; */
+    justify-content: space-between;
+    margin: 0px;
+}
+
+.topfooter-wrap{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    width: 100%;
+    min-height: 200px;
+    background: var(--second-color);
+    border-bottom: var(--border);
+    border-top: var(--border);
+    border-radius: 0px;
+    margin-top: 20px;
+    box-shadow: var(--box-shadow-main);
+}
