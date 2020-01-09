@@ -127,7 +127,7 @@ let BLOG = (() => {
                                 style="background-image: url('${postres[i].pereava}'); background-position: ${postres[i].pereavasettings};"
                                 onclick="SE.redirect('${postres[i].perepostfromid}')">
                             </div>
-                            <div class="post_header_name_per" onclick="SE.redirect('${postres[i].perepostfromid}')">
+                            <div class="post_header_name_per" onclick="SE.redirect('${postres[i].perepostfromid}')" perep = "${postres[i].perepostfromid}" id = "perepid_${postres[i].postid}">
                                 <p>${postres[i].peresurname}</p><p style="margin-left:3px;">${postres[i].perename}</p><p style="width:100%;">${postres[i].perepostdate}</p>
                             </div>
                         </div>                        
@@ -202,15 +202,25 @@ let BLOG = (() => {
     //share post
     let postShare = (idpost) => {
         console.log("postid", idpost);
+        let wallid = ((SE.$(`perepid_${idpost}`)) && (SE.$(`perepid_${idpost}`).getAttribute('perep') !== undefined)) 
+        ? SE.$(`perepid_${idpost}`).getAttribute('perep') 
+        : `${window.location.pathname.replace(/[/]/gi, '')}`;    
 
-        let obj = {"postid":`${idpost}`, "wallid":`${window.location.pathname.replace(/[/]/gi, '')}`};
+        console.log("wallid", wallid);
+         
+        let obj = {"postid":`${idpost}`, "wallid":`${wallid}`};
         SE.send(obj, "/postshare", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
-                SE.$(`post-message-${idpost}`).innerHTML = `posttttt`;
-                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000);
+                SE.$(`post-message-${idpost}`).innerHTML = `
+                <p class="repost-mess">    ${MESS.errorFormMessage().postshared}    </p>
+                `;
+                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 300000);
             } else if ((JSON.parse(res).noshared.code === "ER_DUP_ENTRY")) {
-                SE.$(`post-message-${idpost}`).innerHTML = `${MESS.errorFormMessage().postisonmypage}`; 
-                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000); 
+                SE.$(`post-message-${idpost}`).innerHTML = `
+                <p class="repost-mess">     ${MESS.errorFormMessage().postisonmypage}</p>
+                
+                `; 
+                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 300000); 
             } 
         });
         

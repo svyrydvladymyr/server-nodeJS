@@ -58,7 +58,9 @@ let MESS = (() => {
             let postisonmypage = "Цей пост вже є на вашій сторінці!"
             let mypost = "Мій пост"
             let postfrom = "Репост від"
+            let postshared = "Пост поширено на вашу сторінку!"
             return {
+                postshared,
                 mypost,
                 postfrom,
                 postisonmypage,
@@ -171,7 +173,9 @@ let MESS = (() => {
             let postisonmypage = "This post is already on your page!"
             let mypost = "My post"
             let postfrom = "Repost from"
+            let postshared = "The repost is done on your page!"
             return {
+                postshared,
                 mypost,
                 postfrom,
                 postisonmypage,
