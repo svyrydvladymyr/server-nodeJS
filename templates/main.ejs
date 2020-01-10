@@ -3,7 +3,7 @@
 <head>
     <%- include("./parts/head.ejs") %>
 </head>
-<body>
+<body id="bodyy" onscroll="BLOG.scroll()">
     <%- include("./parts/header.ejs") %>
 
     <% if((permissAccess === 'true') && (activee === 'active')) {%>
@@ -15,7 +15,7 @@
     <div class="wrap">  
         <div class="out1"></div>
         <div class="out2"></div>
-        <div class="side">
+        <div class="side" id="side">
             <%- include("./parts/info.ejs") %>
 
             <% if((permissEdit === 'true') && (vfriendme === 'on')) {%>
@@ -41,7 +41,7 @@
                 <%- include("./parts/projectsside.ejs") %> 
             <% } %>
 
-            <div class="footer footer-main-info main-footer-small">
+            <div class="footer footer-main-info main-footer-small" id="footer-side">
                 <%- include("./parts/footer2.ejs") %>
             </div>
         </div>

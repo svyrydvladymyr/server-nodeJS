@@ -120,7 +120,7 @@ let BLOG = (() => {
                     let share = (who === 'my') ? `<i class='far fa-user'></i>` : (who === 'fr') ? `<i class='fas fa-share' onclick="BLOG.postShareProof('${postres[i].postid}')"></i>` : ``;
                     let mypost = (postres[i].perepostid === 'my') ? `<i class='fas fa-level-up-alt myarrow'></i>` : ``;
                     let posttitle = (postres[i].perepostid === 'my') ? `${MESS.errorFormMessage().mypost}` : `${MESS.errorFormMessage().postfrom + ': ' + postres[i].peresurname + ' ' +postres[i].perename}`;
-                    let pere =  (postres[i].perepostfromid === 'me') ? `` : `
+                    let pere = (postres[i].perepostfromid === 'me') ? `` : `
                         <div class="art-post-header-per" id="art-post-header-per">
                             <div class="post-header-arrow" title="${posttitle}">${mypost}<i class='fas fa-level-down-alt'></i> </div>
                             <div class="post_header_img_per" 
@@ -131,7 +131,16 @@ let BLOG = (() => {
                                 <p>${postres[i].peresurname}</p><p style="margin-left:3px;">${postres[i].perename}</p><p style="width:100%;">${postres[i].perepostdate}</p>
                             </div>
                         </div>                        
-                        `;                    
+                        `;     
+                    let postwho = (postres[i].perepostfromid === 'me') ? `` : `
+                        <div class="post_header_who">
+                            <div class="post_header_wrap_who">
+                                <div class="post_header_name_who" onclick="SE.redirect('${postres[i].postwhoid}')">
+                                    <p>${postres[i].postwhosurname}</p><p style="margin-left:3px;">${postres[i].postwhoname}</p>
+                                </div>
+                            </div>
+                        </div>`;     
+                    let megpost  = (postres[i].perepostfromid === 'me') ? `margin-top:10px; border-radius: 4px;` : ``;            
                     SE.$(`article-blog-wrap`).innerHTML += `     
                     <div class="art-post-wrap">
                         <div class="art-post-header">
@@ -145,7 +154,8 @@ let BLOG = (() => {
                             <div class="post_header_icon">${del}</div>
                         </div>    
                         ${pere}    
-                        <div class="art-post-body"><p>${postres[i].post}</p></div>    
+                        ${postwho}    
+                        <div class="art-post-body" style="${megpost}"><p>${postres[i].post}</p></div>    
                         <div class="art-post-footer">
                             <div class="art-post-footer-like-wrap">
                                 <div class="art-post-footer-like">
@@ -211,18 +221,75 @@ let BLOG = (() => {
         let obj = {"postid":`${idpost}`, "wallid":`${wallid}`};
         SE.send(obj, "/postshare", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
-                SE.$(`post-message-${idpost}`).innerHTML = `
-                <p class="repost-mess">    ${MESS.errorFormMessage().postshared}    </p>
-                `;
-                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 300000);
+                SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess">${MESS.errorFormMessage().postshared}</p>`;
+                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000);
             } else if ((JSON.parse(res).noshared.code === "ER_DUP_ENTRY")) {
-                SE.$(`post-message-${idpost}`).innerHTML = `
-                <p class="repost-mess">     ${MESS.errorFormMessage().postisonmypage}</p>
-                
-                `; 
-                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 300000); 
+                SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess" style="color: #eaa5a5; text-shadow: 0px 0px 2px #ff0000;">${MESS.errorFormMessage().postisonmypage}</p>`; 
+                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000); 
             } 
         });
+        
+    };
+
+    //scroll
+    let direction = document.documentElement.scrollTop;
+    let scroll = () => {
+
+        let info = (SE.$('sideinfo')) ? SE.$('sideinfo').scrollHeight + 20 : 0;        
+        let friend = (SE.$('side-sub-friends')) ? SE.$('side-sub-friends').scrollHeight + 20 : 0;       
+        let skill = (SE.$('side-sub-skills')) ? SE.$('side-sub-skills').scrollHeight + 20 : 0;       
+        let project = (SE.$('side-sub-projects')) ? SE.$('side-sub-projects').scrollHeight + 20 : 0;       
+        let footer = (SE.$('footer-side')) ? SE.$('footer-side').scrollHeight + 10 : 0;       
+        let sumside = info + friend + skill + project + footer;
+
+        console.log(info);
+        console.log(friend);
+        console.log(skill);
+        console.log(project);
+        console.log(footer);
+
+        console.log(sumside);
+        let diect, paddingadd, totop;
+
+        diect = sumside - window.innerHeight;
+
+        if (direction < document.documentElement.scrollTop) {
+            direction = document.documentElement.scrollTop;
+            direct = 'down';
+
+            paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight;
+
+            totop = 0;
+        } else {
+            direction = document.documentElement.scrollTop;
+            direct = 'top';
+
+            paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight - diect;
+
+            totop = document.documentElement.scrollTop;
+        }
+        console.log("ttt", direct);
+        console.log("yyyy", diect);
+        console.log("sssssss",diect - document.documentElement.scrollTop);
+        
+        // paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight;
+
+        if (document.documentElement.scrollTop > sumside + SE.$('header').scrollHeight - window.innerHeight){
+            SE.$('side').style.alignSelf = 'flex-end';
+            SE.$('side').style.paddingTop = `0px`;
+            SE.$('side').style.paddingBottom = `${paddingadd}px`;
+        } else {
+            SE.$('side').style.alignSelf = 'flex-start';
+            SE.$('side').style.paddingBottom = `0px`;            
+            SE.$('side').style.paddingTop = `${totop - 144}px`;   
+            if (document.documentElement.scrollTop === 0){
+                setTimeout(() => { SE.$('side').style.paddingTop = `0px` }, 100);
+            }         
+        }
+
+
+        console.log("paddingadd", paddingadd);
+
         
     };
 
@@ -236,6 +303,7 @@ let BLOG = (() => {
         postList,
         postShareProof,
         closeProfShare,
-        postShare
+        postShare,
+        scroll
     }
 })();
