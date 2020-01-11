@@ -59,7 +59,9 @@ let MESS = (() => {
             let mypost = "Мій пост"
             let postfrom = "Репост від"
             let postshared = "Пост поширено на вашу сторінку!"
+            let postwasdell = "Пост було видалено!"
             return {
+                postwasdell,
                 postshared,
                 mypost,
                 postfrom,
@@ -174,7 +176,9 @@ let MESS = (() => {
             let mypost = "My post"
             let postfrom = "Repost from"
             let postshared = "The repost is done on your page!"
+            let postwasdell = "The post has been deleted!"
             return {
+                postwasdell,
                 postshared,
                 mypost,
                 postfrom,

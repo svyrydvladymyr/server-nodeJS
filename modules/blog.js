@@ -136,11 +136,59 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
         });
     };
 
+    let postlike = (req, res) => {
+        checkProof(req, res, (req, res, userid) => { 
+            console.log("userid", userid);
+            console.log("postidid", req.body.postid);
+            console.log("wallid", req.body.wallid);
+            console.log("type", req.body.type);
 
+            let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = '${req.body.type}'`;
+            sqlquery(req, res, sql, `err-find-like-${req.body.type}`, `no-${req.body.type}`, (req, res, result) => {
+                console.log(result);
+                if ((result != '') && (result[0].likeuserid === userid)){
+                    $_log(`like-is-${req.body.type}`, '0', 'res', res);
+                } else {
+                    let sql = `INSERT INTO like_${req.body.wallid} (likeuserid, likepostid, liketype) VALUE ('${userid}', '${req.body.postid}', '${req.body.type}')`;
+                    sqlquery(req, res, sql, `err-add-like-${req.body.type}`, `noadd${req.body.type}`, (req, res, result) => {
+                        console.log(result);
+                        $_log(`like-added-${req.body.type}`, result.affectedRows, 'res', res);
+
+                    }, 'noerr');   
+                }
+            }, 'noerr');
+        });
+    };
+
+    let postlikechange = (req, res) => {
+        checkProof(req, res, (req, res, userid) => { 
+            console.log("userid", userid);
+            console.log("postidid", req.body.postid);
+            console.log("wallid", req.body.wallid);
+            console.log("type", req.body.type);
+
+            let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = '${req.body.type}'`;
+            sqlquery(req, res, sql, `err-find-like-${req.body.type}`, `no-${req.body.type}`, (req, res, result) => {
+                
+
+
+                if (result != ''){
+                    console.log("likeislength",result.length);
+                    let likeis = (result[0].likeuserid === userid) ? 'yes' : 'no';
+                    console.log("likeis", likeis);
+                    $_log(`like-is-${req.body.type}`, {"likeis":`${likeis}`, "likelength":`${result.length}`}, 'res', res);
+                } else {
+
+                }
+            }, 'noerr');
+        });
+    };
 
 
 module.exports = {
     sendpost,
     postlist,
-    postshare
+    postshare,
+    postlike,
+    postlikechange
 }

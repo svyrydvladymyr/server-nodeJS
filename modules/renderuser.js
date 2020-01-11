@@ -226,6 +226,7 @@ let renderuser = (req, res) => {
                                 createTable(getuserid, 'friend');
                                 createTable(getuserid, 'message');
                                 createTable(getuserid, 'blog');
+                                createTable(getuserid, 'like');
                                 userObjAutoris = result;
                                 //permission for edit
                                 permissionEdit = ((result[0].token === clientToken) && (result[0].userid === req.params['userid'])) ? true : false;

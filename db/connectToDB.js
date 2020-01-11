@@ -15,15 +15,15 @@ let mysql = require('mysql');
 
 let con, db_config = {
     driver: "mysql",
-    host: "localhost",
-    user: "root",
-    password: "",
-    // password: "kalcifer1988",
+    host: "localhost" || "eu-cdbr-west-02.cleardb.net",
+    user: "root" || "bb3b6857c7c94b",
+    // password: "",
+    password: '' || "kalcifer1988",
     charset: 'utf8',
     collation: 'utf8_unicode_ci',
     prefix: '',
     strict: false,
-    database: "kalcifer33333"
+    database: "kalcifer33333" || "heroku_c286770ec73016d"
   };
 
 let dbName = db_config.database;

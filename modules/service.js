@@ -172,6 +172,12 @@ let createTable = (getuserid, type) => {
             perepostdate VARCHAR(20),
             perepostid VARCHAR(30)
             )`; 
+    } else if (type === 'like') {
+        sql = `CREATE TABLE like_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
+            likeuserid VARCHAR(100),
+            likepostid VARCHAR(50),
+            liketype VARCHAR(20)
+            )`; 
     }      
     con.query(sql, function (err, result) {
         err ? $_log(`err-create-table-${type}`, err.code) : $_log(`table-${type}-created`, result.protocol41);

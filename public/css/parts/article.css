@@ -476,3 +476,18 @@
     font-weight: bold;
     color: #464646;
 }
+
+.postwasdell{
+    width: 98%;
+    height: 31px;
+    background: #ebebeb;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    text-align: center; 
+}
+
+.postwasdell p{
+    margin: 0px;
+}
