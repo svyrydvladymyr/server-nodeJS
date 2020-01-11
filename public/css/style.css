@@ -46,6 +46,44 @@ body{
 .out1{
     grid-area: out1;
     min-width: 35px;
+    position: relative;
+}
+
+.totop{
+    width: 37px;
+    height: 37px;
+    display: none;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background: var(--second-color);
+    border-radius: 7px;
+    position: fixed;
+    color: #ffffff;
+    bottom: 40px;
+    text-align: center;
+    margin-left: 220px;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    text-shadow: 0px 0px 2px #111111;
+    box-shadow: 0px 0px 2px #111111;
+    z-index: 5;
+}
+
+.totop > i{
+    height: 8px;
+}
+
+.totop > i:first-child{
+    height: 10px;
+    font-size: 22px;
+}
+
+.totop > i:last-child{
+    margin-top: -2px;
+}
+
+.totop:hover{
+    box-shadow: 0px 0px 4px #111111;
 }
 
 .out2{

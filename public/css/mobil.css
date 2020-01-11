@@ -447,6 +447,10 @@
     display: none;
 }
 
+.totop{
+    margin-left: 20px;
+}
+
 @media screen and (min-width:500px) and (max-width:766px){
     .messenger{width: 98%}
     .messenger_close{width: 98%}

@@ -105,7 +105,7 @@ let BLOG = (() => {
 
     //show post list
     let postList = (pageid) => {   
-        let stepor = SE.$(`article-blog-wrap`).getAttribute('step');
+        let stepor = (SE.$(`article-blog-wrap`)) ? SE.$(`article-blog-wrap`).getAttribute('step') : null;
         let step = ((stepor !== null) && (stepor !== undefined)) ? SE.$(`article-blog-wrap`).getAttribute('step') : 0;
         SE.send({"pageid": `${pageid}`, "step": `${step}`}, "/postlist", (res) => {
             if (JSON.parse(res).res) {
@@ -116,7 +116,7 @@ let BLOG = (() => {
                 let postres = JSON.parse(res).res;
                 for (let i = 0; i < postres.length; i++) {
                     let who = postres[i].who;
-                    let del = (who === 'my') ? `<i class='far fa-trash-alt'></i>` : (who === 'fr') ? `` : ``;
+                    let del = (who === 'my') ? `<i class='far fa-trash-alt' onclick="BLOG.delpost('${postres[i].postid}')"></i>` : (who === 'fr') ? `` : ``;
                     let share = (who === 'my') ? `<i class='far fa-user'></i>` : (who === 'fr') ? `<i class='fas fa-share' onclick="BLOG.postShareProof('${postres[i].postid}')"></i>` : ``;
                     let mypost = (postres[i].perepostid === 'my') ? `<i class='fas fa-level-up-alt myarrow'></i>` : ``;
                     let posttitle = (postres[i].perepostid === 'my') ? `${MESS.errorFormMessage().mypost}` : `${MESS.errorFormMessage().postfrom + ': ' + postres[i].peresurname + ' ' +postres[i].perename}`;
@@ -211,7 +211,9 @@ let BLOG = (() => {
 
     //share post
     let postShare = (idpost) => {
+
         console.log("postid", idpost);
+
         let wallid = ((SE.$(`perepid_${idpost}`)) && (SE.$(`perepid_${idpost}`).getAttribute('perep') !== undefined)) 
         ? SE.$(`perepid_${idpost}`).getAttribute('perep') 
         : `${window.location.pathname.replace(/[/]/gi, '')}`;    
@@ -226,71 +228,29 @@ let BLOG = (() => {
             } else if ((JSON.parse(res).noshared.code === "ER_DUP_ENTRY")) {
                 SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess" style="color: #eaa5a5; text-shadow: 0px 0px 2px #ff0000;">${MESS.errorFormMessage().postisonmypage}</p>`; 
                 setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000); 
-            } 
-        });
-        
+            }; 
+        });        
     };
 
     //scroll
-    let direction = document.documentElement.scrollTop;
     let scroll = () => {
-
         let info = (SE.$('sideinfo')) ? SE.$('sideinfo').scrollHeight + 20 : 0;        
         let friend = (SE.$('side-sub-friends')) ? SE.$('side-sub-friends').scrollHeight + 20 : 0;       
         let skill = (SE.$('side-sub-skills')) ? SE.$('side-sub-skills').scrollHeight + 20 : 0;       
         let project = (SE.$('side-sub-projects')) ? SE.$('side-sub-projects').scrollHeight + 20 : 0;       
         let footer = (SE.$('footer-side')) ? SE.$('footer-side').scrollHeight + 10 : 0;       
         let sumside = info + friend + skill + project + footer;
-
-        console.log(info);
-        console.log(friend);
-        console.log(skill);
-        console.log(project);
-        console.log(footer);
-
-        console.log(sumside);
-        let diect, paddingadd, totop;
-
-        diect = sumside - window.innerHeight;
-
-        if (direction < document.documentElement.scrollTop) {
-            direction = document.documentElement.scrollTop;
-            direct = 'down';
-
-            paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight;
-
-            totop = 0;
+        if (window.innerWidth < 844) {
+            SE.$('totop').style.display = (document.documentElement.scrollTop > sumside + 800) ? "flex" : "none";
         } else {
-            direction = document.documentElement.scrollTop;
-            direct = 'top';
+            SE.$('totop').style.display = (document.documentElement.scrollTop > sumside) ? "flex" : "none";
+        }        
+    };
 
-            paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight - diect;
-
-            totop = document.documentElement.scrollTop;
-        }
-        console.log("ttt", direct);
-        console.log("yyyy", diect);
-        console.log("sssssss",diect - document.documentElement.scrollTop);
-        
-        // paddingadd = document.body.scrollHeight - document.documentElement.scrollTop - window.innerHeight;
-
-        if (document.documentElement.scrollTop > sumside + SE.$('header').scrollHeight - window.innerHeight){
-            SE.$('side').style.alignSelf = 'flex-end';
-            SE.$('side').style.paddingTop = `0px`;
-            SE.$('side').style.paddingBottom = `${paddingadd}px`;
-        } else {
-            SE.$('side').style.alignSelf = 'flex-start';
-            SE.$('side').style.paddingBottom = `0px`;            
-            SE.$('side').style.paddingTop = `${totop - 144}px`;   
-            if (document.documentElement.scrollTop === 0){
-                setTimeout(() => { SE.$('side').style.paddingTop = `0px` }, 100);
-            }         
-        }
-
-
-        console.log("paddingadd", paddingadd);
-
-        
+    //delete post
+    let delpost = (postid) => {
+      console.log("delpostpostid", postid);
+      
     };
 
     
@@ -304,6 +264,7 @@ let BLOG = (() => {
         postShareProof,
         closeProfShare,
         postShare,
-        scroll
+        scroll,
+        delpost
     }
 })();
