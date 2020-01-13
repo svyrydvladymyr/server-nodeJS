@@ -18,7 +18,7 @@ let con, db_config = {
     host: "localhost",
     user: "root",
     // password: "",
-    password: '',
+    password: 'kalcifer1988',
     charset: 'utf8',
     collation: 'utf8_unicode_ci',
     prefix: '',

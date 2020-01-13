@@ -314,7 +314,7 @@
 }
 
 .art-post-footer-like > div > div{
-    width: 130px;
+    width: 180px;
     display: table;
     font-weight: normal;
     min-height: 24px;
@@ -325,7 +325,7 @@
     padding: 5px;
     position: absolute;
     bottom: 20px;
-    left: -1px;
+    left: -8px;
     z-index: 5;
 }
 
@@ -339,15 +339,33 @@
     z-index: -1;
     bottom: 1px;
     transform: skewY(-42deg) rotate(-1deg);
+    left: 10px;
 }
 
 .art-post-footer-like > div > div > p{
+    border-bottom: 1px solid #383838;
     margin: 0px;
+    display: table;
+}
+
+.art-post-footer-like > div > div > p:hover{
+    border-bottom: 1px solid rgb(143, 143, 143);
+    text-shadow: 0px 0px 2px #ffffff;
 }
 
 .art-post-footer-com-wrap > i{
     cursor: pointer;
     color: #484848;
+}
+
+.likelist-share{
+    left: -150px!important;
+}
+
+.likelist-share::before{
+    transform: skewY(248deg) rotate(-238deg)!important;
+    left: 133px!important;
+    bottom: 12px!important;
 }
 
 .art-post-footer-com{
@@ -526,4 +544,81 @@
 
 .postwasdell p{
     margin: 0px;
+}
+
+.like-all-wrap{
+    width: 100%;
+    min-height: 20px;
+    max-height: 400px;
+    border-radius: 6px;
+    background: #505050;
+    color: #ffffff;
+    display: flex;
+    padding: 5px 1px;
+    margin: 7px 0px;
+    overflow-x: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.like-all-wrap > p:first-child {
+    width: 100%;
+    height: 32px;
+    padding: 6px 10px 0px 0px;
+    text-align: right;
+    margin: 0px;
+}
+
+.like-all-wrap-body{
+    cursor: pointer;
+    display: flex;
+    width: 156px;
+    height: 22px;
+    border-radius: 4px;
+    padding: 1px;
+    margin: 2px;
+    overflow: hidden;
+    background: #ffffff;
+    color: #111111;
+}
+
+.like-all-wrap-body > p{
+    margin: 0px;
+    width: 135px;
+    height: 20px;
+    overflow: hidden;
+    font-size: 13px;
+    padding: 2px;
+}
+
+.like-all-wrap-body > span{
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+    background: #ffffff;
+    background-size: cover;
+}
+
+.post-com-wrap{
+    width: 100%;
+    min-height: 30px;
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid #c1c1c1;
+    margin: 9px 0px;
+}
+
+.post-com-write{
+    outline: 1px solid red;
+    width: 100%;
+    height: 40px;
+    padding: 3px 0px;
+}
+
+.post-com-com{
+    outline: 1px solid green;
+    width: 100%;
+    min-height: 10px;
+    padding: 3px 0px;
 }

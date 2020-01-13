@@ -149,7 +149,7 @@ let BLOG = (() => {
                                         <i class='fas fa-heart'></i>
                                     </span>
                                     <div id="likeheartlength-${postres[i].postid}" 
-                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'heart', '15')"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'heart', '15', 'shortlist')"
                                          onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'heart')">
                                          ${postres[i].heartlength}
                                     </div>
@@ -161,7 +161,7 @@ let BLOG = (() => {
                                         <i class='fas fa-thumbs-up'></i>
                                     </span>
                                     <div id="likefingerlength-${postres[i].postid}"
-                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'finger', '15')"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'finger', '15', 'shortlist')"
                                          onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'finger')">
                                          ${postres[i].fingerlength}
                                     </div>
@@ -173,7 +173,7 @@ let BLOG = (() => {
                                         <i class='far fa-smile'></i>
                                     </span>
                                     <div id="likesmilelength-${postres[i].postid}"
-                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'smile', '15')"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'smile', '15', 'shortlist')"
                                          onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'smile')">
                                          ${postres[i].smilelength}
                                     </div>
@@ -182,10 +182,14 @@ let BLOG = (() => {
                             <div class="art-post-footer-com-wrap">
                                 <div class="art-post-footer-com">
                                     <p>${postres[i].com}</p>
-                                    <span><i class='far fa-comment-dots'></i></span>
+                                    <span onclick="BLOG.postComShow('${postres[i].postid}')"><i class='far fa-comment-dots'></i></span>
                                 </div>       
-                                <div class="art-post-footer-com">
-                                    <p id="likesharelength-${postres[i].postid}">${postres[i].share}</p>
+                                <div class="art-post-footer-like">
+                                    <div id="likesharelength-${postres[i].postid}"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'share', '15', 'shortlist')"
+                                         onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'share')">
+                                         ${postres[i].share}
+                                    </div>
                                     ${share}
                                 </div>                   
                             </div>
@@ -237,8 +241,8 @@ let BLOG = (() => {
     //share post
     let postShare = (idpost) => {
         let wallid = ((SE.$(`perepid_${idpost}`)) && (SE.$(`perepid_${idpost}`).getAttribute('perep') !== undefined)) 
-        ? SE.$(`perepid_${idpost}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`;  
+            ? SE.$(`perepid_${idpost}`).getAttribute('perep') 
+            : `${window.location.pathname.replace(/[/]/gi, '')}`;  
         let obj = {"postid":`${idpost}`, "wallid":`${wallid}`};
         SE.send(obj, "/postshare", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
@@ -270,7 +274,7 @@ let BLOG = (() => {
         }   
         let addpost = document.body.clientHeight - window.innerHeight -1;
         if (document.documentElement.scrollTop > addpost){
-                BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
+            BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
         };             
     };
 
@@ -299,8 +303,8 @@ let BLOG = (() => {
     //like post
     let like = (postid, type) => {
         let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
-        ? SE.$(`perepid_${postid}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`;
+            ? SE.$(`perepid_${postid}`).getAttribute('perep') 
+            : `${window.location.pathname.replace(/[/]/gi, '')}`;
         let bgcolor;
         if (type === 'heart'){ bgcolor = `linear-gradient(#fb5c71, #e94055)`};
         if (type === 'finger'){ bgcolor = `linear-gradient(#38a7fc, #195df1)`};
@@ -319,47 +323,67 @@ let BLOG = (() => {
     };
 
     //event if mouse over post
-    let postLikeOver = (postid, type, step) => {
+    let postLikeOver = (postid, type, step, typeres) => {
         let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
-        ? SE.$(`perepid_${postid}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`;
+            ? SE.$(`perepid_${postid}`).getAttribute('perep') 
+            : `${window.location.pathname.replace(/[/]/gi, '')}`;
+        let likelistshare = (type === 'share') ? 'likelist-share' : '';   
         let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "type":`${type}`, "step":`${step}`};
-        SE.send(obj, "/postlikelist", (res) => {
-            if (JSON.parse(res).res) {
-
-                console.log("res", JSON.parse(res).res);
-
-                let lengthlikes = +SE.$(`like${type}length-${postid}`).innerHTML.trim();
-                
-                
-
-                if (+SE.$(`like${type}length-${postid}`).innerHTML.trim() !== 0) {
-                    if ((SE.$(`like${type}length-${postid}`)) && (!SE.$(`likeall${type}-${postid}`))) {
-                        SE.$(`like${type}length-${postid}`).innerHTML += `
-                            <div id="likeall${type}-${postid}">
-                                <p>dfgdfg d</p>
-                                <p>dfgdfg d</p>
-                                <p>dfgdfg d</p>
-                                <p>dfgdfg d</p>
-                            </div>
-                        `;
-                        SE.$(`likeall${type}-${postid}`).innerHTML += `<p>show all ${lengthlikes}</p>`;
-                        console.log("over");      
-                    };  
-                };
-            }; 
-        });
+        if (typeres === 'shortlist') {
+            if (+SE.$(`like${type}length-${postid}`).innerHTML.trim() !== 0) {
+                if ((SE.$(`like${type}length-${postid}`)) && (!SE.$(`likeall${type}-${postid}`))) {
+                    SE.send(obj, "/postlikelist", (res) => {
+                        if (JSON.parse(res).res) {
+                            let masslikes = JSON.parse(res).res;
+                            let lengthlikes = +SE.$(`like${type}length-${postid}`).innerHTML.trim();
+                            SE.$(`like${type}length-${postid}`).innerHTML += `<div class="${likelistshare}" id="likeall${type}-${postid}"></div>`;
+                            for (let i = 0; i < masslikes.length; i++) {
+                                SE.$(`likeall${type}-${postid}`).innerHTML += `<p onclick="SE.redirect('${masslikes[i].userid}')">${masslikes[i].surname} ${masslikes[i].name}</p>`;
+                            }
+                            SE.$(`likeall${type}-${postid}`).innerHTML += `<p onclick="BLOG.postLikeOver('${postid}', '${type}', '1000', 'fulllist')">${MESS.errorFormMessage().showall} ${lengthlikes} ...</p>`;
+                        }; 
+                    });
+                };  
+            };
+        } else if (typeres === 'fulllist') {
+            SE.send(obj, "/postlikelist", (res) => {
+                SE.$(`post-message-${postid}`).innerHTML = ``;
+                if (JSON.parse(res).res) {
+                    let masslikes = JSON.parse(res).res;
+                    if(SE.$(`likeall${type}-${postid}`)){ SE.$(`likeall${type}-${postid}`).remove(); };
+                    SE.$(`post-message-${postid}`).innerHTML += `<div class="like-all-wrap" id="like-all-wrap-${postid}"></div>`;
+                    SE.$(`like-all-wrap-${postid}`).innerHTML += `<p><i class='far fa-times-circle' style="cursor: pointer;" onclick="BLOG.closeProfShare('${postid}')"></i></p>`;
+                    for (let i = 0; i < masslikes.length; i++) {
+                        SE.$(`like-all-wrap-${postid}`).innerHTML += `<div class="like-all-wrap-body" onclick="SE.redirect('${masslikes[i].userid}')">
+                            <span style="background-image: url('${masslikes[i].ava}'); background-position:${masslikes[i].avasettings};"></span>
+                            <p>${masslikes[i].surname} ${masslikes[i].name}</p>
+                        </div>`;
+                    };
+                }; 
+            });
+        };
     };
 
     //event if mouse leave post
     let postLikeLeave = (postid, type) => {
         if (SE.$(`likeall${type}-${postid}`)) { SE.$(`likeall${type}-${postid}`).innerHTML = ``; }  
         if(SE.$(`likeall${type}-${postid}`)){ SE.$(`likeall${type}-${postid}`).remove(); };
-        console.log("over");
-
     };
 
+    //show post comments
+    let postComShow = (postid) => {
+        if (!SE.$(`post-com-wrap-${postid}`)) {
+            SE.$(`post-message-${postid}`).innerHTML = `
+                <div class="post-com-wrap" id="post-com-wrap-${postid}">
+                    <div class="post-com-com"></div>
+                    <div class="post-com-write"></div>
+                </div>
+            `;
+        } else {
+            SE.$(`post-message-${postid}`).innerHTML = '';
+        }
 
+    };
     
     return {
         lengthText,
@@ -376,6 +400,7 @@ let BLOG = (() => {
         like,
         postDelProof,
         postLikeOver,
-        postLikeLeave
+        postLikeLeave,
+        postComShow
     }
 })();

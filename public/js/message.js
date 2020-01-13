@@ -61,7 +61,9 @@ let MESS = (() => {
             let postshared = "Пост поширено на вашу сторінку!"
             let postwasdell = "Пост було видалено!"
             let postdelproof = "Підтвердіть видалення!"
+            let showall = "і ще"
             return {
+                showall,
                 postdelproof,
                 postwasdell,
                 postshared,
@@ -180,7 +182,9 @@ let MESS = (() => {
             let postshared = "The repost is done on your page!"
             let postwasdell = "The post has been deleted!"
             let postdelproof = "Confirm the deletion!"
+            let showall = "and more"
             return {
+                showall,
                 postdelproof,                
                 postwasdell,
                 postshared,
