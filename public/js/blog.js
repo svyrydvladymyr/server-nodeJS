@@ -97,26 +97,25 @@ let BLOG = (() => {
                 if (JSON.parse(res).res === 1) {
                     SE.$("article-write").value = '';
                     SE.$(`article-smile-box`).innerHTML = ``;
+                    SE.$(`article-blog-wrap`).innerHTML = ``;
                     BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
-                }
+                };
             });
-        }        
+        };        
     };
 
     //show post list
     let postList = (pageid) => {   
-        let stepor = (SE.$(`article-blog-wrap`)) ? SE.$(`article-blog-wrap`).getAttribute('step') : null;
-        let step = ((stepor !== null) && (stepor !== undefined)) ? SE.$(`article-blog-wrap`).getAttribute('step') : 0;
+        let step = document.getElementsByClassName('art-post-wrap').length;
         SE.send({"pageid": `${pageid}`, "step": `${step}`}, "/postlist", (res) => {
             if (JSON.parse(res).res) {
 
                 console.log("postlist", JSON.parse(res).res);
 
-                SE.$(`article-blog-wrap`).innerHTML = ``;
                 let postres = JSON.parse(res).res;
                 for (let i = 0; i < postres.length; i++) {
                     let who = postres[i].who;
-                    let del = (who === 'my') ? `<i class='far fa-trash-alt' onclick="BLOG.delpost('${postres[i].postid}')"></i>` : (who === 'fr') ? `` : ``;
+                    let del = (who === 'my') ? `<i class='far fa-trash-alt' onclick="BLOG.postDelProof('${postres[i].postid}')"></i>` : (who === 'fr') ? `` : ``;
                     let share = (who === 'my') ? `<i class='far fa-user'></i>` : (who === 'fr') ? `<i class='fas fa-share' onclick="BLOG.postShareProof('${postres[i].postid}')"></i>` : ``;
                     let mypost = (postres[i].perepostid === 'my') ? `<i class='fas fa-level-up-alt myarrow'></i>` : ``;
                     let posttitle = (postres[i].perepostid === 'my') ? `${MESS.errorFormMessage().mypost}` : `${MESS.errorFormMessage().postfrom + ': ' + postres[i].peresurname + ' ' +postres[i].perename}`;
@@ -144,38 +143,56 @@ let BLOG = (() => {
                         <div class="art-post-footer">
                             <div class="art-post-footer-like-wrap">
                                 <div class="art-post-footer-like">
-                                    <span style="background:linear-gradient(#fdc8cf, #f4b7bf)" id="likeheart-${postres[i].postid}" onclick="BLOG.like('${postres[i].postid}', 'heart')">
+                                    <span style="background:linear-gradient(#fdc8cf, #f4b7bf)" 
+                                          id="likeheart-${postres[i].postid}" 
+                                          onclick="BLOG.like('${postres[i].postid}', 'heart')">
                                         <i class='fas fa-heart'></i>
                                     </span>
-                                    <p id="likeheartlength-${postres[i].postid}"></p>
+                                    <div id="likeheartlength-${postres[i].postid}" 
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'heart', '15')"
+                                         onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'heart')">
+                                         ${postres[i].heartlength}
+                                    </div>
                                 </div>
-                                <div class="art-post-footer-like">
-                                    <span style="background: linear-gradient(#38a7fc, #195df1);">
+                                <div class="art-post-footer-like"> 
+                                    <span style="background: linear-gradient(#afdafb, #92aade);" 
+                                          id="likefinger-${postres[i].postid}" 
+                                          onclick="BLOG.like('${postres[i].postid}', 'finger')">
                                         <i class='fas fa-thumbs-up'></i>
                                     </span>
-                                    <p>1000</p>
+                                    <div id="likefingerlength-${postres[i].postid}"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'finger', '15')"
+                                         onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'finger')">
+                                         ${postres[i].fingerlength}
+                                    </div>
                                 </div>
                                 <div class="art-post-footer-like">
-                                    <span style="background: linear-gradient(#fdf6bc, #ffe600); color: #887a00; font-size: 18px;">
+                                    <span style="background: linear-gradient(#f7f1c1, #ffffff); color: #dcc500; font-size: 18px;" 
+                                          id="likesmile-${postres[i].postid}" 
+                                          onclick="BLOG.like('${postres[i].postid}', 'smile')">
                                         <i class='far fa-smile'></i>
                                     </span>
-                                    <p>1000</p>
+                                    <div id="likesmilelength-${postres[i].postid}"
+                                         onmouseover="BLOG.postLikeOver('${postres[i].postid}', 'smile', '15')"
+                                         onmouseleave="BLOG.postLikeLeave('${postres[i].postid}', 'smile')">
+                                         ${postres[i].smilelength}
+                                    </div>
                                 </div>
                             </div>
                             <div class="art-post-footer-com-wrap">
                                 <div class="art-post-footer-com">
-                                    <p>1000</p>
+                                    <p>${postres[i].com}</p>
                                     <span><i class='far fa-comment-dots'></i></span>
                                 </div>       
                                 <div class="art-post-footer-com">
-                                    <p>1000</p>
+                                    <p id="likesharelength-${postres[i].postid}">${postres[i].share}</p>
                                     ${share}
                                 </div>                   
                             </div>
-                        </div>`;
+                        </div>`;  
                     let post = (postres[i].post === "nopost") ? `<p class="postwasdell">${MESS.errorFormMessage().postwasdell}</p>` : `${postwho}<div class="art-post-body" style="${megpost}"><p>${postres[i].post}</p></div>${footer}`; 
                     SE.$(`article-blog-wrap`).innerHTML += `     
-                    <div class="art-post-wrap">
+                    <div class="art-post-wrap" id="post-wrap-${postres[i].postid}">
                         <div class="art-post-header">
                             <div class="post_header_img"
                                 style="background-image: url('${postres[i].ava}'); background-position: ${postres[i].avasettings};"
@@ -190,7 +207,15 @@ let BLOG = (() => {
                         ${post}                      
                         <div class="art-post-message" id="post-message-${postres[i].postid}"></div>
                     </div>`;
-                    BLOG.likechange(postres[i].postid, 'heart');
+                    if((postres[i].heart === 'yes') && (SE.$(`likeheart-${postres[i].postid}`))){
+                        SE.$(`likeheart-${postres[i].postid}`).style.background = `linear-gradient(#fb5c71, #e94055)`;
+                    };
+                    if((postres[i].finger === 'yes') && (SE.$(`likefinger-${postres[i].postid}`))){
+                        SE.$(`likefinger-${postres[i].postid}`).style.background = `linear-gradient(#38a7fc, #195df1)`;
+                    };
+                    if((postres[i].smile === 'yes') && (SE.$(`likesmile-${postres[i].postid}`))){
+                        SE.$(`likesmile-${postres[i].postid}`).style.background = `linear-gradient(#fdf6bc, #ffe600)`;
+                    };  
                 };
             };            
         });    
@@ -199,12 +224,11 @@ let BLOG = (() => {
     //show share proof
     let postShareProof = (idpost) => {
         SE.$(`post-message-${idpost}`).innerHTML = `
-            <div class="post-message-prof-wrap">
-                <p>${MESS.errorFormMessage().postsharemess}</p>
-                <p onclick="BLOG.postShare('${idpost}')">${MESS.errorFormMessage().prooffriends}</p>  
-                <p onclick="BLOG.closeProfShare('${idpost}')"><i class='fas fa-times'></i></p>         
-            </div>
-        `;
+        <div class="post-message-prof-wrap">
+            <p>${MESS.errorFormMessage().postsharemess}</p>
+            <p onclick="BLOG.postShare('${idpost}')">${MESS.errorFormMessage().prooffriends}</p>  
+            <p onclick="BLOG.closeProfShare('${idpost}')"><i class='fas fa-times'></i></p>         
+        </div>`;
     };
 
     //close share proof
@@ -212,21 +236,19 @@ let BLOG = (() => {
 
     //share post
     let postShare = (idpost) => {
-
-        console.log("postid", idpost);
-
         let wallid = ((SE.$(`perepid_${idpost}`)) && (SE.$(`perepid_${idpost}`).getAttribute('perep') !== undefined)) 
         ? SE.$(`perepid_${idpost}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`;    
-
-        console.log("wallid", wallid);
-         
+        : `${window.location.pathname.replace(/[/]/gi, '')}`;  
         let obj = {"postid":`${idpost}`, "wallid":`${wallid}`};
         SE.send(obj, "/postshare", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
                 SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess">${MESS.errorFormMessage().postshared}</p>`;
+                SE.$(`likesharelength-${idpost}`).innerHTML = `${+SE.$(`likesharelength-${idpost}`).innerHTML + 1}`;                
                 setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000);
             } else if ((JSON.parse(res).noshared.code === "ER_DUP_ENTRY")) {
+                SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess" style="color: #eaa5a5; text-shadow: 0px 0px 2px #ff0000;">${MESS.errorFormMessage().postisonmypage}</p>`; 
+                setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000); 
+            } else if ((JSON.parse(res).noshared === "You can not repost from your page to yours!")) {
                 SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess" style="color: #eaa5a5; text-shadow: 0px 0px 2px #ff0000;">${MESS.errorFormMessage().postisonmypage}</p>`; 
                 setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000); 
             }; 
@@ -245,53 +267,98 @@ let BLOG = (() => {
             SE.$('totop').style.display = (document.documentElement.scrollTop > sumside + 800) ? "flex" : "none";
         } else {
             SE.$('totop').style.display = (document.documentElement.scrollTop > sumside) ? "flex" : "none";
-        }        
+        }   
+        let addpost = document.body.clientHeight - window.innerHeight -1;
+        if (document.documentElement.scrollTop > addpost){
+                BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
+        };             
+    };
+
+    //show del proof
+    let postDelProof = (postid) => {
+        SE.$(`post-message-${postid}`).innerHTML = `
+        <div class="post-message-prof-wrap">
+            <p>${MESS.errorFormMessage().postdelproof}</p>
+            <p onclick="BLOG.delpost('${postid}')">${MESS.errorFormMessage().prooffriends}</p>  
+            <p onclick="BLOG.closeProfShare('${postid}')"><i class='fas fa-times'></i></p>         
+        </div>`;
     };
 
     //delete post
     let delpost = (postid) => {
-        console.log("delpostpostid", postid);
-      
+        let obj = {"postid":`${postid}`, "wallid":`${window.location.pathname.replace(/[/]/gi, '')}`};
+        SE.send(obj, "/postdel", (res) => {            
+            if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
+                if(SE.$(`post-wrap-${postid}`)){ SE.$(`post-wrap-${postid}`).remove(); };
+            } else {
+                SE.$(`post-message-${postid}`).innerHTML = '';
+            }; 
+        });    
     };
 
     //like post
     let like = (postid, type) => {
-        console.log("delpostpostid", postid);
-
         let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
         ? SE.$(`perepid_${postid}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`; 
-
-
+        : `${window.location.pathname.replace(/[/]/gi, '')}`;
+        let bgcolor;
+        if (type === 'heart'){ bgcolor = `linear-gradient(#fb5c71, #e94055)`};
+        if (type === 'finger'){ bgcolor = `linear-gradient(#38a7fc, #195df1)`};
+        if (type === 'smile'){ bgcolor = `linear-gradient(#fdf6bc, #ffe600)`};
         let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "type":`${type}`};
         SE.send(obj, "/postlike", (res) => {
-            if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
-                console.log("res", JSON.parse(res).res);
-                BLOG.likechange(postid, type);
+            if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '1')) {
+                let reslike = JSON.parse(res).res;  
+                if (reslike.likeis === 'yes'){
+                    SE.$(`like${type}-${postid}`).style.background = bgcolor;
+                    if (type === 'smile'){SE.$(`like${type}-${postid}`).style.color = '#887a00'};
+                }
+                SE.$(`like${type}length-${postid}`).innerHTML = `${reslike.likelength}`;
             }; 
         });      
     };
 
-    //likechange post
-    let likechange = (postid, type) => {
-        console.log("likechange", postid);
-
+    //event if mouse over post
+    let postLikeOver = (postid, type, step) => {
         let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
         ? SE.$(`perepid_${postid}`).getAttribute('perep') 
-        : `${window.location.pathname.replace(/[/]/gi, '')}`; 
-
-        let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "type":`${type}`};
-        SE.send(obj, "/postlikechange", (res) => {
+        : `${window.location.pathname.replace(/[/]/gi, '')}`;
+        let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "type":`${type}`, "step":`${step}`};
+        SE.send(obj, "/postlikelist", (res) => {
             if (JSON.parse(res).res) {
-                let reslike = JSON.parse(res).res;  
+
                 console.log("res", JSON.parse(res).res);
-                if (reslike.likeis === 'yes'){
-                    SE.$(`like${type}-${postid}`).style.background = `linear-gradient(#fb5c71, #e94055)`;
-                }
-                SE.$(`like${type}length-${postid}`).innerHTML = `${reslike.likelength}`;
-            };
-        });  
+
+                let lengthlikes = +SE.$(`like${type}length-${postid}`).innerHTML.trim();
+                
+                
+
+                if (+SE.$(`like${type}length-${postid}`).innerHTML.trim() !== 0) {
+                    if ((SE.$(`like${type}length-${postid}`)) && (!SE.$(`likeall${type}-${postid}`))) {
+                        SE.$(`like${type}length-${postid}`).innerHTML += `
+                            <div id="likeall${type}-${postid}">
+                                <p>dfgdfg d</p>
+                                <p>dfgdfg d</p>
+                                <p>dfgdfg d</p>
+                                <p>dfgdfg d</p>
+                            </div>
+                        `;
+                        SE.$(`likeall${type}-${postid}`).innerHTML += `<p>show all ${lengthlikes}</p>`;
+                        console.log("over");      
+                    };  
+                };
+            }; 
+        });
     };
+
+    //event if mouse leave post
+    let postLikeLeave = (postid, type) => {
+        if (SE.$(`likeall${type}-${postid}`)) { SE.$(`likeall${type}-${postid}`).innerHTML = ``; }  
+        if(SE.$(`likeall${type}-${postid}`)){ SE.$(`likeall${type}-${postid}`).remove(); };
+        console.log("over");
+
+    };
+
 
     
     return {
@@ -307,6 +374,8 @@ let BLOG = (() => {
         scroll,
         delpost,
         like,
-        likechange
+        postDelProof,
+        postLikeOver,
+        postLikeLeave
     }
 })();

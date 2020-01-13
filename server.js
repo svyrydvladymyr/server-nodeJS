@@ -8,7 +8,7 @@ let {showprojects, addprojects, showorhiddenproj, editproject, showprojsingle, u
 let {searchUser, addtofriends, prooftofriends, delfromfriends, showfriends} = require('./modules/searchuser');
 let {autorisation, exit, sendemail, verifyuser, autorisationSocial, autorisRouts, recoverdata} = require('./modules/autorisation');
 let {sendmessage, messangerlist, showmessage, showmess, delmess, delallmess, updatemessnew, messangernewkilk} = require('./modules/messager');
-let {sendpost, postlist, postshare, postlike, postlikechange} = require('./modules/blog');
+let {sendpost, postlist, postshare, postlike, postdel, postlikelist} = require('./modules/blog');
 let renderuser = require('./modules/renderuser');
 let {accessLog, $_log} = require('./modules/service');
 let passport = require('passport'); 
@@ -91,7 +91,8 @@ app.post('/sendpost', (req, res) => {sendpost(req, res)});
 app.post('/postlist', (req, res) => {postlist(req, res)});
 app.post('/postshare', (req, res) => {postshare(req, res)});
 app.post('/postlike', (req, res) => {postlike(req, res)});
-app.post('/postlikechange', (req, res) => {postlikechange(req, res)});
+app.post('/postdel', (req, res) => {postdel(req, res)});
+app.post('/postlikelist', (req, res) => {postlikelist(req, res)});
 
 //skills
 app.post('/showskills', (req, res) => {showskills(req, res)});

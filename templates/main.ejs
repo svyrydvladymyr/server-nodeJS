@@ -80,12 +80,14 @@
             // SE.$("reg-file").addEventListener("change", () => {VW.updateAva()});
             SE.send({"userid":window.location.href}, '/showprojects', WPROJ.showProjectsList);
             SE.send({"userid":window.location.href}, '/showskills', WSKILLS.showSkillsList);
+            SE.$(`article-blog-wrap`).innerHTML = ``;
             BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
         </script>
     <% } %>
 
     <% if((permissAccess === 'true') && (permissEdit === 'false')) {%>
         <script>
+            SE.$(`article-blog-wrap`).innerHTML = ``;
             BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
         </script>
     <% } %>

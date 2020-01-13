@@ -176,7 +176,9 @@ let createTable = (getuserid, type) => {
         sql = `CREATE TABLE like_${getuserid} (id INT AUTO_INCREMENT PRIMARY KEY,
             likeuserid VARCHAR(100),
             likepostid VARCHAR(50),
-            liketype VARCHAR(20)
+            liketype VARCHAR(20),
+            comment VARCHAR(400),
+            datecomment VARCHAR(20)
             )`; 
     }      
     con.query(sql, function (err, result) {

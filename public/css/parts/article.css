@@ -119,7 +119,7 @@
     border-radius: 6px;
     padding: 5px 0px;
     background: #fafafa;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .art-post-header{
@@ -297,19 +297,52 @@
     color: #ffffff;
     /* background: red; */
     border-radius: 50%;
-    font-size: 10px;
+    font-size: 9px;
     margin: 0px;
     width: 18px;
     height: 18px;    
 }
 
-.art-post-footer-like > p{
+.art-post-footer-like > div{
     cursor: pointer;
     color: #111111;
     margin: 0px;
     padding: 0px 3px 0px 3px;
     font-size: 12px;
     font-weight: bold;
+    position: relative;
+}
+
+.art-post-footer-like > div > div{
+    width: 130px;
+    display: table;
+    font-weight: normal;
+    min-height: 24px;
+    background: #383838;
+    color: #ffffff;
+    border: 1px solid #969696;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    bottom: 20px;
+    left: -1px;
+    z-index: 5;
+}
+
+.art-post-footer-like > div > div::before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: #383838;
+    position: absolute;
+    z-index: -1;
+    bottom: 1px;
+    transform: skewY(-42deg) rotate(-1deg);
+}
+
+.art-post-footer-like > div > div > p{
+    margin: 0px;
 }
 
 .art-post-footer-com-wrap > i{
@@ -381,16 +414,16 @@
     border: 1px solid #3a3a3a;
     width: 100%;
     color: #ffffff;
-    padding: 5px;
+    padding: 3px 0px;
     margin: 5px 0px 0px 0px;
     border-radius: 5px;
     background: #797979;
-    height: 40px;
+    height: 36px;
 }
 
 .post-message-prof-wrap p{
     margin: 0px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -431,12 +464,12 @@
 }
 
 .repost-mess{
-    font-size: 17px;
+    font-size: 14px;
     font-weight: bold;
     width: 100%;
-    height: 40px;
+    height: 36px;
     color: #ffffff;
-    padding: 9px;
+    padding: 7px;
     margin: 5px 0px 0px 0px;
     text-align: center;
     border-radius: 7px;
@@ -479,13 +512,16 @@
 
 .postwasdell{
     width: 98%;
-    height: 31px;
+    height: 22px;
     background: #ebebeb;
     margin: 5px;
-    padding: 5px;
-    border: 1px solid #d7d7d7;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px;
+    color: #3e3e3e;
+    border: 1px solid #cccccc;
     border-radius: 6px;
-    text-align: center; 
+    text-align: center;
 }
 
 .postwasdell p{

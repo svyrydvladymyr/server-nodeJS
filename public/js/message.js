@@ -54,13 +54,15 @@ let MESS = (() => {
             let messforboth = "Повідомлення буде видалено для обох. У співрозмовника залишиться відмітка про видалене повідомлення."
             let messdeleted = "Видалено!"
             let messdeletedall = "Ви можете видалити весь діалог. Повідомлення будуть видалені також і у вашого друга але залишаться помітки що вони були видалені."
-            let postsharemess = "Поширити на свою сторінку"
+            let postsharemess = "Поширити собі"
             let postisonmypage = "Цей пост вже є на вашій сторінці!"
             let mypost = "Мій пост"
             let postfrom = "Репост від"
             let postshared = "Пост поширено на вашу сторінку!"
             let postwasdell = "Пост було видалено!"
+            let postdelproof = "Підтвердіть видалення!"
             return {
+                postdelproof,
                 postwasdell,
                 postshared,
                 mypost,
@@ -177,7 +179,9 @@ let MESS = (() => {
             let postfrom = "Repost from"
             let postshared = "The repost is done on your page!"
             let postwasdell = "The post has been deleted!"
+            let postdelproof = "Confirm the deletion!"
             return {
+                postdelproof,                
                 postwasdell,
                 postshared,
                 mypost,
