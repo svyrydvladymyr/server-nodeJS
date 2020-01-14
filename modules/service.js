@@ -177,7 +177,7 @@ let createTable = (getuserid, type) => {
             likeuserid VARCHAR(100),
             likepostid VARCHAR(50),
             liketype VARCHAR(20),
-            comment VARCHAR(400),
+            comment VARCHAR(600),
             datecomment VARCHAR(20)
             )`; 
     }      

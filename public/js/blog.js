@@ -23,8 +23,8 @@ let BLOG = (() => {
                    '&#127823;', '&#127826;', '&#127827;', '&#129361;', '&#129362;',
                    '&#129365;', '&#129373;', '&#129381;'];
 
-    let smilesList = () => {
-        SE.$(`article-smile-box`).innerHTML = `
+    let smilesList = (where) => {
+        SE.$(`${where}`).innerHTML = `
             <div class="smile-gtoup-smile" id="article-smile-gtoup-smile" style="width:80%; margin-bottom: 0px; margin-top: 5px;"></div>
             <div class="smile-gtoup-box" style="width:18%; margin-bottom: 0px; margin-top: 5px; margin-right: 0px; margin-left: 5px;">
                 <i class='fas fa-times' onclick="SE.$('article-smile-box').innerHTML = '';"></i>
@@ -96,6 +96,8 @@ let BLOG = (() => {
             SE.send(obj, "/sendpost", (res) => {
                 if (JSON.parse(res).res === 1) {
                     SE.$("article-write").value = '';
+                    SE.$("article-write").style.height = '56px';
+                    SE.$(`article-length-mess`).innerHTML = `1000`;
                     SE.$(`article-smile-box`).innerHTML = ``;
                     SE.$(`article-blog-wrap`).innerHTML = ``;
                     BLOG.postList(`${window.location.pathname.replace(/[/]/gi, '')}`);
@@ -351,8 +353,8 @@ let BLOG = (() => {
                 if (JSON.parse(res).res) {
                     let masslikes = JSON.parse(res).res;
                     if(SE.$(`likeall${type}-${postid}`)){ SE.$(`likeall${type}-${postid}`).remove(); };
+                    SE.$(`post-message-${postid}`).innerHTML = `<p class="like-all-close"><i class='far fa-times-circle' style="cursor: pointer;" onclick="BLOG.closeProfShare('${postid}')"></i></p>`;
                     SE.$(`post-message-${postid}`).innerHTML += `<div class="like-all-wrap" id="like-all-wrap-${postid}"></div>`;
-                    SE.$(`like-all-wrap-${postid}`).innerHTML += `<p><i class='far fa-times-circle' style="cursor: pointer;" onclick="BLOG.closeProfShare('${postid}')"></i></p>`;
                     for (let i = 0; i < masslikes.length; i++) {
                         SE.$(`like-all-wrap-${postid}`).innerHTML += `<div class="like-all-wrap-body" onclick="SE.redirect('${masslikes[i].userid}')">
                             <span style="background-image: url('${masslikes[i].ava}'); background-position:${masslikes[i].avasettings};"></span>
@@ -373,18 +375,70 @@ let BLOG = (() => {
     //show post comments
     let postComShow = (postid) => {
         if (!SE.$(`post-com-wrap-${postid}`)) {
+
+
+
             SE.$(`post-message-${postid}`).innerHTML = `
                 <div class="post-com-wrap" id="post-com-wrap-${postid}">
                     <div class="post-com-com"></div>
-                    <div class="post-com-write"></div>
+                    <div class="post-com-write">
+                        <div class="post-com-write-foto" style="background-image: url(./sdffsdf/sdfsdf.jpg); background-position: 50% 50%;"></div>
+                        <div class="post-com-write-com">
+                            <textarea class="article-blog-post-com" name="article-blog-post" id="article-blog-post-${postid}" maxlength="400" 
+                                oninput="BLOG.kilkRows('article-blog-post-${postid}'), CHECK.checkSendMess('article-blog-post-${postid}')"></textarea>
+                        </div>
+                        <div class="post-com-write-smile"><i class='far fa-grin' onclick="BLOG.smilesListCom('post-com-smile-${postid}', '${postid}')"></i></div>
+                    </div>
+                    <div class="post-com-smile" id="post-com-smile-${postid}"></div>
                 </div>
             `;
+            SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
+            SE.$(`article-blog-post-${postid}`).addEventListener("keydown", (event) => {if (event.key === 'Enter'){
+                if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
+                    console.log("ppppppppppp");
+                }
+            }});  
+
+
+
         } else {
             SE.$(`post-message-${postid}`).innerHTML = '';
-        }
-
+        };
     };
-    
+
+    //for add height to textarea
+    let kilkRows = (postid) => {
+        SE.$(`${postid}`).style.height = (SE.$(`${postid}`).scrollHeight)+"px";        
+        SE.$(`${postid}`).style.overflow = ((parseInt(SE.$(`${postid}`).style.height) > 140) && (postid === 'article-write')) ? `auto` : `hidden`;
+    };
+
+    //for show smiles for com
+    let smilesListCom = (where, postid) => {
+        if (!SE.$(`com-smile-${postid}`)) {
+            SE.$(`${where}`).innerHTML = `<div class="smile-gtoup-com" id="com-smile-${postid}"></div>`;
+            for(let i = 0; i < 18; i++){SE.$(`com-smile-${postid}`).innerHTML += `<p class="smiles-list-com" onclick="BLOG.addSmileCom('${smileSM[i]}', '${postid}')">${smileSM[i]}</p>`;}  
+            for(let i = 0; i < 18; i++){SE.$(`com-smile-${postid}`).innerHTML += `<p class="smiles-list-com" onclick="BLOG.addSmileCom('${smileHN[i]}', '${postid}')">${smileHN[i]}</p>`;}  
+            for(let i = 0; i < 18; i++){SE.$(`com-smile-${postid}`).innerHTML += `<p class="smiles-list-com" onclick="BLOG.addSmileCom('${smileHR[i]}', '${postid}')">${smileHR[i]}</p>`;}  
+            for(let i = 0; i < 18; i++){SE.$(`com-smile-${postid}`).innerHTML += `<p class="smiles-list-com" onclick="BLOG.addSmileCom('${smileVG[i]}', '${postid}')">${smileVG[i]}</p>`;}  
+        } else {
+            SE.$(`post-com-smile-${postid}`).innerHTML = ``;
+        }
+    };
+
+    //for add smile to com write area
+    let addSmileCom = (smile, postid) => {
+        let originval = SE.$(`article-blog-post-${postid}`).value; 
+        SE.$(`article-blog-post-${postid}`).value = `${originval}${smile}`;        
+    };
+
+    window.addEventListener("resize", function(event) {
+        let masstextarea = document.getElementsByClassName('article-blog-post-com');
+        for (let i = 0; i < masstextarea.length; i++) {
+            let postid = masstextarea[i].getAttribute('id').replace('article-blog-post-', '');
+            SE.$(`article-blog-post-${postid}`).style.height = (SE.$(`article-blog-post-${postid}`).scrollHeight)+"px";
+        };        
+    });
+
     return {
         lengthText,
         smilesList,
@@ -401,6 +455,9 @@ let BLOG = (() => {
         postDelProof,
         postLikeOver,
         postLikeLeave,
-        postComShow
+        postComShow,
+        kilkRows,
+        smilesListCom,
+        addSmileCom        
     }
 })();

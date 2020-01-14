@@ -451,6 +451,12 @@
     margin-left: 20px;
 }
 
+@media screen and (max-width:370px){
+    .post_header_name, .post_header_name_per {
+        width: 165px;
+    }
+}
+
 @media screen and (min-width:500px) and (max-width:766px){
     .messenger{width: 98%}
     .messenger_close{width: 98%}

@@ -102,7 +102,9 @@
         "autoriz-email-send-input":"Введіть вашу пошту...",
         "login":"Введіть логін...",
         "password":"Введіть пароль...",
-        "messenger_write_input":"Введіть повідомлення..."
+        "messenger_write_input":"Введіть повідомлення...",
+        "article-blog-post":"Напишіть коментар...",
+        "article-write":"Напишіть post..."
     },
 
 "__comment-page-about":"text for page about",

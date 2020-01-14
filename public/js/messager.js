@@ -178,6 +178,7 @@ let MESSAGER = (() => {
                         <div class="messenger_write_main_mess"></div>
                     </div>`;   
                     SE.$("messenger_send_mess").addEventListener("click", MESSAGER.sendMessage);           
+                    SE.$("messenger_write_input").placeholder = `${MESS.errorFormMessage().writemess}`;         
                     SE.$("messenger_write_input").addEventListener("keydown", (event) => {if (event.key === 'Enter'){
                         if (SE.$("messenger_write_input").value !== ''){ MESSAGER.sendMessage() }
                     }});       

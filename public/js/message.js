@@ -62,7 +62,11 @@ let MESS = (() => {
             let postwasdell = "Пост було видалено!"
             let postdelproof = "Підтвердіть видалення!"
             let showall = "і ще"
+            let writemess = "Введіть повідомлення..."
+            let writepost = "Напишіть коментар..."
             return {
+                writepost,
+                writemess,
                 showall,
                 postdelproof,
                 postwasdell,
@@ -183,7 +187,11 @@ let MESS = (() => {
             let postwasdell = "The post has been deleted!"
             let postdelproof = "Confirm the deletion!"
             let showall = "and more"
+            let writemess = "Enter message ..."
+            let writepost = "Write a comment..."
             return {
+                writepost,
+                writemess,
                 showall,
                 postdelproof,                
                 postwasdell,

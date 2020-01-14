@@ -101,7 +101,9 @@
                 "autoriz-email-send-input":"Enter your mail ...",
                 "login":"Enter login ...",
                 "password":"Enter password ...",
-                "messenger_write_input":"Enter message ..."
+                "messenger_write_input":"Enter message ...",
+                "article-blog-post":"Write a comment...",
+                "article-write":"Write a post..."
         },
 
 "__comment-page-about":"text for page about",

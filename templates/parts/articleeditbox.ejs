@@ -1,9 +1,9 @@
 <div class="article-edit-box-wrap">
     <div class="article-edit-blog-wrap">
-        <textarea class="article-blog-post" name="blog-post" id="article-write" maxlength="1000" oninput="BLOG.lengthText(this), CHECK.checkSendPost('article-write')"></textarea>
+        <textarea class="article-blog-post" name="blog-post" id="article-write" maxlength="1000" oninput="BLOG.kilkRows('article-write'), BLOG.lengthText(this), CHECK.checkSendPost('article-write')"></textarea>
     </div>
     <div class="article-edit-box-button">
-        <i class='far fa-grin'  onclick="BLOG.smilesList()"></i>
+        <i class='far fa-grin'  onclick="BLOG.smilesList('article-smile-box')"></i>
         <i class='far fa-image'></i>
         <i class='far fa-paper-plane' onclick="BLOG.sendPost()"></i>
         <p id="article-length-mess">1000</p>
