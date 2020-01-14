@@ -376,31 +376,45 @@ let BLOG = (() => {
     let postComShow = (postid) => {
         if (!SE.$(`post-com-wrap-${postid}`)) {
 
+            let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
+                ? SE.$(`perepid_${postid}`).getAttribute('perep') 
+                : `${window.location.pathname.replace(/[/]/gi, '')}`;
 
+            let obj = {"postid":`${postid}`, "wallid":`${wallid}`};
+            SE.send(obj, "/postshowcom", (res) => {
+                if (JSON.parse(res).res) {
 
-            SE.$(`post-message-${postid}`).innerHTML = `
-                <div class="post-com-wrap" id="post-com-wrap-${postid}">
-                    <div class="post-com-com"></div>
-                    <div class="post-com-write">
-                        <div class="post-com-write-foto" style="background-image: url(./sdffsdf/sdfsdf.jpg); background-position: 50% 50%;"></div>
-                        <div class="post-com-write-com">
-                            <textarea class="article-blog-post-com" name="article-blog-post" id="article-blog-post-${postid}" maxlength="400" 
-                                oninput="BLOG.kilkRows('article-blog-post-${postid}'), CHECK.checkSendMess('article-blog-post-${postid}')"></textarea>
+                    console.log(JSON.parse(res).res);
+                    
+                    SE.$(`post-message-${postid}`).innerHTML = `
+                        <div class="post-com-wrap" id="post-com-wrap-${postid}">
+                            <div class="post-com-com"></div>
+                            <div class="post-com-write">
+                                <div class="post-com-write-foto" style=""></div>
+                                <div class="post-com-write-com">
+                                    <textarea class="article-blog-post-com" name="article-blog-post" maxlength="400" 
+                                        id="article-blog-post-${postid}" 
+                                        oninput="BLOG.kilkRows('article-blog-post-${postid}'), CHECK.checkSendMess('article-blog-post-${postid}')"
+                                    ></textarea>
+                                </div>
+                                <div class="post-com-write-smile">
+                                    <i class='far fa-grin' onclick="BLOG.smilesListCom('post-com-smile-${postid}', '${postid}')"></i>
+                                </div>
+                            </div>
+                            <div class="post-com-smile" id="post-com-smile-${postid}"></div>
                         </div>
-                        <div class="post-com-write-smile"><i class='far fa-grin' onclick="BLOG.smilesListCom('post-com-smile-${postid}', '${postid}')"></i></div>
-                    </div>
-                    <div class="post-com-smile" id="post-com-smile-${postid}"></div>
-                </div>
-            `;
-            SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
-            SE.$(`article-blog-post-${postid}`).addEventListener("keydown", (event) => {if (event.key === 'Enter'){
-                if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
-                    console.log("ppppppppppp");
-                }
-            }});  
+                    `;
+                    SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
+                    SE.$(`article-blog-post-${postid}`).addEventListener("keydown", (event) => {if (event.key === 'Enter'){
+                        if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
+                            console.log("ppppppppppp");
+                        }
+                    }});  
 
 
 
+                }; 
+            }); 
         } else {
             SE.$(`post-message-${postid}`).innerHTML = '';
         };

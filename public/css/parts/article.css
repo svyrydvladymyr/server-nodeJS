@@ -362,7 +362,8 @@
 .likelist-share::before{
     transform: skewY(248deg) rotate(-238deg)!important;
     left: 133px!important;
-    bottom: 12px!important;
+    bottom: 2px!important;
+    height: 8px!important;
 }
 
 .art-post-footer-com{

@@ -221,39 +221,124 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
 
     let postlikelist = (req, res) => {
         checkProof(req, res, (req, res, userid) => { 
-            let postid = req.body.postid;
-            let wallid = req.body.wallid;
-            let type = req.body.type;
-            let step = req.body.step;
-
-            console.log("postid", postid);
-            console.log("wallid", wallid);
-            console.log("type", type);
-            console.log("step", step);
             mass = [];
             let sql = `SELECT id, likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = '${req.body.type}' ORDER BY id DESC LIMIT ${req.body.step}`;
             sqlquery(req, res, sql, `err-find-post`, `nolikes`, (req, res, result) => {
-                console.log("resultlikes", result);
                 let reslength = result.length;
                 for(let i = 0; i < reslength; i++){
                     let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${result[i].likeuserid}'`; 
                     sqlquery(req, res, sql, `err-find-post`, `nolikes`, (req, res, result) => {          
                         if (result != ''){    
-                            console.log("resultlikes", result);
-      
                             mass.push({"userid": `${result[0].userid}`, 
                                 "name": `${result[0].name}`, 
                                 "surname": `${result[0].surname}`,
                                 "ava": `${readyAva(result[0].ava)}`,
                                 "avasettings": `${result[0].avasettings}`,                                          
                             });
-                            if(i == reslength-1){
-                                res.send({"res": mass});
-                            };  
+                            if(i == reslength-1){ res.send({"res": mass}) };  
                         };   
                     }, 'noerr');               
                 };
             });
+        });
+    };
+
+    let postshowcom = (req, res) => {
+        checkProof(req, res, (req, res, userid) => { 
+            let postid = req.body.postid;
+            let wallid = req.body.wallid;
+            let uuserid = userid;
+            console.log("postid", postid);
+            console.log("wallid", wallid);
+            console.log("userid", uuserid);
+            mass = [];
+            let sql = `SELECT U.userid, U.name, U.surname, U.ava, U.avasettings, F.friendid, F.friendstatus 
+            FROM users U LEFT JOIN friends_${userid} F on U.userid=F.userid WHERE F.userid = '${userid}' AND F.friendid = '${req.body.wallid}'`;  
+            sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+                let resuser = result;
+                console.log("resuser", resuser);
+
+                let sql = `SELECT likeuserid, comment, datecomment FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;  
+                sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+                    let rescom = result;
+                    console.log("rescom", rescom);
+
+
+                    if ((rescom.length === 0) && ((req.body.wallid === userid) || (resuser != ''))) {
+
+                        let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${userid}'`;  
+                        sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+
+                            res.send({"res": {
+                                "userid": `${result[0].userid}`, 
+                                "name": `${result[0].name}`, 
+                                "surname": `${result[0].surname}`,
+                                "ava": `${readyAva(result[0].ava)}`,
+                                "avasettings": `${result[0].avasettings}`}}); 
+
+                        });
+
+                    } else {
+                        masspost = [];
+
+                        for (let i = 0; i < rescom.length; i++) {
+                            
+                            let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${rescom[i].likeuserid}'`;  
+                            sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+
+                                masspost.push({"userid": `${result[0].userid}`, 
+                                    "name": `${result[0].name}`, 
+                                    "surname": `${result[0].surname}`,
+                                    "ava": `${readyAva(result[0].ava)}`,
+                                    "avasettings": `${result[0].avasettings}`,                                          
+                                    "com": `${rescom[i].comment}`,                                          
+                                    "comdate": `${rescom[i].datecomment}`,                                          
+                                });
+                                
+                                if(i === rescom.length-1) { 
+
+                                    if (resuser != ''){ 
+
+                                        res.send({"res": {
+                                        "userid": `${resuser[0].userid}`, 
+                                        "name": `${resuser[0].name}`, 
+                                        "surname": `${resuser[0].surname}`,
+                                        "ava": `${readyAva(resuser[0].ava)}`,
+                                        "avasettings": `${resuser[0].avasettings}`,                                          
+                                        "masspost": masspost}}); 
+                        
+
+                                    } else if (req.body.wallid === userid) {
+
+
+                                        let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${userid}'`;  
+                                        sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+                
+                                            res.send({"res": {
+                                                "userid": `${result[0].userid}`, 
+                                                "name": `${result[0].name}`, 
+                                                "surname": `${result[0].surname}`,
+                                                "ava": `${readyAva(result[0].ava)}`,
+                                                "avasettings": `${result[0].avasettings}`,
+                                                "massposttt": masspost}}); 
+                                        });
+
+
+                                    } else {
+                                        res.send({"res": {"masspost": masspost}}); 
+
+                                    };  
+
+                                };  
+
+
+                            }, 'noerr');
+                        };
+                    };
+
+                }, 'noerr');
+                
+            }, 'noerr');
         });
     };
 
@@ -266,6 +351,6 @@ module.exports = {
     postshare,
     postlike,
     postdel,
-    postlikelist
-    
+    postlikelist,
+    postshowcom    
 }
