@@ -53,46 +53,49 @@ let BLOG = (() => {
     };
 
     //for send post
+    let readymess = (id) => {
+        let smilecod = ['&#128515;', '&#128516;', '&#128518;', '&#128519;', '&#128520;', 
+            '&#128523;', '&#128525;', '&#128526;', '&#128536;', '&#128539;', 
+            '&#128549;', '&#128561;', '&#129315;', '&#128545;', '&#129314;', 
+            '&#129313;', '&#127877;', '&#128568;',
+            '&#128076;', '&#128405;', '&#128077;', '&#128078;', '&#128400;',
+            '&#129304;', '&#128074;', '&#128079;', '&#128070;', '&#128071;',
+            '&#128072;', '&#128073;', '&#128170;', '&#128406;', '&#128591;',
+            '&#129305;', '&#129310;', '&#129309;',
+            '&#129505;', '&#x1F5A4;', '&#128147;', '&#128148;', '&#128149;',
+            '&#128150;', '&#128151;', '&#128152;', '&#128153;', '&#128154;',
+            '&#128155;', '&#128156;', '&#128157;', '&#128158;', '&#128159;',
+            '&#128143;', '&#128139;', '&#127880;',
+            '&#127805;', '&#127812;', '&#127813;', '&#127814;', '&#127815;',
+            '&#127817;', '&#127818;', '&#127819;', '&#127820;', '&#127822;',
+            '&#127823;', '&#127826;', '&#127827;', '&#129361;', '&#129362;',
+            '&#129365;', '&#129373;', '&#129381;'];
+        let smilepicSM = [/😃/gi, /😄/gi, /😆/gi, /😇/gi, /😈/gi, 
+                /😋/gi, /😍/gi, /😎/gi, /😘/gi, /😛/gi, 
+                /😥/gi, /😱/gi, /🤣/gi, /😡/gi, /🤢/gi, 
+                /🤡/gi, /🎅/gi, /😸/gi,
+                /👌/gi, /🖕/gi, /👍/gi, /👎/gi, /🖐/gi,
+                /🤘/gi, /👊/gi, /👏/gi, /👆/gi, /👇/gi,
+                /👈/gi, /👉/gi, /💪/gi, /🖖/gi, /🙏/gi,
+                /🤙/gi, /🤞/gi, /🤝/gi,
+                /🧡/gi, /🖤/gi, /💓/gi, /💔/gi, /💕/gi,
+                /💖/gi, /💗/gi, /💘/gi, /💙/gi, /💚/gi,
+                /💛/gi, /💜/gi, /💝/gi, /💞/gi, /💟/gi,
+                /💏/gi, /💋/gi, /🎈/gi,
+                /🌽/gi, /🍄/gi, /🍅/gi, /🍆/gi, /🍇/gi,
+                /🍉/gi, /🍊/gi, /🍋/gi, /🍌/gi, /🍎/gi,
+                /🍏/gi, /🍒/gi, /🍓/gi, /🥑/gi, /🥒/gi,
+                /🥕/gi, /🥝/gi, /🥥/gi];
+        let replsm = [];
+        replsm[0] = SE.$(`${id}`).value;            
+        for(let i = 0; i < 88; i++){ replsm[i+1] = replsm[i].replace(smilepicSM[i], smilecod[i]) };   
+        return replsm[88];
+    };
+    
     let sendPost = () => {
         if (SE.$("article-write").value !== ''){ 
-            let smilecod = ['&#128515;', '&#128516;', '&#128518;', '&#128519;', '&#128520;', 
-                            '&#128523;', '&#128525;', '&#128526;', '&#128536;', '&#128539;', 
-                            '&#128549;', '&#128561;', '&#129315;', '&#128545;', '&#129314;', 
-                            '&#129313;', '&#127877;', '&#128568;',
-                            '&#128076;', '&#128405;', '&#128077;', '&#128078;', '&#128400;',
-                            '&#129304;', '&#128074;', '&#128079;', '&#128070;', '&#128071;',
-                            '&#128072;', '&#128073;', '&#128170;', '&#128406;', '&#128591;',
-                            '&#129305;', '&#129310;', '&#129309;',
-                            '&#129505;', '&#x1F5A4;', '&#128147;', '&#128148;', '&#128149;',
-                            '&#128150;', '&#128151;', '&#128152;', '&#128153;', '&#128154;',
-                            '&#128155;', '&#128156;', '&#128157;', '&#128158;', '&#128159;',
-                            '&#128143;', '&#128139;', '&#127880;',
-                            '&#127805;', '&#127812;', '&#127813;', '&#127814;', '&#127815;',
-                            '&#127817;', '&#127818;', '&#127819;', '&#127820;', '&#127822;',
-                            '&#127823;', '&#127826;', '&#127827;', '&#129361;', '&#129362;',
-                            '&#129365;', '&#129373;', '&#129381;'];
-            let smilepicSM = [/😃/gi, /😄/gi, /😆/gi, /😇/gi, /😈/gi, 
-                            /😋/gi, /😍/gi, /😎/gi, /😘/gi, /😛/gi, 
-                            /😥/gi, /😱/gi, /🤣/gi, /😡/gi, /🤢/gi, 
-                            /🤡/gi, /🎅/gi, /😸/gi,
-                            /👌/gi, /🖕/gi, /👍/gi, /👎/gi, /🖐/gi,
-                            /🤘/gi, /👊/gi, /👏/gi, /👆/gi, /👇/gi,
-                            /👈/gi, /👉/gi, /💪/gi, /🖖/gi, /🙏/gi,
-                            /🤙/gi, /🤞/gi, /🤝/gi,
-                            /🧡/gi, /🖤/gi, /💓/gi, /💔/gi, /💕/gi,
-                            /💖/gi, /💗/gi, /💘/gi, /💙/gi, /💚/gi,
-                            /💛/gi, /💜/gi, /💝/gi, /💞/gi, /💟/gi,
-                            /💏/gi, /💋/gi, /🎈/gi,
-                            /🌽/gi, /🍄/gi, /🍅/gi, /🍆/gi, /🍇/gi,
-                            /🍉/gi, /🍊/gi, /🍋/gi, /🍌/gi, /🍎/gi,
-                            /🍏/gi, /🍒/gi, /🍓/gi, /🥑/gi, /🥒/gi,
-                            /🥕/gi, /🥝/gi, /🥥/gi];
-            let replsm = [];
-            replsm[0] = SE.$("article-write").value;            
-            for(let i = 0; i < 88; i++){
-                replsm[i+1] = replsm[i].replace(smilepicSM[i], smilecod[i]);
-            }            
-            let obj = {"post":`${replsm[88]}`, "idwall":`${window.location.pathname.replace(/[/]/gi, '')}`};
+            let readymes = readymess(`${article-write}`);
+            let obj = {"post":`${readymes}`, "idwall":`${window.location.pathname.replace(/[/]/gi, '')}`};
             SE.send(obj, "/sendpost", (res) => {
                 if (JSON.parse(res).res === 1) {
                     SE.$("article-write").value = '';
@@ -249,7 +252,8 @@ let BLOG = (() => {
         SE.send(obj, "/postshare", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
                 SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess">${MESS.errorFormMessage().postshared}</p>`;
-                SE.$(`likesharelength-${idpost}`).innerHTML = `${+SE.$(`likesharelength-${idpost}`).innerHTML + 1}`;                
+                let shownomshare = +SE.$(`likesharelength-${idpost}`).innerHTML;
+                SE.$(`likesharelength-${idpost}`).innerHTML = `${shownomshare + 1}`;                
                 setTimeout(() => {SE.$(`post-message-${idpost}`).innerHTML = ``;}, 3000);
             } else if ((JSON.parse(res).noshared.code === "ER_DUP_ENTRY")) {
                 SE.$(`post-message-${idpost}`).innerHTML = `<p class="repost-mess" style="color: #eaa5a5; text-shadow: 0px 0px 2px #ff0000;">${MESS.errorFormMessage().postisonmypage}</p>`; 
@@ -385,12 +389,22 @@ let BLOG = (() => {
                 if (JSON.parse(res).res) {
 
                     console.log(JSON.parse(res).res);
-                    
+                    let comsender = JSON.parse(res).res;
+
+                    if (JSON.parse(res).res.masspost) {
+                        let commass = JSON.parse(res).res.masspost;
+                        console.log(commass);
+                    }                 
+
                     SE.$(`post-message-${postid}`).innerHTML = `
                         <div class="post-com-wrap" id="post-com-wrap-${postid}">
                             <div class="post-com-com"></div>
                             <div class="post-com-write">
-                                <div class="post-com-write-foto" style=""></div>
+                                <div class="post-com-write-foto" 
+                                    style="background-image: url('${comsender.ava}'); background-position: ${comsender.avasettings};"
+                                    onclick="SE.redirect('${comsender.userid}')"
+                                    title="${comsender.surname + ' ' + comsender.name}">
+                                </div>
                                 <div class="post-com-write-com">
                                     <textarea class="article-blog-post-com" name="article-blog-post" maxlength="400" 
                                         id="article-blog-post-${postid}" 
@@ -407,12 +421,19 @@ let BLOG = (() => {
                     SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
                     SE.$(`article-blog-post-${postid}`).addEventListener("keydown", (event) => {if (event.key === 'Enter'){
                         if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
-                            console.log("ppppppppppp");
+                            let readymes = BLOG.readymess(`article-blog-post-${postid}`);
+                            let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "com":`${readymes}`};
+                            SE.send(obj, "/postsendcom", (res) => {
+                                if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
+                                    console.log("comres", JSON.parse(res).res);
+                                    
+                                    SE.$(`article-blog-post-${postid}`).value = ``;
+                                    SE.$(`article-blog-post-${postid}`).style.height = `30px`;
+                                }
+
+                            }); 
                         }
-                    }});  
-
-
-
+                    }}); 
                 }; 
             }); 
         } else {
@@ -472,6 +493,7 @@ let BLOG = (() => {
         postComShow,
         kilkRows,
         smilesListCom,
-        addSmileCom        
+        addSmileCom,
+        readymess        
     }
 })();

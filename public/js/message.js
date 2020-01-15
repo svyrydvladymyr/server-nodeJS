@@ -12,7 +12,7 @@ let MESS = (() => {
             let onlyNum = "Тільки цифри!";
             let onlyLetterslat = "Тільки лат. букви!";
             let onlyLetters = "Тільки букви!";
-            let toLBigFile = "Занадто великий файл! Макс. розмір 1мб";
+            let toLBigFile = "Занадто великий файл! Макс. розмір 5мб";
             let dupllogin = "Користувач з таким логіном вже існує!";
             let duplemail = "Користувач з такою поштою вже існує!";
             let toshort = "Мінімум 7 символів!";
@@ -137,7 +137,7 @@ let MESS = (() => {
             let onlyNum = "Only numbers!";
             let onlyLetterslat = "Only letters!";
             let onlyLetters = "Only letters!";
-            let toLBigFile = "Too large file! Max. size 1MB";
+            let toLBigFile = "Too large file! Max. size 5MB";
             let dupllogin = "A user with this login already exists!";
             let duplemail = "A user with such mail already exists!";
             let toshort = "Minimum of 7 characters!";

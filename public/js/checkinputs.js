@@ -102,7 +102,7 @@ let CHECK = (() => {
 //uploud file exclusion  
     let checkUploudFile = (idF) => {
         if (SE.$(idF).files.length === 1){
-            if (SE.$(idF).files[0].size > 1024000) {
+            if (SE.$(idF).files[0].size > 5120000) {
                 SE.iconON(idF, "false", MESS.errorFormMessage().toLBigFile);  
                 SE.$('reg-file-mess').style.display = 'table';
                 SE.$('reg-file-mess').style.marginTop = '3px';

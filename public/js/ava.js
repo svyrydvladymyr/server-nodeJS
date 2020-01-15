@@ -96,7 +96,7 @@ let rangeAvaFoto = (el) => {
 //update ava date in user date
 let updateAva = () => {
     if (SE.$('reg-file').files.length === 1){
-        if (SE.$('reg-file').files[0].size > 1024000) {
+        if (SE.$('reg-file').files[0].size > 5120000) {
             SE.$('ava-mess-main').innerHTML = MESS.errorFormMessage().toLBigFile;  
             setTimeout(() => {SE.$('ava-mess-main').innerHTML = ''}, 3000);
         } else {
