@@ -186,8 +186,8 @@ let BLOG = (() => {
                             </div>
                             <div class="art-post-footer-com-wrap">
                                 <div class="art-post-footer-com">
-                                    <p>${postres[i].com}</p>
-                                    <span onclick="BLOG.postComShow('${postres[i].postid}')"><i class='far fa-comment-dots'></i></span>
+                                    <p id="likecomlength-${postres[i].postid}">${postres[i].com}</p>
+                                    <span onclick="BLOG.postComShowWrap('${postres[i].postid}')"><i class='far fa-comment-dots'></i></span>
                                 </div>       
                                 <div class="art-post-footer-like">
                                     <div id="likesharelength-${postres[i].postid}"
@@ -312,18 +312,26 @@ let BLOG = (() => {
             ? SE.$(`perepid_${postid}`).getAttribute('perep') 
             : `${window.location.pathname.replace(/[/]/gi, '')}`;
         let bgcolor;
-        if (type === 'heart'){ bgcolor = `linear-gradient(#fb5c71, #e94055)`};
-        if (type === 'finger'){ bgcolor = `linear-gradient(#38a7fc, #195df1)`};
-        if (type === 'smile'){ bgcolor = `linear-gradient(#fdf6bc, #ffe600)`};
         let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "type":`${type}`};
         SE.send(obj, "/postlike", (res) => {
             if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '1')) {
-                let reslike = JSON.parse(res).res;  
-                if (reslike.likeis === 'yes'){
+                if (type === 'heart'){ bgcolor = `linear-gradient(#fb5c71, #e94055)`};
+                if (type === 'finger'){ bgcolor = `linear-gradient(#38a7fc, #195df1)`};
+                if (type === 'smile'){ bgcolor = `linear-gradient(#fdf6bc, #ffe600)`};
+                if (JSON.parse(res).res.likeis === 'yes'){
                     SE.$(`like${type}-${postid}`).style.background = bgcolor;
                     if (type === 'smile'){SE.$(`like${type}-${postid}`).style.color = '#887a00'};
-                }
-                SE.$(`like${type}length-${postid}`).innerHTML = `${reslike.likelength}`;
+                } 
+                SE.$(`like${type}length-${postid}`).innerHTML = `${JSON.parse(res).res.likelength}`;
+            } else if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '0')) {
+                if (type === 'heart'){ bgcolor = `linear-gradient(#fdc8cf, #f4b7bf)`};
+                if (type === 'finger'){ bgcolor = `linear-gradient(#afdafb, #92aade)`};
+                if (type === 'smile'){ bgcolor = `linear-gradient(#f7f1c1, #ffffff)`};
+                if (JSON.parse(res).res.likeis === 'no'){
+                    SE.$(`like${type}-${postid}`).style.background = bgcolor;
+                    if (type === 'smile'){SE.$(`like${type}-${postid}`).style.color = '#dcc500'};
+                } 
+                SE.$(`like${type}length-${postid}`).innerHTML = `${JSON.parse(res).res.likelength}`;
             }; 
         });      
     };
@@ -376,39 +384,49 @@ let BLOG = (() => {
         if(SE.$(`likeall${type}-${postid}`)){ SE.$(`likeall${type}-${postid}`).remove(); };
     };
 
-    //show post comments
-    let postComShow = (postid) => {
+    //event if mouse leave post
+    let postComShowWrap = (postid) => {
         if (!SE.$(`post-com-wrap-${postid}`)) {
+            BLOG.postComShow(postid, 'first');
+        } else {
+            SE.$(`post-message-${postid}`).innerHTML = '';
+        };
+    };
 
-            let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
-                ? SE.$(`perepid_${postid}`).getAttribute('perep') 
-                : `${window.location.pathname.replace(/[/]/gi, '')}`;
+    //show post comments
+    let postComShow = (postid, typeenter) => {
 
-            let obj = {"postid":`${postid}`, "wallid":`${wallid}`};
-            SE.send(obj, "/postshowcom", (res) => {
-                if (JSON.parse(res).res) {
+        let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
+            ? SE.$(`perepid_${postid}`).getAttribute('perep') 
+            : `${window.location.pathname.replace(/[/]/gi, '')}`;
 
-                    console.log(JSON.parse(res).res);
-                    let comsender = JSON.parse(res).res;
+        let step = (typeenter === 'add') ? 0 : document.getElementsByClassName(`post-com-list-${postid}`).length;
 
-                    if (JSON.parse(res).res.masspost) {
-                        let commass = JSON.parse(res).res.masspost;
-                        console.log(commass);
-                    }                 
+        console.log("step", step);
 
+        let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "step":`${step}`};
+        SE.send(obj, "/postshowcom", (res) => {
+            if (JSON.parse(res).res) {
+
+                console.log(JSON.parse(res).res);
+                let comsender = JSON.parse(res).res;
+
+                if (typeenter === 'first') {
                     SE.$(`post-message-${postid}`).innerHTML = `
                         <div class="post-com-wrap" id="post-com-wrap-${postid}">
-                            <div class="post-com-com"></div>
+                            <div class="post-com-com" id="post-com-com-${postid}"></div>
+                            <div class="post-com-shomore" id="post-com-shomore-${postid}"></div>
                             <div class="post-com-write">
                                 <div class="post-com-write-foto" 
                                     style="background-image: url('${comsender.ava}'); background-position: ${comsender.avasettings};"
                                     onclick="SE.redirect('${comsender.userid}')"
                                     title="${comsender.surname + ' ' + comsender.name}">
                                 </div>
-                                <div class="post-com-write-com">
+                                <div class="post-com-write-com">                                    
                                     <textarea class="article-blog-post-com" name="article-blog-post" maxlength="400" 
                                         id="article-blog-post-${postid}" 
                                         oninput="BLOG.kilkRows('article-blog-post-${postid}'), CHECK.checkSendMess('article-blog-post-${postid}')"
+                                        onkeypress="BLOG.postSendCom('${postid}', event)"
                                     ></textarea>
                                 </div>
                                 <div class="post-com-write-smile">
@@ -418,26 +436,78 @@ let BLOG = (() => {
                             <div class="post-com-smile" id="post-com-smile-${postid}"></div>
                         </div>
                     `;
-                    SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
-                    SE.$(`article-blog-post-${postid}`).addEventListener("keydown", (event) => {if (event.key === 'Enter'){
-                        if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
-                            let readymes = BLOG.readymess(`article-blog-post-${postid}`);
-                            let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "com":`${readymes}`};
-                            SE.send(obj, "/postsendcom", (res) => {
-                                if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
-                                    console.log("comres", JSON.parse(res).res);
-                                    
-                                    SE.$(`article-blog-post-${postid}`).value = ``;
-                                    SE.$(`article-blog-post-${postid}`).style.height = `30px`;
-                                }
+                    SE.$(`post-com-com-${postid}`).innerHTML = ``;
+                }
+                if (JSON.parse(res).res.masspost) {
+                    let commass = JSON.parse(res).res.masspost;
+                    console.log(commass);
 
-                            }); 
+                    console.log("typeenter", typeenter);
+                    if (typeenter === 'add') {
+                        let newItem = document.createElement("div");
+                        newItem.setAttribute("class", `post-com-list-wrap post-com-list-${postid}`);
+
+                        newItem.innerHTML = `
+                            <div class="post-com-list-blok">
+                                <div class="post-com-list-img"                                 
+                                    style="background-image: url('${commass[0].ava}'); background-position: ${commass[0].avasettings};"
+                                    onclick="SE.redirect('${commass[0].userid}')"></div>
+                                <div class="post-com-list-post"><span onclick="SE.redirect('${commass[0].userid}')">${commass[0].surname + ' ' + commass[0].name}</span>${commass[0].com}</div>
+                            </div>
+                            <p class="post-com-list-date">${commass[0].comdate}</p>
+                        `;
+
+
+                        SE.$(`post-com-com-${postid}`).insertBefore(newItem, SE.$(`post-com-com-${postid}`).childNodes[0]);
+                    } else {
+
+                        for (let i = 0; i < commass.length; i++) {
+
+                            SE.$(`post-com-com-${postid}`).innerHTML += `
+                                <div class="post-com-list-wrap post-com-list-${postid}">
+                                    <div class="post-com-list-blok">
+                                        <div class="post-com-list-img"                                 
+                                            style="background-image: url('${commass[i].ava}'); background-position: ${commass[i].avasettings};"
+                                            onclick="SE.redirect('${commass[i].userid}')"></div>
+                                        <div class="post-com-list-post"><span onclick="SE.redirect('${commass[i].userid}')">${commass[i].surname + ' ' + commass[i].name}</span>${commass[i].com}</div>
+                                    </div>
+                                    <p class="post-com-list-date">${commass[i].comdate}</p>
+                                </div>                           
+                            `;
+
                         }
-                    }}); 
-                }; 
-            }); 
-        } else {
-            SE.$(`post-message-${postid}`).innerHTML = '';
+                    }
+                } 
+                let stepafter = document.getElementsByClassName(`post-com-list-${postid}`).length;
+
+                SE.$(`post-com-shomore-${postid}`).innerHTML = (stepafter < comsender.pastlength) ? `<p onclick="BLOG.postComShow('${postid}', '')">show more</p>` : ``;
+                
+                SE.$(`article-blog-post-${postid}`).placeholder = `${MESS.errorFormMessage().writepost}`;     
+            }; 
+        }); 
+
+    };
+
+    //send com
+    let postSendCom = (postid, event) => {
+        let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
+        ? SE.$(`perepid_${postid}`).getAttribute('perep') 
+        : `${window.location.pathname.replace(/[/]/gi, '')}`;
+        if (event.key === 'Enter'){
+            if (SE.$(`article-blog-post-${postid}`).value !== ''){ 
+                let readymes = BLOG.readymess(`article-blog-post-${postid}`);
+                let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "com":`${readymes}`};
+                SE.send(obj, "/postsendcom", (res) => {
+                    if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '1')) {
+                        console.log("comres", JSON.parse(res).res);
+                        
+                        SE.$(`article-blog-post-${postid}`).value = ``;
+                        SE.$(`article-blog-post-${postid}`).style.height = `30px`;
+                        SE.$(`likecomlength-${postid}`).innerHTML = `${JSON.parse(res).res.likelength}`;
+                        BLOG.postComShow(postid, 'add');
+                    };
+                }); 
+            };
         };
     };
 
@@ -494,6 +564,8 @@ let BLOG = (() => {
         kilkRows,
         smilesListCom,
         addSmileCom,
-        readymess        
+        readymess,
+        postComShowWrap,
+        postSendCom        
     }
 })();
