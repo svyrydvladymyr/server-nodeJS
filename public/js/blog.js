@@ -24,17 +24,20 @@ let BLOG = (() => {
                    '&#129365;', '&#129373;', '&#129381;'];
 
     let smilesList = (where) => {
-        SE.$(`${where}`).innerHTML = `
-            <div class="smile-gtoup-smile" id="article-smile-gtoup-smile" style="width:80%; margin-bottom: 0px; margin-top: 5px;"></div>
-            <div class="smile-gtoup-box" style="width:18%; margin-bottom: 0px; margin-top: 5px; margin-right: 0px; margin-left: 5px;">
-                <i class='fas fa-times' onclick="SE.$('article-smile-box').innerHTML = '';"></i>
-                <i class='far fa-grin' onclick="BLOG.changeSmile(18, 'smileSM');"></i>
-                <i class='far fa-hand-paper' onclick="BLOG.changeSmile(18, 'smileHN');"></i>
-                <i class='far fa-lemon' onclick="BLOG.changeSmile(18, 'smileVG');"></i>
-                <i class='far fa-heart' onclick="BLOG.changeSmile(18, 'smileHR');"></i>
-            </div>
-        `;
-        BLOG.changeSmile(18, 'smileSM');
+        if (SE.$(`${where}`).innerHTML === ``) {
+            SE.$(`${where}`).innerHTML = `
+                <div class="smile-gtoup-smile" id="article-smile-gtoup-smile" style="width:80%; margin-bottom: 0px; margin-top: 5px;"></div>
+                <div class="smile-gtoup-box-post" style="width:18%; margin-bottom: 0px; margin-top: 5px; margin-right: 0px; margin-left: 5px;">
+                    <i class='far fa-grin' onclick="BLOG.changeSmile(18, 'smileSM');"></i>
+                    <i class='far fa-hand-paper' onclick="BLOG.changeSmile(18, 'smileHN');"></i>
+                    <i class='far fa-lemon' onclick="BLOG.changeSmile(18, 'smileVG');"></i>
+                    <i class='far fa-heart' onclick="BLOG.changeSmile(18, 'smileHR');"></i>
+                </div>
+            `;
+            BLOG.changeSmile(18, 'smileSM');
+        } else {
+            SE.$(`${where}`).innerHTML = ``;
+        };
     };
 
     //show smiles list
@@ -93,8 +96,8 @@ let BLOG = (() => {
     };
 
     //for send post
-    let sendPost = () => {
-        if (SE.$("article-write").value !== ''){ 
+    let sendPost = () => {      
+        if ((SE.$("article-write").value !== '') && (SE.$("article-write").value !== '\n')){ 
             let readymes = readymess(`article-write`);
             let obj = {"post":`${readymes}`, "idwall":`${window.location.pathname.replace(/[/]/gi, '')}`};
             SE.send(obj, "/sendpost", (res) => {
@@ -115,9 +118,6 @@ let BLOG = (() => {
         let step = document.getElementsByClassName('art-post-wrap').length;
         SE.send({"pageid": `${pageid}`, "step": `${step}`}, "/postlist", (res) => {
             if (JSON.parse(res).res) {
-
-                console.log("postlist", JSON.parse(res).res);
-
                 let postres = JSON.parse(res).res;
                 for (let i = 0; i < postres.length; i++) {
                     let who = postres[i].who;
@@ -200,7 +200,9 @@ let BLOG = (() => {
                                 </div>                   
                             </div>
                         </div>`;  
-                    let post = (postres[i].post === "nopost") ? `<p class="postwasdell">${MESS.errorFormMessage().postwasdell}</p>` : `${postwho}<div class="art-post-body" style="${megpost}"><p>${postres[i].post}</p></div>${footer}`; 
+                    let post = (postres[i].post === "nopost") 
+                        ? `<p class="postwasdell">${MESS.errorFormMessage().postwasdell}</p>` 
+                        : `${postwho}<div class="art-post-body" style="${megpost}"><p>${postres[i].post}</p></div>${footer}`; 
                     SE.$(`article-blog-wrap`).innerHTML += `     
                     <div class="art-post-wrap" id="post-wrap-${postres[i].postid}">
                         <div class="art-post-header">
@@ -403,10 +405,7 @@ let BLOG = (() => {
         let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "step":`${step}`};
         SE.send(obj, "/postshowcom", (res) => {
             if (JSON.parse(res).res) {
-                let comsender = JSON.parse(res).res;
-
-                console.log(comsender);
-                
+                let comsender = JSON.parse(res).res;                
                 let ifisfriend = (JSON.parse(res).res.userid) ? `
                     <div class="post-com-write">
                         <div class="post-com-write-foto" 
@@ -551,8 +550,9 @@ let BLOG = (() => {
     let delCom = (postid, wallid, comid) => {
         let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "comid":`${comid}`};
         SE.send(obj, "/delcom", (res) => {
-            if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
+            if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '1')) {
                 if (SE.$(`${comid}`)) {SE.$(`${comid}`).remove()}
+                SE.$(`likecomlength-${postid}`).innerHTML = `${JSON.parse(res).res.likelength}`;
             } else {
                 if (SE.$(`com-mess-${comid}`)) {SE.$(`com-mess-${comid}`).innerHTML = ''}
             }

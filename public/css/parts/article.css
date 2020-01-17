@@ -31,7 +31,12 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    border: var(--border);
     min-height: 10px;
+    border-radius: var(--border-radius-main);
+    background: white;
+    padding: 5px 0px;
+    overflow: hidden;
     text-shadow: 0px 0px 3px #111111;
     color: #ffffff;
 }
@@ -78,12 +83,12 @@
 
 .article-blog-post{
     width: 100%;
-    border-radius: var(--border-radius-main);
-    padding:10px 15px;
-    border: var(--border);
     font-family: Arial;
     height: 56px;
+    padding: 10px 15px;
+    border: 0;
     resize: none;
+    outline: 0!important;
     overflow: hidden;
     min-height: 56px;
     max-height: 140px;
@@ -154,6 +159,13 @@
 }
 
 .art-post-body p{
+    margin: 0px;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.art-post-body pre{
+    font-family: 'Times New Roman', Times, serif;
     margin: 0px;
     font-size: 14px;
 }
@@ -771,6 +783,7 @@
     border-radius: 20px;
     background: #f5f5f5;
     position: relative;
+    word-break: break-all;
 }
 
 @media screen and (max-width:1100px){.post-com-list-post{max-width: 90%;}}

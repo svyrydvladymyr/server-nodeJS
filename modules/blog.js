@@ -379,7 +379,14 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
     let delcom = (req, res) => {
         checkProof(req, res, (req, res, userid) => {            
             let sql = `DELETE FROM like_${req.body.wallid} WHERE likeuserid = '${userid}' AND liketype = 'com' AND comid = '${req.body.comid}'`;
-            sqlquery(req, res, sql, 'err-del-com', 'nodelcom', (req, res, result) => { $_log(`del-com`, result.affectedRows, 'res', res) });
+            sqlquery(req, res, sql, 'err-del-com', 'nodelcom', (req, res, result) => {
+                if (result.affectedRows === 1) {
+                    let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;
+                    sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
+                        $_log(`com-del`, {"res":'1', "likelength":`${result.length}`}, 'res', res);
+                    }, 'noerr');
+                };
+            });
         });
     };
 

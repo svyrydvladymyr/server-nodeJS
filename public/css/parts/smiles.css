@@ -17,7 +17,7 @@
     border: 1px solid #ffffff;
 }
 
-.smile-gtoup-box{
+.smile-gtoup-box, .smile-gtoup-box-post{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -33,7 +33,7 @@
     margin-bottom: 5px;
 }
 
-.smile-gtoup-box > i{
+.smile-gtoup-box > i, .smile-gtoup-box-post > i{
     width: 50%;
     text-align: center;
     cursor: pointer;

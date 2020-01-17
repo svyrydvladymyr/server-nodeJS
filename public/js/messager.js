@@ -208,17 +208,21 @@ let MESSAGER = (() => {
                  '&#127823;', '&#127826;', '&#127827;', '&#129361;', '&#129362;',
                  '&#129365;', '&#129373;', '&#129381;'];
     let smilesList = () => {
-        SE.$(`messenger_write_delblok_wrap`).innerHTML = `
-        <div class="smile-gtoup-box">
-            <i class='fas fa-times' onclick="SE.$('messenger_write_delblok_wrap').innerHTML = '';"></i>
-            <i class='far fa-grin' onclick="MESSAGER.changeSmile(18, 'smileSM');"></i>
-            <i class='far fa-hand-paper' onclick="MESSAGER.changeSmile(18, 'smileHN');"></i>
-            <i class='far fa-lemon' onclick="MESSAGER.changeSmile(18, 'smileVG');"></i>
-            <i class='far fa-heart' onclick="MESSAGER.changeSmile(18, 'smileHR');"></i>
-        </div>
-        <div class="smile-gtoup-smile" id="smile-gtoup-smile"></div>
-        `;
-        MESSAGER.changeSmile(18, 'smileSM');
+        if (SE.$(`messenger_write_delblok_wrap`).innerHTML === ``) {
+            SE.$(`messenger_write_delblok_wrap`).innerHTML = `
+            <div class="smile-gtoup-box">
+                <i class='fas fa-times' onclick="SE.$('messenger_write_delblok_wrap').innerHTML = '';"></i>
+                <i class='far fa-grin' onclick="MESSAGER.changeSmile(18, 'smileSM');"></i>
+                <i class='far fa-hand-paper' onclick="MESSAGER.changeSmile(18, 'smileHN');"></i>
+                <i class='far fa-lemon' onclick="MESSAGER.changeSmile(18, 'smileVG');"></i>
+                <i class='far fa-heart' onclick="MESSAGER.changeSmile(18, 'smileHR');"></i>
+            </div>
+            <div class="smile-gtoup-smile" id="smile-gtoup-smile"></div>
+            `;
+            MESSAGER.changeSmile(18, 'smileSM');
+        } else {
+            SE.$(`messenger_write_delblok_wrap`).innerHTML = ``;
+        };
     };
 
     //show smiles list
