@@ -24,6 +24,15 @@ let SE = (() => {
         file.send(null);
     }; 
 
+
+//generate token
+    let token = length => {
+        let result = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for ( var i = 0; i < length; i++ ) {result += characters.charAt(Math.floor(Math.random() * characters.length))}
+        return result;
+    };
+
 //for send AJAX  
     let send = (obj, url, fun) => {
         xmlhttp = new XMLHttpRequest();
@@ -317,6 +326,7 @@ let SE = (() => {
         send,
         showUsersList,
         saveSett,
-        updateAvaToDB
+        updateAvaToDB,
+        token
     };
 })();    

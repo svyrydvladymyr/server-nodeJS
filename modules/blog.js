@@ -169,7 +169,7 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
     };
 
     let postlike = (req, res) => {
-        checkProof(req, res, (req, res, userid) => { 
+        checkProof(req, res, (req, res, userid) => {             
             let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND likeuserid = '${userid}' AND liketype = '${req.body.type}'`;
             sqlquery(req, res, sql, `err-find-like-${req.body.type}`, `no-${req.body.type}`, (req, res, result) => {
                 if (result != '') {
@@ -181,7 +181,9 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                                 let likeis = 'no';
                                 for (let i = 0; i < result.length; i++) { if (result[i].likeuserid === userid) { likeis = 'yes' }};
                                 $_log(`like-is-${req.body.type}`, {"res":'0', "likeis":`${likeis}`, "likelength":`${result.length}`}, 'res', res);
-                            } 
+                            } else {
+                                $_log(`like-is-${req.body.type}`, {"res":'0', "likeis":`no`, "likelength":`0`}, 'res', res);
+                            }
                         }, 'noerr');
                     }, 'noerr');
                 } else {
@@ -255,31 +257,15 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
 
     let postshowcom = (req, res) => {
         checkProof(req, res, (req, res, userid) => { 
-            let postid = req.body.postid;
-            let wallid = req.body.wallid;
-            let step = req.body.step;
-            let uuserid = userid;
-            console.log("postid", postid);
-            console.log("wallid", wallid);
-            console.log("userid", uuserid);
-            console.log("step", step);
-
-            let mass = [];
             let sql = `SELECT U.userid, U.name, U.surname, U.ava, U.avasettings, F.friendid, F.friendstatus 
-            FROM users U LEFT JOIN friends_${userid} F on U.userid=F.userid WHERE F.userid = '${userid}' AND F.friendid = '${req.body.wallid}'`;  
+                       FROM users U LEFT JOIN friends_${userid} F on U.userid=F.userid WHERE F.userid = '${userid}' AND F.friendid = '${req.body.wallid}'`;  
             sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
                 let resuser = result;
-                console.log("resuser", resuser);
-
-                console.log("comfrom", req.body.wallid);
-
                 let sql = `SELECT likeuserid, comment, datecomment FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com' ORDER BY id DESC LIMIT ${req.body.step}, 5;`;  
                 sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
                     let rescom = result;
-
-                    console.log("rescom", rescom);
-
-                    if ((rescom.length === 0) && ((req.body.wallid === userid) || (resuser[0].friendstatus === 'friend'))) {
+                    let isfriend = (resuser != '') ? resuser[0].friendstatus : 'nofriend';
+                    if ((rescom.length === 0) && ((req.body.wallid === userid) || (isfriend === 'friend'))) {
                         let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${userid}'`;  
                         sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
                             res.send({"res": {
@@ -293,11 +279,29 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                         });
                     } else if (rescom.length !== 0) {
                         let masspost = [];
-                        for (let i = 0; i < rescom.length; i++) {
-                            
+                        for (let i = 0; i < rescom.length; i++) {                            
                             let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${rescom[i].likeuserid}'`;  
                             sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
-
+                                let fordel;
+                                if (resuser != ''){ 
+                                    if ((req.body.wallid === userid) && (rescom[i].likeuserid === userid)) {
+                                        fordel = 'del';
+                                    } else if ((req.body.wallid !== userid) && (rescom[i].likeuserid === userid)) {
+                                        fordel = 'del';
+                                    } else {
+                                        fordel = 'nooooooo';
+                                    }
+                                } else if (req.body.wallid === userid) {
+                                    if ((req.body.wallid === userid) && (rescom[i].likeuserid === userid)) {
+                                        fordel = 'del';
+                                    } else if ((req.body.wallid !== userid) && (rescom[i].likeuserid === userid)) {
+                                        fordel = 'del';
+                                    } else {
+                                        fordel = 'nooooooo';
+                                    }
+                                } else {
+                                    fordel = 'nooooooo';
+                                }
                                 masspost.push({"userid": `${result[0].userid}`, 
                                     "name": `${result[0].name}`, 
                                     "surname": `${result[0].surname}`,
@@ -305,15 +309,12 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                                     "avasettings": `${result[0].avasettings}`,                                          
                                     "com": `${rescom[i].comment}`,                                          
                                     "comdate": `${rescom[i].datecomment}`,                                          
-                                });
-                                
+                                    "options": `${fordel}`,                                          
+                                });                                
                                 if(i === rescom.length-1) { 
-
                                     if (resuser != ''){ 
-
                                         let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;  
                                         sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
-
                                             res.send({"res": {
                                                 "userid": `${resuser[0].userid}`, 
                                                 "name": `${resuser[0].name}`, 
@@ -322,19 +323,14 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                                                 "avasettings": `${resuser[0].avasettings}`,     
                                                 "pastlength": `${result.length}`,                                     
                                                 "masspost": masspost
-                                            }}); 
-                        
+                                            }});                         
                                         }, 'noerr');
-
                                     } else if (req.body.wallid === userid) {
-
-
                                         let sql = `SELECT userid, name, surname, ava, avasettings FROM users WHERE userid = '${userid}'`;  
                                         sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
                                             let mypageres = result;
                                             let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;  
-                                            sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {
-                
+                                            sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {                
                                                 res.send({"res": {
                                                     "userid": `${mypageres[0].userid}`, 
                                                     "name": `${mypageres[0].name}`, 
@@ -343,18 +339,18 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                                                     "avasettings": `${mypageres[0].avasettings}`,
                                                     "pastlength": `${result.length}`, 
                                                     "masspost": masspost
-                                                }}); 
-
+                                                }});
                                             }, 'noerr');
-
-
                                         });
-
                                     } else {
-                                        res.send({"res": {"masspost": masspost}}); 
-
-                                    }; 
-
+                                        let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;  
+                                        sqlquery(req, res, sql, `err-find-com`, `nocoms`, (req, res, result) => {                
+                                            res.send({"res": {
+                                                "pastlength": `${result.length}`, 
+                                                "masspost": masspost
+                                            }});
+                                        }, 'noerr');
+                                    };
                                 };  
                             }, 'noerr');
                         };
@@ -382,7 +378,8 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
                 let sql = `SELECT U.userid, F.friendstatus FROM users U LEFT JOIN friends_${userid} F on U.userid=F.userid WHERE F.userid = '${userid}' AND F.friendid = '${req.body.wallid}'`;  
                 sqlquery(req, res, sql, `err-find-com`, `noaddcom`, (req, res, result) => {
                     let resuser = result; 
-                    if (resuser[0].friendstatus === 'friend') {
+                    let isfriend = (resuser != '') ? resuser[0].friendstatus : 'isfriend';
+                    if (isfriend === 'friend') {
                         let sql = `INSERT INTO like_${req.body.wallid} (likeuserid, likepostid, liketype, comment, datecomment)
                                    VALUES ('${userid}', '${req.body.postid}', 'com', '${messready}', '${readyFullDate('', 'r')}')`;
                         sqlquery(req, res, sql, 'err-add-com', 'noaddcom', (req, res, result) => {
@@ -399,6 +396,32 @@ let {$_log, readyFullDate, token, checkProof, readyAva, sqlquery} = require('./s
         });
     };
 
+    let showoption = (req, res) => {
+        checkProof(req, res, (req, res, userid) => {
+            
+            if (req.body.wallid === userid) {
+                let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;
+
+                sqlquery(req, res, sql, 'err-add-com', 'noaddcom', (req, res, result) => {
+                    console.log("optionns", result);
+                    
+
+                }, 'noerr');
+            }
+
+            // let sql = `INSERT INTO like_${req.body.wallid} (likeuserid, likepostid, liketype, comment, datecomment)
+            //             VALUES ('${userid}', '${req.body.postid}', 'com', '${messready}', '${readyFullDate('', 'r')}')`;
+            // sqlquery(req, res, sql, 'err-add-com', 'noaddcom', (req, res, result) => {
+            //     if (result.affectedRows === 1) {
+            //         let sql = `SELECT likeuserid FROM like_${req.body.wallid} WHERE likepostid = '${req.body.postid}' AND liketype = 'com'`;
+            //         sqlquery(req, res, sql, `err-find-like-${req.body.type}`, `no-${req.body.type}`, (req, res, result) => {
+            //             $_log(`post-add`, {"res":'1', "likelength":`${result.length}`}, 'res', res);
+            //         }, 'noerr');
+            //     };
+            // }); 
+        });
+    };
+
 
 module.exports = {
     sendpost,
@@ -408,5 +431,6 @@ module.exports = {
     postdel,
     postlikelist,
     postshowcom,
-    postsendcom    
+    postsendcom,
+    showoption    
 }
