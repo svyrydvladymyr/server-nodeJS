@@ -437,7 +437,7 @@ let BLOG = (() => {
                     let commass = JSON.parse(res).res.masspost;
                     if (typeenter === 'add') {
                         let token = SE.token(10);
-                        let fordel = (commass[i].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${token}')"><i class='far fa-trash-alt'></i></p>` : '';
+                        let fordel = (commass[0].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${token}')"><i class='far fa-trash-alt'></i></p>` : '';
                         let newItem = document.createElement("div");
                         newItem.setAttribute("class", `post-com-list-wrap post-com-list-${postid}`);
                         newItem.setAttribute("id", `post-com-list-wrap-${token}`);
