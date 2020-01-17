@@ -30,7 +30,7 @@ let clienttoken = (req, res) => {
     let cookies, clientToken;
     cookies = new Cookies(req, res, {"keys":['volodymyr']});
     clientToken = cookies.get('sessionisdd', {signed:true});
-    $_log('//-CLIENT-TOKEN-//', clientToken);                    
+    $_log('/////-CLIENT-TOKEN-/////', clientToken);                    
     return clientToken;
 };
 
@@ -182,7 +182,8 @@ let createTable = (getuserid, type) => {
             likepostid VARCHAR(50),
             liketype VARCHAR(20),
             comment VARCHAR(600),
-            datecomment VARCHAR(20)
+            datecomment VARCHAR(20),
+            comid VARCHAR(20)
             )`; 
     }      
     con.query(sql, function (err, result) {

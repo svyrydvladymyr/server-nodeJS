@@ -52,7 +52,7 @@ let BLOG = (() => {
         SE.$(`article-write`).value = `${originval}${smile}`;        
     };
 
-    //for send post
+    //replace smiles in post 
     let readymess = (id) => {
         let smilecod = ['&#128515;', '&#128516;', '&#128518;', '&#128519;', '&#128520;', 
             '&#128523;', '&#128525;', '&#128526;', '&#128536;', '&#128539;', 
@@ -91,10 +91,11 @@ let BLOG = (() => {
         for(let i = 0; i < 88; i++){ replsm[i+1] = replsm[i].replace(smilepicSM[i], smilecod[i]) };   
         return replsm[88];
     };
-    
+
+    //for send post
     let sendPost = () => {
         if (SE.$("article-write").value !== ''){ 
-            let readymes = readymess(`${article-write}`);
+            let readymes = readymess(`article-write`);
             let obj = {"post":`${readymes}`, "idwall":`${window.location.pathname.replace(/[/]/gi, '')}`};
             SE.send(obj, "/sendpost", (res) => {
                 if (JSON.parse(res).res === 1) {
@@ -403,7 +404,9 @@ let BLOG = (() => {
         SE.send(obj, "/postshowcom", (res) => {
             if (JSON.parse(res).res) {
                 let comsender = JSON.parse(res).res;
+
                 console.log(comsender);
+                
                 let ifisfriend = (JSON.parse(res).res.userid) ? `
                     <div class="post-com-write">
                         <div class="post-com-write-foto" 
@@ -436,13 +439,12 @@ let BLOG = (() => {
                 if (JSON.parse(res).res.masspost) {
                     let commass = JSON.parse(res).res.masspost;
                     if (typeenter === 'add') {
-                        let token = SE.token(10);
-                        let fordel = (commass[0].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${token}')"><i class='far fa-trash-alt'></i></p>` : '';
+                        let fordel = (commass[0].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${commass[0].comid}')"><i class='far fa-trash-alt'></i></p>` : '';
                         let newItem = document.createElement("div");
                         newItem.setAttribute("class", `post-com-list-wrap post-com-list-${postid}`);
-                        newItem.setAttribute("id", `post-com-list-wrap-${token}`);
+                        newItem.setAttribute("id", `${commass[0].comid}`);
                         newItem.innerHTML = `
-                            <div class="com-mess" id="com-mess-${token}"></div>
+                            <div class="com-mess" id="com-mess-${commass[0].comid}"></div>
                             <div class="post-com-list-blok">
                                 <div class="post-com-list-img"                                 
                                     style="background-image: url('${commass[0].ava}'); background-position: ${commass[0].avasettings};"
@@ -453,13 +455,10 @@ let BLOG = (() => {
                         SE.$(`post-com-com-${postid}`).insertBefore(newItem, SE.$(`post-com-com-${postid}`).childNodes[0]);
                     } else {
                         for (let i = 0; i < commass.length; i++) {
-                            let token = SE.token(10);
-
-                            let fordel = (commass[i].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${token}')"><i class='far fa-trash-alt'></i></p>` : '';
-
+                            let fordel = (commass[i].options === 'del') ? `<p class="post-com-list-post-p" onclick="BLOG.showOptions('${postid}', '${commass[i].comid}')"><i class='far fa-trash-alt'></i></p>` : '';
                             SE.$(`post-com-com-${postid}`).innerHTML += `                            
-                                <div class="post-com-list-wrap post-com-list-${postid}" id="post-com-list-wrap-${token}">
-                                    <div class="com-mess" id="com-mess-${token}"></div>
+                                <div class="post-com-list-wrap post-com-list-${postid}" id="${commass[i].comid}">
+                                    <div class="com-mess" id="com-mess-${commass[i].comid}"></div>
                                     <div class="post-com-list-blok">
                                         <div class="post-com-list-img"                                 
                                             style="background-image: url('${commass[i].ava}'); background-position: ${commass[i].avasettings};"
@@ -494,6 +493,7 @@ let BLOG = (() => {
                         SE.$(`article-blog-post-${postid}`).value = ``;
                         SE.$(`article-blog-post-${postid}`).style.height = `30px`;
                         SE.$(`likecomlength-${postid}`).innerHTML = `${JSON.parse(res).res.likelength}`;
+                        if (SE.$(`com-smile-${postid}`)) {SE.$(`com-smile-${postid}`).innerHTML = ``};
                         BLOG.postComShow(postid, 'add');
                     };
                 }); 
@@ -535,38 +535,28 @@ let BLOG = (() => {
     });
 
     //show options for comments
-    let showOptions = (postid, token) => {
-        console.log("over");
-        
+    let showOptions = (postid, comid) => {       
         let wallid = ((SE.$(`perepid_${postid}`)) && (SE.$(`perepid_${postid}`).getAttribute('perep') !== undefined)) 
         ? SE.$(`perepid_${postid}`).getAttribute('perep') 
         : `${window.location.pathname.replace(/[/]/gi, '')}`;
-
-
-        console.log("wallid", wallid);
-        console.log("postid", postid);
-        console.log("token", token);
-
-        SE.$(`com-mess-${token}`).innerHTML = `
+        SE.$(`com-mess-${comid}`).innerHTML = `
         <div class="post-message-prof-com">
             <p>${MESS.errorFormMessage().postdelproof}</p>
-            <p onclick="BLOG.delCom('${postid}', '${token}')">${MESS.errorFormMessage().prooffriends}</p>  
-            <p onclick="SE.$('com-mess-${token}').innerHTML = ''"><i class='fas fa-times'></i></p>         
+            <p onclick="BLOG.delCom('${postid}', '${wallid}', '${comid}')">${MESS.errorFormMessage().prooffriends}</p>  
+            <p onclick="if (SE.$('com-mess-${comid}')) {SE.$('com-mess-${comid}').innerHTML = ''}"><i class='fas fa-times'></i></p>         
         </div>`;
-
-        // let obj = {"postid":`${postid}`, "wallid":`${wallid}`};
-        // SE.send(obj, "/showoption", (res) => {
-        //     if ((JSON.parse(res).res) && (JSON.parse(res).res.res === '1')) {
-
-        //     } 
-        // });
     };
 
     //close options for comments
-    let delCom = (postid, token) => {
-        console.log("postid", postid);
-        console.log("token", token);
-
+    let delCom = (postid, wallid, comid) => {
+        let obj = {"postid":`${postid}`, "wallid":`${wallid}`, "comid":`${comid}`};
+        SE.send(obj, "/delcom", (res) => {
+            if ((JSON.parse(res).res) && (JSON.parse(res).res === 1)) {
+                if (SE.$(`${comid}`)) {SE.$(`${comid}`).remove()}
+            } else {
+                if (SE.$(`com-mess-${comid}`)) {SE.$(`com-mess-${comid}`).innerHTML = ''}
+            }
+        });
     };
 
     return {
